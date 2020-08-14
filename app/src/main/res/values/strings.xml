@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">CBM</string>
+    <string name="email">E-Mail*</string>
+    <string name="password">Password*</string>
+    <string name="forgotpassword">Forgot Your Password?</string>
+    <string name="login">Login</string>
+    <string name="donthaveaccount">Don\'t have an account? Register</string>
+    <string name="firstname">First Name*</string>
+    <string name="lastname">Last Name*</string>
+    <string name="confirmpassword">Confirm Password*</string>
+    <string name="phone">Phone*</string>
+    <string name="about">About Me*</string>
+    <string name="profile">Profile</string>
+    <string name="wanttobusiness">Do you want to use CBM for business?</string>
+    <string name="agreetext">I have read and agree to the CASE BEAU MONDE Terms of Use</string>
+    <string name="team">Team*</string>
+    <string name="companyname">Company Name*</string>
+    <string name="paypalaccept">Do you want to be hired by customers? If yes,please linkyour Paypal account.</string>
+    <string name="profileimage">Profile Image</string>
+    <string name="wanttocustomer">Do you want to use CBM as a customer?</string>
+
+    <string-array name="Team">
+        <item>- Select Team -</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Swift</item>
+        <item>Python</item>
+        <item>Scala</item>
+        <item>Perl</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enteremail">Enter Email</string>
+    <string name="enterpassword">Enter Password</string>
+    <string name="passwordmesg">Password should be greater than 6 characters</string>
+    <string name="close_up">OK</string>
+</resources>

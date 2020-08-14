@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/textsize_16sp"
+            android:textColor="@color/colorWhite"
+            android:layout_marginRight="@dimen/default_margin_16dp">
+
+        </TextView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:civ_border_width="2dp"
+            android:layout_marginRight="@dimen/default_margin_16dp"
+            app:civ_border_color="@color/colorWhite"
+            android:src="@drawable/login_banner">
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+        <ru.nikartm.support.ImageBadgeView
+            android:id="@+id/toolbar_notifiction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/default_margin_16dp"
+            android:src="@drawable/ic_baseline_notifications_24"
+            android:layout_alignParentRight="true"
+            app:ibv_showCounter="true">
+
+        </ru.nikartm.support.ImageBadgeView>
+
+        <ru.nikartm.support.ImageBadgeView
+            android:id="@+id/toolbar_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_baseline_shopping_cart_24"
+            android:layout_alignParentRight="true"
+            app:ibv_showCounter="true"
+            android:layout_marginRight="@dimen/default_margin_16dp">
+
+        </ru.nikartm.support.ImageBadgeView>
+    </LinearLayout>
+
+</RelativeLayout>

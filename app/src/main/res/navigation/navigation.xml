@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.casebeaumonde.fragments.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_users"
+        android:name="com.casebeaumonde.fragments.users.Users"
+        android:label="MyGigs"
+        tools:layout="@layout/fragment_users" />
+
+    <fragment
+        android:id="@+id/nav_pricing"
+        android:name="com.casebeaumonde.fragments.Pricing"
+        android:label="Pricing"
+        tools:layout="@layout/fragment_pricing"/>
+
+    <fragment
+        android:id="@+id/nav_designers"
+        android:name="com.casebeaumonde.fragments.Designers"
+        android:label="Designers"
+        tools:layout="@layout/fragment_designers"/>
+
+    <fragment
+        android:id="@+id/nav_hireanexpert"
+        android:name="com.casebeaumonde.fragments.HireAnExpertFragment"
+        android:label="Designers"
+        tools:layout="@layout/fragment_hire_an_expert"/>
+
+    <fragment
+        android:id="@+id/nav_shop"
+        android:name="com.casebeaumonde.fragments.Shop"
+        android:label="Shop"
+        tools:layout="@layout/fragment_shop"/>
+
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.casebeaumonde.fragments.Cart"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart"/>
+
+    <fragment
+        android:id="@+id/nav_closets"
+        android:name="com.casebeaumonde.fragments.Closets"
+        android:label="Closets"
+        tools:layout="@layout/fragment_closets"/>
+
+    <fragment
+        android:id="@+id/nav_liveevents"
+        android:name="com.casebeaumonde.fragments.LiveEvents"
+        android:label="Live Events"
+        tools:layout="@layout/fragment_live_events"/>
+
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.casebeaumonde.fragments.Chat"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat"/>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.casebeaumonde.fragments.Profile"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"/>
+
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.casebeaumonde.fragments.About"
+        android:label="About"
+        tools:layout="@layout/fragment_about"/>
+
+    <fragment
+        android:id="@+id/nav_contactUs"
+        android:name="com.casebeaumonde.fragments.ContactUs"
+        android:label="Contact Us"
+        tools:layout="@layout/fragment_contact_us"/>
+</navigation>

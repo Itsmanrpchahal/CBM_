@@ -1,4 +1,4 @@
-package com.casebeaumonde.fragments
+package com.casebeaumonde.fragments.pricing
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,6 @@ class Pricing : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(

@@ -10,7 +10,10 @@ import android.view.Window
 import android.widget.*
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
+import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register.*
 import java.io.File
 
 class RegisterActivity : AppCompatActivity() {
@@ -27,9 +30,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var agreecheck :CheckBox
     private lateinit var register_regiter_bt : Button
     private lateinit var register_login : TextView
-    private  var outputUri : Uri? = null
-    private var profilePicChoosed: Boolean? = false
-    val notC = "0"
+    private lateinit var utility: Utility
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun findids() {
+        utility = Utility()
         register_forbusiness = findViewById(R.id.register_forbusiness)
         register_firstname = findViewById(R.id.register_firstname)
         register_lastname = findViewById(R.id.register_lastname)
@@ -115,11 +117,11 @@ class RegisterActivity : AppCompatActivity() {
             val file: File? = ImagePicker.getFile(data)
             //You can also get File Path from intent
             val filePath: String? = ImagePicker.getFilePath(data)
-            Toast.makeText(this,""+filePath,Toast.LENGTH_LONG).show()
+            uploadfilename.text = filePath
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            utility!!.relative_snackbar(parent_register!!, ImagePicker.getError(data), getString(R.string.close_up))
         } else {
-            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
+            utility!!.relative_snackbar(parent_register,"Task Cancelled",getString(R.string.close_up))
         }
     }
 }

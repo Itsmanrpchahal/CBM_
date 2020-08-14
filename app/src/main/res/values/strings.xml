@@ -34,4 +34,11 @@
     <string name="enterpassword">Enter Password</string>
     <string name="passwordmesg">Password should be greater than 6 characters</string>
     <string name="close_up">OK</string>
+    <string name="currentpassword">Current Password*</string>
+    <string name="newpassword">New Password</string>
+    <string name="newconfirmpassword">New password confirmation</string>
+    <string name="closettitle">Closet Title*</string>
+    <string name="closetcheck">This closet is designed for a customer</string>
+    <string name="description">Description*</string>
+    <string name="image">Cover Image</string>
 </resources>

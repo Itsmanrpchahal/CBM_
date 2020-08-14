@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="@dimen/default_margin_16dp"
+    android:id="@+id/createcloset_layout"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/closettitle"
+        android:textStyle="bold"
+        android:textColor="@color/colorTextHint"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+
+    <EditText
+        android:id="@+id/createcloset_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_40dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:textSize="@dimen/textsize_16sp"
+        android:background="@drawable/blackroundcorners">
+
+    </EditText>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="@string/closetcheck"
+        android:textStyle="bold"
+        android:buttonTint="@color/colorTextHint"
+        android:drawableTint="@color/colorTextHint"
+        android:textSize="@dimen/textsize_16sp"
+        android:textColor="@color/colorTextHint">
+
+    </CheckBox>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:textColor="@color/colorTextHint"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+
+    <EditText
+        android:id="@+id/createcloset_description"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:textSize="@dimen/textsize_16sp"
+        android:background="@drawable/blackroundcorners">
+
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:textColor="@color/colorTextHint"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@drawable/blackroundcorners"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_8dp">
+
+        <Button
+            android:id="@+id/createcloset_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite">
+
+        </Button>
+
+
+        <TextView
+            android:id="@+id/createcloset_uploadfilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="No file chosen"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/createcloset_imagerperview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/blackroundcorners"
+        android:src="@drawable/login_banner"
+        android:scaleType="center">
+
+    </ImageButton>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false">
+
+        </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Change Password  "
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:layout_marginLeft="@dimen/default_margin_16dp">
+
+        </Button>
+    </LinearLayout>
+</LinearLayout>

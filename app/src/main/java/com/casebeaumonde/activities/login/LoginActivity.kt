@@ -25,6 +25,7 @@ import com.casebeaumonde.utilities.Utility
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -121,16 +122,23 @@ class LoginActivity : BaseClass() {
                         val responsedata = response.body().toString()
                         Log.d("TEST",""+responsedata)
                         val data = response.body()?.getData()?.userId
-                        setStringVal(Constants.USERID, response.body()?.getData()?.userId.toString())
-                        setStringVal(Constants.TOKEN,response.body()?.getData()?.token)
-                        startActivity(Intent(this@LoginActivity,MainActivity::class.java))
-                        finish()
+                        if (response.body()?.getData()?.token != null )
+                        {
+                            setStringVal(Constants.USERID, response.body()?.getData()?.userId.toString())
+                            setStringVal(Constants.TOKEN,response.body()?.getData()?.token)
+                            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                            finish()
+                        }else{
+                            utility!!.relative_snackbar(parent_login!!, "Invalid Username or Password", getString(R.string.close_up))
+                        }
                     }else{
-                        utility!!.relative_snackbar(parent_login!!, "Logged In", getString(R.string.close_up))
+                        utility!!.relative_snackbar(parent_login!!, response.message(), getString(R.string.close_up))
                     }
                 }
             })
 
+        }else{
+            utility.relative_snackbar(parent_main!!, "No Internet Connectivity", getString(R.string.close_up))
         }
     }
 

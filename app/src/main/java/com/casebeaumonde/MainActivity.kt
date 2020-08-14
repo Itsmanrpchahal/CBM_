@@ -4,9 +4,11 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
@@ -31,7 +33,10 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.HomeFragment
 import com.casebeaumonde.fragments.users.Users
 import com.casebeaumonde.utilities.Utility
+import com.google.android.material.navigation.NavigationView
 import com.shreyaspatil.material.navigationview.MaterialNavigationView
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import retrofit2.Call
 import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
@@ -69,29 +74,12 @@ class MainActivity : BaseClass() {
                 R.id.nav_chat,
                 R.id.nav_profile,
                 R.id.nav_about,
-                R.id.nav_contactUs,
-                R.id.nav_Logout
+                R.id.nav_contactUs
             ), drawerLayout
         )
 
-
-        navView.setNavigationItemSelectedListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.nav_Logout ->
-                {
-                    logout()
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
-
-        }
-
-
         setupActionBarWithNavController(frameLayout, appBarConfiguration)
         navView.setupWithNavController(frameLayout)
-
-
 
 
         // Show ItemStyle
@@ -101,7 +89,7 @@ class MainActivity : BaseClass() {
 
     private fun logout() {
         //hideKeyboard()
-        if (utility.isConnectingToInternet(this)) {
+        if (utility!!.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
 
@@ -126,10 +114,12 @@ class MainActivity : BaseClass() {
 
                 override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
                     pd.dismiss()
-                    Toast.makeText(this@MainActivity, "" + t.message, Toast.LENGTH_LONG).show()
+                    utility!!.relative_snackbar(parent_main!!, t.localizedMessage, getString(R.string.close_up))
                 }
 
             })
+        }else{
+            utility.relative_snackbar(parent_main!!, "No Internet Connectivity", getString(R.string.close_up))
         }
     }
 
@@ -153,12 +143,18 @@ class MainActivity : BaseClass() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         navView.setItemStyle(MaterialNavigationView.ITEM_STYLE_DEFAULT)
-
+        menuInflater.inflate(R.menu.menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+        when(item.itemId)
+        {
+            R.id.logout -> {
+                logout()
+            }
+        }
         return false
     }
 

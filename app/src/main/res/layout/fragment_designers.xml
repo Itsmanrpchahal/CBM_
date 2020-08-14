@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.Designers">
+    tools:context=".fragments.designers.Designers">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include layout="@layout/searchbar">
+
+    </include>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/designer_recyler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Designers" />
+        android:layout_below="@+id/searchlayout">
 
-</FrameLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

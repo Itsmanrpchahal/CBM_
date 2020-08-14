@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
     android:gravity="center"
+    android:id="@+id/parent_register"
     android:background="@drawable/login_banner"
     tools:context=".activities.RegisterActivity">
 
@@ -272,6 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/textsize_16sp">
 

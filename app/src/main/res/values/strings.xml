@@ -21,12 +21,9 @@
 
     <string-array name="Team">
         <item>- Select Team -</item>
-        <item>Java</item>
-        <item>Kotlin</item>
-        <item>Swift</item>
-        <item>Python</item>
-        <item>Scala</item>
-        <item>Perl</item>
+        <item>Boutique</item>
+        <item>Retailer</item>
+        <item>Influencer</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -41,4 +38,16 @@
     <string name="closetcheck">This closet is designed for a customer</string>
     <string name="description">Description*</string>
     <string name="image">Cover Image</string>
+    <string name="enterfirstname">Enter Firstname</string>
+    <string name="enterlastname">Enter Lastname</string>
+    <string name="enterconfirmpassword">Enter Confirm Password</string>
+    <string name="enterphone">Enter Phone</string>
+    <string name="aboutme">Enter About</string>
+    <string name="uploadimage">Upload Image</string>
+    <string name="passwordnotmatch">Password not matched</string>
+    <string name="nointernet">No Internet Connectivity</string>
+    <string name="strongpass">Enter Strong Password</string>
+    <string name="entercomapanyname">Enter Company Name</string>
+    <string name="entercurrentpassword">Enter Current Password</string>
+    <string name="enternewpassword">Enter New Password</string>
 </resources>

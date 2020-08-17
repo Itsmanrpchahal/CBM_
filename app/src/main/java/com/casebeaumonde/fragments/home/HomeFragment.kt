@@ -1,4 +1,4 @@
-package com.casebeaumonde.fragments
+package com.casebeaumonde.fragments.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -40,11 +40,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         add = view.findViewById(R.id.add)!!
         spinner = view.findViewById(R.id.spinner)
 
-
-        val users = listOf("Veniam penatibus", "reprehenderit", "fusce", "Ullamcorper lacinia", "Etiam dis")
+        val users = listOf("Select Item","Veniam penatibus", "reprehenderit", "fusce", "Ullamcorper lacinia", "Etiam dis")
 
         val adapter = context?.let { ArrayAdapter<String>(it,android.R.layout.simple_spinner_dropdown_item,users) }
         spinner.adapter = adapter
+
         spinner.setTitle("Select Item")
         spinner.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -17,13 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.BusinessRegisterActivity"
+        <activity android:name="com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="keyboardHidden|orientation|screenSize">
 
         </activity>
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".activities.userRegister.RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>

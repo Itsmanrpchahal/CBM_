@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/default_margin_16dp"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".fragments.home.HomeFragment">
 
     <Button
         android:id="@+id/add"
@@ -22,7 +22,7 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+android:visibility="gone"
         android:layout_centerInParent="true">
 
     </com.toptoche.searchablespinnerlibrary.SearchableSpinner>

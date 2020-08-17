@@ -8,7 +8,7 @@
     android:gravity="center"
     android:id="@+id/parent_register"
     android:background="@drawable/login_banner"
-    tools:context=".activities.RegisterActivity">
+    tools:context=".activities.userRegister.RegisterActivity">
 
     <ScrollView
         android:layout_width="match_parent"

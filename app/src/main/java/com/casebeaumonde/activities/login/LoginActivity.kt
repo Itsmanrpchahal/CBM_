@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
@@ -13,23 +12,19 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
-import com.casebeaumonde.activities.RegisterActivity
+import com.casebeaumonde.activities.userRegister.RegisterActivity
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
-import com.google.android.material.snackbar.Snackbar
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
 class LoginActivity : BaseClass() {
 

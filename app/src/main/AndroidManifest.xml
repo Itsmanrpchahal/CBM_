@@ -17,16 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-
-        </activity>
+        <activity android:name=".activities.OnBoardScreen"></activity>
+        <activity
+            android:name=".activities.businessRegister.BusinessRegisterActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name=".activities.userRegister.RegisterActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -41,18 +39,16 @@
         <activity
             android:name=".activities.login.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".activities.SplashScreen"
-            >
+        <activity android:name=".activities.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>

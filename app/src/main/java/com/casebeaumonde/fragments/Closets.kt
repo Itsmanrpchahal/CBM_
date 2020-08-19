@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 class Closets : Fragment() {
 
@@ -16,7 +18,10 @@ class Closets : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view : View
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_closets, container, false)
+        view = inflater.inflate(R.layout.fragment_closets, container, false)
+
+        return view
     }
 }

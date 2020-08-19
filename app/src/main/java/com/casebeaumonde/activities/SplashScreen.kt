@@ -10,6 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
@@ -18,12 +19,16 @@ import com.casebeaumonde.constants.Constants
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifImageView
 
 
 class SplashScreen : BaseClass() {
+    private lateinit var gif : GifImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+        gif = findViewById(R.id.gif)
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = window
@@ -39,6 +44,7 @@ class SplashScreen : BaseClass() {
         android.Manifest.permission.CAMERA,
         android.Manifest.permission.ACCESS_FINE_LOCATION
     ){
+        Glide.with(this).load(R.drawable.splashgif).into(gif)
         Handler().postDelayed({
 
             val userID = getStringVal(Constants.TOKEN)
@@ -49,12 +55,11 @@ class SplashScreen : BaseClass() {
                 finish()
             }else{
                 startActivity(Intent(this,
-                    LoginActivity::class.java))
+                    OnBoardScreen::class.java))
                 finish()
             }
 
-
-        },3000)
+        },4000)
     }
 
     private val quickPermissionsOptions = QuickPermissionsOptions(

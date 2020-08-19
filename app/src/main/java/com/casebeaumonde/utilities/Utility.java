@@ -52,11 +52,11 @@ public class Utility {
 
         Pattern pattern;
         Matcher matcher;
-        final String PASSWORD_PATTERN = "(/^(?=.*\\d)(?=.*[A-Z])([@$%&#])[0-9a-zA-Z]{4,}$/)";
+        final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
 
-        return matcher.matches();
+        return PASSWORD_PATTERN.matches(password);
 
     }
 

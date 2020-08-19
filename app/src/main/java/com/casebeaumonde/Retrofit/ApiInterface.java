@@ -3,6 +3,7 @@ package com.casebeaumonde.Retrofit;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
+import com.google.gson.JsonObject;
 
 import java.io.File;
 
@@ -26,6 +27,7 @@ public interface ApiInterface {
             @Field("password") String password
     );
 
+
     @GET("api/v1/logout")
     Call<LogoutResponse> logoutCall(
             @Header("Authorization") String token
@@ -45,4 +47,18 @@ public interface ApiInterface {
             @Part MultipartBody.Part image,
             @Query("role") String role
     );
+
+    @FormUrlEncoded
+    @POST("api/v1/changePassword")
+    Call<JsonObject> changePasswordCall(
+            @Header("Authorization")  String token,
+            @Field("id") String id,
+            @Field("old_password") String old_password,
+            @Field("password") String password,
+            @Field("password_confirmation") String password_confirmation
+    );
+
+//    @FormUrlEncoded
+//    @GET("api/v1/userProfile/{input}")
+
 }

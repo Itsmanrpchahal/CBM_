@@ -50,4 +50,8 @@
     <string name="entercomapanyname">Enter Company Name</string>
     <string name="entercurrentpassword">Enter Current Password</string>
     <string name="enternewpassword">Enter New Password</string>
+    <string name="invalidpassword">Invalid Current Password</string>
+    <string name="splashtext">© 2020 All right reserved| Privacy Policy</string>
+    <string name="logouttext">Are you sure you want to logout?</string>
+    <string name="onboardtext">Life isn\'t black and white. Come build Your exquisite world with CASA BEAU MONDE. Created with you in mind, to improve the way you shop and communicate about fashion. Whether you are an inspiring fashionista or an aspiring one, you\'re home with us. Here you will be able to curate and create all the pretty things and live the most stylish of lives with our latest fashion and shopping technology. We can\'t wait to see how you build your beautiful world with us.</string>
 </resources>

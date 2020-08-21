@@ -9,7 +9,7 @@ import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 
 
-class BaseFrag : Fragment() {
+open class BaseFrag : Fragment() {
     var alertDialog: AlertDialog? = null
     var sharedPreferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null

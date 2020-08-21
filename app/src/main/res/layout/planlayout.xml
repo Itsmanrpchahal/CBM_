@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/margin_8dp"
+        app:cardElevation="@dimen/margin_8dp"
+        app:cardBackgroundColor="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/plan_level_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="LEVEL-1"
+                android:textColor="@color/colorBlack"
+                android:gravity="center"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/plan_price"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="$0/MONTH"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorBlack"
+                android:gravity="center">
+
+            </TextView>
+
+
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

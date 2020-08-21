@@ -43,6 +43,7 @@
             android:layout_marginRight="@dimen/default_margin_16dp"
             android:src="@drawable/ic_baseline_notifications_24"
             android:layout_alignParentRight="true"
+            app:ibv_badgeTextSize="@dimen/textsize_14sp"
             app:ibv_showCounter="true">
 
         </ru.nikartm.support.ImageBadgeView>

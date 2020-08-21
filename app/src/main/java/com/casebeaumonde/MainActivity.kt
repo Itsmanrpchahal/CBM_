@@ -1,14 +1,20 @@
 package com.casebeaumonde
 
+import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.os.Handler
+import android.provider.MediaStore
+import android.view.Menu
+import android.view.MenuItem
+import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
@@ -20,24 +26,32 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
+import com.casebeaumonde.notifications.Notifications
+import com.casebeaumonde.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utility
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.JsonObject
 import com.shreyaspatil.material.navigationview.MaterialNavigationView
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
-import java.lang.Exception
-import kotlin.math.log
+import java.io.File
 
-class MainActivity : BaseClass() {
+class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserProfileAPI {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navView: MaterialNavigationView
     private lateinit var opennavigation: ImageView
@@ -49,8 +63,11 @@ class MainActivity : BaseClass() {
     lateinit var manager: FragmentManager
     private lateinit var changePasswordDialog: Dialog
     private lateinit var logoutDialog: Dialog
-    private lateinit var toolbar_username : TextView
+    private lateinit var toolbar_username: TextView
     var status: Int = 0
+    private lateinit var toolbar_notifiction: ImageBadgeView
+    private lateinit var userImage: CircleImageView
+    lateinit var controller: Controller
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +105,11 @@ class MainActivity : BaseClass() {
 
     }
 
+
     private fun listeners() {
+        toolbar_notifiction.setOnClickListener {
+            startActivity(Intent(this, Notifications::class.java))
+        }
 
     }
 
@@ -137,6 +158,32 @@ class MainActivity : BaseClass() {
     }
 
     private fun findIds() {
+        controller = Controller()
+        controller.Controller(this, this)
+        controller.setUserProfileAPI(
+            "Bearer " + getStringVal(Constants.TOKEN),
+            getStringVal(Constants.USERID)
+        )
+
+
+        val ha = Handler()
+        ha.postDelayed(object : Runnable {
+            override fun run() {
+                //call function
+                controller.setNotificationAPI(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    getStringVal(Constants.USERID)
+                )
+
+                ha.postDelayed(this, 5000)
+            }
+        }, 10000)
+
+        controller.setUserProfileAPI(
+            "Bearer " + getStringVal(Constants.TOKEN),
+            getStringVal(Constants.USERID)
+        )
+
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -152,6 +199,8 @@ class MainActivity : BaseClass() {
         navView = findViewById(R.id.nav_view)
         frameLayout = findNavController(R.id.nav_host_fragment)
         toolbar_username = findViewById(R.id.toolbar_username)
+        toolbar_notifiction = findViewById(R.id.toolbar_notifiction)
+        userImage = findViewById(R.id.userImage)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -176,8 +225,8 @@ class MainActivity : BaseClass() {
                     WindowManager.LayoutParams.WRAP_CONTENT
                 )
 
-                val no : Button
-                val yes : Button
+                val no: Button
+                val yes: Button
 
                 no = logoutDialog.findViewById(R.id.logout_no)
                 yes = logoutDialog.findViewById(R.id.logout_yes)
@@ -205,11 +254,11 @@ class MainActivity : BaseClass() {
                     WindowManager.LayoutParams.WRAP_CONTENT
                 )
 
-                val changepassword_closebt : Button
-                val changepassword_changebt : Button
-                val changepass_current : EditText
-                val changepassword_newPassword : EditText
-                val changepassword_CnewPassword : EditText
+                val changepassword_closebt: Button
+                val changepassword_changebt: Button
+                val changepass_current: EditText
+                val changepassword_newPassword: EditText
+                val changepassword_CnewPassword: EditText
 
                 changepassword_closebt =
                     changePasswordDialog.findViewById(R.id.changepassword_closebt)
@@ -263,8 +312,7 @@ class MainActivity : BaseClass() {
                                 "Bearer " + getStringVal(Constants.TOKEN),
                                 getStringVal(Constants.USERID),
                                 changepass_current.text.toString(),
-                                changepassword_newPassword.text.toString()
-                                ,
+                                changepassword_newPassword.text.toString(),
                                 changepassword_CnewPassword.text.toString(),
                                 changepass_current
                             )
@@ -294,8 +342,7 @@ class MainActivity : BaseClass() {
 
 
             val changePassCall = WebAPI.getInstance().api.changePasswordCall(
-                token
-                , userId, old_password, new_pass, new_cpass
+                token, userId, old_password, new_pass, new_cpass
             )
             changePassCall.enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -363,5 +410,25 @@ class MainActivity : BaseClass() {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
+        toolbar_notifiction.setBadgeValue(notificationsResponseResponse.body()!!.data.notification.size)
+        toolbar_notifiction.setBadgeTextColor(R.color.colorBlue)
+    }
+
+    override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
+        pd.dismiss()
+        if (userProfileResponse.isSuccessful) {
+            if (userProfileResponse.body()?.code.equals("200")) {
+                toolbar_username.text =
+                    userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
+                Glide.with(this).load(userProfileResponse.body()?.data?.filePath+userProfileResponse.body()?.data?.user?.avatar).placeholder(R.drawable.login_banner).into(userImage)
+            }
+        }
+    }
+
+    override fun error(error: String?) {
+        pd.dismiss()
     }
 }

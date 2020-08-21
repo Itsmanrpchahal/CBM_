@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/whiteborder"
+    android:layout_margin="@dimen/margin_8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_margin_16dp">
+
+        <LinearLayout
+            android:id="@+id/nflayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/notification_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:civ_border_width="2dp"
+                android:layout_gravity="center_vertical"
+                app:civ_border_color="@color/colorWhite"
+                android:src="@drawable/login_banner"
+                >
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/notification_image"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/notification_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="notification text"
+                    android:textColor="@color/colorWhite">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/notification_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notification time">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:text="Dismiss"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_16sp"
+            android:textAllCaps="false"
+            android:layout_below="@id/nflayout"
+            android:layout_alignParentRight="true">
+
+        </Button>
+
+    </RelativeLayout>
+
+</RelativeLayout>

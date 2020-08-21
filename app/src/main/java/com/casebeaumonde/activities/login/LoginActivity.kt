@@ -1,5 +1,6 @@
 package com.casebeaumonde.activities.login
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -7,11 +8,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
@@ -19,6 +23,7 @@ import com.casebeaumonde.activities.userRegister.RegisterActivity
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -73,6 +78,17 @@ class LoginActivity : BaseClass() {
         login_LoginBT.setOnClickListener {
             checkValidations()
         }
+
+        login_forgot_TV.setOnClickListener {
+            forgotPassword()
+        }
+    }
+
+    private fun forgotPassword() {
+        val dialog = Dialog(this!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.forgotpasswordlayout)
+        dialog.show()
     }
 
     private fun checkValidations() {
@@ -141,6 +157,4 @@ class LoginActivity : BaseClass() {
         val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
     }
-
-
 }

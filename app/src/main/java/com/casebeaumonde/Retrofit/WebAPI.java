@@ -15,7 +15,7 @@ public class WebAPI {
     public static WebAPI mInstance;
     Retrofit retrofit;
     public static ApiInterface apiInterface;
-    private WebAPI() {
+    public WebAPI() {
 
         Gson gson = new GsonBuilder()
                 .setLenient()

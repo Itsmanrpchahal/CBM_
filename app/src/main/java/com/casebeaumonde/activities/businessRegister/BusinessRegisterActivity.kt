@@ -316,7 +316,7 @@ class BusinessRegisterActivity : AppCompatActivity() {
             uploadfilename.text = filePath
             path = filePath!!
             bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
-            part = sendImageFileToserver(bitMap)
+            part = Utility.sendImageFileToserver(filesDir,bitMap)
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             utility!!.relative_snackbar(
                 bregister_parent!!,
@@ -330,24 +330,6 @@ class BusinessRegisterActivity : AppCompatActivity() {
                 getString(R.string.close_up)
             )
         }
-    }
-
-    //convert image to multipart
-    @Throws(IOException::class)
-    fun sendImageFileToserver(bitMap: Bitmap): MultipartBody.Part {
-        val file = File(filesDir, "image" + ".png")
-        val bos = ByteArrayOutputStream()
-        bitMap.compress(Bitmap.CompressFormat.JPEG, 50, bos)
-        val bitmapdata: ByteArray = bos.toByteArray()
-        val fos = FileOutputStream(file)
-        fos.write(bitmapdata)
-        fos.flush()
-        fos.close()
-        val reqFile = RequestBody.create(MediaType.parse("image/*"), file)
-        val body =
-            MultipartBody.Part.createFormData("image", file.name, reqFile)
-        val name = RequestBody.create(MediaType.parse("text/plain"), "avatar")
-        return body
     }
 
     private fun hideKeyboard() {

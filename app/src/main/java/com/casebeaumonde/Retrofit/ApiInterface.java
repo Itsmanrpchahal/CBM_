@@ -4,11 +4,12 @@ import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
+import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
 import com.casebeaumonde.notifications.response.NotificationsResponse;
 import com.google.gson.JsonObject;
 
-import java.io.File;
+import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -82,5 +83,17 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Query("user_id") String user_id,
             @Part MultipartBody.Part image
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/updateProfile")
+    Call<EditProfileResponse> editProfile(
+            @Header("Authorization") String token,
+            @Field("firstname") String firstname,
+            @Field("lastname") String lastname,
+            @Field("email") String email,
+            @Field("phone") String phone,
+            @Field("about_me") String about_me,
+            @Field("id") String id
     );
 }

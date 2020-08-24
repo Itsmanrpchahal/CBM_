@@ -2,16 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/changepassword_"
+    <item android:id="@+id/logout"
         android:orderInCategory="100"
-        android:title="Change Password"
+        android:title="Logout"
         app:showAsAction="never">
 
     </item>
-
-    <item
-        android:id="@+id/logout"
-        android:orderInCategory="100"
-        android:title="LogOut"
-        app:showAsAction="never" />
 </menu>

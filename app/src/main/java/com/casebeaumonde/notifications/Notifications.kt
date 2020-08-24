@@ -18,8 +18,6 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.notifications.adpater.NotificationAdapter
 import com.casebeaumonde.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utility
-import com.google.gson.JsonObject
-import org.json.JSONObject
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,11 +27,12 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
 
     private lateinit var notification_recyler: RecyclerView
     private lateinit var notification_back: ImageButton
-    private val notifiactionlist = ArrayList<String>()
+    private var notifiactionlist = ArrayList<String>()
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     lateinit var controller: Controller
     private var timer: Timer? = null
+    private var notifications: List<NotificationsResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,12 +67,20 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
                 }
             }
             timer!!.schedule(doTask, 0, 500)
+            notificationCall()
+
+
+        }
+    }
+
+    private fun notificationCall() {
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
             controller.setNotificationAPI(
                 "Bearer " + getStringVal(Constants.TOKEN),
                 getStringVal(Constants.USERID)
             )
-
-
         }
     }
 
@@ -91,11 +98,7 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
 
-        //add layout manager
-        notification_recyler.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = NotificationAdapter(notifiactionlist)
-        notification_recyler.adapter = adapter
+
     }
 
     private fun findIds() {
@@ -105,11 +108,20 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
 
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
         pd.dismiss()
-        Log.d("responseNotify",""+ notificationsResponseResponse.body()!!.data.notification.get(0).notifiableId)
+        //add layout manager
+        notification_recyler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val adapter = NotificationAdapter(this ,notificationsResponseResponse.body()?.data?.notification!!)
+        notification_recyler.adapter = adapter
     }
+
 
     override fun error(error: String?) {
         pd.dismiss()
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 }
+
+
+
+

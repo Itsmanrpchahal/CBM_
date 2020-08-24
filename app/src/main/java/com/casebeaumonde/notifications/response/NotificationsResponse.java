@@ -73,6 +73,9 @@ public class NotificationsResponse {
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
+            @SerializedName("message")
+            @Expose
+            private String message;
 
             public String getId() {
                 return id;
@@ -144,6 +147,14 @@ public class NotificationsResponse {
 
             public void setUpdatedAt(String updatedAt) {
                 this.updatedAt = updatedAt;
+            }
+
+            public String getMessage() {
+                return message;
+            }
+
+            public void setMessage(String message) {
+                this.message = message;
             }
 
             public class Data_ {
@@ -417,8 +428,9 @@ public class NotificationsResponse {
                     }
 
                 }
-
             }
+
         }
     }
+
 }

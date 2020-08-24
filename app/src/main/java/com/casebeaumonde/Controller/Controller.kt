@@ -2,6 +2,7 @@ package com.casebeaumonde.Controller
 
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
+import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.notifications.response.NotificationsResponse
 import okhttp3.MultipartBody
@@ -16,6 +17,7 @@ public class Controller {
     var notificationAPI: NotificationAPI? = null
     var userProfileAPI : UserProfileAPI? = null
     var updateAvatarAPI : UpdateAvatarAPI? = null
+    var updateProfileAPI : UpdateProfileAPI? = null
 
 
     fun Controller(notification: NotificationAPI,userProfile: UserProfileAPI) {
@@ -29,9 +31,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(userProfile: UserProfileAPI,updateAvatar: UpdateAvatarAPI){
+    fun Controller(userProfile: UserProfileAPI,updateAvatar: UpdateAvatarAPI,updateProfile: UpdateProfileAPI){
         userProfileAPI = userProfile
         updateAvatarAPI = updateAvatar
+        updateProfileAPI = updateProfile
         webAPI = WebAPI()
     }
 
@@ -40,16 +43,16 @@ public class Controller {
         webAPI?.api?.notificationCall(token, userId)
             ?.enqueue(object : Callback<NotificationsResponse> {
 
+                override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
+                    notificationAPI?.error(t.message)
+                }
+
                 override fun onResponse(
                     call: Call<NotificationsResponse>,
                     response: Response<NotificationsResponse>
                 ) {
                     val notificationsResponseResponse = response
                     notificationAPI?.onSucess(notificationsResponseResponse)
-                }
-
-                override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
-                    notificationAPI?.error(t.message)
                 }
 
             })
@@ -94,6 +97,24 @@ public class Controller {
         })
     }
 
+    fun setUpDateProfile(token : String,firstname: String,lastname: String,email : String,phone:String,about:String,userID : String)
+    {
+        webAPI?.api?.editProfile(token,firstname,lastname,email,phone,about,userID)?.enqueue(object : Callback<EditProfileResponse>
+        {
+            override fun onResponse(
+                call: Call<EditProfileResponse>,
+                response: Response<EditProfileResponse>
+            ) {
+                val updateProfile = response
+                updateProfileAPI?.onUpdateProfileSuccess(updateProfile)
+            }
+
+            override fun onFailure(call: Call<EditProfileResponse>, t: Throwable) {
+                updateProfileAPI?.error(t.message)
+            }
+        })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -110,4 +131,10 @@ public class Controller {
         fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>)
         fun error(error: String?)
     }
+
+    interface UpdateProfileAPI{
+        fun onUpdateProfileSuccess(updateProfileResponse: Response<EditProfileResponse>)
+        fun error(error: String?)
+    }
+
 }

@@ -1,12 +1,14 @@
 package com.casebeaumonde.notifications
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,15 +17,19 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.notifications.IF.NotificationIF
 import com.casebeaumonde.notifications.adpater.NotificationAdapter
 import com.casebeaumonde.notifications.response.NotificationsResponse
+import com.casebeaumonde.notifications.response.RemoveNotificationResponse
 import com.casebeaumonde.utilities.Utility
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_notifications.*
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class Notifications : BaseClass(), Controller.NotificationAPI {
+class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Controller.RemoveNotificationAPI{
 
     private lateinit var notification_recyler: RecyclerView
     private lateinit var notification_back: ImageButton
@@ -38,9 +44,9 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
         controller = Controller()
-        controller.Controller(this)
+        controller.Controller(this,this)
+        notificationIF = this
         findIds()
-        setAdapter()
         listeners()
         NotificationCall()
     }
@@ -81,6 +87,8 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
                 "Bearer " + getStringVal(Constants.TOKEN),
                 getStringVal(Constants.USERID)
             )
+        }else{
+            utility!!.relative_snackbar(parent_notifications!!, getString(R.string.nointernet), getString(R.string.close_up))
         }
     }
 
@@ -90,18 +98,13 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
         }
     }
 
-    private fun setAdapter() {
+    private fun findIds() {
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
-
-
-    }
-
-    private fun findIds() {
         notification_recyler = findViewById(R.id.notification_recyler)
         notification_back = findViewById(R.id.notification_back)
     }
@@ -115,10 +118,44 @@ class Notifications : BaseClass(), Controller.NotificationAPI {
         notification_recyler.adapter = adapter
     }
 
+    override fun onRemoveNotification(removeNotification: Response<RemoveNotificationResponse>) {
+        if (removeNotification.isSuccessful)
+        {
+            notificationCall()
+        }
+    }
+
 
     override fun error(error: String?) {
         pd.dismiss()
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+        utility!!.relative_snackbar(parent_notifications!!, error, getString(R.string.close_up))
+    }
+
+    companion object{
+        var notificationIF : NotificationIF? = null
+    }
+
+    override fun getID(id: String?) {
+        hideKeyboard()
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            Log.d("notifyID",id)
+            controller.RemoveNotification("Bearer "+getStringVal(Constants.TOKEN),id)
+        }else{
+            utility!!.relative_snackbar(parent_notifications!!, getString(R.string.nointernet), getString(R.string.close_up))
+        }
+    }
+
+    private fun hideKeyboard() {
+        try {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }catch (e : java.lang.Exception)
+        {
+
+        }
+
     }
 }
 

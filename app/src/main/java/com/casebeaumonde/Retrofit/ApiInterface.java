@@ -3,16 +3,19 @@ package com.casebeaumonde.Retrofit;
 import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
+import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
 import com.casebeaumonde.notifications.response.NotificationsResponse;
+import com.casebeaumonde.notifications.response.RemoveNotificationResponse;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -96,4 +99,17 @@ public interface ApiInterface {
             @Field("about_me") String about_me,
             @Field("id") String id
     );
+
+    @DELETE("api/v1/removeNotification/{input}")
+    Call<RemoveNotificationResponse> removeNotification(
+            @Header("Authorization") String token,
+            @Path("input") String notId
+    );
+
+    @GET("api/v1/userGigs/{input}")
+    Call<MyGigsResponse> usergigs(
+            @Header("Authorization") String token,
+            @Path("input") String userid
+    );
+
 }

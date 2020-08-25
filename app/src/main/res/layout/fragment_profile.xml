@@ -180,6 +180,18 @@
                 android:layout_marginTop="@dimen/margin_8dp">
 
             </TextView>
+
+            <TextView
+                android:id="@+id/profile_mygigs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Gigs"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_14sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_8dp">
+
+            </TextView>
         </LinearLayout>
     </ScrollView>
 

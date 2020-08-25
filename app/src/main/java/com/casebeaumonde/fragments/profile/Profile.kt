@@ -12,11 +12,13 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
+import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
@@ -40,6 +42,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var profile_username: TextView
+    private lateinit var profile_mygigs : TextView
     private lateinit var profile_profilePic: ImageView
     private lateinit var profile_followerscount: TextView
     private lateinit var profile_followingcount: TextView
@@ -51,6 +54,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private var path: String = ""
     private lateinit var changePasswordDialog: Dialog
     private lateinit var dialog : Dialog
+    private lateinit var role : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -81,83 +85,92 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
 
         profile_changepassword.setOnClickListener {
-            changePasswordDialog = Dialog(context!!)
-            changePasswordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            changePasswordDialog.setCancelable(false)
-            changePasswordDialog.setContentView(R.layout.changepassword)
-            val window = changePasswordDialog.window
-            window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
 
-            val changepassword_closebt: Button
-            val changepassword_changebt: Button
-            val changepass_current: EditText
-            val changepassword_newPassword: EditText
-            val changepassword_CnewPassword: EditText
-
-            changepassword_closebt =
-                changePasswordDialog.findViewById(R.id.changepassword_closebt)
-            changepassword_changebt =
-                changePasswordDialog.findViewById(R.id.changepassword_changebt)
-            changepass_current = changePasswordDialog.findViewById(R.id.changepass_current)
-            changepassword_newPassword =
-                changePasswordDialog.findViewById(R.id.changepassword_newPassword)
-            changepassword_CnewPassword =
-                changePasswordDialog.findViewById(R.id.changepassword_CnewPassword)
-
-            changepassword_closebt.setOnClickListener {
-                changePasswordDialog.dismiss()
-            }
-
-            changepassword_changebt.setOnClickListener {
-                when {
-                    changepass_current.text.isEmpty() -> {
-                        changepass_current.requestFocus()
-                        changepass_current.error = getString(R.string.entercurrentpassword)
-                    }
-
-                    changepassword_newPassword.text.isEmpty() -> {
-                        changepassword_newPassword.requestFocus()
-                        changepassword_newPassword.error = getString(R.string.enternewpassword)
-                    }
-
-                    changepassword_CnewPassword.text.isEmpty() -> {
-                        changepassword_CnewPassword.requestFocus()
-                        changepassword_CnewPassword.error = getString(R.string.confirmpassword)
-                    }
-
-                    !changepassword_newPassword.text.toString()
-                        .equals(changepassword_CnewPassword.text.toString()) -> {
-                        changepassword_CnewPassword.requestFocus()
-                        changepassword_CnewPassword.error = getString(R.string.passwordnotmatch)
-
-                    }
-
-                    changepassword_newPassword.text.toString().length < 8 && !Utility.isValidPassword(
-                        changepassword_newPassword.text.toString()
-                    ) -> {
-                        changepassword_newPassword.requestFocus()
-                        changepassword_newPassword.error = getString(R.string.strongpass)
-                    }
-                    else -> {
-                        changePassword(
-                            changePasswordDialog,
-                            changepassword_newPassword,
-                            "Bearer " + getStringVal(Constants.TOKEN),
-                            getStringVal(Constants.USERID),
-                            changepass_current.text.toString(),
-                            changepassword_newPassword.text.toString(),
-                            changepassword_CnewPassword.text.toString(),
-                            changepass_current
-                        )
-                    }
-                }
-            }
-            changePasswordDialog.show()
+            changePassworddialog()
         }
 
+        profile_mygigs.setOnClickListener {
+            startActivity(Intent(context,MyGigs::class.java).putExtra("role",role))
+        }
+
+    }
+
+    private fun changePassworddialog() {
+        changePasswordDialog = Dialog(context!!)
+        changePasswordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        changePasswordDialog.setCancelable(false)
+        changePasswordDialog.setContentView(R.layout.changepassword)
+        val window = changePasswordDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val changepassword_closebt: Button
+        val changepassword_changebt: Button
+        val changepass_current: EditText
+        val changepassword_newPassword: EditText
+        val changepassword_CnewPassword: EditText
+
+        changepassword_closebt =
+            changePasswordDialog.findViewById(R.id.changepassword_closebt)
+        changepassword_changebt =
+            changePasswordDialog.findViewById(R.id.changepassword_changebt)
+        changepass_current = changePasswordDialog.findViewById(R.id.changepass_current)
+        changepassword_newPassword =
+            changePasswordDialog.findViewById(R.id.changepassword_newPassword)
+        changepassword_CnewPassword =
+            changePasswordDialog.findViewById(R.id.changepassword_CnewPassword)
+
+        changepassword_closebt.setOnClickListener {
+            changePasswordDialog.dismiss()
+        }
+
+        changepassword_changebt.setOnClickListener {
+            when {
+                changepass_current.text.isEmpty() -> {
+                    changepass_current.requestFocus()
+                    changepass_current.error = getString(R.string.entercurrentpassword)
+                }
+
+                changepassword_newPassword.text.isEmpty() -> {
+                    changepassword_newPassword.requestFocus()
+                    changepassword_newPassword.error = getString(R.string.enternewpassword)
+                }
+
+                changepassword_CnewPassword.text.isEmpty() -> {
+                    changepassword_CnewPassword.requestFocus()
+                    changepassword_CnewPassword.error = getString(R.string.confirmpassword)
+                }
+
+                !changepassword_newPassword.text.toString()
+                    .equals(changepassword_CnewPassword.text.toString()) -> {
+                    changepassword_CnewPassword.requestFocus()
+                    changepassword_CnewPassword.error = getString(R.string.passwordnotmatch)
+
+                }
+
+                changepassword_newPassword.text.toString().length < 8 && !Utility.isValidPassword(
+                    changepassword_newPassword.text.toString()
+                ) -> {
+                    changepassword_newPassword.requestFocus()
+                    changepassword_newPassword.error = getString(R.string.strongpass)
+                }
+                else -> {
+                    changePassword(
+                        changePasswordDialog,
+                        changepassword_newPassword,
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        getStringVal(Constants.USERID),
+                        changepass_current.text.toString(),
+                        changepassword_newPassword.text.toString(),
+                        changepassword_CnewPassword.text.toString(),
+                        changepass_current
+                    )
+                }
+            }
+        }
+        changePasswordDialog.show()
     }
 
     private fun editprofile_Dialog(view: View?) {
@@ -260,7 +273,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_changetv = view.findViewById(R.id.profile_changetv)
         profile_edit_profile = view.findViewById(R.id.profile_edit_profile)
         profile_changepassword  = view.findViewById(R.id.profile_changepassword)
-
+        profile_mygigs = view.findViewById(R.id.profile_mygigs)
         pd.show()
         pd.setContentView(R.layout.loading)
     }
@@ -355,6 +368,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
+        Log.d("userprofilerespose",""+userProfileResponse.body()?.data)
         profile_username.text =
             userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
         Glide.with(context!!)
@@ -372,6 +386,14 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             Constants.ABOUT,
             userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
         )
+        role = userProfileResponse.body()?.data?.user?.role.toString()
+        if (userProfileResponse.body()?.data?.user?.customerSubscription!=null)
+        {
+            profile_mygigs.visibility = View.VISIBLE
+        }else{
+            profile_mygigs.visibility = View.GONE
+        }
+
     }
 
     override fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>) {

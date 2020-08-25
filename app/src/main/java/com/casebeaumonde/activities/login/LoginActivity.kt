@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 class LoginActivity : BaseClass() {
 
@@ -154,7 +155,13 @@ class LoginActivity : BaseClass() {
     }
 
     private fun hideKeyboard() {
-        val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        try {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }catch (e : Exception)
+        {
+
+        }
+
     }
 }

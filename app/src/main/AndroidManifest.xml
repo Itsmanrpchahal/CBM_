@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".notifications.Notifications"></activity>
+        <activity android:name=".activities.myGigs.MyGigs"></activity>
+        <activity android:name=".notifications.Notifications" />
         <activity android:name=".activities.OnBoardScreen" />
         <activity
             android:name=".activities.businessRegister.BusinessRegisterActivity"

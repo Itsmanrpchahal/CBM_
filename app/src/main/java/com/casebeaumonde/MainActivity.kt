@@ -192,7 +192,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     "Bearer " + getStringVal(Constants.TOKEN),
                     getStringVal(Constants.USERID)
                 )
-
                 ha.postDelayed(this, 10000)
             }
         }, 10000)
@@ -274,7 +273,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 toolbar_username.text =
                     userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
                 Glide.with(this)
-                    .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar)
+                    .load(userProfileResponse.body()!!.data!!.filePath + userProfileResponse.body()!!.data!!.user!!.avatar)
                     .placeholder(R.drawable.login_banner).into(userImage)
             }
         }

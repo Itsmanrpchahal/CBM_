@@ -71,7 +71,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     private lateinit var toolbar_notifiction: ImageBadgeView
     private lateinit var userImage: CircleImageView
     lateinit var controller: Controller
-    private lateinit var menuItem: MenuItem
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -272,7 +272,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             if (userProfileResponse.body()?.code.equals("200")) {
                 toolbar_username.text =
                     userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
-                Glide.with(this)
+                Glide.with(this@MainActivity)
                     .load(userProfileResponse.body()!!.data!!.filePath + userProfileResponse.body()!!.data!!.user!!.avatar)
                     .placeholder(R.drawable.login_banner).into(userImage)
             }
@@ -307,7 +307,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 //                status = 1
 //            }
 //        }
-//
 //        return true
 //    }
 

@@ -3,8 +3,10 @@ package com.casebeaumonde.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
+import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
+import com.casebeaumonde.fragments.users.Response.UsersResponse
 import com.casebeaumonde.notifications.response.NotificationsResponse
 import com.casebeaumonde.notifications.response.RemoveNotificationResponse
 import okhttp3.MultipartBody
@@ -22,6 +24,8 @@ public class Controller {
     var updateProfileAPI: UpdateProfileAPI? = null
     var removeNotificationAPI: RemoveNotificationAPI? = null
     var getUserGigsAPI: GetUserGigsAPI? = null
+    var usersAPI: UsersAPI? = null
+    var designersAPI: DesignersAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -49,6 +53,18 @@ public class Controller {
 
     fun Controller(getUserGigs: GetUserGigsAPI) {
         getUserGigsAPI = getUserGigs
+        webAPI = WebAPI()
+    }
+
+    fun Controller(users: UsersAPI)
+    {
+        usersAPI = users
+        webAPI = WebAPI()
+    }
+
+    fun Controller(designers: DesignersAPI)
+    {
+        designersAPI = designers
         webAPI = WebAPI()
     }
 
@@ -168,6 +184,40 @@ public class Controller {
         })
     }
 
+    fun GetUsers(token: String?)
+    {
+        webAPI?.api?.users(token)?.enqueue(object : Callback<UsersResponse>{
+            override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
+                val usersResponse = response
+                usersAPI?.onUsersSuccess(usersResponse)
+            }
+
+            override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
+                usersAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun GetDesigners(token: String?)
+    {
+        webAPI?.api?.designers(token)?.enqueue(object : Callback<DesignersResponse>{
+            override fun onResponse(
+                call: Call<DesignersResponse>,
+                response: Response<DesignersResponse>
+            ) {
+                val designersResponse = response
+                designersAPI?.onDesignersSuccess(designersResponse)
+            }
+
+            override fun onFailure(call: Call<DesignersResponse>, t: Throwable) {
+                designersAPI?.error(t.message)
+            }
+
+        })
+
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -197,6 +247,16 @@ public class Controller {
 
     interface GetUserGigsAPI {
         fun onMyGigsSuccess(myGigsResponse: Response<MyGigsResponse>)
+        fun error(error: String?)
+    }
+
+    interface UsersAPI {
+        fun onUsersSuccess(usersResponse: Response<UsersResponse>)
+        fun error(error: String?)
+    }
+
+    interface DesignersAPI {
+        fun onDesignersSuccess(designerResponse:Response<DesignersResponse>)
         fun error(error: String?)
     }
 }

@@ -211,13 +211,14 @@ class BusinessRegisterActivity : AppCompatActivity() {
     }
 
     private fun setSpinnerData() {
+
+//        business_team_spinner.prompt = "Select"
         val languages = resources.getStringArray(R.array.Team)
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item, languages
         )
         business_team_spinner.adapter = adapter
-
         business_team_spinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(

@@ -1,13 +1,20 @@
 package com.casebeaumonde.fragments.users.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.fragments.users.Response.UsersResponse
+import com.casebeaumonde.notifications.response.NotificationsResponse
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.customuser.view.*
 
-class UsersAdapter (val userList:ArrayList<String>): RecyclerView.Adapter<UsersAdapter.ViewHolder>()
+class UsersAdapter (val context : Context, val userList:MutableList<UsersResponse.Data.User>,var filepath : String): RecyclerView.Adapter<UsersAdapter.ViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersAdapter.ViewHolder {
@@ -16,14 +23,25 @@ class UsersAdapter (val userList:ArrayList<String>): RecyclerView.Adapter<UsersA
     }
 
     override fun getItemCount(): Int {
-       return 14
+       return userList.size
     }
 
     override fun onBindViewHolder(holder: UsersAdapter.ViewHolder, position: Int) {
+        val users = userList?.get(position)
+        holder.itemView.userName.text = users.firstname+" "+users.lastname
+        Glide.with(context).load(filepath+users.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.userImage)
 
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
 
+        fun bindItems(notificationsResponse: NotificationsResponse)
+        {
+            var userImage : CircleImageView
+            var userName : TextView
+
+            userImage = itemView.findViewById(R.id.userImage)
+            userName = itemView.findViewById(R.id.userName)
+        }
     }
 
 }

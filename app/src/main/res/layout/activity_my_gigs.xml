@@ -37,15 +37,16 @@
 
             </TextView>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/add_gig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
                 android:src="@drawable/ic_baseline_add_24"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/textsize_16sp">
 
-            </ImageView>
+            </ImageButton>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 

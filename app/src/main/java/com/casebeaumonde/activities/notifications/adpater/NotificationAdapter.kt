@@ -1,4 +1,4 @@
-package com.casebeaumonde.notifications.adpater
+package com.casebeaumonde.activities.notifications.adpater
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.notifications.IF.NotificationIF
-import com.casebeaumonde.notifications.Notifications
-import com.casebeaumonde.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.notifications.IF.NotificationIF
+import com.casebeaumonde.activities.notifications.Notifications
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.notificationlayoiut.view.*

@@ -1,4 +1,4 @@
-package com.casebeaumonde.notifications.IF;
+package com.casebeaumonde.activities.notifications.IF;
 
 public interface NotificationIF {
 

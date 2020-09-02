@@ -27,11 +27,13 @@
         android:layout_marginTop="@dimen/margin_8dp"
         android:textSize="@dimen/textsize_16sp"
         android:padding="@dimen/margin_8dp"
+        android:textColor="@color/colorBlack"
         android:background="@drawable/blackroundcorners">
 
     </EditText>
 
     <CheckBox
+        android:id="@+id/createcloset_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_margin_16dp"
@@ -62,6 +64,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="@dimen/margin_8dp"
         android:padding="@dimen/margin_8dp"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/textsize_16sp"
         android:background="@drawable/blackroundcorners">
 
@@ -101,7 +104,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="No file chosen"
+            android:hint="No file chosen"
+            android:textColorHint="@color/colorBlack"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/textsize_16sp">
@@ -129,18 +133,20 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/createcloset_savebt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Close"
+            android:text="Save"
             android:textColor="@color/colorWhite"
             android:textAllCaps="false">
 
         </Button>
 
         <Button
+            android:id="@+id/createcloset_cancelbt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  Change Password  "
+            android:text="  Cancel  "
             android:textColor="@color/colorWhite"
             android:textAllCaps="false"
             android:layout_marginLeft="@dimen/default_margin_16dp">

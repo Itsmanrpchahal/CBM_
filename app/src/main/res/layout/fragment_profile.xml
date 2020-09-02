@@ -192,6 +192,25 @@
                 android:layout_marginTop="@dimen/margin_8dp">
 
             </TextView>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                app:tabMode="scrollable"
+                app:tabIndicatorColor="@color/colorWhite"
+                app:tabTextColor="@color/colorWhite">
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            </androidx.viewpager.widget.ViewPager>
         </LinearLayout>
     </ScrollView>
 

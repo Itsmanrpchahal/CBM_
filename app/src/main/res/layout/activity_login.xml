@@ -85,7 +85,9 @@
                 android:text="@string/login"
                 android:textColor="@color/colorBlack"
                 android:textAllCaps="false"
-                android:textSize="@dimen/textsize_16sp"></Button>
+                android:textSize="@dimen/textsize_16sp">
+
+            </Button>
 
             <TextView
                 android:id="@+id/login_forgot_TV"

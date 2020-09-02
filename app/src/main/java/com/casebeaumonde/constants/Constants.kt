@@ -9,6 +9,7 @@ object Constants
     val ABOUT : String? = "ABOUT"
     val TOKEN: String? = "TOKEN"
     val USERID: String? = "USERID"
+    val CLOSETID: String? = "closetId"
     val CLEAR: String? = "CLEAR"
     val BASE_URL ="http://dev.casabeaumonde.com/"
     val BASE_IMAGE_URL ="http://dev.casabeaumonde.com/storage/"

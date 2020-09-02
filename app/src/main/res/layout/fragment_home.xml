@@ -22,7 +22,7 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-android:visibility="gone"
+        android:visibility="gone"
         android:layout_centerInParent="true">
 
     </com.toptoche.searchablespinnerlibrary.SearchableSpinner>

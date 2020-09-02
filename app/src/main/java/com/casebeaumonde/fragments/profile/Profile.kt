@@ -1,8 +1,10 @@
 package com.casebeaumonde.fragments.profile
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -12,19 +14,23 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.myGigs.MyGigs
+import com.casebeaumonde.activities.myclosets.MyClosets
+import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -36,7 +42,7 @@ import retrofit2.Response
 import java.io.File
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI {
+    Controller.UpdateProfileAPI,TabLayout.OnTabSelectedListener {
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
@@ -55,6 +61,9 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var changePasswordDialog: Dialog
     private lateinit var dialog : Dialog
     private lateinit var role : String
+    private  var tabLayout: TabLayout? = null
+    var viewPager: ViewPager? = null
+    private lateinit var fragmentActivity : FragmentActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -174,7 +183,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     }
 
     private fun editprofile_Dialog(view: View?) {
-         dialog = Dialog(context!!)
+        dialog = Dialog(context!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         dialog.setContentView(R.layout.editprofilelayout)
@@ -250,13 +259,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                             getString(R.string.close_up)
                         )
                     }
-
                 }
             }
         }
-
         dialog.show()
-
     }
 
     private fun findIds(view: View) {
@@ -274,9 +280,24 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_edit_profile = view.findViewById(R.id.profile_edit_profile)
         profile_changepassword  = view.findViewById(R.id.profile_changepassword)
         profile_mygigs = view.findViewById(R.id.profile_mygigs)
+        tabLayout = view.findViewById(R.id.tabLayout)
+        viewPager = view.findViewById(R.id.viewPager)
         pd.show()
         pd.setContentView(R.layout.loading)
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("My wall"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
+       tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
+        tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+
+        tabLayout!!.setOnTabSelectedListener(this)
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -285,7 +306,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             getStringVal(Constants.USERID)
         )
     }
-
 
 
     private fun pictureSelectionDialog() {
@@ -528,8 +548,30 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                         getString(R.string.close_up)
                     )
                 }
-
             })
+        }
+    }
+
+    override fun onTabSelected(p0: TabLayout.Tab?) {
+        Toast.makeText(context,""+p0?.text,Toast.LENGTH_SHORT).show()
+        when{
+            p0?.text?.equals("My Closets")!! ->
+            {
+                startActivity(Intent(context,MyClosets::class.java))
+            }
+        }
+    }
+
+    override fun onTabUnselected(p0: TabLayout.Tab?) {
+       // Toast.makeText(context,"HERE "+p0,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onTabReselected(p0: TabLayout.Tab?) {
+        when{
+            p0?.text?.equals("My Closets")!! ->
+            {
+                startActivity(Intent(context,MyClosets::class.java))
+            }
         }
     }
 }

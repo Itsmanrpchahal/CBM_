@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorBlack"
     android:id="@+id/parent_notifications"
-    tools:context=".notifications.Notifications">
+    tools:context=".activities.notifications.Notifications">
 
    <androidx.appcompat.widget.Toolbar
        android:id="@+id/notification_toolbar"

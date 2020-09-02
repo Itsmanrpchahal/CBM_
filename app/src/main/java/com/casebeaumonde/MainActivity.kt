@@ -1,16 +1,13 @@
 package com.casebeaumonde
 
-import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
@@ -18,7 +15,6 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -34,26 +30,17 @@ import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.home.HomeFragment
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
-import com.casebeaumonde.fragments.users.Users
-import com.casebeaumonde.notifications.Notifications
-import com.casebeaumonde.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.notifications.Notifications
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utility
-import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.navigation.NavigationView
-import com.google.gson.JsonObject
 import com.shreyaspatil.material.navigationview.MaterialNavigationView
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import okhttp3.MultipartBody
-import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
-import java.io.File
+import java.lang.Exception
 
 class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserProfileAPI{
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -272,9 +259,15 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             if (userProfileResponse.body()?.code.equals("200")) {
                 toolbar_username.text =
                     userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
-                Glide.with(this@MainActivity)
-                    .load(userProfileResponse.body()!!.data!!.filePath + userProfileResponse.body()!!.data!!.user!!.avatar)
-                    .placeholder(R.drawable.login_banner).into(userImage)
+                try {
+                    Glide.with(this@MainActivity)
+                        .load(userProfileResponse.body()!!.data!!.filePath + userProfileResponse.body()!!.data!!.user!!.avatar)
+                        .placeholder(R.drawable.login_banner).into(userImage)
+                }catch (e: Exception)
+                {
+
+                }
+
             }
         }
     }

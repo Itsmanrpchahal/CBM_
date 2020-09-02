@@ -2,10 +2,8 @@ package com.casebeaumonde.activities.myGigs
 
 import android.app.Dialog
 import android.app.ProgressDialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -19,10 +17,8 @@ import com.casebeaumonde.activities.myGigs.adapter.MyGigsAdapter
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.notifications.adpater.NotificationAdapter
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_my_gigs.*
-import kotlinx.android.synthetic.main.activity_notifications.*
 import retrofit2.Response
 
 class MyGigs : BaseClass(), Controller.GetUserGigsAPI {

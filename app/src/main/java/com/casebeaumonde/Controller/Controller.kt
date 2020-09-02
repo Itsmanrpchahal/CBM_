@@ -3,12 +3,14 @@ package com.casebeaumonde.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
+import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.fragments.users.Response.UsersResponse
-import com.casebeaumonde.notifications.response.NotificationsResponse
-import com.casebeaumonde.notifications.response.RemoveNotificationResponse
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
+import com.casebeaumonde.createClosets.CreateClosetResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +28,8 @@ public class Controller {
     var getUserGigsAPI: GetUserGigsAPI? = null
     var usersAPI: UsersAPI? = null
     var designersAPI: DesignersAPI? = null
+    var myClosetsAPI : MyClosetsAPI? = null
+    var createClosetAPI : CreateClosetAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -65,6 +69,13 @@ public class Controller {
     fun Controller(designers: DesignersAPI)
     {
         designersAPI = designers
+        webAPI = WebAPI()
+    }
+
+    fun Controller(myClosets: MyClosetsAPI,createCloset: CreateClosetAPI)
+    {
+        myClosetsAPI = myClosets
+        createClosetAPI = createCloset
         webAPI = WebAPI()
     }
 
@@ -218,6 +229,44 @@ public class Controller {
 
     }
 
+    fun GetMyClosets(token: String?,userId: String?)
+    {
+        webAPI?.api?.myClosets(token,userId)?.enqueue(object : Callback<MyClosetsResponse>
+        {
+            override fun onResponse(
+                call: Call<MyClosetsResponse>,
+                response: Response<MyClosetsResponse>
+            ) {
+                val myclosetsResponse = response
+                myClosetsAPI?.onMyClosetsSuccess(myclosetsResponse)
+            }
+
+            override fun onFailure(call: Call<MyClosetsResponse>, t: Throwable) {
+                myClosetsAPI?.error(t.message)
+            }
+
+        })
+    }
+
+
+    fun CreateCloset(token: String?,title:String?,visibility:String?,part: MultipartBody.Part,decs:String?)
+    {
+        webAPI?.api?.createCloset(token,title,visibility,part,decs)?.enqueue(object : Callback<CreateClosetResponse>
+        {
+            override fun onResponse(
+                call: Call<CreateClosetResponse>,
+                response: Response<CreateClosetResponse>
+            ) {
+                val createClosetResponse = response
+                createClosetAPI?.onCreateClosetSuccess(createClosetResponse)
+            }
+
+            override fun onFailure(call: Call<CreateClosetResponse>, t: Throwable) {
+                createClosetAPI?.error(t.message)
+            }
+
+        })
+    }
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -257,6 +306,16 @@ public class Controller {
 
     interface DesignersAPI {
         fun onDesignersSuccess(designerResponse:Response<DesignersResponse>)
+        fun error(error: String?)
+    }
+
+    interface MyClosetsAPI {
+        fun onMyClosetsSuccess(myClosetsResponse: Response<MyClosetsResponse>)
+        fun error(error: String?)
+    }
+
+    interface CreateClosetAPI {
+        fun onCreateClosetSuccess(createClosetResponse: Response<CreateClosetResponse>)
         fun error(error: String?)
     }
 }

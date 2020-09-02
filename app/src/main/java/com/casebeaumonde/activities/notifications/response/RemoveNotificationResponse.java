@@ -1,4 +1,4 @@
-package com.casebeaumonde.notifications.response;
+package com.casebeaumonde.activities.notifications.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
-import com.casebeaumonde.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.customuser.view.*
 

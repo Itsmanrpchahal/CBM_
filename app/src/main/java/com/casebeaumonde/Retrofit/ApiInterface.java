@@ -4,16 +4,16 @@ import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
+import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
+import com.casebeaumonde.createClosets.CreateClosetResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
 import com.casebeaumonde.fragments.users.Response.UsersResponse;
-import com.casebeaumonde.notifications.response.NotificationsResponse;
-import com.casebeaumonde.notifications.response.RemoveNotificationResponse;
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
+import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -122,5 +122,21 @@ public interface ApiInterface {
     @GET("api/v1/designers")
     Call<DesignersResponse> designers (
             @Header("Authorization") String token
+    );
+
+    @GET("api/v1/userClosets/{input}")
+    Call<MyClosetsResponse> myClosets (
+            @Header("Authorization") String token,
+            @Path("input") String userId
+    );
+
+    @Multipart
+    @POST("api/v1/createCloset")
+    Call<CreateClosetResponse> createCloset (
+      @Header("Authorization") String token,
+      @Query("title") String title,
+      @Query("visibility") String visibility,
+      @Part MultipartBody.Part image,
+      @Query("description") String description
     );
 }

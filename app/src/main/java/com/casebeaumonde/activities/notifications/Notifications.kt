@@ -1,4 +1,4 @@
-package com.casebeaumonde.notifications
+package com.casebeaumonde.activities.notifications
 
 import android.app.ProgressDialog
 import android.content.Context
@@ -10,19 +10,17 @@ import android.util.Log
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.notifications.IF.NotificationIF
-import com.casebeaumonde.notifications.adpater.NotificationAdapter
-import com.casebeaumonde.notifications.response.NotificationsResponse
-import com.casebeaumonde.notifications.response.RemoveNotificationResponse
+import com.casebeaumonde.activities.notifications.IF.NotificationIF
+import com.casebeaumonde.activities.notifications.adpater.NotificationAdapter
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
 import com.casebeaumonde.utilities.Utility
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_notifications.*
 import retrofit2.Response
 import java.util.*

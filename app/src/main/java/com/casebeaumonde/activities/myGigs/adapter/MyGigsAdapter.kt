@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
-import com.casebeaumonde.notifications.adpater.NotificationAdapter
 import kotlinx.android.synthetic.main.custom_mygigs.view.*
-import org.w3c.dom.Text
 
 class MyGigsAdapter (var context: Context,val mygigs: MutableList<MyGigsResponse.Data.User.Gig>):RecyclerView.Adapter<MyGigsAdapter.ViewHolder>()
 {

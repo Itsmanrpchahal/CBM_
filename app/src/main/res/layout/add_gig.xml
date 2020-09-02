@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:visibility="gone"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetRight="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Gig"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_centerInParent="true">
+
+            </TextView>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+
+        <EditText
+            android:id="@+id/addgig_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/textsize_16sp"
+            android:background="@drawable/blackroundcorners">
+
+        </EditText>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/addgid_hourly_RB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hourly Rate"
+                android:buttonTint="@color/colorBlack"
+                android:textColor="@color/colorBlack">
+            </RadioButton>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fixed Rate"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:buttonTint="@color/colorBlack">
+            </RadioButton>
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hours"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/addgig_hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/textsize_16sp"
+            android:background="@drawable/blackroundcorners">
+
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rate"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/addgig_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/textsize_16sp"
+            android:padding="@dimen/margin_8dp"
+            android:background="@drawable/blackroundcorners">
+
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+        <Spinner
+            android:id="@+id/addgig_status_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:padding="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/textsize_16sp"
+            android:background="@drawable/blackroundcorners">
+
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/addgig_description"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:padding="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/textsize_16sp"
+            android:background="@drawable/blackroundcorners">
+
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false">
+
+            </Button>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:layout_marginLeft="@dimen/default_margin_16dp">
+
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

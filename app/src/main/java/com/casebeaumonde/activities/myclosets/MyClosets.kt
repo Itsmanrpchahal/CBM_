@@ -8,9 +8,10 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Window
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.BaseClass
@@ -31,15 +33,16 @@ import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_my_closets.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.createclosets.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.net.URL
 
-class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetAPI {
+class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetAPI,
+    ClosetItemID_IF {
 
     private lateinit var myclosets_back: ImageButton
     private lateinit var controller: Controller
@@ -48,7 +51,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var create_closets: ImageButton
     private lateinit var closets_recyler: RecyclerView
     private lateinit var part: MultipartBody.Part
-    private lateinit var bitMap: Bitmap
+     lateinit var bitMap: Bitmap
     private var path: String = ""
     private lateinit var createcloset_title: EditText
     private lateinit var createcloset_checkbox: CheckBox
@@ -61,6 +64,11 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var dialog: Dialog
     private var checked: String = "0"
     var c: String = ""
+    private var pos: Int = 0
+    private lateinit var response: ArrayList<MyClosetsResponse.Data.Closet>
+    private var title: String? = ""
+    private var decs: String? = ""
+    private var url : String? =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +76,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         findIds()
         controller = Controller()
         controller.Controller(this, this)
-
+        closetitemidIf = this
         lsiteners()
 
     }
@@ -79,54 +87,65 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
 
         create_closets.setOnClickListener {
-            dialog = Dialog(this!!)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.createclosets)
-            val window = dialog.window
-            window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
-            )
-            dialog.show()
-
-            createcloset_title = dialog.findViewById(R.id.createcloset_title)
-            createcloset_checkbox = dialog.findViewById(R.id.createcloset_checkbox)
-            createcloset_description = dialog.findViewById(R.id.createcloset_description)
-            createcloset_upload = dialog.findViewById(R.id.createcloset_upload)
-            createcloset_uploadfilename = dialog.findViewById(R.id.createcloset_uploadfilename)
-            createcloset_imagerperview = dialog.findViewById(R.id.createcloset_imagerperview)
-            createcloset_savebt = dialog.findViewById(R.id.createcloset_savebt)
-            createcloset_cancelbt = dialog.findViewById(R.id.createcloset_cancelbt)
-
-            createcloset_upload.setOnClickListener {
-                if ((ContextCompat.checkSelfPermission(
-                        this!!,
-                        Manifest.permission.CAMERA
-                    ) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
-                        this!!,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
-                        this!!,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED)
-                ) {
-                    methodRequiresPermissions()
-                } else {
-                    pictureSelectionDialog()
-                }
-            }
-
-            createcloset_cancelbt.setOnClickListener {
-                dialog.dismiss()
-            }
-
-            createcloset_savebt.setOnClickListener {
-
-                checkValidations()
-            }
+            CreateClosets(pos)
 
         }
     }
+
+    private fun CreateClosets(pos: Int?) {
+        dialog = Dialog(this!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.createclosets)
+        val window = dialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+
+        createcloset_title = dialog.findViewById(R.id.createcloset_title)
+        createcloset_checkbox = dialog.findViewById(R.id.createcloset_checkbox)
+        createcloset_description = dialog.findViewById(R.id.createcloset_description)
+        createcloset_upload = dialog.findViewById(R.id.createcloset_upload)
+        createcloset_uploadfilename = dialog.findViewById(R.id.createcloset_uploadfilename)
+        createcloset_imagerperview = dialog.findViewById(R.id.createcloset_imagerperview)
+        createcloset_savebt = dialog.findViewById(R.id.createcloset_savebt)
+        createcloset_cancelbt = dialog.findViewById(R.id.createcloset_cancelbt)
+
+        createcloset_title.setText(response.get(pos!!).title)
+        createcloset_description.setText(response.get(pos!!).description)
+
+
+
+        createcloset_upload.setOnClickListener {
+            if ((ContextCompat.checkSelfPermission(
+                    this!!,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
+                    this!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
+                    this!!,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED)
+            ) {
+                methodRequiresPermissions()
+            } else {
+                pictureSelectionDialog()
+            }
+        }
+
+        createcloset_cancelbt.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        createcloset_savebt.setOnClickListener {
+
+            checkValidations()
+        }
+    }
+    
+
 
     private fun checkValidations() {
 
@@ -157,7 +176,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                     "Upload Image",
                     getString(R.string.close_up)
                 )
-            } else -> {
+            }
+            else -> {
                 if (checked.equals("1")) {
                     c = "public"
                 } else {
@@ -229,6 +249,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         pd.dismiss()
 
         if (myClosetsResponse.isSuccessful) {
+            response =
+                myClosetsResponse.body()?.data?.closet as ArrayList<MyClosetsResponse.Data.Closet>
             closets_recyler.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val adapter = MyClosetsAdapter(this, myClosetsResponse.body()?.data?.closet!!)
@@ -245,8 +267,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     override fun onCreateClosetSuccess(createClosetResponse: Response<CreateClosetResponse>) {
 
         pd.dismiss()
-        if (createClosetResponse.isSuccessful)
-        {
+        if (createClosetResponse.isSuccessful) {
             dialog.dismiss()
             controller.GetMyClosets(
                 "Bearer " + getStringVal(Constants.TOKEN),
@@ -332,6 +353,10 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
     }
 
+    companion object {
+        var closetitemidIf: ClosetItemID_IF? = null
+    }
+
     @SuppressLint("MissingPermission", "HardwareIds")
     private fun methodRequiresPermissions() = runWithPermissions(
         Manifest.permission.READ_PHONE_STATE,
@@ -345,4 +370,10 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
     }
 
+    override fun getClosetID(id: String?) {
+        pos = id?.toInt()!!
+        CreateClosets(pos)
+    }
+
 }
+

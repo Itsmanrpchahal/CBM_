@@ -1,17 +1,25 @@
 package com.casebeaumonde.utilities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +27,7 @@ import kotlin.jvm.Throws;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Part;
 
 public class Utility {
 
@@ -60,6 +69,7 @@ public class Utility {
 
     }
 
+
     //convert image to multipart
     public static MultipartBody.Part sendImageFileToserver(File filesDir,Bitmap bitMap) throws IOException {
 
@@ -81,6 +91,4 @@ public class Utility {
 
         return body;
     }
-
-
 }

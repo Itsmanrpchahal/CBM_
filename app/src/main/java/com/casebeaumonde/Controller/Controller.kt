@@ -2,6 +2,8 @@ package com.casebeaumonde.Controller
 
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
+import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
+import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
@@ -30,6 +32,8 @@ public class Controller {
     var designersAPI: DesignersAPI? = null
     var myClosetsAPI : MyClosetsAPI? = null
     var createClosetAPI : CreateClosetAPI? = null
+    var closetItemsAPI : ClosetItemsAPI? = null
+    var addTofavClosetItemAPI : AddTofavClosetItemAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -79,6 +83,13 @@ public class Controller {
         webAPI = WebAPI()
     }
 
+    fun Controller(closetItems: ClosetItemsAPI,addTofavClosetItem: AddTofavClosetItemAPI)
+    {
+        closetItemsAPI = closetItems
+        addTofavClosetItemAPI = addTofavClosetItem
+        webAPI = WebAPI()
+
+    }
 
     fun setNotificationAPI(token: String?, userId: String?) {
         webAPI?.api?.notificationCall(token, userId)
@@ -268,6 +279,45 @@ public class Controller {
         })
     }
 
+    fun ClosetItems(token: String?,closetID : String?)
+    {
+        webAPI?.api?.closetsItems(token,closetID)?.enqueue(object : Callback<ClosetsItemsResponse>
+        {
+            override fun onResponse(
+                call: Call<ClosetsItemsResponse>,
+                response: Response<ClosetsItemsResponse>
+            ) {
+                val closetItems = response
+                closetItemsAPI?.onClosetItemSuccess(closetItems)
+            }
+
+            override fun onFailure(call: Call<ClosetsItemsResponse>, t: Throwable) {
+               closetItemsAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun AddToFavClosetItem(token: String?,closetItemId:String?,type:String?)
+    {
+        webAPI?.api?.addToFavClosetItem(token,closetItemId,type)?.enqueue(object :Callback<AddToFavClosetItemResponse>
+        {
+            override fun onResponse(
+                call: Call<AddToFavClosetItemResponse>,
+                response: Response<AddToFavClosetItemResponse>
+            ) {
+                val addtofavclosetItem = response
+                addTofavClosetItemAPI?.onAddToFavClosetItemSuccess(addtofavclosetItem)
+            }
+
+            override fun onFailure(call: Call<AddToFavClosetItemResponse>, t: Throwable) {
+                addTofavClosetItemAPI?.error(t.message)
+            }
+
+        })
+
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -316,6 +366,16 @@ public class Controller {
 
     interface CreateClosetAPI {
         fun onCreateClosetSuccess(createClosetResponse: Response<CreateClosetResponse>)
+        fun error(error: String?)
+    }
+
+    interface ClosetItemsAPI {
+        fun onClosetItemSuccess(closetItemsResponse: Response<ClosetsItemsResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddTofavClosetItemAPI {
+        fun onAddToFavClosetItemSuccess(addToFavClosetItemResponse: Response<AddToFavClosetItemResponse>)
         fun error(error: String?)
     }
 }

@@ -1,6 +1,9 @@
 package com.casebeaumonde.Retrofit;
 
 import com.casebeaumonde.UpdateProfilePicResponse;
+import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse;
+import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
+import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
@@ -138,5 +141,20 @@ public interface ApiInterface {
       @Query("visibility") String visibility,
       @Part MultipartBody.Part image,
       @Query("description") String description
+    );
+
+    @GET("api/v1/closet/{input}")
+    Call<ClosetsItemsResponse> closetsItems (
+            @Header("Authorization") String token,
+            @Path("input") String closetId
+    );
+
+
+    @FormUrlEncoded
+    @POST("api/v1/heartItem")
+    Call<AddToFavClosetItemResponse> addToFavClosetItem (
+            @Header("Authorization") String token,
+            @Field("id") String id,
+            @Field("type") String type
     );
 }

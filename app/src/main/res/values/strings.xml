@@ -59,4 +59,10 @@
     <string name="hours">Hours</string>
     <string name="rate">Rate</string>
     <string name="status">Status</string>
+    <string name="category">Category</string>
+    <string name="picture">Picture</string>
+    <string name="size">Size</string>
+    <string name="color">Color</string>
+    <string name="brand">Brand</string>
+    <string name="price">Price</string>
 </resources>

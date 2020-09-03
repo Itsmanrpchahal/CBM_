@@ -234,230 +234,230 @@ public class MyClosetsResponse {
                 this.creator = creator;
             }
 
-        }
+            public class Creator {
 
-        public class Brand {
+                @SerializedName("id")
+                @Expose
+                private Integer id;
+                @SerializedName("firstname")
+                @Expose
+                private String firstname;
+                @SerializedName("lastname")
+                @Expose
+                private String lastname;
+                @SerializedName("fullname")
+                @Expose
+                private String fullname;
+                @SerializedName("phone")
+                @Expose
+                private String phone;
+                @SerializedName("email")
+                @Expose
+                private String email;
+                @SerializedName("company")
+                @Expose
+                private String company;
+                @SerializedName("status")
+                @Expose
+                private String status;
+                @SerializedName("affiliate_id")
+                @Expose
+                private Integer affiliateId;
+                @SerializedName("percent")
+                @Expose
+                private String percent;
+                @SerializedName("pending_balance")
+                @Expose
+                private String pendingBalance;
+                @SerializedName("available_balance")
+                @Expose
+                private String availableBalance;
+                @SerializedName("allow_hire")
+                @Expose
+                private Integer allowHire;
+                @SerializedName("avatar")
+                @Expose
+                private String avatar;
+                @SerializedName("email_verified_at")
+                @Expose
+                private String emailVerifiedAt;
+                @SerializedName("created_at")
+                @Expose
+                private String createdAt;
+                @SerializedName("updated_at")
+                @Expose
+                private String updatedAt;
+                @SerializedName("deleted_at")
+                @Expose
+                private Object deletedAt;
+                @SerializedName("role")
+                @Expose
+                private String role;
+                @SerializedName("unread_notifications")
+                @Expose
+                private List<Object> unreadNotifications = null;
 
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("user_id")
-            @Expose
-            private Object userId;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("description")
-            @Expose
-            private Object description;
-            @SerializedName("status")
-            @Expose
-            private String status;
-            @SerializedName("logo")
-            @Expose
-            private Object logo;
-            @SerializedName("created_at")
-            @Expose
-            private String createdAt;
-            @SerializedName("updated_at")
-            @Expose
-            private String updatedAt;
+                public Integer getId() {
+                    return id;
+                }
 
-            public Integer getId() {
-                return id;
+                public void setId(Integer id) {
+                    this.id = id;
+                }
+
+                public String getFirstname() {
+                    return firstname;
+                }
+
+                public void setFirstname(String firstname) {
+                    this.firstname = firstname;
+                }
+
+                public String getLastname() {
+                    return lastname;
+                }
+
+                public void setLastname(String lastname) {
+                    this.lastname = lastname;
+                }
+
+                public String getFullname() {
+                    return fullname;
+                }
+
+                public void setFullname(String fullname) {
+                    this.fullname = fullname;
+                }
+
+                public String getPhone() {
+                    return phone;
+                }
+
+                public void setPhone(String phone) {
+                    this.phone = phone;
+                }
+
+                public String getEmail() {
+                    return email;
+                }
+
+                public void setEmail(String email) {
+                    this.email = email;
+                }
+
+                public String getCompany() {
+                    return company;
+                }
+
+                public void setCompany(String company) {
+                    this.company = company;
+                }
+
+                public String getStatus() {
+                    return status;
+                }
+
+                public void setStatus(String status) {
+                    this.status = status;
+                }
+
+                public Integer getAffiliateId() {
+                    return affiliateId;
+                }
+
+                public void setAffiliateId(Integer affiliateId) {
+                    this.affiliateId = affiliateId;
+                }
+
+                public String getPercent() {
+                    return percent;
+                }
+
+                public void setPercent(String percent) {
+                    this.percent = percent;
+                }
+
+                public String getPendingBalance() {
+                    return pendingBalance;
+                }
+
+                public void setPendingBalance(String pendingBalance) {
+                    this.pendingBalance = pendingBalance;
+                }
+
+                public String getAvailableBalance() {
+                    return availableBalance;
+                }
+
+                public void setAvailableBalance(String availableBalance) {
+                    this.availableBalance = availableBalance;
+                }
+
+                public Integer getAllowHire() {
+                    return allowHire;
+                }
+
+                public void setAllowHire(Integer allowHire) {
+                    this.allowHire = allowHire;
+                }
+
+                public String getAvatar() {
+                    return avatar;
+                }
+
+                public void setAvatar(String avatar) {
+                    this.avatar = avatar;
+                }
+
+                public String getEmailVerifiedAt() {
+                    return emailVerifiedAt;
+                }
+
+                public void setEmailVerifiedAt(String emailVerifiedAt) {
+                    this.emailVerifiedAt = emailVerifiedAt;
+                }
+
+                public String getCreatedAt() {
+                    return createdAt;
+                }
+
+                public void setCreatedAt(String createdAt) {
+                    this.createdAt = createdAt;
+                }
+
+                public String getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                public void setUpdatedAt(String updatedAt) {
+                    this.updatedAt = updatedAt;
+                }
+
+                public Object getDeletedAt() {
+                    return deletedAt;
+                }
+
+                public void setDeletedAt(Object deletedAt) {
+                    this.deletedAt = deletedAt;
+                }
+
+                public String getRole() {
+                    return role;
+                }
+
+                public void setRole(String role) {
+                    this.role = role;
+                }
+
+                public List<Object> getUnreadNotifications() {
+                    return unreadNotifications;
+                }
+
+                public void setUnreadNotifications(List<Object> unreadNotifications) {
+                    this.unreadNotifications = unreadNotifications;
+                }
+
             }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public Object getUserId() {
-                return userId;
-            }
-
-            public void setUserId(Object userId) {
-                this.userId = userId;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public Object getDescription() {
-                return description;
-            }
-
-            public void setDescription(Object description) {
-                this.description = description;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public Object getLogo() {
-                return logo;
-            }
-
-            public void setLogo(Object logo) {
-                this.logo = logo;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public String getUpdatedAt() {
-                return updatedAt;
-            }
-
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
-            }
-
-        }
-
-        public class Color {
-
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("user_id")
-            @Expose
-            private Object userId;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("status")
-            @Expose
-            private String status;
-            @SerializedName("created_at")
-            @Expose
-            private String createdAt;
-            @SerializedName("updated_at")
-            @Expose
-            private String updatedAt;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public Object getUserId() {
-                return userId;
-            }
-
-            public void setUserId(Object userId) {
-                this.userId = userId;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public String getUpdatedAt() {
-                return updatedAt;
-            }
-
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
-            }
-
-        }
-
-        public class Size {
-
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("status")
-            @Expose
-            private String status;
-            @SerializedName("created_at")
-            @Expose
-            private String createdAt;
-            @SerializedName("updated_at")
-            @Expose
-            private String updatedAt;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public String getCreatedAt() {
-                return createdAt;
-            }
-
-            public void setCreatedAt(String createdAt) {
-                this.createdAt = createdAt;
-            }
-
-            public String getUpdatedAt() {
-                return updatedAt;
-            }
-
-            public void setUpdatedAt(String updatedAt) {
-                this.updatedAt = updatedAt;
-            }
-
         }
 
         public class Category {
@@ -552,69 +552,32 @@ public class MyClosetsResponse {
             }
 
         }
-
-        public class Creator {
+        public class Brand {
 
             @SerializedName("id")
             @Expose
             private Integer id;
-            @SerializedName("firstname")
+            @SerializedName("user_id")
             @Expose
-            private String firstname;
-            @SerializedName("lastname")
+            private Object userId;
+            @SerializedName("name")
             @Expose
-            private String lastname;
-            @SerializedName("fullname")
+            private String name;
+            @SerializedName("description")
             @Expose
-            private String fullname;
-            @SerializedName("phone")
-            @Expose
-            private String phone;
-            @SerializedName("email")
-            @Expose
-            private String email;
-            @SerializedName("company")
-            @Expose
-            private String company;
+            private Object description;
             @SerializedName("status")
             @Expose
             private String status;
-            @SerializedName("affiliate_id")
+            @SerializedName("logo")
             @Expose
-            private Integer affiliateId;
-            @SerializedName("percent")
-            @Expose
-            private String percent;
-            @SerializedName("pending_balance")
-            @Expose
-            private String pendingBalance;
-            @SerializedName("available_balance")
-            @Expose
-            private String availableBalance;
-            @SerializedName("allow_hire")
-            @Expose
-            private Integer allowHire;
-            @SerializedName("avatar")
-            @Expose
-            private String avatar;
-            @SerializedName("email_verified_at")
-            @Expose
-            private String emailVerifiedAt;
+            private Object logo;
             @SerializedName("created_at")
             @Expose
             private String createdAt;
             @SerializedName("updated_at")
             @Expose
             private String updatedAt;
-            @SerializedName("deleted_at")
-            @Expose
-            private Object deletedAt;
-            @SerializedName("role")
-            @Expose
-            private String role;
-            @SerializedName("unread_notifications")
-            @Expose
-            private List<Object> unreadNotifications = null;
 
             public Integer getId() {
                 return id;
@@ -624,52 +587,28 @@ public class MyClosetsResponse {
                 this.id = id;
             }
 
-            public String getFirstname() {
-                return firstname;
+            public Object getUserId() {
+                return userId;
             }
 
-            public void setFirstname(String firstname) {
-                this.firstname = firstname;
+            public void setUserId(Object userId) {
+                this.userId = userId;
             }
 
-            public String getLastname() {
-                return lastname;
+            public String getName() {
+                return name;
             }
 
-            public void setLastname(String lastname) {
-                this.lastname = lastname;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public String getFullname() {
-                return fullname;
+            public Object getDescription() {
+                return description;
             }
 
-            public void setFullname(String fullname) {
-                this.fullname = fullname;
-            }
-
-            public String getPhone() {
-                return phone;
-            }
-
-            public void setPhone(String phone) {
-                this.phone = phone;
-            }
-
-            public String getEmail() {
-                return email;
-            }
-
-            public void setEmail(String email) {
-                this.email = email;
-            }
-
-            public String getCompany() {
-                return company;
-            }
-
-            public void setCompany(String company) {
-                this.company = company;
+            public void setDescription(Object description) {
+                this.description = description;
             }
 
             public String getStatus() {
@@ -680,60 +619,12 @@ public class MyClosetsResponse {
                 this.status = status;
             }
 
-            public Integer getAffiliateId() {
-                return affiliateId;
+            public Object getLogo() {
+                return logo;
             }
 
-            public void setAffiliateId(Integer affiliateId) {
-                this.affiliateId = affiliateId;
-            }
-
-            public String getPercent() {
-                return percent;
-            }
-
-            public void setPercent(String percent) {
-                this.percent = percent;
-            }
-
-            public String getPendingBalance() {
-                return pendingBalance;
-            }
-
-            public void setPendingBalance(String pendingBalance) {
-                this.pendingBalance = pendingBalance;
-            }
-
-            public String getAvailableBalance() {
-                return availableBalance;
-            }
-
-            public void setAvailableBalance(String availableBalance) {
-                this.availableBalance = availableBalance;
-            }
-
-            public Integer getAllowHire() {
-                return allowHire;
-            }
-
-            public void setAllowHire(Integer allowHire) {
-                this.allowHire = allowHire;
-            }
-
-            public String getAvatar() {
-                return avatar;
-            }
-
-            public void setAvatar(String avatar) {
-                this.avatar = avatar;
-            }
-
-            public String getEmailVerifiedAt() {
-                return emailVerifiedAt;
-            }
-
-            public void setEmailVerifiedAt(String emailVerifiedAt) {
-                this.emailVerifiedAt = emailVerifiedAt;
+            public void setLogo(Object logo) {
+                this.logo = logo;
             }
 
             public String getCreatedAt() {
@@ -752,28 +643,135 @@ public class MyClosetsResponse {
                 this.updatedAt = updatedAt;
             }
 
-            public Object getDeletedAt() {
-                return deletedAt;
+        }
+
+        public class Size {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("name")
+            @Expose
+            private String name;
+            @SerializedName("status")
+            @Expose
+            private String status;
+            @SerializedName("created_at")
+            @Expose
+            private String createdAt;
+            @SerializedName("updated_at")
+            @Expose
+            private String updatedAt;
+
+            public Integer getId() {
+                return id;
             }
 
-            public void setDeletedAt(Object deletedAt) {
-                this.deletedAt = deletedAt;
+            public void setId(Integer id) {
+                this.id = id;
             }
 
-            public String getRole() {
-                return role;
+            public String getName() {
+                return name;
             }
 
-            public void setRole(String role) {
-                this.role = role;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public List<Object> getUnreadNotifications() {
-                return unreadNotifications;
+            public String getStatus() {
+                return status;
             }
 
-            public void setUnreadNotifications(List<Object> unreadNotifications) {
-                this.unreadNotifications = unreadNotifications;
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
+        }
+
+        public class Color {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("user_id")
+            @Expose
+            private Object userId;
+            @SerializedName("name")
+            @Expose
+            private String name;
+            @SerializedName("status")
+            @Expose
+            private String status;
+            @SerializedName("created_at")
+            @Expose
+            private String createdAt;
+            @SerializedName("updated_at")
+            @Expose
+            private String updatedAt;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public Object getUserId() {
+                return userId;
+            }
+
+            public void setUserId(Object userId) {
+                this.userId = userId;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
             }
 
         }

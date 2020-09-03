@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.addClosetItem.ClosetsItems"></activity>
+        <activity android:name=".activities.ClosetItem.ClosetsItems"></activity>
         <activity android:name=".activities.myclosets.MyClosets" />
         <activity android:name=".activities.myGigs.MyGigs" />
         <activity android:name=".activities.notifications.Notifications" />

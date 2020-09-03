@@ -12,13 +12,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.addClosetItem.ClosetsItems
+import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closet_layout.view.*
-import org.w3c.dom.Text
 import java.lang.Exception
 
 class MyClosetsAdapter(
@@ -51,7 +50,11 @@ class MyClosetsAdapter(
             "Created at: " + Utils.changeDateTimeToDateTime(closets.createdAt)
 
         holder.itemView.closet_go_to_closets.setOnClickListener {
-            context.startActivity(Intent(context,ClosetsItems::class.java).putExtra(Constants.CLOSETID,closets.id))
+            context.startActivity(Intent(context,ClosetsItems::class.java).putExtra(Constants.CLOSETID,""+closets.id))
+        }
+
+        holder.itemView.closets_edititem.setOnClickListener {
+            MyClosets.closetitemidIf!!.getClosetID(position.toString())
         }
     }
 

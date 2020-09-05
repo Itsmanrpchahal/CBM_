@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,7 +69,6 @@ public class Utility {
         return PASSWORD_PATTERN.matches(password);
 
     }
-
 
     //convert image to multipart
     public static MultipartBody.Part sendImageFileToserver(File filesDir,Bitmap bitMap) throws IOException {

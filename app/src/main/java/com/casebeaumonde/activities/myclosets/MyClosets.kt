@@ -8,12 +8,15 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.AsyncTask
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
@@ -21,11 +24,15 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
+import com.casebeaumonde.activities.myclosets.IF.DeleteClosetID
 import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
+import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
+import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.createClosets.CreateClosetResponse
@@ -37,12 +44,10 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
-import java.io.IOException
-import java.io.InputStream
-import java.net.URL
 
 class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetAPI,
-    ClosetItemID_IF {
+    Controller.UpdateClosetAPI,Controller.DeleteClosetAPI,
+    ClosetItemID_IF,DeleteClosetID {
 
     private lateinit var myclosets_back: ImageButton
     private lateinit var controller: Controller
@@ -51,7 +56,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var create_closets: ImageButton
     private lateinit var closets_recyler: RecyclerView
     private lateinit var part: MultipartBody.Part
-     lateinit var bitMap: Bitmap
+    public lateinit var bitMap: Bitmap
     private var path: String = ""
     private lateinit var createcloset_title: EditText
     private lateinit var createcloset_checkbox: CheckBox
@@ -61,22 +66,28 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var createcloset_imagerperview: ImageView
     private lateinit var createcloset_savebt: Button
     private lateinit var createcloset_cancelbt: Button
+    private lateinit var search_ET: EditText
     private lateinit var dialog: Dialog
     private var checked: String = "0"
     var c: String = ""
     private var pos: Int = 0
     private lateinit var response: ArrayList<MyClosetsResponse.Data.Closet>
+    private lateinit var closets: ArrayList<MyClosetsResponse.Data.Closet>
     private var title: String? = ""
     private var decs: String? = ""
-    private var url : String? =""
+    private var url: String? = ""
+    private var id: String? = ""
+    var msg: String? = ""
+    var lastMsg = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_closets)
         findIds()
         controller = Controller()
-        controller.Controller(this, this)
+        controller.Controller(this, this, this,this)
         closetitemidIf = this
+        deleteClosetID = this
         lsiteners()
 
     }
@@ -87,8 +98,57 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
 
         create_closets.setOnClickListener {
-            CreateClosets(pos)
 
+            CreateClosets(-1)
+
+        }
+
+        search_ET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (count > 0) {
+                    searchByTitle(s.toString())
+                } else {
+                    setFullData(closets)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotEmpty()) {
+
+                    searchByTitle(s.toString())
+                } else {
+                    closets_recyler.visibility = View.VISIBLE
+                    setFullData(closets)
+                }
+            }
+
+        })
+    }
+
+    fun searchByTitle(s: String) {
+
+        response = ArrayList()
+        if (closets.size > 0) {
+            for (i in closets!!.indices) {
+                val closetModel = closets!![i]
+                if (closetModel.title!!.toLowerCase().contains(s.toLowerCase()))
+                    response!!.add(closetModel)
+
+                if (response.size > 0) {
+                    closets_recyler.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    //closets =  response
+                    val adapter = MyClosetsAdapter(this, response!!)
+                    closets_recyler.adapter = adapter
+                }
+            }
+            if (response.size == 0) {
+                closets_recyler.visibility = View.GONE
+            }
         }
     }
 
@@ -112,10 +172,38 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         createcloset_savebt = dialog.findViewById(R.id.createcloset_savebt)
         createcloset_cancelbt = dialog.findViewById(R.id.createcloset_cancelbt)
 
-        createcloset_title.setText(response.get(pos!!).title)
-        createcloset_description.setText(response.get(pos!!).description)
+        if (pos != -1) {
+            createcloset_title.setText(response.get(pos!!).title)
+            createcloset_description.setText(response.get(pos!!).description)
+            createcloset_savebt.setText("Update")
+            id = response.get(pos!!).id.toString()
 
+            if (response.get(pos!!).visibility.equals("private")) {
+                createcloset_checkbox.isChecked = true
+            } else {
+                createcloset_checkbox.isChecked = false
+            }
 
+            Glide.with(this).asBitmap().load(Constants.BASE_IMAGE_URL + response.get(pos!!).image)
+                .into(object : CustomTarget<Bitmap?>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: com.bumptech.glide.request.transition.Transition<in Bitmap?>?
+                    ) {
+                        createcloset_imagerperview.setImageBitmap(resource)
+                        Log.d("image", "" + resource)
+                        createcloset_uploadfilename.text = resource.toString()
+                        bitMap = resource
+                        part = Utility.sendImageFileToserver(filesDir, bitMap)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        Log.d("loadcleared", "" + placeholder)
+                    }
+                })
+
+            //controller.UpdateCloset("Bearer "+getStringVal(Constants.TOKEN),)
+        }
 
         createcloset_upload.setOnClickListener {
             if ((ContextCompat.checkSelfPermission(
@@ -141,13 +229,18 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
         createcloset_savebt.setOnClickListener {
 
-            checkValidations()
+            checkValidations(createcloset_savebt.text.toString(),createcloset_title.text.toString(),createcloset_description.text.toString(),part,id)
         }
     }
-    
 
 
-    private fun checkValidations() {
+    private fun checkValidations(
+        toString: String,
+        title: String,
+        descrition: String,
+        part: MultipartBody.Part,
+        id: String?
+    ) {
 
 
         createcloset_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -178,6 +271,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                 )
             }
             else -> {
+
                 if (checked.equals("1")) {
                     c = "public"
                 } else {
@@ -187,12 +281,26 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                 if (utility.isConnectingToInternet(this)) {
                     pd.show()
                     pd.setContentView(R.layout.loading)
-                    createClosetAPI(
-                        createcloset_title.text.toString(),
-                        c,
-                        createcloset_description.text.toString(),
-                        part
-                    )
+
+                    if (toString.equals("Update")) {
+
+                        controller.UpdateCloset(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            id,
+                            title,
+                            c,
+                            part,
+                            descrition
+                        )
+                    } else {
+                        createClosetAPI(
+                            createcloset_title.text.toString(),
+                            c,
+                            createcloset_description.text.toString(),
+                            this.part
+                        )
+                    }
+
                 } else {
                     utility!!.relative_snackbar(
                         parent_myclosets,
@@ -200,12 +308,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                         getString(R.string.close_up)
                     )
                 }
-
-
             }
         }
-
-
     }
 
     private fun createClosetAPI(title: String, c: String, decs: String, part: MultipartBody.Part) {
@@ -233,6 +337,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         super.onResume()
     }
 
+
     private fun findIds() {
         utility = Utility()
         pd = ProgressDialog(this)
@@ -243,18 +348,16 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         myclosets_back = findViewById(R.id.myclosets_back)
         create_closets = findViewById(R.id.create_closets)
         closets_recyler = findViewById(R.id.closets_recyler)
+        search_ET = findViewById(R.id.search_ET)
     }
 
     override fun onMyClosetsSuccess(myClosetsResponse: Response<MyClosetsResponse>) {
         pd.dismiss()
 
         if (myClosetsResponse.isSuccessful) {
-            response =
+            closets =
                 myClosetsResponse.body()?.data?.closet as ArrayList<MyClosetsResponse.Data.Closet>
-            closets_recyler.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            val adapter = MyClosetsAdapter(this, myClosetsResponse.body()?.data?.closet!!)
-            closets_recyler.adapter = adapter
+            setFullData(closets)
         } else {
             utility!!.relative_snackbar(
                 parent_myclosets,
@@ -262,6 +365,15 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                 getString(R.string.close_up)
             )
         }
+    }
+
+    private fun setFullData(closets: ArrayList<MyClosetsResponse.Data.Closet>) {
+        response =
+            closets
+        closets_recyler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val adapter = MyClosetsAdapter(this, closets!!)
+        closets_recyler.adapter = adapter
     }
 
     override fun onCreateClosetSuccess(createClosetResponse: Response<CreateClosetResponse>) {
@@ -281,6 +393,23 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
     }
 
+    override fun onUpdateClosetSuccess(updateClosetsResponse: Response<UpdateClosetsResponse>) {
+        pd.dismiss()
+        if (updateClosetsResponse.isSuccessful) {
+            dialog.dismiss()
+            controller.GetMyClosets(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                getStringVal(Constants.USERID)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_myclosets,
+                updateClosetsResponse.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -291,7 +420,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     }
 
     private fun pictureSelectionDialog() {
-
         val camera: LinearLayout
         val gallery: LinearLayout
         val dialog = Dialog(this!!)
@@ -355,6 +483,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
     companion object {
         var closetitemidIf: ClosetItemID_IF? = null
+        var deleteClosetID : DeleteClosetID? = null
     }
 
     @SuppressLint("MissingPermission", "HardwareIds")
@@ -375,5 +504,49 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         CreateClosets(pos)
     }
 
+
+    private fun DeleteClosetAPI(pos: String?) {
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+           controller.DeleteCloset("Bearer "+getStringVal(Constants.TOKEN), pos.toString())
+        } else {
+            utility!!.relative_snackbar(
+                parent_myclosets,
+                R.string.nointernet.toString(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun onDeleteClosetSuccess(deleteClosetResponse: Response<DeleteClosetResponse>) {
+       pd.dismiss()
+        if (deleteClosetResponse.isSuccessful)
+        {
+            utility!!.relative_snackbar(
+                parent_myclosets,
+                deleteClosetResponse.body()?.message,
+                getString(R.string.close_up)
+            )
+            controller.GetMyClosets(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                getStringVal(Constants.USERID)
+            )
+
+        }else {
+            utility!!.relative_snackbar(
+                parent_myclosets,
+                R.string.nointernet.toString(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun deleteClosetID(id: String?) {
+        DeleteClosetAPI(id)
+
+    }
 }
+
+
 

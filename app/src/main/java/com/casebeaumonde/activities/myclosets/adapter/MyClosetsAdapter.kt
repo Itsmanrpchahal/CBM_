@@ -56,6 +56,10 @@ class MyClosetsAdapter(
         holder.itemView.closets_edititem.setOnClickListener {
             MyClosets.closetitemidIf!!.getClosetID(position.toString())
         }
+
+        holder.itemView.closets_delete.setOnClickListener {
+            MyClosets.deleteClosetID!!.deleteClosetID(closets.id.toString())
+        }
     }
 
     override fun getItemCount(): Int {

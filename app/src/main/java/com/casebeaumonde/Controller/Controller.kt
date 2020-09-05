@@ -5,7 +5,9 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
+import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
+import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
@@ -34,6 +36,8 @@ public class Controller {
     var createClosetAPI : CreateClosetAPI? = null
     var closetItemsAPI : ClosetItemsAPI? = null
     var addTofavClosetItemAPI : AddTofavClosetItemAPI? = null
+    var updateClosetAPI : UpdateClosetAPI? = null
+    var deleteClosetAPI : DeleteClosetAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -76,10 +80,12 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(myClosets: MyClosetsAPI,createCloset: CreateClosetAPI)
+    fun Controller(myClosets: MyClosetsAPI,createCloset: CreateClosetAPI,updateCloset : UpdateClosetAPI,deleteCloset: DeleteClosetAPI)
     {
         myClosetsAPI = myClosets
         createClosetAPI = createCloset
+        updateClosetAPI = updateCloset
+        deleteClosetAPI = deleteCloset
         webAPI = WebAPI()
     }
 
@@ -88,7 +94,6 @@ public class Controller {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
         webAPI = WebAPI()
-
     }
 
     fun setNotificationAPI(token: String?, userId: String?) {
@@ -315,7 +320,44 @@ public class Controller {
             }
 
         })
+    }
 
+    fun UpdateCloset(token: String?,id : String?,title : String?,visibility : String?,image : MultipartBody.Part,description : String?)
+    {
+        webAPI?.api?.closetUpdate(token, id, title, visibility, image, description)?.enqueue(object : Callback<UpdateClosetsResponse>
+        {
+            override fun onResponse(
+                call: Call<UpdateClosetsResponse>,
+                response: Response<UpdateClosetsResponse>
+            ) {
+                val updateCloset = response
+                updateClosetAPI?.onUpdateClosetSuccess(updateCloset)
+            }
+
+            override fun onFailure(call: Call<UpdateClosetsResponse>, t: Throwable) {
+               updateClosetAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun DeleteCloset(token: String?,id: String?)
+    {
+        webAPI?.api?.deleteCloset(token, id)?.enqueue(object : Callback<DeleteClosetResponse>
+        {
+            override fun onResponse(
+                call: Call<DeleteClosetResponse>,
+                response: Response<DeleteClosetResponse>
+            ) {
+                val deleteCloset = response
+                deleteClosetAPI?.onDeleteClosetSuccess(deleteCloset)
+            }
+
+            override fun onFailure(call: Call<DeleteClosetResponse>, t: Throwable) {
+                deleteClosetAPI?.error(t.message)
+            }
+
+        })
     }
 
     interface NotificationAPI {
@@ -376,6 +418,16 @@ public class Controller {
 
     interface AddTofavClosetItemAPI {
         fun onAddToFavClosetItemSuccess(addToFavClosetItemResponse: Response<AddToFavClosetItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface UpdateClosetAPI {
+        fun onUpdateClosetSuccess(updateClosetsResponse: Response<UpdateClosetsResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteClosetAPI {
+        fun onDeleteClosetSuccess(deleteClosetResponse: Response<DeleteClosetResponse>)
         fun error(error: String?)
     }
 }

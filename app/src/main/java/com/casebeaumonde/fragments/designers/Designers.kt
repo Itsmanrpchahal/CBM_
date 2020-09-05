@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,7 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.constants.GridItemDecoration
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.designers.adapter.DesignerAdapter
-import com.casebeaumonde.fragments.users.adapter.UsersAdapter
 import com.casebeaumonde.utilities.Utility
-import kotlinx.android.synthetic.main.activity_notifications.*
-import kotlinx.android.synthetic.main.activity_notifications.parent_notifications
 import kotlinx.android.synthetic.main.fragment_designers.*
 import retrofit2.Response
 

@@ -30,13 +30,8 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_business_register.*
 import kotlinx.android.synthetic.main.activity_register.*
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 class BusinessRegisterActivity : AppCompatActivity() {
 

@@ -1,10 +1,8 @@
 package com.casebeaumonde.fragments.profile
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -23,7 +21,6 @@ import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myclosets.MyClosets
-import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse

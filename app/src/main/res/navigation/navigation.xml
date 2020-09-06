@@ -56,7 +56,7 @@
 
     <fragment
         android:id="@+id/nav_liveevents"
-        android:name="com.casebeaumonde.fragments.LiveEvents"
+        android:name="com.casebeaumonde.fragments.Live_Events.LiveEvents"
         android:label="Live Events"
         tools:layout="@layout/fragment_live_events"/>
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/liveevent_image"
+        android:layout_width="match_parent"
+        android:layout_height="170dp">
+
+    </ImageView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_16dp">
+
+        <TextView
+            android:id="@+id/liveevent_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event Name"
+            android:textSize="@dimen/textsize_24sp"
+            android:textColor="@color/colorWhite">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/liveevent_createdby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/liveevent_name"
+            android:hint="Create by"
+            android:textSize="@dimen/textsize_16sp"
+            android:layout_marginTop="@dimen/margin_8dp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/liveevent_expireat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/liveevent_createdby"
+            android:hint="Expires at">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true">
+
+            <CheckBox
+                android:id="@+id/liveevent_favbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/favoritecheckbox">
+
+            </CheckBox>
+
+            <TextView
+                android:id="@+id/liveevent_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0">
+
+            </TextView>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

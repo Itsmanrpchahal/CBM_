@@ -1,0 +1,3 @@
+package com.casebeaumonde.fragments.Live_Events.adapter
+
+class LiveEventsAdapter

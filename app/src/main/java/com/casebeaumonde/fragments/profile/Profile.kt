@@ -20,6 +20,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.myGigs.MyGigs
+import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
@@ -29,6 +30,7 @@ import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MultipartBody
@@ -39,28 +41,27 @@ import retrofit2.Response
 import java.io.File
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI,TabLayout.OnTabSelectedListener {
+    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener {
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var profile_username: TextView
-    private lateinit var profile_mygigs : TextView
-    private lateinit var profile_profilePic: ImageView
+    private lateinit var profile_mygigs: Button
+    private lateinit var profile_profilePic: CircleImageView
     private lateinit var profile_followerscount: TextView
     private lateinit var profile_followingcount: TextView
-    private lateinit var profile_changetv: TextView
+    private lateinit var profile_changetv: ImageView
     private lateinit var part: MultipartBody.Part
     private lateinit var bitMap: Bitmap
-    private lateinit var profile_changepassword : TextView
-    private lateinit var profile_edit_profile: TextView
+    private lateinit var profile_changepassword: Button
+    private lateinit var profile_edit_profile: Button
     private var path: String = ""
     private lateinit var changePasswordDialog: Dialog
-    private lateinit var dialog : Dialog
-    private lateinit var role : String
-    private  var tabLayout: TabLayout? = null
-    var viewPager: ViewPager? = null
-    private lateinit var fragmentActivity : FragmentActivity
+    private lateinit var dialog: Dialog
+    private lateinit var role: String
+    private var tabLayout: TabLayout? = null
+    private lateinit var fragmentActivity: FragmentActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -96,7 +97,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
 
         profile_mygigs.setOnClickListener {
-            startActivity(Intent(context,MyGigs::class.java).putExtra("role",role))
+            startActivity(Intent(context, MyGigs::class.java).putExtra("role", role))
         }
 
     }
@@ -246,10 +247,16 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                     if (utility.isConnectingToInternet(context)) {
                         pd.show()
                         pd.setContentView(R.layout.loading)
-                        controller.setUpDateProfile("Bearer "+getStringVal(Constants.TOKEN),editprofile_firstname.text.toString(),
-                            editprofile_lastname.text.toString(),editprofile_email.text.toString(),editprofile_phone.text.toString(),
-                            editprofile_about.text.toString(),getStringVal(Constants.USERID).toString())
-                    }else {
+                        controller.setUpDateProfile(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            editprofile_firstname.text.toString(),
+                            editprofile_lastname.text.toString(),
+                            editprofile_email.text.toString(),
+                            editprofile_phone.text.toString(),
+                            editprofile_about.text.toString(),
+                            getStringVal(Constants.USERID).toString()
+                        )
+                    } else {
                         utility!!.relative_snackbar(
                             parent_main,
                             getString(R.string.nointernet),
@@ -275,21 +282,20 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_followingcount = view.findViewById(R.id.profile_followingcount)
         profile_changetv = view.findViewById(R.id.profile_changetv)
         profile_edit_profile = view.findViewById(R.id.profile_edit_profile)
-        profile_changepassword  = view.findViewById(R.id.profile_changepassword)
+        profile_changepassword = view.findViewById(R.id.profile_changepassword)
         profile_mygigs = view.findViewById(R.id.profile_mygigs)
         tabLayout = view.findViewById(R.id.tabLayout)
-        viewPager = view.findViewById(R.id.viewPager)
         pd.show()
         pd.setContentView(R.layout.loading)
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("My wall"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
-       tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
+        tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
         tabLayout!!.setOnTabSelectedListener(this)
@@ -385,7 +391,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
-        Log.d("userprofilerespose",""+userProfileResponse.body()?.data)
+        Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
         profile_username.text =
             userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
         Glide.with(context!!)
@@ -404,10 +410,9 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
         )
         role = userProfileResponse.body()?.data?.user?.role.toString()
-        if (userProfileResponse.body()?.data?.user?.customerSubscription!=null || userProfileResponse.body()?.data?.user?.businessSubscription!=null)
-        {
+        if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
             profile_mygigs.visibility = View.VISIBLE
-        }else{
+        } else {
             profile_mygigs.visibility = View.GONE
         }
 
@@ -444,19 +449,21 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             "Bearer " + getStringVal(Constants.TOKEN),
             getStringVal(Constants.USERID)
         )
-        if (updateProfileResponse.isSuccessful)
-        {
-            setStringVal(Constants.FIRSTNAME,updateProfileResponse.body()?.data?.user?.firstname)
-            setStringVal(Constants.LASTNAME,updateProfileResponse.body()?.data?.user?.lastname)
-            setStringVal(Constants.EMAIL,updateProfileResponse.body()?.data?.user?.email)
-            setStringVal(Constants.PHONE,updateProfileResponse.body()?.data?.user?.phone)
-            setStringVal(Constants.ABOUT,updateProfileResponse.body()?.data?.user?.profile?.aboutMe)
+        if (updateProfileResponse.isSuccessful) {
+            setStringVal(Constants.FIRSTNAME, updateProfileResponse.body()?.data?.user?.firstname)
+            setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.data?.user?.lastname)
+            setStringVal(Constants.EMAIL, updateProfileResponse.body()?.data?.user?.email)
+            setStringVal(Constants.PHONE, updateProfileResponse.body()?.data?.user?.phone)
+            setStringVal(
+                Constants.ABOUT,
+                updateProfileResponse.body()?.data?.user?.profile?.aboutMe
+            )
             utility!!.relative_snackbar(
                 parent_profile,
                 "Profile Updated",
                 getString(R.string.close_up)
             )
-        }else{
+        } else {
             utility!!.relative_snackbar(
                 parent_profile,
                 updateProfileResponse.message(),
@@ -527,7 +534,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                         } catch (e: Exception) {
                             e.message
                         }
-                    }else{
+                    } else {
                         utility.relative_snackbar(
                             parent_profile!!,
                             response.message(),
@@ -550,24 +557,30 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     }
 
     override fun onTabSelected(p0: TabLayout.Tab?) {
-        Toast.makeText(context,""+p0?.text,Toast.LENGTH_SHORT).show()
-        when{
-            p0?.text?.equals("My Closets")!! ->
-            {
-                startActivity(Intent(context,MyClosets::class.java))
+        Toast.makeText(context, "" + p0?.text, Toast.LENGTH_SHORT).show()
+        when {
+            p0?.text?.equals("My Closets")!! -> {
+                startActivity(Intent(context, MyClosets::class.java))
+            }
+
+            p0?.text?.equals("My Wall")!! -> {
+                startActivity(Intent(context, MyWall::class.java))
             }
         }
     }
 
     override fun onTabUnselected(p0: TabLayout.Tab?) {
-       // Toast.makeText(context,"HERE "+p0,Toast.LENGTH_SHORT).show()
+        // Toast.makeText(context,"HERE "+p0,Toast.LENGTH_SHORT).show()
     }
 
     override fun onTabReselected(p0: TabLayout.Tab?) {
-        when{
-            p0?.text?.equals("My Closets")!! ->
-            {
-                startActivity(Intent(context,MyClosets::class.java))
+        when {
+            p0?.text?.equals("My Closets")!! -> {
+                startActivity(Intent(context, MyClosets::class.java))
+            }
+
+            p0?.text?.equals("My Wall")!! -> {
+                startActivity(Intent(context,MyWall::class.java))
             }
         }
     }

@@ -63,6 +63,12 @@ public class Controller {
         webAPI = WebAPI()
     }
 
+    fun Controller(userProfile: UserProfileAPI)
+    {
+        userProfileAPI = userProfile
+        webAPI = WebAPI()
+    }
+
     fun Controller(getUserGigs: GetUserGigsAPI) {
         getUserGigsAPI = getUserGigs
         webAPI = WebAPI()

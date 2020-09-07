@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
+import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.custom_mywall.view.*
 
 class MyWallAdapter(
@@ -34,7 +35,7 @@ class MyWallAdapter(
         holder.itemView.myWall_closetname.text = fashionable.title
         holder.itemView.myWall_Decs.text = fashionable.type
         holder.itemView.myWall_morenext.text = fashionable.description
-        holder.itemView.myWall_lastupdate.text = fashionable.updatedAt
+        holder.itemView.myWall_lastupdate.text = Utils.changeDateTimeToDateTime(fashionable.updatedAt)
     }
 
     override fun getItemCount(): Int {

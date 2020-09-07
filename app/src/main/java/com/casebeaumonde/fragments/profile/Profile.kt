@@ -22,6 +22,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
+import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
@@ -566,6 +567,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             p0?.text?.equals("My Wall")!! -> {
                 startActivity(Intent(context, MyWall::class.java))
             }
+
+            p0?.text?.equals("Notifications")!! -> {
+                startActivity(Intent(context,Notifications::class.java))
+            }
         }
     }
 
@@ -581,6 +586,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             p0?.text?.equals("My Wall")!! -> {
                 startActivity(Intent(context,MyWall::class.java))
+            }
+
+            p0?.text?.equals("Notifications")!! -> {
+                startActivity(Intent(context,Notifications::class.java))
             }
         }
     }

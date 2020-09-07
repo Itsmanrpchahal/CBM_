@@ -1,5 +1,6 @@
 package com.casebeaumonde.activities.ClosetItem
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -14,12 +15,14 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
+import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -32,7 +35,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 
-class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF ,Controller.AddTofavClosetItemAPI{
+class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,ViewClosetID_IF ,Controller.AddTofavClosetItemAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -42,7 +45,7 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF ,Con
     private lateinit var closetitems_back : ImageButton
     private lateinit var closetiems_add : ImageButton
     private lateinit var hearlist : ArrayList<ClosetsItemsResponse.Data.Closet.Item.Heart>
-    private lateinit var closetResponse : ArrayList<ClosetsItemsResponse>
+    private lateinit var closetResponse : ArrayList<ClosetsItemsResponse.Data.Closet.Item>
     private lateinit var dialog :Dialog
     private var path: String = ""
     private lateinit var part: MultipartBody.Part
@@ -68,6 +71,7 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF ,Con
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
        setClosetAPI()
         closetitemidIf = this
+        viewclosetidIf = this
         listeners()
 
     }
@@ -138,6 +142,7 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF ,Con
 
     companion object{
         var closetitemidIf : ClosetItemID_IF? = null
+        var viewclosetidIf : ViewClosetID_IF? = null
     }
 
 
@@ -164,6 +169,8 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF ,Con
                     it
                 )
             }
+            closetResponse = ArrayList()
+            closetResponse.addAll(closetItemsResponse.body()?.data?.closet?.items!!)
             closetsItems_recycler.adapter = adapter
 
         }else{
@@ -256,5 +263,47 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF ,Con
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun getID(id: Int?) {
+        ViewClosetItem(id)
+        Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun ViewClosetItem(id: Int?) {
+        val dialog = Dialog(this!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.viewclosetitem)
+        val window = dialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        var viewitem_image: ImageView
+        var viewitem_title : TextView
+        var viewitem_color : TextView
+        var viewitem_size : TextView
+        var viewitem_price : TextView
+        var  viewitem_category : TextView
+        var viewitem_favcount : TextView
+
+        viewitem_image = dialog.findViewById(R.id.viewitem_image)
+        viewitem_title = dialog.findViewById(R.id.viewitem_title)
+        viewitem_color = dialog.findViewById(R.id.viewitem_color)
+        viewitem_size = dialog.findViewById(R.id.viewitem_size)
+        viewitem_price = dialog.findViewById(R.id.viewitem_price)
+        viewitem_category = dialog.findViewById(R.id.viewitem_category)
+        viewitem_favcount = dialog.findViewById(R.id.viewitem_favcount)
+        Glide.with(this).load(Constants.BASE_IMAGE_URL+closetResponse.get(id!!).picture).placeholder(R.drawable.login_banner).into(viewitem_image)
+        viewitem_title.text = "Title :"+closetResponse.get(id).title
+        viewitem_color.text = "Color :"+closetResponse.get(id).color.name
+        viewitem_size.text = "Size :"+closetResponse.get(id).size.name
+        viewitem_price.text = "Price :"+closetResponse.get(id).price
+        viewitem_category.text = "Category :"+closetResponse.get(id).category.name
+        viewitem_favcount.text = closetResponse.get(id).hearts.size.toString()
+
+        dialog.show()
     }
 }

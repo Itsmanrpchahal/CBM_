@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HireAnExpertFragment">
+    android:orientation="vertical"
+    android:background="@color/colorBlack"
+    android:id="@+id/parent_hireexpert"
+    tools:context=".fragments.HireExpert.HireAnExpertFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+  <include layout="@layout/searchbar"></include>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hireanexpertRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hire An Expert" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

@@ -3,6 +3,7 @@ package com.casebeaumonde.Retrofit;
 import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
+import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
@@ -11,6 +12,9 @@ import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.createClosets.CreateClosetResponse;
+import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
+import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse;
+import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
@@ -174,5 +178,32 @@ public interface ApiInterface {
     Call<DeleteClosetResponse> deleteCloset (
             @Header("Authorization") String token,
             @Path("input") String id
+    );
+
+    @DELETE("api/v1/removeItem/{input}")
+    Call<DeleteClosetItemResponse> deleteClosetItem (
+            @Header("Authorization") String token,
+            @Path("input") String id
+    );
+
+
+    @GET("api/v1/hireAnExpert")
+    Call<HireAnExpertResponse> hireanExpert (
+            @Header("Authorization") String token
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/sendInvitation")
+    Call<SendInvitationResponse> sendInviation (
+            @Header("Authorization") String token,
+            @Field("designer_id") String designer_id,
+            @Field("description") String description,
+            @Field("gig_id") String gig_id,
+            @Field("budget") String budget
+    );
+
+    @GET("api/v1/liveEvents")
+    Call<LiveEventsResponse> liveEvents (
+            @Header("Authorization") String token
     );
 }

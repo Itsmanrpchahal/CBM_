@@ -100,6 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/colorBlack"
+            android:clickable="false"
             android:button="@drawable/fav_checkbox_border"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/margin_8dp">
@@ -112,11 +113,11 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/viewitem_checkbox"
             android:layout_marginRight="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:layout_centerVertical="true"
-            android:text=""
+            android:text="11"
             android:textColorHint="@color/colorBlack"
-            android:textColor="@color/colorBlack"
-            android:layout_marginTop="@dimen/margin_8dp">
+            android:textColor="@color/colorBlack">
 
         </TextView>
     </RelativeLayout>

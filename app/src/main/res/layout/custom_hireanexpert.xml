@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_8dp"
+    android:background="@drawable/whiteborder">
+
+
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/textsize_16sp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hireanexpert_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/hireanexpert_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:text="Name"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_gravity="center">
+
+            </TextView>
+        </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/layout1"
+        android:background="@color/colorWhite">
+
+    </View>
+
+    <TextView
+        android:id="@+id/hireanexpert_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Desc"
+        android:layout_below="@id/view1"
+        android:layout_margin="@dimen/margin_8dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_14sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/hireanexpert_hours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hours"
+        android:layout_below="@+id/hireanexpert_description"
+        android:layout_margin="@dimen/margin_8dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/hireanexpert_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rate"
+        android:layout_below="@+id/hireanexpert_hours"
+        android:layout_margin="@dimen/margin_8dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/hireanexpert_ratetype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate type"
+        android:layout_below="@+id/hireanexpert_rate"
+        android:layout_margin="@dimen/margin_8dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/hireanexpert_sendInvitation"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@id/hireanexpert_rate"
+        android:layout_alignParentRight="true"
+        android:padding="5dp"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@color/colorWhite"
+        android:text="Send Invitation"
+        android:textColor="@color/colorBlack"
+        android:textAllCaps="false">
+
+    </Button>
+
+</RelativeLayout>

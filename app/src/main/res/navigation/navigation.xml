@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home"
+    app:startDestination="@+id/nav_profile"
     tools:ignore="UnusedNavigation">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.casebeaumonde.fragments.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_profile"
+        android:name="com.casebeaumonde.fragments.profile.Profile"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"/>
 
     <fragment
         android:id="@+id/nav_users"
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/nav_hireanexpert"
-        android:name="com.casebeaumonde.fragments.HireAnExpertFragment"
+        android:name="com.casebeaumonde.fragments.HireExpert.HireAnExpertFragment"
         android:label="Designers"
         tools:layout="@layout/fragment_hire_an_expert"/>
 
@@ -66,12 +66,12 @@
         android:label="Chat"
         tools:layout="@layout/fragment_chat"/>
 
-    <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.casebeaumonde.fragments.profile.Profile"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile"/>
 
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.casebeaumonde.fragments.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_about"

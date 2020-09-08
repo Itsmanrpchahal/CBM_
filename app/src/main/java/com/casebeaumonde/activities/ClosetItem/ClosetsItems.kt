@@ -21,6 +21,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
+import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
 import com.casebeaumonde.constants.BaseClass
@@ -35,7 +36,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 
-class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,ViewClosetID_IF ,Controller.AddTofavClosetItemAPI{
+class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,ViewClosetID_IF ,Controller.AddTofavClosetItemAPI,Controller.DeleteClosetItemAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -61,13 +62,15 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
     private lateinit var aditemtocloset_price : EditText
     private lateinit var aditemtocloset_add : Button
     private lateinit var aditemtocloset_cancel : Button
+    private lateinit var logoutDialog: Dialog
+    private lateinit var Viewdialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_closets_items)
         findIds()
         controller = Controller()
-        controller.Controller(this,this)
+        controller.Controller(this,this,this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
        setClosetAPI()
         closetitemidIf = this
@@ -189,6 +192,17 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
        }
     }
 
+    override fun onDeleteClosetItemSuccess(deleteClosetItemResponse: Response<DeleteClosetItemResponse>) {
+       pd.dismiss()
+        if (deleteClosetItemResponse.isSuccessful)
+        {
+            setClosetAPI()
+            utility!!.relative_snackbar(parent_closetsItems!!, deleteClosetItemResponse.body()?.message, getString(R.string.close_up))
+        }else{
+            utility!!.relative_snackbar(parent_closetsItems!!, deleteClosetItemResponse.message(), getString(R.string.close_up))
+        }
+    }
+
 
     override fun error(error: String?) {
         pd.dismiss()
@@ -205,6 +219,41 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
             utility.relative_snackbar(parent_closetsItems!!, "No Internet Connectivity", getString(R.string.close_up))
         }
     }
+
+    private fun LogoutDialog(id: String?) {
+        logoutDialog = Dialog(this)
+        logoutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        logoutDialog.setCancelable(false)
+        logoutDialog.setContentView(R.layout.logout_dialog)
+        val window = logoutDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+        val  text : TextView
+
+        no = logoutDialog.findViewById(R.id.logout_no)
+        yes = logoutDialog.findViewById(R.id.logout_yes)
+        text = logoutDialog.findViewById(R.id.logout_tv)
+        text.text = "Are you sure you want to delete it?"
+
+        no.setOnClickListener {
+            logoutDialog.dismiss()
+        }
+
+        yes.setOnClickListener {
+            logoutDialog.dismiss()
+            Viewdialog.dismiss()
+            controller.DeleteClosetItem("Bearer "+getStringVal(Constants.TOKEN),
+                id)
+        }
+
+        logoutDialog.show()
+    }
+
 
     private fun pictureSelectionDialog() {
 
@@ -267,15 +316,16 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
 
     override fun getID(id: Int?) {
         ViewClosetItem(id)
-        Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
     }
+
+
 
     @SuppressLint("CheckResult")
     private fun ViewClosetItem(id: Int?) {
-        val dialog = Dialog(this!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.viewclosetitem)
-        val window = dialog.window
+         Viewdialog = Dialog(this!!)
+        Viewdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        Viewdialog.setContentView(R.layout.viewclosetitem)
+        val window = Viewdialog.window
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
@@ -288,22 +338,59 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
         var viewitem_price : TextView
         var  viewitem_category : TextView
         var viewitem_favcount : TextView
+        var itemview_removebt : Button
+        var viewitem_checkbox : CheckBox
 
-        viewitem_image = dialog.findViewById(R.id.viewitem_image)
-        viewitem_title = dialog.findViewById(R.id.viewitem_title)
-        viewitem_color = dialog.findViewById(R.id.viewitem_color)
-        viewitem_size = dialog.findViewById(R.id.viewitem_size)
-        viewitem_price = dialog.findViewById(R.id.viewitem_price)
-        viewitem_category = dialog.findViewById(R.id.viewitem_category)
-        viewitem_favcount = dialog.findViewById(R.id.viewitem_favcount)
+        viewitem_image = Viewdialog.findViewById(R.id.viewitem_image)
+        viewitem_title = Viewdialog.findViewById(R.id.viewitem_title)
+        viewitem_color = Viewdialog.findViewById(R.id.viewitem_color)
+        viewitem_size = Viewdialog.findViewById(R.id.viewitem_size)
+        viewitem_price = Viewdialog.findViewById(R.id.viewitem_price)
+        viewitem_category = Viewdialog.findViewById(R.id.viewitem_category)
+        viewitem_favcount = Viewdialog.findViewById(R.id.viewitem_favcount)
+        viewitem_checkbox = Viewdialog.findViewById(R.id.viewitem_checkbox)
+        itemview_removebt = Viewdialog.findViewById(R.id.itemview_removebt)
+
         Glide.with(this).load(Constants.BASE_IMAGE_URL+closetResponse.get(id!!).picture).placeholder(R.drawable.login_banner).into(viewitem_image)
         viewitem_title.text = "Title :"+closetResponse.get(id).title
         viewitem_color.text = "Color :"+closetResponse.get(id).color.name
+        if (closetResponse.get(id).hearts.size>0)
+        {
+            viewitem_favcount.text = closetResponse.get(id).hearts.size.toString()
+        }
         viewitem_size.text = "Size :"+closetResponse.get(id).size.name
         viewitem_price.text = "Price :"+closetResponse.get(id).price
         viewitem_category.text = "Category :"+closetResponse.get(id).category.name
-        viewitem_favcount.text = closetResponse.get(id).hearts.size.toString()
 
-        dialog.show()
+        itemview_removebt.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                LogoutDialog(closetResponse.get(id).id.toString())
+
+            }else {
+                utility.relative_snackbar(parent_closetsItems!!, "No Internet Connectivity", getString(R.string.close_up))
+            }
+        }
+        searchUserHeart(closetResponse.get(id).hearts,viewitem_checkbox)
+        Viewdialog.show()
+    }
+
+    fun searchUserHeart(
+        closetsItems: MutableList<ClosetsItemsResponse.Data.Closet.Item.Heart>,
+        closetitemFavorite: CheckBox
+    )
+    {
+        if (closetsItems.size>0)
+        {
+            for (i in closetsItems!!.indices)
+            {
+                val heart = closetsItems!![i]
+                if (heart.userId.toString().equals(getStringVal(Constants.USERID)))
+                {
+                    closetitemFavorite.isChecked = true
+                }
+            }
+        }
     }
 }

@@ -152,6 +152,15 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
     }
 
+    private fun setFullData(closets: ArrayList<MyClosetsResponse.Data.Closet>) {
+        response =
+            closets
+        closets_recyler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val adapter = MyClosetsAdapter(this, closets!!)
+        closets_recyler.adapter = adapter
+    }
+
     private fun CreateClosets(pos: Int?) {
         dialog = Dialog(this!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -367,14 +376,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
     }
 
-    private fun setFullData(closets: ArrayList<MyClosetsResponse.Data.Closet>) {
-        response =
-            closets
-        closets_recyler.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = MyClosetsAdapter(this, closets!!)
-        closets_recyler.adapter = adapter
-    }
+
 
     override fun onCreateClosetSuccess(createClosetResponse: Response<CreateClosetResponse>) {
 
@@ -496,7 +498,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
     ) {
         pictureSelectionDialog()
-
     }
 
     override fun getClosetID(id: String?) {
@@ -544,7 +545,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
     override fun deleteClosetID(id: String?) {
         DeleteClosetAPI(id)
-
     }
 }
 

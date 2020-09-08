@@ -4,6 +4,7 @@ import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
+import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
@@ -15,6 +16,9 @@ import com.casebeaumonde.fragments.users.Response.UsersResponse
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
 import com.casebeaumonde.createClosets.CreateClosetResponse
+import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
+import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
+import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,12 +36,16 @@ public class Controller {
     var getUserGigsAPI: GetUserGigsAPI? = null
     var usersAPI: UsersAPI? = null
     var designersAPI: DesignersAPI? = null
-    var myClosetsAPI : MyClosetsAPI? = null
-    var createClosetAPI : CreateClosetAPI? = null
-    var closetItemsAPI : ClosetItemsAPI? = null
-    var addTofavClosetItemAPI : AddTofavClosetItemAPI? = null
-    var updateClosetAPI : UpdateClosetAPI? = null
-    var deleteClosetAPI : DeleteClosetAPI? = null
+    var myClosetsAPI: MyClosetsAPI? = null
+    var createClosetAPI: CreateClosetAPI? = null
+    var closetItemsAPI: ClosetItemsAPI? = null
+    var addTofavClosetItemAPI: AddTofavClosetItemAPI? = null
+    var updateClosetAPI: UpdateClosetAPI? = null
+    var deleteClosetAPI: DeleteClosetAPI? = null
+    var deleteClosetItemAPI: DeleteClosetItemAPI? = null
+    var hireAnExpertAPI: HireAnExpertAPI? = null
+    var sendInvitationAPI: SendInvitationAPI? = null
+    var liveEventsAPI : LiveEventsAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -63,8 +71,7 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(userProfile: UserProfileAPI)
-    {
+    fun Controller(userProfile: UserProfileAPI) {
         userProfileAPI = userProfile
         webAPI = WebAPI()
     }
@@ -74,20 +81,22 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(users: UsersAPI)
-    {
+    fun Controller(users: UsersAPI) {
         usersAPI = users
         webAPI = WebAPI()
     }
 
-    fun Controller(designers: DesignersAPI)
-    {
+    fun Controller(designers: DesignersAPI) {
         designersAPI = designers
         webAPI = WebAPI()
     }
 
-    fun Controller(myClosets: MyClosetsAPI,createCloset: CreateClosetAPI,updateCloset : UpdateClosetAPI,deleteCloset: DeleteClosetAPI)
-    {
+    fun Controller(
+        myClosets: MyClosetsAPI,
+        createCloset: CreateClosetAPI,
+        updateCloset: UpdateClosetAPI,
+        deleteCloset: DeleteClosetAPI
+    ) {
         myClosetsAPI = myClosets
         createClosetAPI = createCloset
         updateClosetAPI = updateCloset
@@ -95,10 +104,28 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(closetItems: ClosetItemsAPI,addTofavClosetItem: AddTofavClosetItemAPI)
-    {
+    fun Controller(
+        closetItems: ClosetItemsAPI,
+        addTofavClosetItem: AddTofavClosetItemAPI,
+        deleteClosetItem: DeleteClosetItemAPI
+    ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
+        deleteClosetItemAPI = deleteClosetItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(
+        liveEventsAP: LiveEventsAPI
+    ){
+        liveEventsAPI = liveEventsAP
+        webAPI = WebAPI()
+    }
+
+
+    fun Controller(hireAnExpert: HireAnExpertAPI, sendInvitation: SendInvitationAPI) {
+        hireAnExpertAPI = hireAnExpert
+        sendInvitationAPI = sendInvitation
         webAPI = WebAPI()
     }
 
@@ -135,7 +162,6 @@ public class Controller {
                 override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
                     userProfileAPI?.error(t.message)
                 }
-
             })
     }
 
@@ -217,9 +243,8 @@ public class Controller {
         })
     }
 
-    fun GetUsers(token: String?)
-    {
-        webAPI?.api?.users(token)?.enqueue(object : Callback<UsersResponse>{
+    fun GetUsers(token: String?) {
+        webAPI?.api?.users(token)?.enqueue(object : Callback<UsersResponse> {
             override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                 val usersResponse = response
                 usersAPI?.onUsersSuccess(usersResponse)
@@ -232,9 +257,8 @@ public class Controller {
         })
     }
 
-    fun GetDesigners(token: String?)
-    {
-        webAPI?.api?.designers(token)?.enqueue(object : Callback<DesignersResponse>{
+    fun GetDesigners(token: String?) {
+        webAPI?.api?.designers(token)?.enqueue(object : Callback<DesignersResponse> {
             override fun onResponse(
                 call: Call<DesignersResponse>,
                 response: Response<DesignersResponse>
@@ -251,10 +275,8 @@ public class Controller {
 
     }
 
-    fun GetMyClosets(token: String?,userId: String?)
-    {
-        webAPI?.api?.myClosets(token,userId)?.enqueue(object : Callback<MyClosetsResponse>
-        {
+    fun GetMyClosets(token: String?, userId: String?) {
+        webAPI?.api?.myClosets(token, userId)?.enqueue(object : Callback<MyClosetsResponse> {
             override fun onResponse(
                 call: Call<MyClosetsResponse>,
                 response: Response<MyClosetsResponse>
@@ -271,86 +293,93 @@ public class Controller {
     }
 
 
-    fun CreateCloset(token: String?,title:String?,visibility:String?,part: MultipartBody.Part,decs:String?)
-    {
-        webAPI?.api?.createCloset(token,title,visibility,part,decs)?.enqueue(object : Callback<CreateClosetResponse>
-        {
-            override fun onResponse(
-                call: Call<CreateClosetResponse>,
-                response: Response<CreateClosetResponse>
-            ) {
-                val createClosetResponse = response
-                createClosetAPI?.onCreateClosetSuccess(createClosetResponse)
-            }
+    fun CreateCloset(
+        token: String?,
+        title: String?,
+        visibility: String?,
+        part: MultipartBody.Part,
+        decs: String?
+    ) {
+        webAPI?.api?.createCloset(token, title, visibility, part, decs)
+            ?.enqueue(object : Callback<CreateClosetResponse> {
+                override fun onResponse(
+                    call: Call<CreateClosetResponse>,
+                    response: Response<CreateClosetResponse>
+                ) {
+                    val createClosetResponse = response
+                    createClosetAPI?.onCreateClosetSuccess(createClosetResponse)
+                }
 
-            override fun onFailure(call: Call<CreateClosetResponse>, t: Throwable) {
-                createClosetAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<CreateClosetResponse>, t: Throwable) {
+                    createClosetAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun ClosetItems(token: String?,closetID : String?)
-    {
-        webAPI?.api?.closetsItems(token,closetID)?.enqueue(object : Callback<ClosetsItemsResponse>
-        {
-            override fun onResponse(
-                call: Call<ClosetsItemsResponse>,
-                response: Response<ClosetsItemsResponse>
-            ) {
-                val closetItems = response
-                closetItemsAPI?.onClosetItemSuccess(closetItems)
-            }
+    fun ClosetItems(token: String?, closetID: String?) {
+        webAPI?.api?.closetsItems(token, closetID)
+            ?.enqueue(object : Callback<ClosetsItemsResponse> {
+                override fun onResponse(
+                    call: Call<ClosetsItemsResponse>,
+                    response: Response<ClosetsItemsResponse>
+                ) {
+                    val closetItems = response
+                    closetItemsAPI?.onClosetItemSuccess(closetItems)
+                }
 
-            override fun onFailure(call: Call<ClosetsItemsResponse>, t: Throwable) {
-               closetItemsAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<ClosetsItemsResponse>, t: Throwable) {
+                    closetItemsAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun AddToFavClosetItem(token: String?,closetItemId:String?,type:String?)
-    {
-        webAPI?.api?.addToFavClosetItem(token,closetItemId,type)?.enqueue(object :Callback<AddToFavClosetItemResponse>
-        {
-            override fun onResponse(
-                call: Call<AddToFavClosetItemResponse>,
-                response: Response<AddToFavClosetItemResponse>
-            ) {
-                val addtofavclosetItem = response
-                addTofavClosetItemAPI?.onAddToFavClosetItemSuccess(addtofavclosetItem)
-            }
+    fun AddToFavClosetItem(token: String?, closetItemId: String?, type: String?) {
+        webAPI?.api?.addToFavClosetItem(token, closetItemId, type)
+            ?.enqueue(object : Callback<AddToFavClosetItemResponse> {
+                override fun onResponse(
+                    call: Call<AddToFavClosetItemResponse>,
+                    response: Response<AddToFavClosetItemResponse>
+                ) {
+                    val addtofavclosetItem = response
+                    addTofavClosetItemAPI?.onAddToFavClosetItemSuccess(addtofavclosetItem)
+                }
 
-            override fun onFailure(call: Call<AddToFavClosetItemResponse>, t: Throwable) {
-                addTofavClosetItemAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<AddToFavClosetItemResponse>, t: Throwable) {
+                    addTofavClosetItemAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun UpdateCloset(token: String?,id : String?,title : String?,visibility : String?,image : MultipartBody.Part,description : String?)
-    {
-        webAPI?.api?.closetUpdate(token, id, title, visibility, image, description)?.enqueue(object : Callback<UpdateClosetsResponse>
-        {
-            override fun onResponse(
-                call: Call<UpdateClosetsResponse>,
-                response: Response<UpdateClosetsResponse>
-            ) {
-                val updateCloset = response
-                updateClosetAPI?.onUpdateClosetSuccess(updateCloset)
-            }
+    fun UpdateCloset(
+        token: String?,
+        id: String?,
+        title: String?,
+        visibility: String?,
+        image: MultipartBody.Part,
+        description: String?
+    ) {
+        webAPI?.api?.closetUpdate(token, id, title, visibility, image, description)
+            ?.enqueue(object : Callback<UpdateClosetsResponse> {
+                override fun onResponse(
+                    call: Call<UpdateClosetsResponse>,
+                    response: Response<UpdateClosetsResponse>
+                ) {
+                    val updateCloset = response
+                    updateClosetAPI?.onUpdateClosetSuccess(updateCloset)
+                }
 
-            override fun onFailure(call: Call<UpdateClosetsResponse>, t: Throwable) {
-               updateClosetAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<UpdateClosetsResponse>, t: Throwable) {
+                    updateClosetAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun DeleteCloset(token: String?,id: String?)
-    {
-        webAPI?.api?.deleteCloset(token, id)?.enqueue(object : Callback<DeleteClosetResponse>
-        {
+    fun DeleteCloset(token: String?, id: String?) {
+        webAPI?.api?.deleteCloset(token, id)?.enqueue(object : Callback<DeleteClosetResponse> {
             override fun onResponse(
                 call: Call<DeleteClosetResponse>,
                 response: Response<DeleteClosetResponse>
@@ -361,6 +390,84 @@ public class Controller {
 
             override fun onFailure(call: Call<DeleteClosetResponse>, t: Throwable) {
                 deleteClosetAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun DeleteClosetItem(token: String?, id: String?) {
+        webAPI?.api?.deleteClosetItem(token, id)
+            ?.enqueue(object : Callback<DeleteClosetItemResponse> {
+                override fun onResponse(
+                    call: Call<DeleteClosetItemResponse>,
+                    response: Response<DeleteClosetItemResponse>
+                ) {
+                    val deleteClosetItem = response
+                    deleteClosetItemAPI?.onDeleteClosetItemSuccess(deleteClosetItem)
+                }
+
+                override fun onFailure(call: Call<DeleteClosetItemResponse>, t: Throwable) {
+                    deleteClosetItemAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun HireAnExpert(token: String?) {
+        webAPI?.api?.hireanExpert(token)?.enqueue(object : Callback<HireAnExpertResponse> {
+            override fun onResponse(
+                call: Call<HireAnExpertResponse>,
+                response: Response<HireAnExpertResponse>
+            ) {
+                val hireAnExpert = response
+                hireAnExpertAPI?.onHireErxpertSuccess(hireAnExpert)
+            }
+
+            override fun onFailure(call: Call<HireAnExpertResponse>, t: Throwable) {
+                hireAnExpertAPI?.error(t.message)
+            }
+        })
+    }
+
+
+    fun SendInvitation(
+        token: String?,
+        desigenerID: String,
+        decripition: String?,
+        gig_id: String?,
+        budget: String?
+    ) {
+        webAPI?.api?.sendInviation(token, desigenerID, decripition, gig_id, budget)
+            ?.enqueue(object : Callback<SendInvitationResponse> {
+                override fun onResponse(
+                    call: Call<SendInvitationResponse>,
+                    response: Response<SendInvitationResponse>
+                ) {
+                    val sendInvitation = response
+                    sendInvitationAPI?.onSendInvitationSuccess(sendInvitation)
+                }
+
+                override fun onFailure(call: Call<SendInvitationResponse>, t: Throwable) {
+                    sendInvitationAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun LiveEvents(token: String?)
+    {
+        webAPI?.api?.liveEvents(token)?.enqueue(object : Callback<LiveEventsResponse>
+        {
+            override fun onResponse(
+                call: Call<LiveEventsResponse>,
+                response: Response<LiveEventsResponse>
+            ) {
+                val liveEvents = response
+                liveEventsAPI?.onLiveEventSuccess(liveEvents)
+            }
+
+            override fun onFailure(call: Call<LiveEventsResponse>, t: Throwable) {
+               liveEventsAPI?.error(t.message)
             }
 
         })
@@ -403,7 +510,7 @@ public class Controller {
     }
 
     interface DesignersAPI {
-        fun onDesignersSuccess(designerResponse:Response<DesignersResponse>)
+        fun onDesignersSuccess(designerResponse: Response<DesignersResponse>)
         fun error(error: String?)
     }
 
@@ -434,6 +541,26 @@ public class Controller {
 
     interface DeleteClosetAPI {
         fun onDeleteClosetSuccess(deleteClosetResponse: Response<DeleteClosetResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteClosetItemAPI {
+        fun onDeleteClosetItemSuccess(deleteClosetItemResponse: Response<DeleteClosetItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface HireAnExpertAPI {
+        fun onHireErxpertSuccess(hireAnExpertResponse: Response<HireAnExpertResponse>)
+        fun error(error: String?)
+    }
+
+    interface SendInvitationAPI {
+        fun onSendInvitationSuccess(sendInvitationResponse: Response<SendInvitationResponse>)
+        fun error(error: String?)
+    }
+
+    interface LiveEventsAPI {
+        fun onLiveEventSuccess(liveEventsResponse: Response<LiveEventsResponse>)
         fun error(error: String?)
     }
 }

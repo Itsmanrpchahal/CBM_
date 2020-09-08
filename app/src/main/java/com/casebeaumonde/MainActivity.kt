@@ -69,7 +69,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,
+                R.id.nav_profile,
                 R.id.nav_users,
                 R.id.nav_pricing,
                 R.id.nav_designers,
@@ -79,7 +79,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 R.id.nav_closets,
                 R.id.nav_liveevents,
                 R.id.nav_chat,
-                R.id.nav_profile,
+                R.id.nav_home,
                 R.id.nav_about,
                 R.id.nav_contactUs
             ), drawerLayout

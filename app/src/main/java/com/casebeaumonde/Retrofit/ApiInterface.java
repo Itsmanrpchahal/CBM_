@@ -4,6 +4,7 @@ import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
+import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
@@ -205,5 +206,11 @@ public interface ApiInterface {
     @GET("api/v1/liveEvents")
     Call<LiveEventsResponse> liveEvents (
             @Header("Authorization") String token
+    );
+
+    @GET("api/v1/eventDetail/{input}")
+    Call<EventDetailResponse> eventDetail (
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 }

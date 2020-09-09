@@ -4,10 +4,14 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
@@ -17,6 +21,7 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.constants.GridItemDecoration
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.designers.adapter.DesignerAdapter
+import com.casebeaumonde.fragments.users.adapter.UsersAdapter
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_designers.*
 import retrofit2.Response
@@ -25,8 +30,11 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
 
     private lateinit var designer_recyler: RecyclerView
     private lateinit var utility: Utility
+    private lateinit var search_ET: EditText
     private lateinit var pd: ProgressDialog
     private lateinit var controller: Controller
+    private lateinit var response : ArrayList<DesignersResponse.Data.User>
+    private lateinit var filterData : ArrayList<DesignersResponse.Data.User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +63,41 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
             )
         }
 
+        listeners()
         return view
+    }
+
+    private fun listeners() {
+        search_ET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (count > 0) {
+                    searchByTitle(s.toString())
+                } else {
+                    setFullData(response)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotEmpty()) {
+
+                    searchByTitle(s.toString())
+                } else {
+                    designer_recyler.visibility = View.VISIBLE
+                    setFullData(response)
+                }
+            }
+
+        })
+    }
+
+    private fun setFullData(response: ArrayList<DesignersResponse.Data.User>) {
+        designer_recyler.layoutManager = GridLayoutManager(context, 2)
+       // designer_recyler.addItemDecoration(GridItemDecoration(10, 2))
+        val adapter = DesignerAdapter(context!!,response)
+        designer_recyler.adapter = adapter
     }
 
     private fun findIds(view: View) {
@@ -65,6 +107,7 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
         pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
+        search_ET = view.findViewById(R.id.search_ET)
         designer_recyler = view.findViewById(R.id.designer_recyler)
     }
 
@@ -72,11 +115,8 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
         pd!!.dismiss()
         if (designerResponse.isSuccessful)
         {
-            designer_recyler.layoutManager = GridLayoutManager(context, 2)
-            designer_recyler.addItemDecoration(GridItemDecoration(10, 2))
-
-            val adapter = DesignerAdapter(context!!,designerResponse?.body()?.data?.users!!)
-            designer_recyler.adapter = adapter
+            response = designerResponse.body()?.data?.users as ArrayList<DesignersResponse.Data.User>
+            setFullData(response)
         }else{
             utility!!.relative_snackbar(
                 parent_designer!!,
@@ -93,5 +133,26 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
             error,
             getString(R.string.close_up)
         )
+    }
+
+    private fun searchByTitle(toString: String) {
+        filterData = ArrayList()
+        if (response.size > 0) {
+            for (i in response!!.indices) {
+                val closetModel = response!![i]
+                if (closetModel.firstname!!.toLowerCase().contains(toString.toLowerCase()))
+                    filterData!!.add(closetModel)
+
+                if (filterData.size > 0) {
+                    designer_recyler.layoutManager = GridLayoutManager(context, 2)
+                    //user_recyler.addItemDecoration(GridItemDecoration(10, 2))
+                    val adapter = DesignerAdapter(context!!, filterData)
+                    designer_recyler.adapter = adapter
+                }
+            }
+            if (filterData.size == 0) {
+                designer_recyler.visibility = View.GONE
+            }
+        }
     }
 }

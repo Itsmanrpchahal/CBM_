@@ -467,7 +467,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             Glide.with(this).load(bitMap).placeholder(R.drawable.login_banner)
                 .into(createcloset_imagerperview)
 
-
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             utility!!.relative_snackbar(
                 parent_main!!,

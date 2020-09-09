@@ -1,14 +1,17 @@
 package com.casebeaumonde.fragments.Live_Events.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.eventDetail.EventDetailScreen
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.fragments.designers.adapter.DesignerAdapter
@@ -30,6 +33,11 @@ class LiveEventsAdapter(val context : Context,val data: MutableList<LiveEventsRe
         Glide.with(context).load(Constants.BASE_IMAGE_URL+list.image).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = list.title
         holder.itemView.closetitem_uploadby.text = "Created by: "+data.get(position).creator.firstname +" at "+Utils.changeDateTimeToDateTime(list.createdAt)
+
+        holder.itemView.setOnClickListener {
+            context.startActivity(Intent(context,EventDetailScreen::class.java).putExtra(Constants.EVENTID,list.id.toString()))
+//            Toast.makeText(context,""+list.id,Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getItemCount(): Int {

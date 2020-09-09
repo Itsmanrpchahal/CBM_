@@ -5,6 +5,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
+import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
@@ -45,7 +46,8 @@ public class Controller {
     var deleteClosetItemAPI: DeleteClosetItemAPI? = null
     var hireAnExpertAPI: HireAnExpertAPI? = null
     var sendInvitationAPI: SendInvitationAPI? = null
-    var liveEventsAPI : LiveEventsAPI? = null
+    var liveEventsAPI: LiveEventsAPI? = null
+    var eventsDetailAPI: EventsDetailAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -117,7 +119,7 @@ public class Controller {
 
     fun Controller(
         liveEventsAP: LiveEventsAPI
-    ){
+    ) {
         liveEventsAPI = liveEventsAP
         webAPI = WebAPI()
     }
@@ -126,6 +128,13 @@ public class Controller {
     fun Controller(hireAnExpert: HireAnExpertAPI, sendInvitation: SendInvitationAPI) {
         hireAnExpertAPI = hireAnExpert
         sendInvitationAPI = sendInvitation
+        webAPI = WebAPI()
+    }
+
+
+    fun Controller(eventsDetail: EventsDetailAPI)
+    {
+        eventsDetailAPI = eventsDetail
         webAPI = WebAPI()
     }
 
@@ -454,10 +463,8 @@ public class Controller {
             })
     }
 
-    fun LiveEvents(token: String?)
-    {
-        webAPI?.api?.liveEvents(token)?.enqueue(object : Callback<LiveEventsResponse>
-        {
+    fun LiveEvents(token: String?) {
+        webAPI?.api?.liveEvents(token)?.enqueue(object : Callback<LiveEventsResponse> {
             override fun onResponse(
                 call: Call<LiveEventsResponse>,
                 response: Response<LiveEventsResponse>
@@ -467,7 +474,26 @@ public class Controller {
             }
 
             override fun onFailure(call: Call<LiveEventsResponse>, t: Throwable) {
-               liveEventsAPI?.error(t.message)
+                liveEventsAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun EventDetail(token: String?,id: String?)
+    {
+        webAPI?.api?.eventDetail(token,id)?.enqueue(object : Callback<EventDetailResponse>
+        {
+            override fun onResponse(
+                call: Call<EventDetailResponse>,
+                response: Response<EventDetailResponse>
+            ) {
+                val eventDetail = response
+                eventsDetailAPI?.onEventDetailSuccess(eventDetail)
+            }
+
+            override fun onFailure(call: Call<EventDetailResponse>, t: Throwable) {
+               eventsDetailAPI?.error(t.message)
             }
 
         })
@@ -561,6 +587,11 @@ public class Controller {
 
     interface LiveEventsAPI {
         fun onLiveEventSuccess(liveEventsResponse: Response<LiveEventsResponse>)
+        fun error(error: String?)
+    }
+
+    interface EventsDetailAPI {
+        fun onEventDetailSuccess(eventDetailResponse: Response<EventDetailResponse>)
         fun error(error: String?)
     }
 }

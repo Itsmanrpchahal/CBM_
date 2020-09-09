@@ -2,6 +2,7 @@ package com.casebeaumonde.constants
 
 object Constants
 {
+    val EVENTID: String? = "EVENTID"
     val FIRSTNAME: String? = "FIRSTNAME"
     val LASTNAME: String? = "LASTNAME"
     val EMAIL : String?= "EMAIL"

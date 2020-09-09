@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.myWall.MyWall"></activity>
+        <activity android:name=".activities.eventDetail.EventDetailScreen"></activity>
+        <activity android:name=".activities.myWall.MyWall" />
         <activity android:name=".activities.ClosetItem.ClosetsItems" />
         <activity android:name=".activities.myclosets.MyClosets" />
         <activity android:name=".activities.myGigs.MyGigs" />

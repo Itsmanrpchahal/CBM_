@@ -48,6 +48,8 @@ class ClosetsItemAdapter(var context: Context, var closetsItems: MutableList<Clo
         holder.itemView.setOnClickListener {
             ClosetsItems.viewclosetidIf!!.getID(position)
         }
+
+
     }
 
     fun searchUserHeart(

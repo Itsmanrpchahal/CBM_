@@ -4,14 +4,19 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.constants.GridItemDecoration
@@ -28,6 +33,10 @@ class Users : BaseFrag(),Controller.UsersAPI {
     private lateinit var controller: Controller
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
+    private lateinit var search_ET: EditText
+    private lateinit var filePath : String
+    private lateinit var response : ArrayList<UsersResponse.Data.User>
+    private lateinit var filterData : ArrayList<UsersResponse.Data.User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +61,64 @@ class Users : BaseFrag(),Controller.UsersAPI {
             utility!!.relative_snackbar(parent_notifications!!, getString(R.string.nointernet), getString(R.string.close_up))
         }
 
+        listeners()
+
         return view
+    }
+
+    private fun listeners() {
+        search_ET!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (count > 0) {
+                    searchByTitle(s.toString(),filePath)
+                } else {
+                    setFullData(response,filePath)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (s.isNotEmpty()) {
+
+                    searchByTitle(s.toString(),filePath)
+                } else {
+                    user_recyler.visibility = View.VISIBLE
+                    setFullData(response,filePath)
+                }
+            }
+
+        })
+    }
+
+    private fun setFullData(response: ArrayList<UsersResponse.Data.User>,filePath : String) {
+        user_recyler.layoutManager = GridLayoutManager(context,2)
+        //user_recyler.addItemDecoration(GridItemDecoration(10, 2))
+        val adapter = UsersAdapter(context!!,response,filePath)
+        user_recyler.adapter = adapter
+    }
+
+    private fun searchByTitle(toString: String,filePath: String) {
+        filterData = ArrayList()
+        if (response.size > 0) {
+            for (i in response!!.indices) {
+                val closetModel = response!![i]
+                if (closetModel.firstname!!.toLowerCase().contains(toString.toLowerCase()))
+                    filterData!!.add(closetModel)
+
+                if (filterData.size > 0) {
+                    user_recyler.layoutManager = GridLayoutManager(context,2)
+                    //user_recyler.addItemDecoration(GridItemDecoration(10, 2))
+                    val adapter = UsersAdapter(context!!,filterData,filePath)
+                    user_recyler.adapter = adapter
+                }
+            }
+            if (filterData.size == 0) {
+                user_recyler.visibility = View.GONE
+            }
+        }
     }
 
 
@@ -64,6 +130,7 @@ class Users : BaseFrag(),Controller.UsersAPI {
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
         user_recyler = view.findViewById(R.id.users_recycler)
+        search_ET = view.findViewById(R.id.search_ET)
     }
 
     override fun onUsersSuccess(usersResponse: Response<UsersResponse>) {
@@ -71,12 +138,9 @@ class Users : BaseFrag(),Controller.UsersAPI {
         pd.dismiss()
         if (usersResponse.isSuccessful)
         {
-            user_recyler.layoutManager = GridLayoutManager(context,2)
-            user_recyler.addItemDecoration(GridItemDecoration(10, 2))
-            val usersList = ArrayList<String>()
-
-            val adapter = UsersAdapter(context!!,usersResponse.body()?.data?.users!!,usersResponse.body()?.data?.filePath.toString())
-            user_recyler.adapter = adapter
+            filePath =  usersResponse.body()?.data?.filePath.toString()
+            response = usersResponse.body()?.data?.users as ArrayList<UsersResponse.Data.User>
+            setFullData(response,filePath)
         }else{
             utility!!.relative_snackbar(parent_users!!, usersResponse.message(), getString(R.string.close_up))
         }

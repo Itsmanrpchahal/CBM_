@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
@@ -29,7 +30,6 @@ class UsersAdapter (val context : Context, val userList:MutableList<UsersRespons
         val users = userList?.get(position)
         holder.itemView.userName.text = users.firstname+" "+users.lastname
         Glide.with(context).load(filepath+users.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.userImage)
-
     }
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
 

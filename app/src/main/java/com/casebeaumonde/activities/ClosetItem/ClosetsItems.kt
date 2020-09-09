@@ -250,13 +250,11 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
             controller.DeleteClosetItem("Bearer "+getStringVal(Constants.TOKEN),
                 id)
         }
-
         logoutDialog.show()
     }
 
 
     private fun pictureSelectionDialog() {
-
         val camera: LinearLayout
         val gallery: LinearLayout
         val dialog = Dialog(this!!)
@@ -367,7 +365,6 @@ class ClosetsItems : BaseClass(),Controller.ClosetItemsAPI, ClosetItemID_IF,View
                 pd.show()
                 pd.setContentView(R.layout.loading)
                 LogoutDialog(closetResponse.get(id).id.toString())
-
             }else {
                 utility.relative_snackbar(parent_closetsItems!!, "No Internet Connectivity", getString(R.string.close_up))
             }

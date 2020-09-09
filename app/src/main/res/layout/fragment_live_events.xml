@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/margin_8dp"
     android:id="@+id/parent_liveevents"
     tools:context=".fragments.Live_Events.LiveEvents">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/roundcorners">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/live_event_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/roundcorners">
+
+        </androidx.appcompat.widget.AppCompatSpinner>
+
+        <TextView
+            android:id="@+id/live_spinnertitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:gravity="center_vertical"
+            android:text="All"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/textsize_16sp"
+            tools:ignore="RtlCompat">
+
+        </TextView>
+    </RelativeLayout>
+
+    <include layout="@layout/searchbar" ></include>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/live_events_recycler"
@@ -13,4 +47,4 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-</RelativeLayout>
+</LinearLayout>

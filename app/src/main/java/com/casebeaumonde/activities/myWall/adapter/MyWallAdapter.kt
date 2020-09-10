@@ -1,6 +1,7 @@
 package com.casebeaumonde.activities.myWall.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utils
@@ -36,6 +38,10 @@ class MyWallAdapter(
         holder.itemView.myWall_Decs.text = fashionable.type
         holder.itemView.myWall_morenext.text = fashionable.description
         holder.itemView.myWall_lastupdate.text = Utils.changeDateTimeToDateTime(fashionable.updatedAt)
+
+        holder.itemView.setOnClickListener {
+            context.startActivity(Intent(context, ClosetsItems::class.java).putExtra(Constants.CLOSETID,""+fashionable.id))
+        }
     }
 
     override fun getItemCount(): Int {

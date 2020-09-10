@@ -16,6 +16,7 @@ import com.casebeaumonde.createClosets.CreateClosetResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse;
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
+import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
@@ -212,5 +213,10 @@ public interface ApiInterface {
     Call<EventDetailResponse> eventDetail (
             @Header("Authorization") String token,
             @Path("input") String id
+    );
+
+    @GET("api/v1/getAllCloset")
+    Call<AllClosetsResponse> allClosets (
+            @Header("Authorization") String token
     );
 }

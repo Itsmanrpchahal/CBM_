@@ -126,6 +126,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                             startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                             finish()
                             clearStringVal(Constants.TOKEN)
+                            clearStringVal(Constants.USERID)
                         }
                     }
                 }

@@ -12,16 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
+import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.eventDetail.adapter.EventDetailAdapter
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
+import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.Live_Events.adapter.LiveEventsAdapter
 import com.casebeaumonde.utilities.Utility
+import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_event_detail_screen.*
 import retrofit2.Response
 
-class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI {
+class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_IF,Controller.AddTofavClosetItemAPI{
 
     private lateinit var eventdetail_back: ImageButton
     private lateinit var eventdetail_eventname: TextView
@@ -39,7 +43,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI {
 
         findIDs()
         listeners()
-        controller.Controller(this)
+        controller.Controller(this,this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -62,6 +66,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI {
         eventdetail_back = findViewById(R.id.eventdetail_back)
         eventdetail_eventname = findViewById(R.id.eventdetail_eventname)
         eventdetails_items = findViewById(R.id.eventdetails_items)
+        closetitemidIf = this
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -80,6 +85,21 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI {
         setFullData(response)
     }
 
+    companion object{
+        var closetitemidIf : ClosetItemID_IF? = null
+    }
+
+    override fun onAddToFavClosetItemSuccess(addToFavClosetItemResponse: Response<AddToFavClosetItemResponse>) {
+        if (addToFavClosetItemResponse.isSuccessful)
+        {
+            pd.dismiss()
+        }else {
+            pd.dismiss()
+            recreate()
+            utility!!.relative_snackbar(parent_closetsItems!!, addToFavClosetItemResponse.message(), getString(R.string.close_up))
+        }
+    }
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -94,5 +114,16 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val adapter = EventDetailAdapter(this!!, response!!, getStringVal(Constants.USERID)!!)
         eventdetails_items.adapter = adapter
+    }
+
+    override fun getClosetID(id: String?) {
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.AddToFavClosetItem("Bearer "+getStringVal(Constants.TOKEN),id,"closet_item")
+
+        }else {
+            utility.relative_snackbar(parent_eventdetail!!, "No Internet Connectivity", getString(R.string.close_up))
+        }
     }
 }

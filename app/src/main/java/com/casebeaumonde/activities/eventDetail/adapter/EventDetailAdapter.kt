@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ClosetItem.ClosetsItems
+import com.casebeaumonde.activities.eventDetail.EventDetailScreen
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.constants.Constants
 import kotlinx.android.synthetic.main.closetsitems.view.*
@@ -47,6 +49,10 @@ class EventDetailAdapter(
                     holder.itemView.closetitem_favorite.isChecked = true
                 }
             }
+        }
+
+        holder.itemView.closetitem_favorite.setOnClickListener {
+            EventDetailScreen.closetitemidIf!!.getClosetID(listdata.id.toString())
         }
     }
 

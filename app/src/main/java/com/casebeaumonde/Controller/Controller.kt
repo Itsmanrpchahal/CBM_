@@ -20,6 +20,8 @@ import com.casebeaumonde.createClosets.CreateClosetResponse
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
+import com.casebeaumonde.fragments.allClosets.AllClosets
+import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,6 +50,7 @@ public class Controller {
     var sendInvitationAPI: SendInvitationAPI? = null
     var liveEventsAPI: LiveEventsAPI? = null
     var eventsDetailAPI: EventsDetailAPI? = null
+    var allClosetAPI : AllClosetsAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -132,9 +135,17 @@ public class Controller {
     }
 
 
-    fun Controller(eventsDetail: EventsDetailAPI)
+    fun Controller(eventsDetail: EventsDetailAPI,addTofavClosetItem: AddTofavClosetItemAPI)
     {
         eventsDetailAPI = eventsDetail
+        addTofavClosetItemAPI = addTofavClosetItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(allClosets: AllClosetsAPI,addTofavClosetItem: AddTofavClosetItemAPI)
+    {
+        allClosetAPI = allClosets
+        addTofavClosetItemAPI = addTofavClosetItem
         webAPI = WebAPI()
     }
 
@@ -499,6 +510,25 @@ public class Controller {
         })
     }
 
+
+    fun AllClosets(token: String?)
+    {
+        webAPI?.api?.allClosets(token)?.enqueue(object : Callback<AllClosetsResponse>
+        {
+            override fun onResponse(
+                call: Call<AllClosetsResponse>,
+                response: Response<AllClosetsResponse>
+            ) {
+                val allClosets = response
+                allClosetAPI?.onAllEventsSuccess(allClosets)
+            }
+
+            override fun onFailure(call: Call<AllClosetsResponse>, t: Throwable) {
+                allClosetAPI?.error(t.message)
+            }
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -593,5 +623,10 @@ public class Controller {
     interface EventsDetailAPI {
         fun onEventDetailSuccess(eventDetailResponse: Response<EventDetailResponse>)
         fun error(error: String?)
+    }
+
+    interface AllClosetsAPI {
+        fun onAllEventsSuccess (allClosetsResponse: Response<AllClosetsResponse>)
+        fun error(error : String?)
     }
 }

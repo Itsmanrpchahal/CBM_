@@ -143,7 +143,9 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
                 if (filterdata.size > 0) {
                     live_events_recycler.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    val adapter = LiveEventsAdapter(context!!, filterdata!!)
+                    val adapter = LiveEventsAdapter(context!!, filterdata!!,
+                        getStringVal(Constants.USERID).toString()
+                    )
                     live_events_recycler.adapter = adapter
                 }
             }
@@ -167,7 +169,9 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
                 if (filterdata.size > 0) {
                     live_events_recycler.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    val adapter = LiveEventsAdapter(context!!, filterdata!!)
+                    val adapter = LiveEventsAdapter(context!!, filterdata!!,
+                        getStringVal(Constants.USERID).toString()
+                    )
                     live_events_recycler.adapter = adapter
                 }
             }
@@ -217,7 +221,9 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
         //response = closets
         live_events_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val adapter = LiveEventsAdapter(context!!, closets!!)
+        val adapter = LiveEventsAdapter(context!!, closets!!,
+            getStringVal(Constants.USERID).toString()
+        )
         live_events_recycler.adapter = adapter
     }
 

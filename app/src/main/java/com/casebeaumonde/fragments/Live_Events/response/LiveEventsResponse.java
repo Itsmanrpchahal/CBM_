@@ -90,9 +90,18 @@ this.data = data;
         @SerializedName("creator")
         @Expose
         private Creator creator;
+
         @SerializedName("hearts")
         @Expose
-        private List<Object> hearts = null;
+        private List<Heart> hearts = null;
+
+        public List<Heart> getHearts() {
+            return hearts;
+        }
+
+        public void setHearts(List<Heart> hearts) {
+            this.hearts = hearts;
+        }
 
         public Integer getId() {
             return id;
@@ -206,12 +215,77 @@ this.data = data;
             this.creator = creator;
         }
 
-        public List<Object> getHearts() {
-            return hearts;
-        }
 
-        public void setHearts(List<Object> hearts) {
-            this.hearts = hearts;
+
+        public class Heart {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("user_id")
+            @Expose
+            private Integer userId;
+            @SerializedName("heartable_type")
+            @Expose
+            private String heartableType;
+            @SerializedName("heartable_id")
+            @Expose
+            private Integer heartableId;
+            @SerializedName("created_at")
+            @Expose
+            private String createdAt;
+            @SerializedName("updated_at")
+            @Expose
+            private String updatedAt;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public Integer getUserId() {
+                return userId;
+            }
+
+            public void setUserId(Integer userId) {
+                this.userId = userId;
+            }
+
+            public String getHeartableType() {
+                return heartableType;
+            }
+
+            public void setHeartableType(String heartableType) {
+                this.heartableType = heartableType;
+            }
+
+            public Integer getHeartableId() {
+                return heartableId;
+            }
+
+            public void setHeartableId(Integer heartableId) {
+                this.heartableId = heartableId;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
         }
 
         public class Creator {

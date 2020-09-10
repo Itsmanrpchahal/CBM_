@@ -195,9 +195,6 @@ this.data = data;
                 @SerializedName("id")
                 @Expose
                 private Integer id;
-                @SerializedName("parent_id")
-                @Expose
-                private Integer parentId;
                 @SerializedName("creator_id")
                 @Expose
                 private Integer creatorId;
@@ -262,14 +259,6 @@ this.data = data;
 
                 public void setId(Integer id) {
                     this.id = id;
-                }
-
-                public Integer getParentId() {
-                    return parentId;
-                }
-
-                public void setParentId(Integer parentId) {
-                    this.parentId = parentId;
                 }
 
                 public Integer getCreatorId() {

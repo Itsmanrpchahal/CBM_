@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    tools:context=".fragments.Closets">
+    android:orientation="vertical"
+    android:id="@+id/parent_allClosets"
+    tools:context=".fragments.allClosets.AllClosets">
 
-    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/searchbar"></include>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allclosets_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

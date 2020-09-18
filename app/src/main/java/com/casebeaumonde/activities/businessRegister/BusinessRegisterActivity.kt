@@ -224,7 +224,6 @@ class BusinessRegisterActivity : AppCompatActivity() {
                     spinnertitle.setText(languages[position])
                 }
                 userType = languages[position]
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

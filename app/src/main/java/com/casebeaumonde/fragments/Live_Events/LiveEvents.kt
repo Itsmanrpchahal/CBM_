@@ -23,15 +23,19 @@ import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.constants.GridItemDecoration
+import com.casebeaumonde.fragments.HireExpert.IF.HireExpertIF
+import com.casebeaumonde.fragments.Live_Events.IF.LiveEventIF
 import com.casebeaumonde.fragments.Live_Events.adapter.LiveEventsAdapter
+import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.fragments.designers.adapter.DesignerAdapter
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_designers.*
 import kotlinx.android.synthetic.main.fragment_live_events.*
 import retrofit2.Response
+import kotlin.properties.Delegates
 
-class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
+class LiveEvents : BaseFrag(), Controller.LiveEventsAPI ,LiveEventIF,Controller.FavLiveEventAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -43,6 +47,7 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
     private lateinit var filterdata: ArrayList<LiveEventsResponse.Event>
     private lateinit var search_ET: EditText
     private lateinit var type: String
+    private var count : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +57,9 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_live_events, container, false)
         findIds(view)
+        liveEventIF = this
         controller = Controller()
-        controller.Controller(this)
+        controller.Controller(this,this)
 
         if (utility.isConnectingToInternet(context)) {
             pd.show()
@@ -215,6 +221,10 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
         }
     }
 
+    companion object {
+        var liveEventIF: LiveEventIF? = null
+    }
+
     private fun setFullData(closets: ArrayList<LiveEventsResponse.Event>) {
 
         live_events_recycler.visibility = View.VISIBLE
@@ -227,6 +237,27 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
         live_events_recycler.adapter = adapter
     }
 
+    override fun onFavLiveEventSuccess(favLiveEvent: Response<FavLiveEventResponse>) {
+       pd.dismiss()
+        if (favLiveEvent.isSuccessful)
+        {
+            utility!!.relative_snackbar(
+            parent_liveevents!!,
+            favLiveEvent.body()?.message,
+            getString(R.string.close_up)
+        )
+
+            controller.LiveEvents("Bearer " + getStringVal(Constants.TOKEN))
+
+        }else{
+            utility!!.relative_snackbar(
+                parent_liveevents!!,
+                favLiveEvent.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -234,5 +265,12 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI {
             error,
             getString(R.string.close_up)
         )
+    }
+
+    override fun getID(id: String?,coount : Int) {
+        pd.show()
+        count = coount
+
+     controller.favLiveEvent("Bearer "+getStringVal(Constants.TOKEN),id,"event")
     }
 }

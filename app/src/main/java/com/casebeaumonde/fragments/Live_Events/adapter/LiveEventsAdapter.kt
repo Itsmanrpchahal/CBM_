@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.eventDetail.EventDetailScreen
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.Live_Events.LiveEvents
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.utilities.Utils
@@ -45,6 +46,9 @@ class LiveEventsAdapter(val context : Context,val data: MutableList<LiveEventsRe
             holder.itemView.closetitem_favcount.text = list.hearts.size.toString()
         }
 
+        holder.itemView.closetitem_favorite.setOnClickListener {
+            LiveEvents.liveEventIF?.getID(list.id.toString(), list.hearts.size)
+        }
 
         searchUserHeart(list,holder.itemView.closetitem_favorite)
     }

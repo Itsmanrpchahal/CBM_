@@ -83,15 +83,33 @@
 
             </TextView>
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                android:id="@+id/additemclosets_categoryspinner"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_40dp"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                app:hintText="Select Category">
+                android:layout_margin="@dimen/margin_8dp">
 
-            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                <Spinner
+                    android:id="@+id/additemclosets_categoryspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:background="@drawable/roundcorners">
+
+                </Spinner>
+
+                <TextView
+                    android:id="@+id/additemclosets_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Select Category"
+                    android:textColor="@color/colorBlack"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_8dp">
+
+                </TextView>
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,15 +164,15 @@
 
             </TextView>
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <Spinner
                 android:id="@+id/additemclosets_Sizespinner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_40dp"
                 android:layout_margin="@dimen/margin_8dp"
                 android:background="@drawable/roundcorners"
-                app:hintText="Select Category">
+                >
 
-            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+            </Spinner>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -167,15 +185,15 @@
 
             </TextView>
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <Spinner
                 android:id="@+id/additemclosets_Colorpinner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_40dp"
                 android:layout_margin="@dimen/margin_8dp"
                 android:background="@drawable/roundcorners"
-                app:hintText="Select Category">
+                >
 
-            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+            </Spinner>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,15 +206,15 @@
 
             </TextView>
 
-            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            <Spinner
                 android:id="@+id/additemclosets_Brandpinner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_40dp"
                 android:layout_margin="@dimen/margin_8dp"
                 android:background="@drawable/roundcorners"
-                app:hintText="Select Category">
+                >
 
-            </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+            </Spinner>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -23,7 +23,7 @@ import retrofit2.Response
 
 class MyGigs : BaseClass(), Controller.GetUserGigsAPI {
 
-    public lateinit var mygigis_back: ImageView
+     lateinit var mygigis_back: ImageView
     lateinit var mygigigs_rv: RecyclerView
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog

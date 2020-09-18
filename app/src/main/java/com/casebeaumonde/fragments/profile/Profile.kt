@@ -368,7 +368,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             )
         } else {
             utility!!.relative_snackbar(
-                parent_main,
+                parent_profile,
                 "Task Cancelled",
                 getString(R.string.close_up)
             )

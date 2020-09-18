@@ -2,6 +2,7 @@ package com.casebeaumonde.fragments.allClosets.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +47,8 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
         }
 
         holder.itemView.setOnClickListener {
-            context.startActivity(Intent(context, ClosetsItems::class.java).putExtra(Constants.CLOSETID,""+listData.id))
+            context.startActivity(Intent(context, ClosetsItems::class.java)
+                .putExtra(Constants.CLOSETID,""+listData.id))
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {
@@ -91,3 +93,4 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
         }
     }
 }
+

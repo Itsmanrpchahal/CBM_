@@ -35,7 +35,8 @@ class MyClosetsAdapter(
     override fun onBindViewHolder(holder: MyClosetsAdapter.ViewHolder, position: Int) {
         val closets = closetsList.get(position)
         try {
-            Glide.with(context).load(Constants.BASE_IMAGE_URL+closets.image).placeholder(R.drawable.login_banner)
+            Glide.with(context).load(Constants.BASE_IMAGE_URL + closets.image)
+                .placeholder(R.drawable.login_banner)
                 .into(holder.itemView.closet_banner)
         } catch (e: Exception) {
 
@@ -50,7 +51,12 @@ class MyClosetsAdapter(
             "Created at: " + Utils.changeDateTimeToDateTime(closets.createdAt)
 
         holder.itemView.closet_go_to_closets.setOnClickListener {
-            context.startActivity(Intent(context,ClosetsItems::class.java).putExtra(Constants.CLOSETID,""+closets.id))
+            context.startActivity(
+                Intent(
+                    context,
+                    ClosetsItems::class.java
+                ).putExtra(Constants.CLOSETID, "" + closets.id)
+            )
         }
 
         holder.itemView.closets_edititem.setOnClickListener {

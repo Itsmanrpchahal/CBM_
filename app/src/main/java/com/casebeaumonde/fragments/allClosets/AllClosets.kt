@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.app.ActivityCompat.recreate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,17 +19,13 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
-import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.Live_Events.adapter.LiveEventsAdapter
 import com.casebeaumonde.fragments.allClosets.adapter.AllClosetsAdapter
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.fragment_closets.*
-import kotlinx.android.synthetic.main.fragment_live_events.*
-import kotlinx.android.synthetic.main.fragment_live_events.parent_liveevents
 import retrofit2.Response
 
 class AllClosets : BaseFrag(),Controller.AllClosetsAPI,ClosetItemID_IF ,Controller.AddTofavClosetItemAPI{

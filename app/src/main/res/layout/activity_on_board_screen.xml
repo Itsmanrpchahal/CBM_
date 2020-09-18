@@ -32,28 +32,13 @@
         </TextView>
 
         <TextView
-            android:id="@+id/onboard_about"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_40dp"
-            android:layout_weight="1"
-            android:text="About"
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@id/onboard_home"
-            android:layout_marginRight="2dp"
-            android:layout_marginLeft="2dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/textsize_14sp">
-
-        </TextView>
-
-        <TextView
             android:id="@+id/onboard_pricing"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/margin_40dp"
             android:layout_weight="1"
             android:text="Pricing"
             android:gravity="center_vertical"
-            android:layout_toRightOf="@id/onboard_about"
+            android:layout_toRightOf="@id/onboard_home"
             android:layout_marginRight="2dp"
             android:layout_marginLeft="2dp"
             android:textColor="@color/colorWhite"

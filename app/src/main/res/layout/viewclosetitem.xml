@@ -115,7 +115,7 @@
             android:layout_marginRight="@dimen/margin_8dp"
             android:layout_marginTop="@dimen/margin_8dp"
             android:layout_centerVertical="true"
-            android:text="11"
+            android:text=""
             android:textColorHint="@color/colorBlack"
             android:textColor="@color/colorBlack">
 
@@ -136,6 +136,20 @@
             android:background="@drawable/blackroundcorners">
 
         </Spinner>
+
+        <TextView
+            android:id="@+id/itemview_pinnertitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40dp"
+            android:textColor="@color/colorBlack"
+            android:text="FFF"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/textsize_16sp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_toLeftOf="@id/itemview_addtoclosetbt"
+            android:layout_marginRight="@dimen/margin_8dp">
+
+        </TextView>
 
         <Button
             android:id="@+id/itemview_addtoclosetbt"

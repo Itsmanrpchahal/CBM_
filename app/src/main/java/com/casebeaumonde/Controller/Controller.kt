@@ -5,6 +5,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
+import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
@@ -19,8 +20,9 @@ import com.casebeaumonde.activities.notifications.response.RemoveNotificationRes
 import com.casebeaumonde.createClosets.CreateClosetResponse
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
+import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
-import com.casebeaumonde.fragments.allClosets.AllClosets
+import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -51,6 +53,9 @@ public class Controller {
     var liveEventsAPI: LiveEventsAPI? = null
     var eventsDetailAPI: EventsDetailAPI? = null
     var allClosetAPI : AllClosetsAPI? = null
+    var addItemToAnotherClosetAPI : AdDItemToAnotherClosetAPI? = null
+    var favLiveEventAPI : FavLiveEventAPI? = null
+    var addClosetItemListAPI : AddClosetItemListAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -112,18 +117,23 @@ public class Controller {
     fun Controller(
         closetItems: ClosetItemsAPI,
         addTofavClosetItem: AddTofavClosetItemAPI,
-        deleteClosetItem: DeleteClosetItemAPI
+        deleteClosetItem: DeleteClosetItemAPI,
+        addClosetItemList: AddClosetItemListAPI
     ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
         deleteClosetItemAPI = deleteClosetItem
+        addClosetItemListAPI = addClosetItemList
         webAPI = WebAPI()
     }
 
     fun Controller(
-        liveEventsAP: LiveEventsAPI
+        liveEventsAP: LiveEventsAPI,
+        favLiveEvent: FavLiveEventAPI
     ) {
         liveEventsAPI = liveEventsAP
+        favLiveEventAPI = favLiveEvent
+
         webAPI = WebAPI()
     }
 
@@ -135,10 +145,11 @@ public class Controller {
     }
 
 
-    fun Controller(eventsDetail: EventsDetailAPI,addTofavClosetItem: AddTofavClosetItemAPI)
+    fun Controller(eventsDetail: EventsDetailAPI,addTofavClosetItem: AddTofavClosetItemAPI,addItemToAnotherCloset: AdDItemToAnotherClosetAPI)
     {
         eventsDetailAPI = eventsDetail
         addTofavClosetItemAPI = addTofavClosetItem
+        addItemToAnotherClosetAPI = addItemToAnotherCloset
         webAPI = WebAPI()
     }
 
@@ -529,6 +540,62 @@ public class Controller {
         })
     }
 
+    fun AddItemToAnotherCloset(token: String?,itemId:String?,closetId : String?,type: String?)
+    {
+       webAPI?.api?.addItemToAnotherCloset(token,itemId,closetId,type)?.enqueue(object : Callback<AddItemToAnotherCloset>
+       {
+           override fun onResponse(
+               call: Call<AddItemToAnotherCloset>,
+               response: Response<AddItemToAnotherCloset>
+           ) {
+               val addToCloset = response
+               addItemToAnotherClosetAPI?.onAddItemToAnotherClosetSuccess(addToCloset)
+           }
+
+           override fun onFailure(call: Call<AddItemToAnotherCloset>, t: Throwable) {
+              addItemToAnotherClosetAPI?.error(t.message)
+           }
+
+       })
+    }
+
+    fun favLiveEvent(token: String?,id: String?,type: String?)
+    {
+        webAPI?.api?.favLiveEventResponse(token, id, type)?.enqueue(object : Callback<FavLiveEventResponse>
+        {
+            override fun onResponse(
+                call: Call<FavLiveEventResponse>,
+                response: Response<FavLiveEventResponse>
+            ) {
+                val favLiveEvent = response
+                favLiveEventAPI?.onFavLiveEventSuccess(favLiveEvent)
+            }
+
+            override fun onFailure(call: Call<FavLiveEventResponse>, t: Throwable) {
+               favLiveEventAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun AddClosetItemList(token: String?)
+    {
+        webAPI?.api?.addClosetItemLists(token)?.enqueue(object : Callback<AddClosetItemResponse>
+        {
+            override fun onResponse(
+                call: Call<AddClosetItemResponse>,
+                response: Response<AddClosetItemResponse>
+            ) {
+                val closetLists = response
+                addClosetItemListAPI?.onAddClosetItemListSuccess(closetLists)
+            }
+
+            override fun onFailure(call: Call<AddClosetItemResponse>, t: Throwable) {
+                addClosetItemListAPI?.error(t.message)
+            }
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -628,5 +695,20 @@ public class Controller {
     interface AllClosetsAPI {
         fun onAllEventsSuccess (allClosetsResponse: Response<AllClosetsResponse>)
         fun error(error : String?)
+    }
+
+    interface AdDItemToAnotherClosetAPI {
+        fun onAddItemToAnotherClosetSuccess(addItemToAnotherCloset: Response<AddItemToAnotherCloset>)
+        fun error(error: String?)
+    }
+
+    interface FavLiveEventAPI {
+        fun onFavLiveEventSuccess(favLiveEvent: Response<FavLiveEventResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddClosetItemListAPI {
+        fun onAddClosetItemListSuccess (addClosetItemList : Response<AddClosetItemResponse>)
+        fun error(error: String?)
     }
 }

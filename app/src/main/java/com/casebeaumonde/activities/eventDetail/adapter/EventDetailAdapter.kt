@@ -14,6 +14,7 @@ import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.eventDetail.EventDetailScreen
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.allClosets.AllClosets
 import kotlinx.android.synthetic.main.closetsitems.view.*
 
 class EventDetailAdapter(
@@ -37,7 +38,10 @@ class EventDetailAdapter(
         Glide.with(context).load(Constants.BASE_IMAGE_URL+listdata.picture).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = listdata.title
         holder.itemView.closetitem_uploadby.text = "Uploaded by :"+listdata.creator.firstname
-        holder.itemView.closetitem_favcount.text = listdata.hearts.size.toString()
+        if (listdata.hearts.size>0)
+        {
+            holder.itemView.closetitem_favcount.text = listdata.hearts.size.toString()
+        }
 
         if (listdata.hearts.size>0)
         {
@@ -53,6 +57,10 @@ class EventDetailAdapter(
 
         holder.itemView.closetitem_favorite.setOnClickListener {
             EventDetailScreen.closetitemidIf!!.getClosetID(listdata.id.toString())
+        }
+
+        holder.itemView.setOnClickListener {
+            EventDetailScreen.eventID_IF!!.getEventID(position)
         }
     }
 

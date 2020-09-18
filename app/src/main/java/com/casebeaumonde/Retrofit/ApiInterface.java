@@ -4,6 +4,7 @@ import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
+import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
@@ -15,7 +16,9 @@ import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegist
 import com.casebeaumonde.createClosets.CreateClosetResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse;
+import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse;
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
+import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse;
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
@@ -24,7 +27,6 @@ import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
 import com.google.gson.JsonObject;
-
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -217,6 +219,28 @@ public interface ApiInterface {
 
     @GET("api/v1/getAllCloset")
     Call<AllClosetsResponse> allClosets (
+            @Header("Authorization") String token
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/addItemToCloset")
+    Call<AddItemToAnotherCloset> addItemToAnotherCloset (
+            @Header("Authorization") String token,
+            @Field("itemid") String itemid,
+            @Field("closetid") String closetid,
+            @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/heartEvent")
+    Call<FavLiveEventResponse> favLiveEventResponse (
+            @Header("Authorization") String token,
+            @Field("id") String id,
+            @Field("type") String type
+    );
+
+    @GET("api/v1/fetchList")
+    Call<AddClosetItemResponse> addClosetItemLists (
             @Header("Authorization") String token
     );
 }

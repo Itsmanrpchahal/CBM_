@@ -89,7 +89,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         closetitemidIf = this
         deleteClosetID = this
         lsiteners()
-
     }
 
     private fun lsiteners() {

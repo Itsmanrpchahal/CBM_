@@ -289,13 +289,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         pd.show()
         pd.setContentView(R.layout.loading)
         tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
+        //tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
+       // tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
+        //tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
+       // tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
+       // tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
         tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
         tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
 
@@ -353,7 +353,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             path = filePath!!
             bitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver, fileUri)
-            part = Utility.sendImageFileToserver(context?.filesDir, bitMap)
+            part = Utility.sendImageFileToserver(context?.filesDir, bitMap,"image")
 
             updateAvatar(
                 part,
@@ -558,7 +558,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     }
 
     override fun onTabSelected(p0: TabLayout.Tab?) {
-        Toast.makeText(context, "" + p0?.text, Toast.LENGTH_SHORT).show()
         when {
             p0?.text?.equals("My Closets")!! -> {
                 startActivity(Intent(context, MyClosets::class.java))

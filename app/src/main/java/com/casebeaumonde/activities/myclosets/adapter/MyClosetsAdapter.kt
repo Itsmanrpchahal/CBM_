@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
+import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.Constants
@@ -65,6 +66,10 @@ class MyClosetsAdapter(
 
         holder.itemView.closets_delete.setOnClickListener {
             MyClosets.deleteClosetID!!.deleteClosetID(closets.id.toString())
+        }
+
+        holder.itemView.closets_additem.setOnClickListener {
+            context.startActivity(Intent(context,AddItemToCloset::class.java).putExtra("closetID",closets.id.toString()))
         }
     }
 

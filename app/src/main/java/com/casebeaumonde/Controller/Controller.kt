@@ -5,6 +5,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
+import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
@@ -56,6 +57,8 @@ public class Controller {
     var addItemToAnotherClosetAPI : AdDItemToAnotherClosetAPI? = null
     var favLiveEventAPI : FavLiveEventAPI? = null
     var addClosetItemListAPI : AddClosetItemListAPI? = null
+    var addClosetItemsAPI : AddClosetItemAPI? = null
+    var editClosetItemAPI : EditClosetItemAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -118,12 +121,14 @@ public class Controller {
         closetItems: ClosetItemsAPI,
         addTofavClosetItem: AddTofavClosetItemAPI,
         deleteClosetItem: DeleteClosetItemAPI,
-        addClosetItemList: AddClosetItemListAPI
+        editClosetItem : EditClosetItemAPI,
+        addItemToAnotherCloset: AdDItemToAnotherClosetAPI
     ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
         deleteClosetItemAPI = deleteClosetItem
-        addClosetItemListAPI = addClosetItemList
+        editClosetItemAPI = editClosetItem
+        addItemToAnotherClosetAPI = addItemToAnotherCloset
         webAPI = WebAPI()
     }
 
@@ -157,6 +162,14 @@ public class Controller {
     {
         allClosetAPI = allClosets
         addTofavClosetItemAPI = addTofavClosetItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(addClosetItemList:AddClosetItemListAPI,addclosetItem: AddClosetItemAPI)
+    {
+
+        addClosetItemListAPI = addClosetItemList
+        addClosetItemsAPI = addclosetItem
         webAPI = WebAPI()
     }
 
@@ -596,6 +609,43 @@ public class Controller {
         })
     }
 
+    fun AddClosetItems(token: String?,picture : MultipartBody.Part,title : String,description : String,closet_id : String,category_id : String,size : String,color : String,brand : String,price : String)
+    {
+        webAPI?.api?.addClosetItem(token, picture, title, description, closet_id, category_id, size, color, brand,price.toDouble())?.enqueue(object : Callback<AddClosetItemResponse>
+        {
+            override fun onResponse(
+                call: Call<AddClosetItemResponse>,
+                response: Response<AddClosetItemResponse>
+            ) {
+                val addclosetItem = response
+                addClosetItemsAPI?.onAddClosetItemSuccess(addclosetItem)
+            }
+
+            override fun onFailure(call: Call<AddClosetItemResponse>, t: Throwable) {
+                addTofavClosetItemAPI?.error(t.message)
+            }
+        })
+    }
+
+    fun EditClosetItem(token: String?,picture: MultipartBody.Part,title: String?,decripition: String?,closet_id: String,category_id: String,size: String,color: String,brand: String,price: String,id: String?)
+    {
+        webAPI?.api?.editClosetItem(token,picture,title,decripition,closet_id,category_id,size,color,brand,price.toDouble(),id)?.enqueue(object : Callback<EditClosetItemResponse>
+        {
+            override fun onResponse(
+                call: Call<EditClosetItemResponse>,
+                response: Response<EditClosetItemResponse>
+            ) {
+                val editClosetItem = response
+                editClosetItemAPI?.onEditClosetItemSuccess(editClosetItem)
+            }
+
+            override fun onFailure(call: Call<EditClosetItemResponse>, t: Throwable) {
+                editClosetItemAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -709,6 +759,16 @@ public class Controller {
 
     interface AddClosetItemListAPI {
         fun onAddClosetItemListSuccess (addClosetItemList : Response<AddClosetItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddClosetItemAPI {
+        fun onAddClosetItemSuccess(addclosetItem : Response<AddClosetItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface EditClosetItemAPI {
+        fun onEditClosetItemSuccess(editClosetItem : Response<EditClosetItemResponse>)
         fun error(error: String?)
     }
 }

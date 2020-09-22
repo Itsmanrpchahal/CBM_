@@ -311,7 +311,7 @@ class BusinessRegisterActivity : AppCompatActivity() {
             uploadfilename.text = filePath
             path = filePath!!
             bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
-            part = Utility.sendImageFileToserver(filesDir,bitMap)
+            part = Utility.sendImageFileToserver(filesDir,bitMap,"image")
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             utility!!.relative_snackbar(
                 bregister_parent!!,

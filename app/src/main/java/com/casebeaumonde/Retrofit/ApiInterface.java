@@ -4,6 +4,7 @@ import com.casebeaumonde.UpdateProfilePicResponse;
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
+import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
@@ -242,5 +243,36 @@ public interface ApiInterface {
     @GET("api/v1/fetchList")
     Call<AddClosetItemResponse> addClosetItemLists (
             @Header("Authorization") String token
+    );
+
+    @Multipart
+    @POST("api/v1/addClosetItem")
+    Call<AddClosetItemResponse> addClosetItem (
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part picture,
+            @Query("title") String title,
+            @Query("description") String description,
+            @Query("closet_id") String closet_id,
+            @Query("category_id") String category_id,
+            @Query("size") String size,
+            @Query("color") String color,
+            @Query("brand") String brand,
+            @Query("price") Double price
+    );
+
+    @Multipart
+    @POST("api/v1/updateClosetItem")
+    Call<EditClosetItemResponse> editClosetItem (
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part picture,
+            @Query("title") String title,
+            @Query("description") String description,
+            @Query("closet_id") String closet_id,
+            @Query("category_id") String category_id,
+            @Query("size") String size,
+            @Query("color") String color,
+            @Query("brand") String brand,
+            @Query("price") Double price,
+            @Query("id") String id
     );
 }

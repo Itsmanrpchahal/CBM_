@@ -8,8 +8,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -17,29 +19,36 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
+import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
+import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
+import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
+import kotlinx.android.synthetic.main.activity_business_register.*
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.additemtoclosets.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.viewclosetitem.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
+import java.lang.Exception
 
 class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
-    Controller.AddClosetItemListAPI {
+     Controller.EditClosetItemAPI ,Controller.AdDItemToAnotherClosetAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -51,29 +60,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var hearlist: ArrayList<ClosetsItemsResponse.Data.Closet.Item.Heart>
     private lateinit var closetResponse: ArrayList<ClosetsItemsResponse.Data.Closet.Item>
     private lateinit var dialog: Dialog
-    private var path: String = ""
-    private lateinit var part: MultipartBody.Part
-    private lateinit var bitMap: Bitmap
-    private lateinit var aditemtocloset_title: EditText
-    private lateinit var aditemtocloset_decs: EditText
-    private lateinit var additemclosets_categoryspinner: Spinner
-    private lateinit var additemclosets__upload: Button
-    private lateinit var additemclosets__uploadfilename: TextView
-    private lateinit var additemclosets_Sizespinner: Spinner
-    private lateinit var additemclosets_Colorpinner: Spinner
-    private lateinit var additemclosets_Brandpinner: Spinner
-    private lateinit var aditemtocloset_price: EditText
-    private lateinit var aditemtocloset_add: Button
-    private lateinit var aditemtocloset_cancel: Button
-    private lateinit var additemclosets_category: TextView
     private lateinit var logoutDialog: Dialog
     private lateinit var Viewdialog: Dialog
-    private lateinit var closetCreateListItems: ArrayList<AddClosetItemResponse.Data>
-    private lateinit var categorties: ArrayList<AddClosetItemResponse.Data.Category>
-    private lateinit var cateName: ArrayList<String>
-    private lateinit var brands: ArrayList<AddClosetItemResponse.Data.Brand>
-    private lateinit var size: ArrayList<AddClosetItemResponse.Data.Size>
-    private lateinit var color: ArrayList<AddClosetItemResponse.Data.Color>
+    private lateinit var userClosets : ArrayList<ClosetsItemsResponse.Data.AllCloset>
     private lateinit var list: ArrayList<String>
     private lateinit var listID: ArrayList<String>
 
@@ -82,13 +71,17 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         setContentView(R.layout.activity_closets_items)
         findIds()
         controller = Controller()
-        controller.Controller(this, this, this, this)
+        controller.Controller(this, this, this,   this,this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
 
-        setClosetAPI()
         closetitemidIf = this
         viewclosetidIf = this
         listeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setClosetAPI()
     }
 
     private fun listeners() {
@@ -97,81 +90,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
 
         closetiems_add.setOnClickListener {
-            addItemToCloset()
+            startActivity(Intent(this,AddItemToCloset::class.java).putExtra("closetID",closetID))
+           // addItemToCloset(closetItemID)
         }
-    }
-
-    private fun addItemToCloset() {
-        dialog = Dialog(this!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-        dialog.setContentView(R.layout.additemtoclosets)
-        findAddClosetItemIDs(dialog)
-        val window = dialog.window
-        window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        AddClosetsLisetners(dialog)
-
-
-        setFetchList(additemclosets_categoryspinner, cateName, additemclosets_category)
-
-        dialog.show()
-    }
-
-    private fun AddClosetsLisetners(dialog: Dialog) {
-        dialog.additemclosets__upload.setOnClickListener {
-            pictureSelectionDialog()
-        }
-
-        dialog.aditemtocloset_cancel.setOnClickListener {
-            dialog.dismiss()
-        }
-    }
-
-    private fun setFetchList(
-        additemclosetsCategoryspinner: Spinner,
-        categortie: ArrayList<String>,
-        additemclosets_category: TextView
-    ) {
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_dropdown_item, categortie
-        )
-        additemclosetsCategoryspinner.adapter = adapter
-        additemclosetsCategoryspinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-
-                additemclosets_category.setText(categorties.get(position).name)
-
-                // userType = languages[position]
-
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
-    }
-
-    private fun findAddClosetItemIDs(dialog: Dialog) {
-        aditemtocloset_title = dialog.findViewById(R.id.aditemtocloset_title)
-        aditemtocloset_decs = dialog.findViewById(R.id.aditemtocloset_decs)
-        additemclosets_categoryspinner = dialog.findViewById(R.id.additemclosets_categoryspinner)
-        additemclosets__upload = dialog.findViewById(R.id.additemclosets__upload)
-        additemclosets__uploadfilename = dialog.findViewById(R.id.additemclosets__uploadfilename)
-        additemclosets_Sizespinner = dialog.findViewById(R.id.additemclosets_Sizespinner)
-        additemclosets_Colorpinner = dialog.findViewById(R.id.additemclosets_Colorpinner)
-        additemclosets_Brandpinner = dialog.findViewById(R.id.additemclosets_Brandpinner)
-        aditemtocloset_price = dialog.findViewById(R.id.aditemtocloset_price)
-        aditemtocloset_cancel = dialog.findViewById(R.id.aditemtocloset_cancel)
-        aditemtocloset_add = dialog.findViewById(R.id.aditemtocloset_add)
-        additemclosets_category = dialog.findViewById(R.id.additemclosets_category)
     }
 
     private fun setClosetAPI() {
@@ -233,6 +154,8 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     it
                 )
             }
+            userClosets = ArrayList()
+            userClosets.addAll(closetItemsResponse.body()?.data?.allClosets!!)
             closetResponse = ArrayList()
             closetResponse.addAll(closetItemsResponse.body()?.data?.closet?.items!!)
             closetsItems_recycler.adapter = adapter
@@ -242,8 +165,6 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             ) {
                 closetiems_add.visibility = View.VISIBLE
             }
-
-
         } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
@@ -285,32 +206,25 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
     }
 
-    override fun onAddClosetItemListSuccess(addClosetItemList: Response<AddClosetItemResponse>) {
+    override fun onEditClosetItemSuccess(editClosetItem: Response<EditClosetItemResponse>) {
+        //Viewdialog.dismiss()
+        setClosetAPI()
+    }
+
+    override fun onAddItemToAnotherClosetSuccess(addItemToAnotherCloset: Response<AddItemToAnotherCloset>) {
         pd.dismiss()
-        // dialog.dismiss()
-
-        if (addClosetItemList.isSuccessful) {
-            categorties = ArrayList()
-            cateName = ArrayList()
-            categorties =
-                addClosetItemList.body()?.data?.categories as ArrayList<AddClosetItemResponse.Data.Category>
-
-            for (i in 0 until categorties.size) {
-                val cat = categorties.get(i)
-                cateName.add(cat.name)
-            }
-
-            brands =
-                addClosetItemList.body()?.data?.brands as ArrayList<AddClosetItemResponse.Data.Brand>
-            color =
-                addClosetItemList.body()?.data?.colors as ArrayList<AddClosetItemResponse.Data.Color>
-            size =
-                addClosetItemList.body()?.data?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
-
+        Viewdialog.dismiss()
+        if (addItemToAnotherCloset.isSuccessful) {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                addItemToAnotherCloset.body()?.messsage,
+                getString(R.string.close_up)
+            )
+            setClosetAPI()
         } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                addClosetItemList.message(),
+                addItemToAnotherCloset.message(),
                 getString(R.string.close_up)
             )
         }
@@ -334,68 +248,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             )
 
         } else {
-            utility.relative_snackbar(
+            utility!!.relative_snackbar(
                 parent_closetsItems!!,
                 "No Internet Connectivity",
-                getString(R.string.close_up)
-            )
-        }
-    }
-
-
-    private fun pictureSelectionDialog() {
-        val camera: LinearLayout
-        val gallery: LinearLayout
-        val dialog = Dialog(this!!)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.imagepicker)
-        camera = dialog.findViewById(R.id.linear_camera) as LinearLayout
-        gallery = dialog.findViewById(R.id.linear_gallery) as LinearLayout
-
-        camera.setOnClickListener {
-            ImagePicker.with(this)
-                .cameraOnly()
-                .crop()         //User can only capture image using Camera
-                .start()
-            dialog.dismiss()
-        }
-
-        gallery.setOnClickListener {
-            ImagePicker.with(this)
-                .galleryOnly()
-                .crop()     //User can only select image from Gallery
-                .start()    //Default Request Code is ImagePicker.REQUEST_CODE
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            //Image Uri will not be null for RESULT_OK
-            val fileUri = data?.data
-
-            //You can get File object from intent
-            var file: File? = ImagePicker.getFile(data)
-            //You can also get File Path from intent
-            val filePath: String? = ImagePicker.getFilePath(data)
-
-            path = filePath!!
-            bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
-            part = Utility.sendImageFileToserver(filesDir, bitMap)
-            additemclosets__uploadfilename.text = path.toString()
-
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            utility!!.relative_snackbar(
-                parent_main!!,
-                ImagePicker.getError(data),
-                getString(R.string.close_up)
-            )
-        } else {
-            utility!!.relative_snackbar(
-                parent_main,
-                "Task Cancelled",
                 getString(R.string.close_up)
             )
         }
@@ -428,7 +283,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         var viewitem_checkbox: CheckBox
         var itemview_spinner: Spinner
         var itemview_editbt: Button
+        var itemview_closebt : Button
         var itemview_addtoclosetbt: Button
+        var itemview_pinnertitle : TextView
 
         viewitem_image = Viewdialog.findViewById(R.id.viewitem_image)
         viewitem_title = Viewdialog.findViewById(R.id.viewitem_title)
@@ -441,7 +298,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         itemview_removebt = Viewdialog.findViewById(R.id.itemview_removebt)
         itemview_spinner = Viewdialog.findViewById(R.id.itemview_spinner)
         itemview_editbt = Viewdialog.findViewById(R.id.itemview_editbt)
+        itemview_closebt = Viewdialog.findViewById(R.id.itemview_closebt)
         itemview_addtoclosetbt = Viewdialog.findViewById(R.id.itemview_addtoclosetbt)
+        itemview_pinnertitle = Viewdialog.findViewById(R.id.itemview_pinnertitle)
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL + closetResponse.get(id!!).picture)
             .placeholder(R.drawable.login_banner).into(viewitem_image)
@@ -471,16 +330,21 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
         itemview_editbt.setOnClickListener {
             Viewdialog.dismiss()
-            addItemToCloset()
+            //addItemToCloset(closetItemID)
         }
+
+        itemview_closebt.setOnClickListener {
+            Viewdialog.dismiss()
+        }
+
         searchUserHeart(closetResponse.get(id).hearts, viewitem_checkbox)
 
-        // setSpinnerData(userClosets,itemview_spinner,closetResponse.get(id).id,itemview_addtoclosetbt,spinnertitle)
+         setSpinnerData(userClosets,itemview_spinner,closetResponse.get(id).id,itemview_addtoclosetbt,itemview_pinnertitle)
         Viewdialog.show()
     }
 
     private fun setSpinnerData(
-        userClosets: ArrayList<ClosetsItemsResponse.Data.Closet>,
+        userClosets: ArrayList<ClosetsItemsResponse.Data.AllCloset>,
         itemviewSpinner: Spinner,
         id: Int,
         itemviewAddtoclosetbt: Button,
@@ -521,7 +385,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             pd.show()
             controller.AddItemToAnotherCloset(
                 "Bearer " + getStringVal(Constants.TOKEN),
-                id.toString(), closetId, "event_item"
+                id.toString(), closetId, "closet_item"
             )
         }
     }

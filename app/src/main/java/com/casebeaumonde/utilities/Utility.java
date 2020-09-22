@@ -71,10 +71,10 @@ public class Utility {
     }
 
     //convert image to multipart
-    public static MultipartBody.Part sendImageFileToserver(File filesDir,Bitmap bitMap) throws IOException {
+    public static MultipartBody.Part sendImageFileToserver(File filesDir,Bitmap bitMap,String image) throws IOException {
 
 
-        File file = new File(filesDir, "image" + ".png");
+        File file = new File(filesDir, image + ".png");
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitMap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
@@ -86,8 +86,8 @@ public class Utility {
         fos.close();
 
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "image");
+        MultipartBody.Part body = MultipartBody.Part.createFormData(image, file.getName(), reqFile);
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), image);
 
         return body;
     }

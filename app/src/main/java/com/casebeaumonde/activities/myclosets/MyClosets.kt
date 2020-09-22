@@ -40,7 +40,6 @@ import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_my_closets.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
@@ -99,7 +98,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         create_closets.setOnClickListener {
 
             CreateClosets(-1)
-
         }
 
         search_ET!!.addTextChangedListener(object : TextWatcher {
@@ -202,7 +200,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                         Log.d("image", "" + resource)
                         createcloset_uploadfilename.text = resource.toString()
                         bitMap = resource
-                        part = Utility.sendImageFileToserver(filesDir, bitMap)
+                        part = Utility.sendImageFileToserver(filesDir, bitMap,"image")
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) {
@@ -461,20 +459,20 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             path = filePath!!
             createcloset_uploadfilename.text = filePath
             bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
-            part = Utility.sendImageFileToserver(filesDir, bitMap)
+            part = Utility.sendImageFileToserver(filesDir, bitMap,"image")
 
             Glide.with(this).load(bitMap).placeholder(R.drawable.login_banner)
                 .into(createcloset_imagerperview)
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             utility!!.relative_snackbar(
-                parent_main!!,
+                parent_myclosets!!,
                 ImagePicker.getError(data),
                 getString(R.string.close_up)
             )
         } else {
             utility!!.relative_snackbar(
-                parent_main,
+                parent_myclosets,
                 "Task Cancelled",
                 getString(R.string.close_up)
             )

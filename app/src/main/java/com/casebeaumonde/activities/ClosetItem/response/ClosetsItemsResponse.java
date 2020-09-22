@@ -224,7 +224,7 @@ this.data = data;
                 private Brand brand;
                 @SerializedName("price")
                 @Expose
-                private Integer price;
+                private Double price;
                 @SerializedName("picture")
                 @Expose
                 private String picture;
@@ -333,11 +333,11 @@ this.data = data;
                     this.brand = brand;
                 }
 
-                public Integer getPrice() {
+                public Double getPrice() {
                     return price;
                 }
 
-                public void setPrice(Integer price) {
+                public void setPrice(Double price) {
                     this.price = price;
                 }
 
@@ -1109,5 +1109,37 @@ this.data = data;
 
             }
         }
+
+        @SerializedName("all_closet")
+        @Expose
+        public List<AllCloset> allClosets = null;
+
+        public class AllCloset {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("title")
+            @Expose
+            private String title;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+        }
     }
+
+
 }

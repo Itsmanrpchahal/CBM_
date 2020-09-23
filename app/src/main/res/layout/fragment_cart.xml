@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.Cart">
+    android:id="@+id/parent_cart"
+    tools:context=".fragments.cart.Cart">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Cart" />
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/cartitems_recycler"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+   </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>

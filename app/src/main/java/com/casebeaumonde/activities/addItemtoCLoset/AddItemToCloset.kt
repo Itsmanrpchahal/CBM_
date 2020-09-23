@@ -7,26 +7,33 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
+import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse
+import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_add_item_to_closet.*
+import kotlinx.android.synthetic.main.activity_closets_items.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 
-class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller.AddClosetItemAPI {
+class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller.AddClosetItemAPI,
+    Controller.ClosetItemsAPI ,Controller.EditClosetItemAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -37,6 +44,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
     private lateinit var brands: ArrayList<AddClosetItemResponse.Data.Brand>
     private lateinit var size: ArrayList<AddClosetItemResponse.Data.Size>
     private lateinit var color: ArrayList<AddClosetItemResponse.Data.Color>
+    private lateinit var closetItems: ArrayList<ClosetsItemsResponse.Data.Closet>
     private lateinit var cateName: ArrayList<String>
     private lateinit var brandName: ArrayList<String>
     private lateinit var Size: ArrayList<String>
@@ -44,11 +52,13 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
     private lateinit var list: ArrayList<String>
     private lateinit var listID: ArrayList<String>
     private var cateID = ""
+    private var categoryName = ""
     private var brandID = ""
     private var colorID = ""
     private var sizeID = ""
     private var closetItemID = ""
     private var path: String = ""
+    private var edit: String = ""
     private lateinit var part: MultipartBody.Part
     private lateinit var bitMap: Bitmap
     private lateinit var aditemtocloset_title: EditText
@@ -73,9 +83,16 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         setContentView(R.layout.activity_add_item_to_closet)
         findIds()
         controller = Controller()
-        controller.Controller(this, this)
+        controller.Controller(this, this, this,this)
         controller.AddClosetItemList("Bearer " + getStringVal(Constants.TOKEN))
         listeners()
+        edit = intent.getStringExtra("edit").toString()
+        pd.show()
+        pd.setContentView(R.layout.loading)
+        controller.ClosetItems(
+            "Bearer " + getStringVal(Constants.TOKEN),
+            intent.getStringExtra("closetID")
+        )
     }
 
     private fun listeners() {
@@ -92,7 +109,13 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         }
 
 
-        addItems(intent.getStringExtra("closetID"))
+        aditemtocloset_add.setOnClickListener {
+//            if (edit.equals("1")) {
+//                UpdateItem(intent.getStringExtra("closetID"), intent.getStringExtra("closetItemID"))
+//            } else {
+                addItems(intent.getStringExtra("closetID"),edit)
+//            }
+        }
     }
 
     private fun findIds() {
@@ -179,32 +202,48 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         }
     }
 
-    private fun addItems(closetId: String?) {
-        aditemtocloset_add.setOnClickListener {
-            when {
-                aditemtocloset_title.text.isEmpty() -> {
-                    aditemtocloset_title.setError("Enter Title")
-                    aditemtocloset_title.requestFocus()
-                }
+    private fun addItems(closetId: String?, edit: String) {
 
-                aditemtocloset_decs.text.isEmpty() -> {
-                    aditemtocloset_decs.setError("Enter Description")
-                    aditemtocloset_decs.requestFocus()
-                }
+        when {
+            aditemtocloset_title.text.isEmpty() -> {
+                aditemtocloset_title.setError("Enter Title")
+                aditemtocloset_title.requestFocus()
+            }
 
-                additemclosets__uploadfilename.text.isEmpty() -> {
-                    additemclosets__uploadfilename.setError("Upload Image")
-                    additemclosets__uploadfilename.requestFocus()
-                }
+            aditemtocloset_decs.text.isEmpty() -> {
+                aditemtocloset_decs.setError("Enter Description")
+                aditemtocloset_decs.requestFocus()
+            }
 
-                aditemtocloset_price.text.isEmpty() -> {
-                    aditemtocloset_price.setError("Enter Price")
-                    aditemtocloset_price.requestFocus()
-                }
-                else -> {
-                    // if (aditemtocloset_add.equals("Add")) {
-                    pd.show()
-                    pd.setContentView(R.layout.loading)
+            additemclosets__uploadfilename.text.isEmpty() -> {
+                additemclosets__uploadfilename.setError("Upload Image")
+                additemclosets__uploadfilename.requestFocus()
+            }
+
+            aditemtocloset_price.text.isEmpty() -> {
+                aditemtocloset_price.setError("Enter Price")
+                aditemtocloset_price.requestFocus()
+            }
+            else -> {
+                // if (aditemtocloset_add.equals("Add")) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                if (edit.equals("1"))
+                {
+                    controller.EditClosetItem(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        part,
+                        aditemtocloset_title.text.toString(),
+                        aditemtocloset_decs.text.toString(),
+                        closetId.toString(),
+                        cateID,
+                        sizeID,
+                        colorID,
+                        brandID,
+                        aditemtocloset_price.text.toString(),
+                        closetItemID
+                    )
+                }else {
                     controller.AddClosetItems(
                         "Bearer " + getStringVal(Constants.TOKEN),
                         part,
@@ -219,6 +258,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     )
                 }
             }
+
         }
     }
 
@@ -289,6 +329,49 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         }
     }
 
+    override fun onClosetItemSuccess(closetItemsResponse: Response<ClosetsItemsResponse>) {
+        pd.dismiss()
+        if (closetItemsResponse.isSuccessful) {
+            if (edit.equals("1"))
+            {
+                closetItemID = closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.id.toString()
+                aditemtocloset_title.setText(closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.title)
+                aditemtocloset_decs.setText(closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.description)
+                aditemtocloset_price.setText(closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.price.toString())
+                cateID = closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.category?.id.toString()!!
+                categoryName = closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.category?.name!!
+                Glide.with(this).asBitmap().load(Constants.BASE_IMAGE_URL + closetItemsResponse.body()?.data?.closet?.items?.get(intent.getStringExtra("closetItemID").toInt())?.picture)
+                    .into(object : CustomTarget<Bitmap?>() {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: com.bumptech.glide.request.transition.Transition<in Bitmap?>?
+                        ) {
+                            Log.d("image", "" + resource)
+                            additemclosets__uploadfilename.text = resource.toString()
+                            bitMap = resource
+                            part = Utility.sendImageFileToserver(filesDir, bitMap,"image")
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            Log.d("loadcleared", "" + placeholder)
+                        }
+                    })
+            }
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                closetItemsResponse.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun onEditClosetItemSuccess(editClosetItem: Response<EditClosetItemResponse>) {
+        pd.dismiss()
+        onBackPressed()
+    }
+
     override fun error(error: String?) {
         utility!!.relative_snackbar(
             parent_additemtocloset!!,
@@ -311,9 +394,12 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-                additemclosets_category.setText(categorties.get(position).name)
-                // userType = languages[position]
-                cateID = categorties.get(position).id.toString()
+                if (position!=null)
+                {
+                    additemclosets_category.setText(categorties.get(position).name)
+                    // userType = languages[position]
+                    cateID = categorties.get(position).id.toString()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

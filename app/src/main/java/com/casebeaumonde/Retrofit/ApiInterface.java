@@ -19,8 +19,9 @@ import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse;
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse;
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
-import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse;
+import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse;
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
+import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
@@ -274,5 +275,11 @@ public interface ApiInterface {
             @Query("brand") String brand,
             @Query("price") Double price,
             @Query("id") String id
+    );
+
+
+    @GET("api/v1/cartItem")
+    Call<CartItemsResponse> cartItem (
+            @Header("Authorization") String token
     );
 }

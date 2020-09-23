@@ -141,11 +141,9 @@ class AllClosets : BaseFrag(),Controller.AllClosetsAPI,ClosetItemID_IF ,Controll
        pd.dismiss()
         if (allClosetsResponse.isSuccessful)
         {
-
             response = allClosetsResponse.body()?.data?.closet as ArrayList<AllClosetsResponse.Data.Closet>
-
             setFullData(response)
-        }else{
+        } else {
             utility!!.relative_snackbar(
                 parent_allClosets!!,
                 allClosetsResponse.message(),

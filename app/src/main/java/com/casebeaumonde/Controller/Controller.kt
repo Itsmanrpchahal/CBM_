@@ -23,8 +23,9 @@ import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
-import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse
+import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
+import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,6 +60,7 @@ public class Controller {
     var addClosetItemListAPI : AddClosetItemListAPI? = null
     var addClosetItemsAPI : AddClosetItemAPI? = null
     var editClosetItemAPI : EditClosetItemAPI? = null
+    var cartItemAPI : CartItemAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -121,13 +123,11 @@ public class Controller {
         closetItems: ClosetItemsAPI,
         addTofavClosetItem: AddTofavClosetItemAPI,
         deleteClosetItem: DeleteClosetItemAPI,
-        editClosetItem : EditClosetItemAPI,
         addItemToAnotherCloset: AdDItemToAnotherClosetAPI
     ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
         deleteClosetItemAPI = deleteClosetItem
-        editClosetItemAPI = editClosetItem
         addItemToAnotherClosetAPI = addItemToAnotherCloset
         webAPI = WebAPI()
     }
@@ -165,11 +165,18 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(addClosetItemList:AddClosetItemListAPI,addclosetItem: AddClosetItemAPI)
+    fun Controller(addClosetItemList:AddClosetItemListAPI,addclosetItem: AddClosetItemAPI,closetItems: ClosetItemsAPI,editClosetItem: EditClosetItemAPI)
     {
-
         addClosetItemListAPI = addClosetItemList
         addClosetItemsAPI = addclosetItem
+        closetItemsAPI = closetItems
+        editClosetItemAPI = editClosetItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(cartItem: CartItemAPI)
+    {
+        cartItemAPI = cartItem
         webAPI = WebAPI()
     }
 
@@ -511,7 +518,6 @@ public class Controller {
             override fun onFailure(call: Call<LiveEventsResponse>, t: Throwable) {
                 liveEventsAPI?.error(t.message)
             }
-
         })
     }
 
@@ -646,6 +652,25 @@ public class Controller {
         })
     }
 
+    fun CartItems(token: String?)
+    {
+        webAPI?.api?.cartItem(token)?.enqueue(object : Callback<CartItemsResponse>
+        {
+            override fun onResponse(
+                call: Call<CartItemsResponse>,
+                response: Response<CartItemsResponse>
+            ) {
+                val cart = response
+                cartItemAPI?.onCartItemSuccess(cart)
+            }
+
+            override fun onFailure(call: Call<CartItemsResponse>, t: Throwable) {
+                cartItemAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -769,6 +794,11 @@ public class Controller {
 
     interface EditClosetItemAPI {
         fun onEditClosetItemSuccess(editClosetItem : Response<EditClosetItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface CartItemAPI {
+        fun onCartItemSuccess ( cartitem : Response<CartItemsResponse>)
         fun error(error: String?)
     }
 }

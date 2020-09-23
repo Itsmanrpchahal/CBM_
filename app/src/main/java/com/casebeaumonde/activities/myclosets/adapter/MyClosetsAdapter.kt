@@ -69,7 +69,7 @@ class MyClosetsAdapter(
         }
 
         holder.itemView.closets_additem.setOnClickListener {
-            context.startActivity(Intent(context,AddItemToCloset::class.java).putExtra("closetID",closets.id.toString()))
+            context.startActivity(Intent(context,AddItemToCloset::class.java).putExtra("closetID",closets.id.toString()).putExtra("edit","0").putExtra("closetItemID",""))
         }
     }
 

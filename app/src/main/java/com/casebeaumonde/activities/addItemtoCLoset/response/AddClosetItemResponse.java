@@ -1,4 +1,4 @@
-package com.casebeaumonde.fragments.allClosets.response;
+package com.casebeaumonde.activities.addItemtoCLoset.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

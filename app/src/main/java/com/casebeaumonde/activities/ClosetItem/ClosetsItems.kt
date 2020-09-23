@@ -1,17 +1,12 @@
 package com.casebeaumonde.activities.ClosetItem
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,7 +14,6 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
@@ -33,22 +27,13 @@ import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.allClosets.response.AddClosetItemResponse
 import com.casebeaumonde.utilities.Utility
-import com.github.dhaval2404.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.activity_business_register.*
 import kotlinx.android.synthetic.main.activity_closets_items.*
-import kotlinx.android.synthetic.main.additemtoclosets.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.viewclosetitem.*
-import okhttp3.MultipartBody
 import retrofit2.Response
-import java.io.File
-import java.lang.Exception
 
 class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
-     Controller.EditClosetItemAPI ,Controller.AdDItemToAnotherClosetAPI{
+    Controller.AdDItemToAnotherClosetAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -71,7 +56,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         setContentView(R.layout.activity_closets_items)
         findIds()
         controller = Controller()
-        controller.Controller(this, this, this,   this,this)
+        controller.Controller(this, this, this, this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
 
         closetitemidIf = this
@@ -90,7 +75,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
 
         closetiems_add.setOnClickListener {
-            startActivity(Intent(this,AddItemToCloset::class.java).putExtra("closetID",closetID))
+            startActivity(Intent(this,AddItemToCloset::class.java).putExtra("closetID",closetID).putExtra("edit","0").putExtra("closetItemID",""))
            // addItemToCloset(closetItemID)
         }
     }
@@ -204,11 +189,6 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 getString(R.string.close_up)
             )
         }
-    }
-
-    override fun onEditClosetItemSuccess(editClosetItem: Response<EditClosetItemResponse>) {
-        //Viewdialog.dismiss()
-        setClosetAPI()
     }
 
     override fun onAddItemToAnotherClosetSuccess(addItemToAnotherCloset: Response<AddItemToAnotherCloset>) {
@@ -330,6 +310,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
         itemview_editbt.setOnClickListener {
             Viewdialog.dismiss()
+            startActivity(Intent(this,AddItemToCloset::class.java).putExtra("closetID",closetID).putExtra("edit","1").putExtra("closetItemID",id.toString()))
             //addItemToCloset(closetItemID)
         }
 

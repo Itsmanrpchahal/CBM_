@@ -18,7 +18,7 @@ import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.fragments.users.Response.UsersResponse
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
-import com.casebeaumonde.createClosets.CreateClosetResponse
+import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse

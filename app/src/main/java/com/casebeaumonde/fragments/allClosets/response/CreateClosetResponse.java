@@ -1,4 +1,4 @@
-package com.casebeaumonde.createClosets;
+package com.casebeaumonde.fragments.allClosets.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

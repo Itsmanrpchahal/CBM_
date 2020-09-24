@@ -14,7 +14,7 @@ import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
-import com.casebeaumonde.createClosets.CreateClosetResponse;
+import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse;
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse;

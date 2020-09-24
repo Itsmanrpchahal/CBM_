@@ -35,7 +35,7 @@ import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.createClosets.CreateClosetResponse
+import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions

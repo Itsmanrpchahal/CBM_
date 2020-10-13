@@ -23,7 +23,9 @@ import java.lang.Exception
 
 class MyClosetsAdapter(
     var context: Context,
-    var closetsList: MutableList<MyClosetsResponse.Data.Closet>
+    var closetsList: MutableList<MyClosetsResponse.Data.Closet>,
+    var userID : String,
+    var loginuserID : String
 ) :
     RecyclerView.Adapter<MyClosetsAdapter.ViewHolder>() {
 
@@ -56,8 +58,15 @@ class MyClosetsAdapter(
                 Intent(
                     context,
                     ClosetsItems::class.java
-                ).putExtra(Constants.CLOSETID, "" + closets.id)
+                ).putExtra(Constants.CLOSETID, "" + closets.id).putExtra("userID",userID)
             )
+        }
+
+        if (userID != loginuserID)
+        {
+            holder.itemView.closets_edititem.visibility = View.GONE
+            holder.itemView.closets_additem.visibility = View.GONE
+            holder.itemView.closets_delete.visibility = View.GONE
         }
 
         holder.itemView.closets_edititem.setOnClickListener {

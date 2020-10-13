@@ -99,6 +99,19 @@
             android:background="#00000000">
 
         </Button>
+
+        <Button
+            android:id="@+id/gig_sendInvitation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:visibility="gone"
+            android:textColor="@color/colorWhite"
+            android:text="Send Invitation"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textsize_12sp">
+
+        </Button>
     </LinearLayout>
 
 

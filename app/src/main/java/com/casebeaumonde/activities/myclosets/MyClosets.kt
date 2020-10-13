@@ -68,6 +68,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var search_ET: EditText
     private lateinit var dialog: Dialog
     private var checked: String = "0"
+    private lateinit var userID : String
     var c: String = ""
     private var pos: Int = 0
     private lateinit var response: ArrayList<MyClosetsResponse.Data.Closet>
@@ -87,6 +88,11 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         controller.Controller(this, this, this,this)
         closetitemidIf = this
         deleteClosetID = this
+        userID = intent.getStringExtra("userID")
+        if (userID != getStringVal(Constants.USERID))
+        {
+            create_closets.visibility = View.GONE
+        }
         lsiteners()
     }
 
@@ -139,7 +145,9 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                     closets_recyler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     //closets =  response
-                    val adapter = MyClosetsAdapter(this, response!!)
+                    val adapter = MyClosetsAdapter(this, response!!,userID,
+                        getStringVal(Constants.USERID).toString()
+                    )
                     closets_recyler.adapter = adapter
                 }
             }
@@ -154,7 +162,9 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             closets
         closets_recyler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = MyClosetsAdapter(this, closets!!)
+        val adapter = MyClosetsAdapter(this, closets!!,userID,
+            getStringVal(Constants.USERID).toString()
+        )
         closets_recyler.adapter = adapter
     }
 
@@ -330,7 +340,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             pd.setContentView(R.layout.loading)
             controller.GetMyClosets(
                 "Bearer " + getStringVal(Constants.TOKEN),
-                getStringVal(Constants.USERID)
+                userID
             )
         } else {
             utility!!.relative_snackbar(
@@ -382,7 +392,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             dialog.dismiss()
             controller.GetMyClosets(
                 "Bearer " + getStringVal(Constants.TOKEN),
-                getStringVal(Constants.USERID)
+                userID
             )
             utility!!.relative_snackbar(
                 parent_myclosets,
@@ -398,7 +408,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             dialog.dismiss()
             controller.GetMyClosets(
                 "Bearer " + getStringVal(Constants.TOKEN),
-                getStringVal(Constants.USERID)
+                userID
             )
         } else {
             utility!!.relative_snackbar(
@@ -527,7 +537,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             )
             controller.GetMyClosets(
                 "Bearer " + getStringVal(Constants.TOKEN),
-                getStringVal(Constants.USERID)
+                userID
             )
 
         }else {

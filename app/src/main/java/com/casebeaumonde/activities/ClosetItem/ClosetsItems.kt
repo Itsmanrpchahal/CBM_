@@ -33,7 +33,7 @@ import retrofit2.Response
 
 class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
-    Controller.AdDItemToAnotherClosetAPI{
+    Controller.AdDItemToAnotherClosetAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -47,7 +47,8 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var dialog: Dialog
     private lateinit var logoutDialog: Dialog
     private lateinit var Viewdialog: Dialog
-    private lateinit var userClosets : ArrayList<ClosetsItemsResponse.Data.AllCloset>
+    private lateinit var userID: String
+    private lateinit var userClosets: ArrayList<ClosetsItemsResponse.Data.AllCloset>
     private lateinit var list: ArrayList<String>
     private lateinit var listID: ArrayList<String>
 
@@ -61,6 +62,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
         closetitemidIf = this
         viewclosetidIf = this
+        userID = intent.getStringExtra("userID")
         listeners()
     }
 
@@ -75,8 +77,11 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
 
         closetiems_add.setOnClickListener {
-            startActivity(Intent(this,AddItemToCloset::class.java).putExtra("closetID",closetID).putExtra("edit","0").putExtra("closetItemID",""))
-           // addItemToCloset(closetItemID)
+            startActivity(
+                Intent(this, AddItemToCloset::class.java).putExtra("closetID", closetID)
+                    .putExtra("edit", "0").putExtra("closetItemID", "")
+            )
+            // addItemToCloset(closetItemID)
         }
     }
 
@@ -263,9 +268,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         var viewitem_checkbox: CheckBox
         var itemview_spinner: Spinner
         var itemview_editbt: Button
-        var itemview_closebt : Button
+        var itemview_closebt: Button
         var itemview_addtoclosetbt: Button
-        var itemview_pinnertitle : TextView
+        var itemview_pinnertitle: TextView
 
         viewitem_image = Viewdialog.findViewById(R.id.viewitem_image)
         viewitem_title = Viewdialog.findViewById(R.id.viewitem_title)
@@ -281,6 +286,11 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         itemview_closebt = Viewdialog.findViewById(R.id.itemview_closebt)
         itemview_addtoclosetbt = Viewdialog.findViewById(R.id.itemview_addtoclosetbt)
         itemview_pinnertitle = Viewdialog.findViewById(R.id.itemview_pinnertitle)
+
+        if (userID != getStringVal(Constants.USERID)) {
+            itemview_removebt.visibility = View.GONE
+            itemview_editbt.visibility = View.GONE
+        }
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL + closetResponse.get(id!!).picture)
             .placeholder(R.drawable.login_banner).into(viewitem_image)
@@ -310,7 +320,10 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
         itemview_editbt.setOnClickListener {
             Viewdialog.dismiss()
-            startActivity(Intent(this,AddItemToCloset::class.java).putExtra("closetID",closetID).putExtra("edit","1").putExtra("closetItemID",id.toString()))
+            startActivity(
+                Intent(this, AddItemToCloset::class.java).putExtra("closetID", closetID)
+                    .putExtra("edit", "1").putExtra("closetItemID", id.toString())
+            )
             //addItemToCloset(closetItemID)
         }
 
@@ -320,7 +333,13 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
         searchUserHeart(closetResponse.get(id).hearts, viewitem_checkbox)
 
-         setSpinnerData(userClosets,itemview_spinner,closetResponse.get(id).id,itemview_addtoclosetbt,itemview_pinnertitle)
+        setSpinnerData(
+            userClosets,
+            itemview_spinner,
+            closetResponse.get(id).id,
+            itemview_addtoclosetbt,
+            itemview_pinnertitle
+        )
         Viewdialog.show()
     }
 

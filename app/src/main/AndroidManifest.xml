@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.addItemtoCLoset.AddItemToCloset"></activity>
+        <activity android:name=".fragments.profile.ViewProfile"></activity>
+        <activity android:name=".activities.addItemtoCLoset.AddItemToCloset" />
         <activity android:name=".activities.eventDetail.EventDetailScreen" />
         <activity android:name=".activities.myWall.MyWall" />
         <activity android:name=".activities.ClosetItem.ClosetsItems" />

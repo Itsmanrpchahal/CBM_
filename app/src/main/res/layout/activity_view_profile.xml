@@ -1,17 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
-    tools:context=".fragments.profile.Profile">
+    android:id="@+id/parent_viewProfile"
+    tools:context=".fragments.profile.ViewProfile">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/viewprofile_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24"
+                android:background="#00000000"
+                android:layout_marginLeft="@dimen/default_margin_16dp">
+
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/viewprofile__username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true">
+        android:nestedScrollingEnabled="true"
+        android:layout_marginTop="55dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +68,7 @@
                 android:layout_gravity="center">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_profilePic"
+                    android:id="@+id/viewprofile_profilePic"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
                     android:layout_centerInParent="true"
@@ -35,7 +77,7 @@
                 </de.hdodenhof.circleimageview.CircleImageView>
 
                 <ImageView
-                    android:id="@+id/profile_changetv"
+                    android:id="@+id/viewprofile_changetv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
@@ -46,7 +88,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/profile_username"
+                android:id="@+id/viewprofile_usernamefull"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
@@ -111,14 +153,28 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/viewprofile_followbt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:text="Follow"
+                    android:drawableLeft="@drawable/ic_userprofile"
+                    android:textColor="@color/colorBlack"
+                    android:paddingLeft="@dimen/margin_8dp"
+                    android:textAllCaps="false"
+                    android:layout_marginRight="@dimen/margin_8dp">
+
+                </Button>
+
                 <LinearLayout
-                    android:id="@+id/profile_followinglayout"
+                    android:id="@+id/viewprofile_followinglayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/profile_followerscount"
+                        android:id="@+id/viewprofile_followerscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -139,14 +195,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/profile_followerslayout"
+                    android:id="@+id/viewprofile_followerslayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_8dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/profile_followingcount"
+                        android:id="@+id/viewprofile__followingcount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -176,49 +232,7 @@
 
 
             <Button
-                android:id="@+id/profile_edit_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Edit Profile"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_14sp"
-                android:layout_marginLeft="@dimen/margin_40dp"
-                android:layout_marginRight="@dimen/margin_40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/default_margin_16dp">
-
-            </Button>
-
-            <Button
-                android:id="@+id/profile_changepassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Change Password"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_14sp"
-                android:layout_marginLeft="@dimen/margin_40dp"
-                android:layout_marginRight="@dimen/margin_40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_8dp">
-
-            </Button>
-
-            <Button
-                android:id="@+id/profile_chooseyourplan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Choose your plan"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_14sp"
-                android:layout_marginLeft="@dimen/margin_40dp"
-                android:layout_marginRight="@dimen/margin_40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_8dp">
-
-            </Button>
-
-            <Button
-                android:id="@+id/profile_mygigs"
+                android:id="@+id/viewprofile__mygigs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="My Gigs"
@@ -235,7 +249,7 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/viewprofile_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="scrollable"

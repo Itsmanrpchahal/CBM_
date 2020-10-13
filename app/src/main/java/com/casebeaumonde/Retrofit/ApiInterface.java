@@ -24,6 +24,7 @@ import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
+import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
 import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
@@ -124,6 +125,12 @@ public interface ApiInterface {
 
     @GET("api/v1/userGigs/{input}")
     Call<MyGigsResponse> usergigs(
+            @Header("Authorization") String token,
+            @Path("input") String userid
+    );
+
+    @GET("api/v1/myWall/{input}")
+    Call<MyWallResponse> myWall(
             @Header("Authorization") String token,
             @Path("input") String userid
     );

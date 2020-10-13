@@ -13,7 +13,8 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.FragmentActivity
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
@@ -25,6 +26,9 @@ import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.profile.IF.GetUserID
+import com.casebeaumonde.fragments.profile.adapter.FollowerAdapter
+import com.casebeaumonde.fragments.profile.adapter.FollowingAdapter
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
@@ -42,7 +46,7 @@ import retrofit2.Response
 import java.io.File
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener {
+    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener, GetUserID {
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
@@ -52,17 +56,27 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var profile_profilePic: CircleImageView
     private lateinit var profile_followerscount: TextView
     private lateinit var profile_followingcount: TextView
+    private lateinit var profile_followerslayout: LinearLayout
+    private lateinit var profile_followinglayout: LinearLayout
     private lateinit var profile_changetv: ImageView
     private lateinit var part: MultipartBody.Part
     private lateinit var bitMap: Bitmap
     private lateinit var profile_changepassword: Button
     private lateinit var profile_edit_profile: Button
+    private lateinit var followbt: Button
     private var path: String = ""
     private lateinit var changePasswordDialog: Dialog
     private lateinit var dialog: Dialog
     private lateinit var role: String
     private var tabLayout: TabLayout? = null
+    private lateinit var username: String
+    private lateinit var userID: String
+    private lateinit var followfollowingDialog: Dialog
     private lateinit var fragmentActivity: FragmentActivity
+    private lateinit var businessSubscription: String
+    private lateinit var customerSubscription: String
+    private lateinit var followers: ArrayList<UserProfileResponse.Data.User.Follower>
+    private lateinit var following: ArrayList<UserProfileResponse.Data.User.Following>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,8 +91,15 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         view = inflater.inflate(R.layout.fragment_profile, container, false)
         controller = Controller()
         controller.Controller(this, this, this)
+        getUserID = this
         findIds(view)
         listeners()
+
+        controller.setUserProfileAPI(
+            "Bearer " + getStringVal(Constants.TOKEN),
+            getStringVal(Constants.USERID)
+        )
+        userID = getStringVal(Constants.USERID).toString()
 
         return view
     }
@@ -98,9 +119,56 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
 
         profile_mygigs.setOnClickListener {
-            startActivity(Intent(context, MyGigs::class.java).putExtra("role", role))
+            startActivity(Intent(context, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
         }
 
+        profile_followerslayout.setOnClickListener {
+            openFollowersDialog("followers")
+        }
+
+        profile_followinglayout.setOnClickListener {
+            openFollowersDialog("following")
+        }
+
+    }
+
+    private fun openFollowersDialog(s: String) {
+        followfollowingDialog = Dialog(context!!)
+        followfollowingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        followfollowingDialog.setCancelable(true)
+        followfollowingDialog.setContentView(R.layout.followerfollowinglayout)
+        val window = followfollowingDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val followrecyclerview: RecyclerView
+        val followcancelbt: Button
+        val followtext: TextView
+        followrecyclerview = followfollowingDialog.findViewById(R.id.followrecyclerview)
+        followcancelbt = followfollowingDialog.findViewById(R.id.followcancelbt)
+        followtext = followfollowingDialog.findViewById(R.id.followtext)
+        if (s.equals("followers")) {
+            followtext.setText("Followers Users List")
+            followrecyclerview.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val adapter = FollowerAdapter(context!!, followers)
+            followrecyclerview.adapter = adapter
+        } else {
+            followtext.setText("Following Users List")
+            followrecyclerview.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val adapter = FollowingAdapter(context!!, following)
+            followrecyclerview.adapter = adapter
+        }
+
+
+        followcancelbt.setOnClickListener {
+            followfollowingDialog.dismiss()
+        }
+
+        followfollowingDialog.show()
     }
 
     private fun changePassworddialog() {
@@ -281,6 +349,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_profilePic = view.findViewById(R.id.profile_profilePic)
         profile_followerscount = view.findViewById(R.id.profile_followerscount)
         profile_followingcount = view.findViewById(R.id.profile_followingcount)
+        profile_followerslayout = view.findViewById(R.id.profile_followerslayout)
+        profile_followinglayout = view.findViewById(R.id.profile_followinglayout)
         profile_changetv = view.findViewById(R.id.profile_changetv)
         profile_edit_profile = view.findViewById(R.id.profile_edit_profile)
         profile_changepassword = view.findViewById(R.id.profile_changepassword)
@@ -288,29 +358,23 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         tabLayout = view.findViewById(R.id.tabLayout)
         pd.show()
         pd.setContentView(R.layout.loading)
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
-        //tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-       // tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
-        //tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
-       // tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
-       // tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
-        tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
-        tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-
-        tabLayout!!.setOnTabSelectedListener(this)
+        //userID = getStringVal(Constants.USERID).toString()
     }
 
 
     override fun onResume() {
         super.onResume()
-        controller.setUserProfileAPI(
-            "Bearer " + getStringVal(Constants.TOKEN),
-            getStringVal(Constants.USERID)
-        )
     }
 
+    companion object {
+        var getUserID: GetUserID? = null
+    }
+
+    override fun getUserID(id: String?) {
+
+        userID = id.toString()
+        startActivity(Intent(context,ViewProfile::class.java).putExtra("userID",userID))
+    }
 
     private fun pictureSelectionDialog() {
 
@@ -353,7 +417,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             path = filePath!!
             bitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver, fileUri)
-            part = Utility.sendImageFileToserver(context?.filesDir, bitMap,"image")
+            part = Utility.sendImageFileToserver(context?.filesDir, bitMap, "image")
 
             updateAvatar(
                 part,
@@ -393,6 +457,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
         Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
+
         profile_username.text =
             userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
         Glide.with(context!!)
@@ -402,6 +467,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             userProfileResponse.body()?.data?.user?.followers?.size.toString()
         profile_followingcount.text =
             userProfileResponse.body()?.data?.user?.following?.size.toString()
+        username = userProfileResponse.body()?.data?.user?.firstname!!
         setStringVal(Constants.FIRSTNAME, userProfileResponse.body()?.data?.user?.firstname)
         setStringVal(Constants.LASTNAME, userProfileResponse.body()?.data?.user?.lastname)
         setStringVal(Constants.EMAIL, userProfileResponse.body()?.data?.user?.email)
@@ -410,13 +476,38 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             Constants.ABOUT,
             userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
         )
+
+        followers =
+            userProfileResponse.body()?.data?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
+        following =
+            userProfileResponse.body()?.data?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
+
         role = userProfileResponse.body()?.data?.user?.role.toString()
+
         if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
             profile_mygigs.visibility = View.VISIBLE
+
+
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
+            tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+            tabLayout!!.setOnTabSelectedListener(this)
         } else {
             profile_mygigs.visibility = View.GONE
-        }
 
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
+            tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+            tabLayout!!.setOnTabSelectedListener(this)
+        }
     }
 
     override fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>) {
@@ -459,6 +550,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 Constants.ABOUT,
                 updateProfileResponse.body()?.data?.user?.profile?.aboutMe
             )
+
+
             utility!!.relative_snackbar(
                 parent_profile,
                 "Profile Updated",
@@ -560,15 +653,19 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onTabSelected(p0: TabLayout.Tab?) {
         when {
             p0?.text?.equals("My Closets")!! -> {
-                startActivity(Intent(context, MyClosets::class.java))
+                startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
+            }
+
+            p0?.text?.equals("My gigs")!! -> {
+                startActivity(Intent(context, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
             }
 
             p0?.text?.equals("My Wall")!! -> {
-                startActivity(Intent(context, MyWall::class.java))
+                startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))
             }
 
             p0?.text?.equals("Notifications")!! -> {
-                startActivity(Intent(context,Notifications::class.java))
+                startActivity(Intent(context, Notifications::class.java).putExtra("userID", userID))
             }
         }
     }
@@ -580,16 +677,22 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onTabReselected(p0: TabLayout.Tab?) {
         when {
             p0?.text?.equals("My Closets")!! -> {
-                startActivity(Intent(context, MyClosets::class.java))
+                startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
+            }
+
+            p0?.text?.equals("My gigs")!! -> {
+                startActivity(Intent(context, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
             }
 
             p0?.text?.equals("My Wall")!! -> {
-                startActivity(Intent(context,MyWall::class.java))
+                startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))
             }
 
             p0?.text?.equals("Notifications")!! -> {
-                startActivity(Intent(context,Notifications::class.java))
+                startActivity(Intent(context, Notifications::class.java).putExtra("userID", userID))
             }
         }
     }
+
+
 }

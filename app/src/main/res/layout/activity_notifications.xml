@@ -33,7 +33,7 @@
              android:layout_height="wrap_content"
              android:text="Notifications"
              android:textColor="@color/colorWhite"
-             android:textSize="@dimen/textsize_24sp"
+             android:textSize="@dimen/textsize_16sp"
              android:layout_centerInParent="true">
 
          </TextView>

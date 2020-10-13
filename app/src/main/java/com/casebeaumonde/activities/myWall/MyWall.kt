@@ -13,24 +13,27 @@ import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.activities.myWall.adapter.MyWallAdapter
+import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_my_wall.*
 import retrofit2.Response
 
-class MyWall : BaseClass(),Controller.UserProfileAPI  {
+class MyWall : BaseClass(),Controller.MyWallAPI  {
     private lateinit var myWall_Recycler : RecyclerView
     private lateinit var controller: Controller
     private lateinit var utility: Utility
     private lateinit var myWall_back : ImageButton
     private lateinit var pd: ProgressDialog
+    private lateinit var userID : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_wall)
-
+        userID = intent.getStringExtra("userID").toString()
         controller = Controller()
         controller.Controller(this)
         findIds()
+
         listerners()
     }
 
@@ -42,9 +45,9 @@ class MyWall : BaseClass(),Controller.UserProfileAPI  {
 
     override fun onResume() {
         super.onResume()
-        controller.setUserProfileAPI(
+        controller.setMyWall(
             "Bearer " + getStringVal(Constants.TOKEN),
-            getStringVal(Constants.USERID)
+            userID
         )
     }
 
@@ -61,21 +64,21 @@ class MyWall : BaseClass(),Controller.UserProfileAPI  {
         myWall_back = findViewById(R.id.myWall_back)
     }
 
-    override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
+    override fun onMyWallSuccess(myWall: Response<MyWallResponse>) {
         pd.dismiss()
-        if (userProfileResponse.isSuccessful)
+        if (myWall.isSuccessful)
         {
             myWall_Recycler.layoutManager = LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,false)
             val  adapter = MyWallAdapter(this,
-                (userProfileResponse.body()?.data?.fashionables as ArrayList<UserProfileResponse.Data.Fashionable>?)!!,
-                userProfileResponse.body()?.data?.filePath.toString()
+                (myWall.body()?.data?.fashionables as ArrayList<MyWallResponse.Data.Fashionable>?)!!,
+                myWall.body()?.data?.filePath.toString()
             )
             myWall_Recycler.adapter = adapter
         }else{
             utility!!.relative_snackbar(
                 parent_myWall,
-                userProfileResponse.message(),
+                myWall.message(),
                 getString(R.string.close_up)
             )
         }

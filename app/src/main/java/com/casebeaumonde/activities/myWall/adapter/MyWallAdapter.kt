@@ -12,13 +12,14 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.custom_mywall.view.*
 
 class MyWallAdapter(
     val context: Context,
-    val myWallList: ArrayList<UserProfileResponse.Data.Fashionable>,
+    val myWallList: ArrayList<MyWallResponse.Data.Fashionable>,
     var filePath: String
 ) :
     RecyclerView.Adapter<MyWallAdapter.ViewHolder>() {

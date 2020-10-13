@@ -26,6 +26,7 @@ import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -61,6 +62,7 @@ public class Controller {
     var addClosetItemsAPI : AddClosetItemAPI? = null
     var editClosetItemAPI : EditClosetItemAPI? = null
     var cartItemAPI : CartItemAPI? = null
+    var myWallAPI : MyWallAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -86,13 +88,20 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(userProfile: UserProfileAPI) {
+    fun Controller(myWall: MyWallAPI) {
+        myWallAPI = myWall
+        webAPI = WebAPI()
+    }
+
+    fun Controller(userProfile: UserProfileAPI)
+    {
         userProfileAPI = userProfile
         webAPI = WebAPI()
     }
 
-    fun Controller(getUserGigs: GetUserGigsAPI) {
+    fun Controller(getUserGigs: GetUserGigsAPI,sendInvitation: SendInvitationAPI) {
         getUserGigsAPI = getUserGigs
+        sendInvitationAPI = sendInvitation
         webAPI = WebAPI()
     }
 
@@ -232,6 +241,25 @@ public class Controller {
                 }
 
             })
+    }
+
+    fun setMyWall(token: String?,userId: String?)
+    {
+        webAPI?.api?.myWall(token,userId)?.enqueue(object : Callback<MyWallResponse>
+        {
+            override fun onResponse(
+                call: Call<MyWallResponse>,
+                response: Response<MyWallResponse>
+            ) {
+                val myWallResponse = response
+                myWallAPI?.onMyWallSuccess(myWallResponse)
+            }
+
+            override fun onFailure(call: Call<MyWallResponse>, t: Throwable) {
+               myWallAPI?.error(t.message)
+            }
+
+        })
     }
 
     fun setUpDateProfile(
@@ -799,6 +827,11 @@ public class Controller {
 
     interface CartItemAPI {
         fun onCartItemSuccess ( cartitem : Response<CartItemsResponse>)
+        fun error(error: String?)
+    }
+
+    interface MyWallAPI {
+        fun onMyWallSuccess (myWall : Response<MyWallResponse>)
         fun error(error: String?)
     }
 }

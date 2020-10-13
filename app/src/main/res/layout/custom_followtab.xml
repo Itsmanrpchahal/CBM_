@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    android:layout_margin="@dimen/default_margin_16dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        android:id="@+id/userimage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/login_banner"
+        android:scaleType="centerCrop">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/userimage"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:textSize="@dimen/default_margin_16dp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/viewprofilebt"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:background="@color/colorBlack"
+        android:text="  View Profile  "
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite">
+
+    </Button>
+
+</RelativeLayout>

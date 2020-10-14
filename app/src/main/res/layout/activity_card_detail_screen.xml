@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.paymentScreen.CardDetailScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back_carddetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24"
+                android:background="#00000000"
+                android:layout_marginLeft="@dimen/default_margin_16dp">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/default_margin_16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/textsize_16sp">
+
+            <TextView
+                android:id="@+id/plan_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Level"
+                android:textSize="@dimen/textsize_24sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp">
+
+                <TextView
+                    android:id="@+id/plan_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0"
+                    android:textSize="@dimen/margin_40dp"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_gravity="center">
+
+                </TextView>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:text="Important: Note that no actual charge will be made for this subscription. The following information is only collected for identity verification purposes and to be used in any addittional services that you request in the future. Any charge will allways be executed with your explicit consent."
+                android:layout_marginTop="@dimen/margin_8dp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Billing information"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card holder"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_cardholdername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter name on card"
+                android:inputType="textPersonName"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card number"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_cardnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter card number"
+                android:inputType="number"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expiration date"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_carddate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter expiration date (MM/YYYY)"
+                android:inputType="number"
+                android:editable="false"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CVC"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_cvc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter card verification code"
+                android:inputType="number"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Billing zip code"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_billingzipcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter billing zip code"
+                android:inputType="number"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supported payment methods"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="6">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/visa"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/mastercard"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/amex"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/discover"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/jcb"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diners"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_marginBottom="@dimen/default_margin_16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/plan_verfybt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners"
+                    android:text="Verify"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/plan_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners"
+                    android:text="Cancel"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -23,6 +23,7 @@ import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemRespon
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
+import com.casebeaumonde.fragments.pricing.response.PricingResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
@@ -30,6 +31,7 @@ import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
 import com.google.gson.JsonObject;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -141,28 +143,28 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/designers")
-    Call<DesignersResponse> designers (
+    Call<DesignersResponse> designers(
             @Header("Authorization") String token
     );
 
     @GET("api/v1/userClosets/{input}")
-    Call<MyClosetsResponse> myClosets (
+    Call<MyClosetsResponse> myClosets(
             @Header("Authorization") String token,
             @Path("input") String userId
     );
 
     @Multipart
     @POST("api/v1/createCloset")
-    Call<CreateClosetResponse> createCloset (
-      @Header("Authorization") String token,
-      @Query("title") String title,
-      @Query("visibility") String visibility,
-      @Part MultipartBody.Part image,
-      @Query("description") String description
+    Call<CreateClosetResponse> createCloset(
+            @Header("Authorization") String token,
+            @Query("title") String title,
+            @Query("visibility") String visibility,
+            @Part MultipartBody.Part image,
+            @Query("description") String description
     );
 
     @GET("api/v1/closet/{input}")
-    Call<ClosetsItemsResponse> closetsItems (
+    Call<ClosetsItemsResponse> closetsItems(
             @Header("Authorization") String token,
             @Path("input") String closetId
     );
@@ -170,7 +172,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/heartItem")
-    Call<AddToFavClosetItemResponse> addToFavClosetItem (
+    Call<AddToFavClosetItemResponse> addToFavClosetItem(
             @Header("Authorization") String token,
             @Field("id") String id,
             @Field("type") String type
@@ -178,7 +180,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("api/v1/updateCloset")
-    Call<UpdateClosetsResponse> closetUpdate (
+    Call<UpdateClosetsResponse> closetUpdate(
             @Header("Authorization") String token,
             @Query("id") String id,
             @Query("title") String title,
@@ -188,26 +190,26 @@ public interface ApiInterface {
     );
 
     @DELETE("api/v1/deleteCloset/{input}")
-    Call<DeleteClosetResponse> deleteCloset (
+    Call<DeleteClosetResponse> deleteCloset(
             @Header("Authorization") String token,
             @Path("input") String id
     );
 
     @DELETE("api/v1/removeItem/{input}")
-    Call<DeleteClosetItemResponse> deleteClosetItem (
+    Call<DeleteClosetItemResponse> deleteClosetItem(
             @Header("Authorization") String token,
             @Path("input") String id
     );
 
 
     @GET("api/v1/hireAnExpert")
-    Call<HireAnExpertResponse> hireanExpert (
+    Call<HireAnExpertResponse> hireanExpert(
             @Header("Authorization") String token
     );
 
     @FormUrlEncoded
     @POST("api/v1/sendInvitation")
-    Call<SendInvitationResponse> sendInviation (
+    Call<SendInvitationResponse> sendInviation(
             @Header("Authorization") String token,
             @Field("designer_id") String designer_id,
             @Field("description") String description,
@@ -216,24 +218,24 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/liveEvents")
-    Call<LiveEventsResponse> liveEvents (
+    Call<LiveEventsResponse> liveEvents(
             @Header("Authorization") String token
     );
 
     @GET("api/v1/eventDetail/{input}")
-    Call<EventDetailResponse> eventDetail (
+    Call<EventDetailResponse> eventDetail(
             @Header("Authorization") String token,
             @Path("input") String id
     );
 
     @GET("api/v1/getAllCloset")
-    Call<AllClosetsResponse> allClosets (
+    Call<AllClosetsResponse> allClosets(
             @Header("Authorization") String token
     );
 
     @FormUrlEncoded
     @POST("api/v1/addItemToCloset")
-    Call<AddItemToAnotherCloset> addItemToAnotherCloset (
+    Call<AddItemToAnotherCloset> addItemToAnotherCloset(
             @Header("Authorization") String token,
             @Field("itemid") String itemid,
             @Field("closetid") String closetid,
@@ -242,20 +244,20 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/heartEvent")
-    Call<FavLiveEventResponse> favLiveEventResponse (
+    Call<FavLiveEventResponse> favLiveEventResponse(
             @Header("Authorization") String token,
             @Field("id") String id,
             @Field("type") String type
     );
 
     @GET("api/v1/fetchList")
-    Call<AddClosetItemResponse> addClosetItemLists (
+    Call<AddClosetItemResponse> addClosetItemLists(
             @Header("Authorization") String token
     );
 
     @Multipart
     @POST("api/v1/addClosetItem")
-    Call<AddClosetItemResponse> addClosetItem (
+    Call<AddClosetItemResponse> addClosetItem(
             @Header("Authorization") String token,
             @Part MultipartBody.Part picture,
             @Query("title") String title,
@@ -270,7 +272,7 @@ public interface ApiInterface {
 
     @Multipart
     @POST("api/v1/updateClosetItem")
-    Call<EditClosetItemResponse> editClosetItem (
+    Call<EditClosetItemResponse> editClosetItem(
             @Header("Authorization") String token,
             @Part MultipartBody.Part picture,
             @Query("title") String title,
@@ -286,7 +288,12 @@ public interface ApiInterface {
 
 
     @GET("api/v1/cartItem")
-    Call<CartItemsResponse> cartItem (
+    Call<CartItemsResponse> cartItem(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/v1/userPlans")
+    Call<PricingResponse> pricing(
             @Header("Authorization") String token
     );
 }

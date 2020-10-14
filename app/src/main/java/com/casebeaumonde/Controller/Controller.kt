@@ -26,6 +26,7 @@ import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -63,6 +64,7 @@ public class Controller {
     var editClosetItemAPI : EditClosetItemAPI? = null
     var cartItemAPI : CartItemAPI? = null
     var myWallAPI : MyWallAPI? = null
+    var pricingAPI : PricingAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -186,6 +188,12 @@ public class Controller {
     fun Controller(cartItem: CartItemAPI)
     {
         cartItemAPI = cartItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(pricing: PricingAPI)
+    {
+        pricingAPI = pricing
         webAPI = WebAPI()
     }
 
@@ -699,6 +707,24 @@ public class Controller {
         })
     }
 
+    fun Pricing(token: String?)
+    {
+        webAPI?.api?.pricing(token)?.enqueue(object : Callback<PricingResponse> {
+            override fun onResponse(
+                call: Call<PricingResponse>,
+                response: Response<PricingResponse>
+            ) {
+                val pricing = response
+                pricingAPI?.onPricingSuccess(pricing)
+            }
+
+            override fun onFailure(call: Call<PricingResponse>, t: Throwable) {
+                pricingAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -832,6 +858,11 @@ public class Controller {
 
     interface MyWallAPI {
         fun onMyWallSuccess (myWall : Response<MyWallResponse>)
+        fun error(error: String?)
+    }
+
+    interface PricingAPI {
+        fun onPricingSuccess (pricing : Response<PricingResponse>)
         fun error(error: String?)
     }
 }

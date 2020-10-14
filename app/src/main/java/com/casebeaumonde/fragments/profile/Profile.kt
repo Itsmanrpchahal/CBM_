@@ -484,6 +484,15 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         role = userProfileResponse.body()?.data?.user?.role.toString()
 
+        if (userProfileResponse.body()?.data?.user?.customerSubscription !=null)
+        {
+            setStringVal(Constants.CUSTOMERSUBSCRIPTION,"1")
+        }
+
+        if (userProfileResponse.body()?.data?.user?.businessSubscription !=null)
+        {
+            setStringVal(Constants.BUSSINESSSUBSSCRIPTION,"1")
+        }
         if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
             profile_mygigs.visibility = View.VISIBLE
 

@@ -27,7 +27,7 @@ class CustomerPricingAdapter(val context: Context, val pricing: ArrayList<Pricin
         holder.itemView.levelplan.setText(pricing.get(position).name)
         holder.itemView.planrate.setText(pricing.get(position).monthlyPrice)
         holder.itemView.subscribebt.setOnClickListener {
-            context.startActivity(Intent(context,CardDetailScreen::class.java).putExtra("planname",pricing.get(position).name))
+            context.startActivity(Intent(context,CardDetailScreen::class.java).putExtra("planname",pricing.get(position).name).putExtra("planprice",pricing.get(position).monthlyPrice))
         }
     }
 

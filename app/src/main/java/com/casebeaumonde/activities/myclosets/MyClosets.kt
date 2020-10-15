@@ -130,6 +130,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             }
 
         })
+
+
     }
 
     fun searchByTitle(s: String) {

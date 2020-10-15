@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
+import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
@@ -29,9 +31,12 @@ import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
+import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 import retrofit2.Response
+import kotlin.math.log
 
-class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
+class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,SelectedCloset_ID,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
     Controller.AdDItemToAnotherClosetAPI {
 
@@ -51,17 +56,27 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var userClosets: ArrayList<ClosetsItemsResponse.Data.AllCloset>
     private lateinit var list: ArrayList<String>
     private lateinit var listID: ArrayList<String>
+    private lateinit var closet_showselectbt : Button
+    private lateinit var closet_deselectitembt: Button
+    private lateinit var closet_selectitembt: Button
+    private lateinit var checkedClosetIDs : ArrayList<String>
+    private lateinit var selectedItems : ArrayList<String>
+    var select : Int = 0
+    var selectAll : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_closets_items)
         findIds()
+        checkedClosetIDs = ArrayList()
+        selectedItems = ArrayList()
         controller = Controller()
         controller.Controller(this, this, this, this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
 
         closetitemidIf = this
         viewclosetidIf = this
+        selectedclosetId = this
         userID = intent.getStringExtra("userID")
         listeners()
     }
@@ -82,6 +97,37 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     .putExtra("edit", "0").putExtra("closetItemID", "")
             )
             // addItemToCloset(closetItemID)
+        }
+
+        closet_showselectbt.setOnClickListener {
+            closet_selectitembt.visibility = View.VISIBLE
+            closet_deselectitembt.visibility = View.VISIBLE
+            closet_showselectbt.visibility = View.GONE
+            select = 1
+            setFullData(closetResponse,select,selectAll)
+
+        }
+
+        closet_deselectitembt.setOnClickListener {
+            closet_deselectitembt.visibility = View.GONE
+            closet_selectitembt.visibility = View.GONE
+            closet_showselectbt.visibility = View.VISIBLE
+            select = 0
+            selectAll = 0
+            setFullData(closetResponse,select,selectAll)
+            checkedClosetIDs.clear()
+            Log.d("test",""+checkedClosetIDs)
+        }
+
+        closet_selectitembt.setOnClickListener {
+            checkedClosetIDs.clear()
+            for (i in closetResponse.indices)
+            {
+                checkedClosetIDs.add(closetResponse.get(i).id.toString())
+            }
+            selectAll = 1
+            setFullData(closetResponse,select,selectAll)
+            Log.d("test",""+checkedClosetIDs)
         }
     }
 
@@ -116,6 +162,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     companion object {
         var closetitemidIf: ClosetItemID_IF? = null
         var viewclosetidIf: ViewClosetID_IF? = null
+        var selectedclosetId : SelectedCloset_ID? = null
     }
 
 
@@ -129,26 +176,21 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         closetsItems_recycler = findViewById(R.id.closetsItems_recycler)
         closetitems_back = findViewById(R.id.closetitems_back)
         closetiems_add = findViewById(R.id.closetiems_add)
+        closet_showselectbt = findViewById(R.id.closet_showselectbt)
+        closet_deselectitembt = findViewById(R.id.closet_deselectitembt)
+        closet_selectitembt = findViewById(R.id.closet_selectitembt)
     }
 
-
+    //ToDo: Get  Closet All Items
     override fun onClosetItemSuccess(closetItemsResponse: Response<ClosetsItemsResponse>) {
         pd.dismiss()
         if (closetItemsResponse.isSuccessful) {
             //userClosets = closetItemsResponse.body()?.data?.closet as ArrayList<ClosetsItemsResponse.Data.Closet>
-            closetsItems_recycler.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            val adapter = getStringVal(Constants.USERID)?.let {
-                ClosetsItemAdapter(
-                    this, closetItemsResponse.body()?.data?.closet?.items!!,
-                    it
-                )
-            }
             userClosets = ArrayList()
+            selectAll = 0
             userClosets.addAll(closetItemsResponse.body()?.data?.allClosets!!)
-            closetResponse = ArrayList()
-            closetResponse.addAll(closetItemsResponse.body()?.data?.closet?.items!!)
-            closetsItems_recycler.adapter = adapter
+            setFullData(closetItemsResponse.body()?.data?.closet?.items,select,selectAll)
+
 
             if (closetItemsResponse.body()?.data?.closet?.userId.toString()
                     .equals(getStringVal(Constants.USERID))
@@ -164,6 +206,25 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
     }
 
+
+    //ToDo : Set Data into Adapter
+    private fun setFullData(items: List<ClosetsItemsResponse.Data.Closet.Item>?,select : Int,selectAll : Int) {
+        closetsItems_recycler.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val adapter = getStringVal(Constants.USERID)?.let {
+            ClosetsItemAdapter(
+                this, (items as MutableList<ClosetsItemsResponse.Data.Closet.Item>?)!!,
+                it,select,selectAll
+            )
+        }
+        closetResponse = ArrayList()
+        closetResponse.addAll(items!!)
+        closetsItems_recycler.adapter = adapter
+    }
+
+
+
+    //ToDo : Set Fav closet Item
     override fun onAddToFavClosetItemSuccess(addToFavClosetItemResponse: Response<AddToFavClosetItemResponse>) {
         if (addToFavClosetItemResponse.isSuccessful) {
             pd.dismiss()
@@ -178,6 +239,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
     }
 
+    //ToDo : Set Delete closet item
     override fun onDeleteClosetItemSuccess(deleteClosetItemResponse: Response<DeleteClosetItemResponse>) {
         pd.dismiss()
         if (deleteClosetItemResponse.isSuccessful) {
@@ -196,6 +258,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
     }
 
+    //ToDo: Add closet item to another closet
     override fun onAddItemToAnotherClosetSuccess(addItemToAnotherCloset: Response<AddItemToAnotherCloset>) {
         pd.dismiss()
         Viewdialog.dismiss()
@@ -246,6 +309,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     }
 
 
+    //ToDo: View Closet Item
     @SuppressLint("CheckResult")
     private fun ViewClosetItem(id: Int?) {
         Viewdialog = Dialog(this!!)
@@ -439,5 +503,22 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 }
             }
         }
+    }
+
+    override fun getID(
+        id:  String?,
+        s:  String
+    ) {
+        if (s.equals("0"))
+        {
+            if (checkedClosetIDs.contains(id))
+            {
+                checkedClosetIDs.remove(id)
+            }
+        }else {
+            checkedClosetIDs.add(id.toString())
+        }
+
+        Log.d("test",""+checkedClosetIDs)
     }
 }

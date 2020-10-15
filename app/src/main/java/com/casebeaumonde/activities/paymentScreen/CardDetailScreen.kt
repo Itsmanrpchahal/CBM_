@@ -32,6 +32,15 @@ class CardDetailScreen : AppCompatActivity() {
     private lateinit var plan_cancel: Button
     private lateinit var back_carddetail: ImageButton
     private val PUBLISHABLE_KEY = "pk_test_OTNta0F2CKTUpYDDM7igKdml"
+    private lateinit var planname: String
+    private lateinit var planprice: String
+    private lateinit var cardholdername : String
+    private lateinit var cardnumber : String
+    private lateinit var cardexpDateyear : String
+    private lateinit var cardcvc : String
+    private lateinit var cardbilligcode : String
+    private  var MONTH : Int = 0
+    private var YEAR : Int = 0
     var token: Token? = null
     val c = Calendar.getInstance()
     lateinit var stripe: Stripe
@@ -40,8 +49,11 @@ class CardDetailScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail_screen)
-
+        planname = intent.getStringExtra("planname")
+        planprice = intent.getStringExtra("planprice")
         findIds()
+        plan_name.setText(planname)
+        plan_price.setText("$ " + planprice + "/month")
         listeners()
     }
 
@@ -58,6 +70,9 @@ class CardDetailScreen : AppCompatActivity() {
                 c.set(Calendar.YEAR, year)
                 c.set(Calendar.MONTH, monthOfYear)
                 c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                MONTH = monthOfYear
+                YEAR = year
+
                 updateDateInView()
             }
         }
@@ -83,25 +98,66 @@ class CardDetailScreen : AppCompatActivity() {
 
         plan_verfybt.setOnClickListener {
             //val card = CardUtils.isValidCardNumber("4242424242424242")
-            val card2 = Card("4242424242424242", 10, 2020, "122")
-            val stripe1 = Stripe(this,"pk_test_OTNta0F2CKTUpYDDM7igKdml")
-            stripe1.createToken(card2, object : TokenCallback {
-                override fun onSuccess(token: Token?) {
-                    Toast.makeText(this@CardDetailScreen, "" + token, Toast.LENGTH_SHORT).show()
-                    Log.d("token",""+token)
-                    Log.d("card",""+card2)
-                }
+            checkValidations()
+        }
+    }
 
-                override fun onError(error: Exception?) {
-                    Toast.makeText(this@CardDetailScreen, "Error" + error, Toast.LENGTH_SHORT).show()
-                }
-            })
+    private fun checkValidations() {
+        when {
+            plan_cardholdername.text.isEmpty() -> {
+                plan_cardholdername.requestFocus()
+                plan_cardholdername.error = "Enter name on card"
+            }
 
+            plan_cardnumber.text.isEmpty() -> {
+                plan_cardnumber.requestFocus()
+                plan_cardnumber.error = "Enter card number"
+            }
+
+            plan_carddate.text.isEmpty() -> {
+                plan_carddate.requestFocus()
+                plan_carddate.error = "Enter expiration date"
+            }
+
+            plan_cvc.text.isEmpty() -> {
+                plan_cvc.requestFocus()
+                plan_cvc.error = "Enter card verification code"
+            }
+
+            plan_billingzipcode.text.isEmpty() -> {
+                plan_billingzipcode.requestFocus()
+                plan_billingzipcode.error = "Enter billing zip code"
+            }
+            else -> {
+                cardholdername = plan_cardholdername.text.toString()
+                cardnumber = plan_cardnumber.text.toString()
+                cardexpDateyear = plan_carddate.text.toString()
+                cardcvc = plan_cvc.text.toString()
+                cardbilligcode = plan_billingzipcode.text.toString()
+                val dateyear = cardexpDateyear.split("/").toTypedArray()
+                Log.d("dateyear",""+dateyear)
+                Toast.makeText(this,""+MONTH+" "+YEAR,Toast.LENGTH_LONG).show()
+
+                val card2 = Card(cardnumber, MONTH, YEAR, cardcvc)
+                val stripe1 = Stripe(this, "pk_test_OTNta0F2CKTUpYDDM7igKdml")
+                stripe1.createToken(card2, object : TokenCallback {
+                    override fun onSuccess(token: Token?) {
+                        Toast.makeText(this@CardDetailScreen, "" + token, Toast.LENGTH_SHORT).show()
+                        Log.d("token", "" + token)
+                        Log.d("card", "" + card2)
+                    }
+
+                    override fun onError(error: Exception?) {
+                        Toast.makeText(this@CardDetailScreen, "Error" + error, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
+            }
         }
     }
 
     private fun updateDateInView() {
-        val myFormat = "MM/dd/yyyy" // mention the format you need
+        val myFormat = "MM/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         plan_carddate.setText(sdf.format(c.time))
     }
@@ -114,6 +170,7 @@ class CardDetailScreen : AppCompatActivity() {
         plan_cardnumber = findViewById(R.id.plan_cardnumber)
         plan_billingzipcode = findViewById(R.id.plan_billingzipcode)
         plan_verfybt = findViewById(R.id.plan_verfybt)
+        plan_cvc = findViewById(R.id.plan_cvc)
         plan_cancel = findViewById(R.id.plan_cancel)
         back_carddetail = findViewById(R.id.back_carddetail)
 

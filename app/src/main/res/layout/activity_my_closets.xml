@@ -60,6 +60,7 @@
 
     <include layout="@layout/searchbar"></include>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/closets_recyler"
         android:layout_width="match_parent"

@@ -16,6 +16,16 @@
 
     </ImageView>
 
+    <CheckBox
+        android:id="@+id/select_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_margin="@dimen/margin_8dp"
+        android:buttonTint="@color/colorWhite">
+    </CheckBox>
+
     <RelativeLayout
         android:layout_below="@id/closetItemImage"
         android:layout_width="match_parent"

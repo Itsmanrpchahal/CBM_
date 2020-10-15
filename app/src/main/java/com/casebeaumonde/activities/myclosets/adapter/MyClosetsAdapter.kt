@@ -5,10 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
@@ -80,6 +77,7 @@ class MyClosetsAdapter(
         holder.itemView.closets_additem.setOnClickListener {
             context.startActivity(Intent(context,AddItemToCloset::class.java).putExtra("closetID",closets.id.toString()).putExtra("edit","0").putExtra("closetItemID",""))
         }
+
     }
 
     override fun getItemCount(): Int {

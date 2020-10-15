@@ -49,6 +49,54 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:padding="@dimen/margin_8dp">
+
+        <Button
+            android:id="@+id/closet_selectitembt"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Select All"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/roundcorners">
+
+        </Button>
+
+        <Button
+            android:id="@+id/closet_deselectitembt"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Deselect All"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/roundcorners">
+
+        </Button>
+
+        <Button
+            android:id="@+id/closet_showselectbt"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/roundcorners"
+            android:text="Select Items"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack">
+
+        </Button>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/closetsItems_recycler"
         android:layout_width="match_parent"

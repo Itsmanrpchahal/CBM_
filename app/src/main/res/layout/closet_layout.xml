@@ -1,157 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_8dp"
-    android:background="@color/colorBlack">
+    android:background="@color/colorBlack"
+    android:orientation="vertical">
 
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+
+        <ImageView
+            android:id="@+id/closet_banner"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/whiteborder"
+            android:padding="@dimen/margin_8dp"
+            android:src="@drawable/login_banner">
+
+        </ImageView>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/closet_banner"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/login_banner"
-                android:padding="@dimen/margin_8dp"
-                android:background="@drawable/whiteborder">
+            <TextView
+                android:id="@+id/closet_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:singleLine="true"
+                android:text="User name"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
-            </ImageView>
+            </TextView>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/closet_go_to_closets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:singleLine="true"
+                android:text="Go to closet"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/closet_descripition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/closet_username"
+                android:singleLine="true"
+                android:text="Decs"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/closet_visibilty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/closet_descripition"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:singleLine="true"
+                android:text="Visibility: Public"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/closet_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/closet_visibilty"
+                android:singleLine="true"
+                android:text="Customer: "
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/closet_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/closet_customer"
+                android:singleLine="true"
+                android:text="Status:"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+
+            <TextView
+                android:id="@+id/closet_createdat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/closet_status"
+                android:singleLine="true"
+                android:text="Created at:"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/closet_createdat"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:gravity="right"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/closet_username"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/closets_additem"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:singleLine="true"
-                    android:text="User name"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:textColor="@color/colorWhite">
+                    android:background="@android:color/transparent"
+                    android:text="Add Items"
+                    android:textAllCaps="false">
 
-                </TextView>
+                </Button>
 
-                <TextView
-                    android:id="@+id/closet_go_to_closets"
-                    android:layout_width="wrap_content"
+
+                <Button
+                    android:id="@+id/closets_edititem"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textColor="@color/colorWhite"
-                    android:singleLine="true"
-                    android:text="Go to closet"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:layout_alignParentRight="true">
+                    android:background="@android:color/transparent"
+                    android:text="Edit"
+                    android:textAllCaps="false">
 
-                </TextView>
+                </Button>
 
-                <TextView
-                    android:id="@+id/closet_descripition"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/closets_delete"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="Decs"
-                    android:textColor="@color/colorWhite"
-                    android:layout_below="@id/closet_username">
+                    android:background="@android:color/transparent"
+                    android:text="Delete"
+                    android:textAllCaps="false">
 
-                </TextView>
+                </Button>
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/closet_visibilty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="Visibility: Public"
-                    android:layout_marginTop="@dimen/default_margin_16dp"
-                    android:textColor="@color/colorWhite"
-                    android:layout_below="@id/closet_descripition">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/closet_customer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Customer: "
-                    android:singleLine="true"
-                    android:textColor="@color/colorWhite"
-                    android:layout_below="@id/closet_visibilty">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/closet_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="Status:"
-                    android:textColor="@color/colorWhite"
-                    android:layout_below="@id/closet_customer">
-
-                </TextView>
-
-
-                <TextView
-                    android:id="@+id/closet_createdat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Created at:"
-                    android:singleLine="true"
-                    android:textColor="@color/colorWhite"
-                    android:layout_below="@id/closet_status">
-
-                </TextView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right"
-                    android:layout_below="@id/closet_createdat"
-                    android:layout_marginTop="@dimen/default_margin_16dp">
-
-                    <Button
-                        android:id="@+id/closets_additem"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:text="Add Items"
-                        android:textAllCaps="false">
-
-                    </Button>
-
-
-                    <Button
-                        android:id="@+id/closets_edititem"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:text="Edit"
-                        android:textAllCaps="false">
-
-                    </Button>
-
-                    <Button
-                        android:id="@+id/closets_delete"
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:text="Delete"
-                        android:textAllCaps="false">
-
-                    </Button>
-                </LinearLayout>
-
-            </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

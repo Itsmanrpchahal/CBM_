@@ -17,7 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.paymentScreen.CardDetailScreen"></activity>
+        <service
+            android:name=".TokenIntentService"
+            android:exported="false"></service>
+
+        <activity android:name=".activities.paymentScreen.CardDetailScreen" />
         <activity android:name=".fragments.profile.ViewProfile" />
         <activity android:name=".activities.addItemtoCLoset.AddItemToCloset" />
         <activity android:name=".activities.eventDetail.EventDetailScreen" />

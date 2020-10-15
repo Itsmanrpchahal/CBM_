@@ -71,4 +71,7 @@
     <string name="color">Color</string>
     <string name="brand">Brand</string>
     <string name="price">Price</string>
+    <string name="errorvalidate">Validation Errors</string>
+    <string name="endingIn">"Card ending in "</string>
+    <string name="progressMessage"><![CDATA[Making Payment Please Don\'t Cancel or Close This Window&#8230;]]></string>
 </resources>

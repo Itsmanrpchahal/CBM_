@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "457728397556",
+    "firebase_url": "https://casebeaumonde.firebaseio.com",
+    "project_id": "casebeaumonde",
+    "storage_bucket": "casebeaumonde.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457728397556:android:259b7c0b71f8b17ed34ea1",
+        "android_client_info": {
+          "package_name": "com.casebeaumonde"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457728397556-5b5rcbec247h5t0es43hpt49kcsfvl12.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.casebeaumonde",
+            "certificate_hash": "c7c2412fc95d7ba083d5cca52ed651123dc0c1d8"
+          }
+        },
+        {
+          "client_id": "457728397556-rt01ve5g21gr067oj8becln4snugot7a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8Z2SY5gddDkTKuVGemnIHTTikiUNPZyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457728397556-rt01ve5g21gr067oj8becln4snugot7a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

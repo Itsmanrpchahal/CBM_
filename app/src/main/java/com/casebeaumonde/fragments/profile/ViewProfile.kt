@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -21,6 +22,7 @@ import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.profile.profileResponse.FollowUnFollowResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import com.google.android.material.tabs.TabLayout
@@ -29,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_view_profile.*
 import kotlinx.android.synthetic.main.fragment_my_wall.*
 import retrofit2.Response
 
-class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelectedListener {
+class ViewProfile : BaseClass(), Controller.UserProfileAPI,Controller.FollowUnFollowAPI,TabLayout.OnTabSelectedListener {
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
@@ -43,6 +45,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelect
     private lateinit var viewprofile_tabLayout : TabLayout
     private lateinit var viewprofile_profilePic : CircleImageView
     private lateinit var viewprofile__mygigs : Button
+    private lateinit var viewprofile_followbt : Button
     private lateinit var role : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +53,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelect
         setContentView(R.layout.activity_view_profile)
         userID = intent.getStringExtra("userID").toString()
         controller = Controller()
-        controller.Controller(this)
+        controller.Controller(this,this)
         findIds()
         controller.setUserProfileAPI(
             "Bearer " + getStringVal(Constants.TOKEN),
@@ -67,6 +70,12 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelect
 
         viewprofile__mygigs.setOnClickListener {
             startActivity(Intent(this, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
+        }
+
+        viewprofile_followbt.setOnClickListener {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.FollowUnFollow("Bearer "+getStringVal(Constants.TOKEN),userID)
         }
     }
 
@@ -87,12 +96,19 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelect
         viewprofile__followingcount = findViewById(R.id.viewprofile__followingcount)
         viewprofile_tabLayout = findViewById(R.id.viewprofile_tabLayout)
         viewprofile__mygigs = findViewById(R.id.viewprofile__mygigs)
+        viewprofile_followbt = findViewById(R.id.viewprofile_followbt)
     }
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
         if (userProfileResponse.isSuccessful)
         {
+            if (userProfileResponse.body()?.data?.currentFollowing==true)
+            {
+                viewprofile_followbt.setText("UnFollow")
+            }else{
+                viewprofile_followbt.setText("Follow")
+            }
             viewprofile__username.setText(userProfileResponse.body()?.data?.user?.firstname+"'s Profile")
             viewprofile_usernamefull.setText(userProfileResponse.body()?.data?.user?.firstname+" "+userProfileResponse.body()?.data?.user?.lastname)
             viewprofile_followerscount.text = userProfileResponse.body()?.data?.user?.followers?.size.toString()
@@ -117,6 +133,36 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelect
 
     }
 
+    override fun onFollowUnfollowSuccess(followUnfollow: Response<FollowUnFollowResponse>) {
+        pd.dismiss()
+        if (followUnfollow.isSuccessful)
+        {
+            if (followUnfollow.body()?.message.equals("Now you are following Roberto"))
+            {
+                viewprofile_followbt.setText("Unfollow")
+            }else{
+                viewprofile_followbt.setText("Follow")
+            }
+            controller.setUserProfileAPI(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                userID
+            )
+
+
+            utility!!.relative_snackbar(
+                parent_viewProfile,
+                followUnfollow.body()?.message,
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_viewProfile,
+                followUnfollow.body()?.message,
+                getString(R.string.close_up)
+            )
+        }
+    }
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -124,6 +170,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,TabLayout.OnTabSelect
             error,
             getString(R.string.close_up)
         )
+        Log.d("message",""+error)
     }
 
     override fun onTabSelected(p0: TabLayout.Tab?) {

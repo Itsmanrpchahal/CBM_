@@ -49,53 +49,101 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:padding="@dimen/margin_8dp">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/closet_selectitembt"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="Select All"
-            android:layout_margin="5dp"
-            android:visibility="gone"
-            android:textAllCaps="false"
-            android:textColor="@color/colorBlack"
-            android:background="@drawable/roundcorners">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:padding="@dimen/margin_8dp">
 
-        </Button>
 
-        <Button
-            android:id="@+id/closet_deselectitembt"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="Deselect All"
-            android:layout_margin="5dp"
-            android:visibility="gone"
-            android:textAllCaps="false"
-            android:textColor="@color/colorBlack"
-            android:background="@drawable/roundcorners">
+            <Button
+                android:id="@+id/closet_moveitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Move Item"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
 
-        </Button>
+            </Button>
 
-        <Button
-            android:id="@+id/closet_showselectbt"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/roundcorners"
-            android:text="Select Items"
-            android:textAllCaps="false"
-            android:textColor="@color/colorBlack">
+            <Button
+                android:id="@+id/closet_duplicateitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Duplicate Item"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
 
-        </Button>
+            </Button>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/closet_makeoutfitbt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Make Outfit"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+
+            <Button
+                android:id="@+id/closet_selectitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Select All"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+            <Button
+                android:id="@+id/closet_deselectitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Deselect All"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+            <Button
+                android:id="@+id/closet_showselectbt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/roundcorners"
+                android:text="Select Items"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack">
+
+            </Button>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/closetsItems_recycler"

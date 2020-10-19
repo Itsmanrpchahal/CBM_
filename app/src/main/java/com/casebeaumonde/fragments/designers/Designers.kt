@@ -63,6 +63,8 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
             )
         }
 
+
+
         listeners()
         return view
     }
@@ -91,6 +93,8 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
             }
 
         })
+
+
     }
 
     private fun setFullData(response: ArrayList<DesignersResponse.Data.User>) {

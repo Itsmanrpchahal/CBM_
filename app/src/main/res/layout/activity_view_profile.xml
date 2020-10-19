@@ -162,6 +162,7 @@
                     android:drawableLeft="@drawable/ic_userprofile"
                     android:textColor="@color/colorBlack"
                     android:paddingLeft="@dimen/margin_8dp"
+                    android:paddingRight="@dimen/margin_8dp"
                     android:textAllCaps="false"
                     android:layout_marginRight="@dimen/margin_8dp">
 
@@ -174,7 +175,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/viewprofile_followerscount"
+                        android:id="@+id/viewprofile__followingcount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -202,7 +203,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/viewprofile__followingcount"
+                        android:id="@+id/viewprofile_followerscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

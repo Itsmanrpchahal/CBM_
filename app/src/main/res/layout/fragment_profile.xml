@@ -118,7 +118,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/profile_followerscount"
+                        android:id="@+id/profile_followingcount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -146,7 +146,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/profile_followingcount"
+                        android:id="@+id/profile_followerscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

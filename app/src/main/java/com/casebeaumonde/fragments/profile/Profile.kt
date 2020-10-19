@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.pricing.Pricing
 import com.casebeaumonde.fragments.profile.IF.GetUserID
 import com.casebeaumonde.fragments.profile.adapter.FollowerAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowingAdapter
@@ -63,6 +65,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var bitMap: Bitmap
     private lateinit var profile_changepassword: Button
     private lateinit var profile_edit_profile: Button
+    private lateinit var profile_chooseyourplan : Button
     private lateinit var followbt: Button
     private var path: String = ""
     private lateinit var changePasswordDialog: Dialog
@@ -77,6 +80,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var customerSubscription: String
     private lateinit var followers: ArrayList<UserProfileResponse.Data.User.Follower>
     private lateinit var following: ArrayList<UserProfileResponse.Data.User.Following>
+    lateinit var manager: FragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -89,6 +93,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         val view: View
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        manager = fragmentManager!!
         controller = Controller()
         controller.Controller(this, this, this)
         getUserID = this
@@ -128,6 +134,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         profile_followinglayout.setOnClickListener {
             openFollowersDialog("following")
+        }
+
+        profile_chooseyourplan.setOnClickListener {
+            val transaction = manager.beginTransaction()
+                transaction.replace(R.id.nav_host_fragment, Pricing())
+                transaction.commit()
+           // startActivity(Intent(context,Pricing::class.java))
         }
 
     }
@@ -355,6 +368,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_edit_profile = view.findViewById(R.id.profile_edit_profile)
         profile_changepassword = view.findViewById(R.id.profile_changepassword)
         profile_mygigs = view.findViewById(R.id.profile_mygigs)
+        profile_chooseyourplan = view.findViewById(R.id.profile_chooseyourplan)
         tabLayout = view.findViewById(R.id.tabLayout)
         pd.show()
         pd.setContentView(R.layout.loading)

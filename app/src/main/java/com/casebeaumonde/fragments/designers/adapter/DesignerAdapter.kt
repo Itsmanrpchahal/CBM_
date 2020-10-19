@@ -1,6 +1,7 @@
 package com.casebeaumonde.fragments.designers.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
+import com.casebeaumonde.fragments.profile.ViewProfile
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.customuser.view.*
 
@@ -29,6 +31,10 @@ class DesignerAdapter (val context : Context,var designers : MutableList<Designe
         val designers = designers?.get(position)
         holder.itemView.userName.text = designers.firstname+" "+designers.lastname
         Glide.with(context).load(Constants.BASE_IMAGE_URL+designers.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.userImage)
+
+        holder.itemView.setOnClickListener {
+            context.startActivity(Intent(context, ViewProfile::class.java).putExtra("userID",designers.id.toString()))
+        }
     }
 
     class ViewHolder (itemView: View): RecyclerView.ViewHolder(itemView){

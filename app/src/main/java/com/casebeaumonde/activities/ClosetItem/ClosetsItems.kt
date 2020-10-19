@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -22,23 +23,25 @@ import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
-import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
+import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse
+import com.casebeaumonde.activities.myclosets.response.FetchListResponse
+import com.casebeaumonde.activities.myclosets.response.MoveClosetItems
+import com.casebeaumonde.activities.myclosets.response.OutFitResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
-import org.jetbrains.annotations.NotNull
-import org.jetbrains.annotations.Nullable
 import retrofit2.Response
-import kotlin.math.log
 
-class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,SelectedCloset_ID,
+class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
+    SelectedCloset_ID,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
-    Controller.AdDItemToAnotherClosetAPI {
+    Controller.AdDItemToAnotherClosetAPI, Controller.MoveItemAPI, Controller.DuplicateItemAPI,
+    Controller.FetchListAPI, Controller.OutFItAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -56,13 +59,22 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var userClosets: ArrayList<ClosetsItemsResponse.Data.AllCloset>
     private lateinit var list: ArrayList<String>
     private lateinit var listID: ArrayList<String>
-    private lateinit var closet_showselectbt : Button
+    private lateinit var closet_showselectbt: Button
     private lateinit var closet_deselectitembt: Button
     private lateinit var closet_selectitembt: Button
-    private lateinit var checkedClosetIDs : ArrayList<String>
-    private lateinit var selectedItems : ArrayList<String>
-    var select : Int = 0
-    var selectAll : Int = 0
+    private lateinit var closet_moveitembt: Button
+    private lateinit var closet_duplicateitembt: Button
+    private lateinit var closet_makeoutfitbt: Button
+    private lateinit var moveItemDialog: Dialog
+    private lateinit var checkedClosetIDs: ArrayList<String>
+    private lateinit var selectedItems: ArrayList<String>
+    private lateinit var listData: ArrayList<String>
+    private lateinit var outFitRes: ArrayList<FetchListResponse.Data.Outfit>
+    private lateinit var outFitTitle: ArrayList<String>
+    private lateinit var outFitID: ArrayList<String>
+
+    var select: Int = 0
+    var selectAll: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,9 +83,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         checkedClosetIDs = ArrayList()
         selectedItems = ArrayList()
         controller = Controller()
-        controller.Controller(this, this, this, this)
+        controller.Controller(this, this, this, this, this, this, this, this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
-
+        controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
         closetitemidIf = this
         viewclosetidIf = this
         selectedclosetId = this
@@ -104,7 +116,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             closet_deselectitembt.visibility = View.VISIBLE
             closet_showselectbt.visibility = View.GONE
             select = 1
-            setFullData(closetResponse,select,selectAll)
+            setFullData(closetResponse, select, selectAll)
 
         }
 
@@ -114,21 +126,214 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             closet_showselectbt.visibility = View.VISIBLE
             select = 0
             selectAll = 0
-            setFullData(closetResponse,select,selectAll)
+            setFullData(closetResponse, select, selectAll)
             checkedClosetIDs.clear()
-            Log.d("test",""+checkedClosetIDs)
+            closet_moveitembt.visibility = View.GONE
+            closet_duplicateitembt.visibility = View.GONE
+            closet_makeoutfitbt.visibility = View.GONE
         }
 
         closet_selectitembt.setOnClickListener {
             checkedClosetIDs.clear()
-            for (i in closetResponse.indices)
-            {
+            for (i in closetResponse.indices) {
                 checkedClosetIDs.add(closetResponse.get(i).id.toString())
             }
             selectAll = 1
-            setFullData(closetResponse,select,selectAll)
-            Log.d("test",""+checkedClosetIDs)
+            setFullData(closetResponse, select, selectAll)
+            Log.d("test", "" + checkedClosetIDs)
+            if (checkedClosetIDs.size > 0) {
+                closet_moveitembt.visibility = View.VISIBLE
+                closet_duplicateitembt.visibility = View.VISIBLE
+                closet_makeoutfitbt.visibility = View.VISIBLE
+            } else {
+                closet_moveitembt.visibility = View.GONE
+                closet_duplicateitembt.visibility = View.GONE
+                closet_makeoutfitbt.visibility = View.GONE
+            }
         }
+
+        closet_moveitembt.setOnClickListener {
+            if (checkedClosetIDs.size > 0) {
+                showMoveDialog("move")
+            }
+
+        }
+
+        closet_duplicateitembt.setOnClickListener {
+            if (checkedClosetIDs.size > 0) {
+                showMoveDialog("duplicate")
+            }
+        }
+
+        closet_makeoutfitbt.setOnClickListener {
+            if (checkedClosetIDs.size > 0) {
+                showMoveDialog("outfit")
+            }
+        }
+
+    }
+
+
+    //ToDO: MoveClosetiTem dialog
+    private fun showMoveDialog(s: String) {
+        moveItemDialog = Dialog(this)
+        moveItemDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        moveItemDialog.setContentView(R.layout.customspinner)
+        val window = moveItemDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+
+        var listview: ListView
+        var outfitlist: ListView
+        var moveitem: Button
+        var cancelitem: Button
+        var addnewclosetet: EditText
+        var checkbox: CheckBox
+        var addoutfit : CheckBox
+        listview = moveItemDialog.findViewById(R.id.listview)
+        outfitlist = moveItemDialog.findViewById(R.id.outfitlist)
+        moveitem = moveItemDialog.findViewById(R.id.moveitem)
+        cancelitem = moveItemDialog.findViewById(R.id.cancelitem)
+        checkbox = moveItemDialog.findViewById(R.id.checkbox)
+        addnewclosetet = moveItemDialog.findViewById(R.id.addnewclosetet)
+        addoutfit = moveItemDialog.findViewById(R.id.addoutfit)
+        list = ArrayList()
+        listID = ArrayList()
+        outFitTitle = ArrayList()
+        outFitID = ArrayList()
+
+        if (s.equals("move") || s.equals("duplicate")) {
+            listview.visibility = View.VISIBLE
+            outfitlist.visibility = View.GONE
+            checkbox.visibility = View.VISIBLE
+            addoutfit.visibility = View.GONE
+        } else {
+            listview.visibility = View.GONE
+            outfitlist.visibility = View.VISIBLE
+            addoutfit.visibility = View.VISIBLE
+            checkbox.visibility = View.GONE
+        }
+
+
+//ToDo : Get USer closets for move and duplicate
+        for (i in 0 until userClosets.size) {
+            val title = userClosets.get(i)
+            list.add(title.title)
+            listID.add(title.id.toString())
+        }
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_multiple_choice, list
+        )
+
+        listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listview.setAdapter(adapter);
+
+
+        //ToDo: Get Outfits
+        for (i in 0 until outFitRes.size) {
+            val title = outFitRes.get(i)
+            outFitTitle.add(title.title)
+            outFitID.add(title.id.toString())
+        }
+
+        val outfitadapter =
+            ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, outFitTitle)
+
+        outfitlist.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE)
+        outfitlist.setAdapter(outfitadapter)
+
+        moveitem.setOnClickListener {
+            if (s.equals("move") || s.equals("duplicate")) {
+                listData = ArrayList()
+                val sbArray: SparseBooleanArray = listview.getCheckedItemPositions()
+                for (i in 0 until sbArray.size()) {
+
+                    val key = sbArray.keyAt(i)
+
+                    if (sbArray[key]) listData.add(listID.get(key))
+                }
+            } else {
+                listData = ArrayList()
+                val sbArray: SparseBooleanArray = outfitlist.getCheckedItemPositions()
+                for (i in 0 until sbArray.size()) {
+
+                    val key = sbArray.keyAt(i)
+
+                    if (sbArray[key]) listData.add(outFitID.get(key))
+                }
+            }
+
+            pd.show()
+            pd.setContentView(R.layout.loading)
+
+            val newclosetname = addnewclosetet.text.toString()
+            if (s.equals("move")) {
+
+                controller.MoveItem(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    checkedClosetIDs.toString(),
+                    listData.toString(),
+                    newclosetname
+                )
+
+
+            } else if (s.equals("duplicate")) {
+
+                controller.DuplicateItem(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    checkedClosetIDs.toString(),
+                    listData.toString(),
+                    newclosetname
+                )
+
+            } else if (s.equals("outfit")) {
+                controller.OutFIt(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    checkedClosetIDs.toString(),
+                    listData.toString(),
+                    newclosetname
+                )
+            }
+
+            Log.d("listtag", "" + listData + "    " + checkedClosetIDs)
+
+        }
+
+
+        checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if (isChecked) {
+                addnewclosetet.visibility = View.VISIBLE
+                listview.visibility = View.GONE
+                listData = ArrayList()
+                listData.clear()
+            } else {
+                addnewclosetet.visibility = View.GONE
+                listview.visibility = View.VISIBLE
+            }
+        }
+
+        addoutfit.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                addnewclosetet.visibility = View.VISIBLE
+                outfitlist.visibility = View.GONE
+                listData = ArrayList()
+                listData.clear()
+            } else {
+                addnewclosetet.visibility = View.GONE
+                outfitlist.visibility = View.VISIBLE
+            }
+
+        }
+
+        cancelitem.setOnClickListener { moveItemDialog.dismiss() }
+
+
+        moveItemDialog.show()
     }
 
     private fun setClosetAPI() {
@@ -162,7 +367,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     companion object {
         var closetitemidIf: ClosetItemID_IF? = null
         var viewclosetidIf: ViewClosetID_IF? = null
-        var selectedclosetId : SelectedCloset_ID? = null
+        var selectedclosetId: SelectedCloset_ID? = null
     }
 
 
@@ -179,6 +384,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         closet_showselectbt = findViewById(R.id.closet_showselectbt)
         closet_deselectitembt = findViewById(R.id.closet_deselectitembt)
         closet_selectitembt = findViewById(R.id.closet_selectitembt)
+        closet_moveitembt = findViewById(R.id.closet_moveitembt)
+        closet_duplicateitembt = findViewById(R.id.closet_duplicateitembt)
+        closet_makeoutfitbt = findViewById(R.id.closet_makeoutfitbt)
     }
 
     //ToDo: Get  Closet All Items
@@ -189,9 +397,11 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             userClosets = ArrayList()
             selectAll = 0
             userClosets.addAll(closetItemsResponse.body()?.data?.allClosets!!)
-            setFullData(closetItemsResponse.body()?.data?.closet?.items,select,selectAll)
-
-
+            setFullData(closetItemsResponse.body()?.data?.closet?.items, select, selectAll)
+            listData = ArrayList()
+            checkedClosetIDs = ArrayList()
+            listData.clear()
+            checkedClosetIDs.clear()
             if (closetItemsResponse.body()?.data?.closet?.userId.toString()
                     .equals(getStringVal(Constants.USERID))
             ) {
@@ -208,20 +418,23 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
 
     //ToDo : Set Data into Adapter
-    private fun setFullData(items: List<ClosetsItemsResponse.Data.Closet.Item>?,select : Int,selectAll : Int) {
+    private fun setFullData(
+        items: List<ClosetsItemsResponse.Data.Closet.Item>?,
+        select: Int,
+        selectAll: Int
+    ) {
         closetsItems_recycler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val adapter = getStringVal(Constants.USERID)?.let {
             ClosetsItemAdapter(
                 this, (items as MutableList<ClosetsItemsResponse.Data.Closet.Item>?)!!,
-                it,select,selectAll
+                it, select, selectAll
             )
         }
         closetResponse = ArrayList()
         closetResponse.addAll(items!!)
         closetsItems_recycler.adapter = adapter
     }
-
 
 
     //ToDo : Set Fav closet Item
@@ -273,6 +486,82 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
                 addItemToAnotherCloset.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    //ToDo: Move Closet Items
+    override fun onMoveItemSuccess(moveItem: Response<MoveClosetItems>) {
+        pd.dismiss()
+
+        moveItemDialog.dismiss()
+        setClosetAPI()
+        if (moveItem.isSuccessful) {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                moveItem.body()?.message,
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                moveItem.body()?.message,
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    //ToDo: Duplicate Item
+    override fun onDuplicateItemSuccess(duplicateItem: Response<DuplicateItemResponse>) {
+        pd.dismiss()
+        moveItemDialog.dismiss()
+        setClosetAPI()
+        if (duplicateItem.isSuccessful) {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                duplicateItem.body()?.message,
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                duplicateItem.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    //ToDo: Fetch List
+    override fun onFetchListSuccess(fetchList: Response<FetchListResponse>) {
+        pd.dismiss()
+        if (fetchList.isSuccessful) {
+            outFitRes = ArrayList()
+            outFitRes.addAll(fetchList.body()?.data?.outfits!!)
+        } else {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                fetchList.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    //ToDo: Outfit
+    override fun onOutfitSuccess(outfit: Response<OutFitResponse>) {
+        pd.dismiss()
+        moveItemDialog.dismiss()
+        setClosetAPI()
+        if (outfit.isSuccessful) {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                outfit.body()?.message,
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                outfit.message(),
                 getString(R.string.close_up)
             )
         }
@@ -506,19 +795,27 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     }
 
     override fun getID(
-        id:  String?,
-        s:  String
+        id: String?,
+        s: String
     ) {
-        if (s.equals("0"))
-        {
-            if (checkedClosetIDs.contains(id))
-            {
+        if (s.equals("0")) {
+            if (checkedClosetIDs.contains(id)) {
                 checkedClosetIDs.remove(id)
             }
-        }else {
+        } else {
             checkedClosetIDs.add(id.toString())
         }
 
-        Log.d("test",""+checkedClosetIDs)
+        if (checkedClosetIDs.size > 0) {
+            closet_moveitembt.visibility = View.VISIBLE
+            closet_duplicateitembt.visibility = View.VISIBLE
+            closet_makeoutfitbt.visibility = View.VISIBLE
+        } else {
+            closet_moveitembt.visibility = View.GONE
+            closet_duplicateitembt.visibility = View.GONE
+            closet_makeoutfitbt.visibility = View.GONE
+        }
+
+        Log.d("test", "" + checkedClosetIDs)
     }
 }

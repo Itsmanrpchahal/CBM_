@@ -73,24 +73,26 @@ class Pricing : BaseFrag(), Controller.PricingAPI {
 
     override fun onPricingSuccess(pricing: Response<PricingResponse>) {
         pd.dismiss()
-        if (getStringVal(Constants.BUSSINESSSUBSSCRIPTION).equals("1")) {
-            bussinessPricing =
-                pricing.body()?.data?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>
-            priciing_recyclerview.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            val adapter = BussinessPricingAdapter(
-                context!!, bussinessPricing
-            )
-            priciing_recyclerview.adapter = adapter
+        if (getStringVal(Constants.USER_ROLE).equals("1")) {
+
         }
 
-        if (getStringVal(Constants.CUSTOMERSUBSCRIPTION).equals("1")) {
+        if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             customerPricing =
                 pricing.body()?.data?.customerPlans as ArrayList<PricingResponse.Data.CustomerPlan>
             priciing_recyclerview.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             val adapter = CustomerPricingAdapter(
                 context!!, customerPricing
+            )
+            priciing_recyclerview.adapter = adapter
+        } else {
+            bussinessPricing =
+                pricing.body()?.data?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>
+            priciing_recyclerview.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val adapter = BussinessPricingAdapter(
+                context!!, bussinessPricing
             )
             priciing_recyclerview.adapter = adapter
         }

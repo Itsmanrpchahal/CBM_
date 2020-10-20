@@ -497,6 +497,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             userProfileResponse.body()?.data?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
 
         role = userProfileResponse.body()?.data?.user?.role.toString()
+        setStringVal(Constants.USER_ROLE,userProfileResponse.body()?.data?.user?.role.toString())
 
         if (userProfileResponse.body()?.data?.user?.customerSubscription !=null)
         {
@@ -597,6 +598,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             error,
             getString(R.string.close_up)
         )
+        Log.d("testing",""+error)
     }
 
     private fun changePassword(

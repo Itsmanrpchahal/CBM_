@@ -103,6 +103,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             startActivity(Intent(this, Notifications::class.java))
         }
 
+
     }
 
     private fun logout() {

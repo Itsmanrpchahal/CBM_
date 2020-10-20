@@ -1,10 +1,12 @@
 package com.casebeaumonde.activities.notifications.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotificationsResponse {
 
     @SerializedName("code")

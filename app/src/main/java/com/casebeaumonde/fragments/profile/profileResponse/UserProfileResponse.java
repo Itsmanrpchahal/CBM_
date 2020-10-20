@@ -870,7 +870,7 @@ public class UserProfileResponse {
                 private Integer customerPlanId;
                 @SerializedName("amount")
                 @Expose
-                private Integer amount;
+                private Double amount;
                 @SerializedName("currency")
                 @Expose
                 private String currency;
@@ -882,7 +882,7 @@ public class UserProfileResponse {
                 private String inactiveAt;
                 @SerializedName("monthly_price")
                 @Expose
-                private Integer monthlyPrice;
+                private Double monthlyPrice;
                 @SerializedName("prev_customer_plan_id")
                 @Expose
                 private Integer prevCustomerPlanId;
@@ -891,7 +891,7 @@ public class UserProfileResponse {
                 private Integer nextCustomerPlanId;
                 @SerializedName("annual_charge")
                 @Expose
-                private Integer annualCharge;
+                private Double annualCharge;
                 @SerializedName("yearly_saving_percent")
                 @Expose
                 private Object yearlySavingPercent;
@@ -962,11 +962,11 @@ public class UserProfileResponse {
                     this.customerPlanId = customerPlanId;
                 }
 
-                public Integer getAmount() {
+                public Double getAmount() {
                     return amount;
                 }
 
-                public void setAmount(Integer amount) {
+                public void setAmount(Double amount) {
                     this.amount = amount;
                 }
 
@@ -994,11 +994,11 @@ public class UserProfileResponse {
                     this.inactiveAt = inactiveAt;
                 }
 
-                public Integer getMonthlyPrice() {
+                public Double getMonthlyPrice() {
                     return monthlyPrice;
                 }
 
-                public void setMonthlyPrice(Integer monthlyPrice) {
+                public void setMonthlyPrice(Double monthlyPrice) {
                     this.monthlyPrice = monthlyPrice;
                 }
 
@@ -1018,11 +1018,11 @@ public class UserProfileResponse {
                     this.nextCustomerPlanId = nextCustomerPlanId;
                 }
 
-                public Integer getAnnualCharge() {
+                public Double getAnnualCharge() {
                     return annualCharge;
                 }
 
-                public void setAnnualCharge(Integer annualCharge) {
+                public void setAnnualCharge(Double annualCharge) {
                     this.annualCharge = annualCharge;
                 }
 
@@ -1159,10 +1159,10 @@ public class UserProfileResponse {
                     private String description;
                     @SerializedName("monthly_price")
                     @Expose
-                    private Integer monthlyPrice;
+                    private Double monthlyPrice;
                     @SerializedName("yearly_price")
                     @Expose
-                    private Integer yearlyPrice;
+                    private Double yearlyPrice;
                     @SerializedName("yearly_saving_percent")
                     @Expose
                     private Integer yearlySavingPercent;
@@ -1254,19 +1254,19 @@ public class UserProfileResponse {
                         this.description = description;
                     }
 
-                    public Integer getMonthlyPrice() {
+                    public Double getMonthlyPrice() {
                         return monthlyPrice;
                     }
 
-                    public void setMonthlyPrice(Integer monthlyPrice) {
+                    public void setMonthlyPrice(Double monthlyPrice) {
                         this.monthlyPrice = monthlyPrice;
                     }
 
-                    public Integer getYearlyPrice() {
+                    public Double getYearlyPrice() {
                         return yearlyPrice;
                     }
 
-                    public void setYearlyPrice(Integer yearlyPrice) {
+                    public void setYearlyPrice(Double yearlyPrice) {
                         this.yearlyPrice = yearlyPrice;
                     }
 

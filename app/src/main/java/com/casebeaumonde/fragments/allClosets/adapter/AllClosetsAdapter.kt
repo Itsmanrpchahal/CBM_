@@ -48,7 +48,7 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context, ClosetsItems::class.java)
-                .putExtra(Constants.CLOSETID,""+listData.id))
+                .putExtra(Constants.CLOSETID,""+listData.id).putExtra("userID",userID))
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {

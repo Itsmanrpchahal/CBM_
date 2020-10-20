@@ -16,4 +16,5 @@ object Constants
     val CLEAR: String? = "CLEAR"
     val BASE_URL ="http://dev.casabeaumonde.com/"
     val BASE_IMAGE_URL ="http://dev.casabeaumonde.com/storage/"
+    val USER_ROLE = "USER_ROLE"
 }

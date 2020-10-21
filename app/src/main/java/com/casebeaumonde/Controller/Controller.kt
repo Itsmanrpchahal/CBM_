@@ -23,6 +23,7 @@ import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.activities.myclosets.response.*
+import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
@@ -70,6 +71,7 @@ public class Controller {
     var duplicateItemAPI: DuplicateItemAPI? = null
     var fetchListAPI: FetchListAPI? = null
     var outFItAPI : OutFItAPI? = null
+    var paymentProfileAPI : PaymentProfileAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -211,6 +213,12 @@ public class Controller {
 
     fun Controller(pricing: PricingAPI) {
         pricingAPI = pricing
+        webAPI = WebAPI()
+    }
+
+    fun Controller(paymentProfile: PaymentProfileAPI)
+    {
+        paymentProfileAPI = paymentProfile
         webAPI = WebAPI()
     }
 
@@ -862,6 +870,24 @@ public class Controller {
         })
     }
 
+    fun PaymentProfile(token: String?){
+        webAPI?.api?.paymentProfile(token)?.enqueue(object : Callback<PaymentProfileResponse>
+        {
+            override fun onResponse(
+                call: Call<PaymentProfileResponse>,
+                response: Response<PaymentProfileResponse>
+            ) {
+                val paymentprofile = response
+                paymentProfileAPI?.onPaymentProfileSuccess(paymentprofile)
+            }
+
+            override fun onFailure(call: Call<PaymentProfileResponse>, t: Throwable) {
+                paymentProfileAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1025,6 +1051,11 @@ public class Controller {
 
     interface OutFItAPI {
         fun onOutfitSuccess(outfit : Response<OutFitResponse>)
+        fun error(error: String?)
+    }
+
+    interface PaymentProfileAPI {
+        fun onPaymentProfileSuccess(paymentProfile: Response<PaymentProfileResponse>)
         fun error(error: String?)
     }
 }

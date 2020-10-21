@@ -222,10 +222,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="My Gigs"
+                android:visibility="gone"
                 android:layout_marginLeft="@dimen/margin_40dp"
                 android:layout_marginRight="@dimen/margin_40dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_14sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_8dp">
+
+            </Button>
+
+            <Button
+                android:id="@+id/profile_mypaymentmethods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My payment methods"
+                android:visibility="gone"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_14sp"
+                android:layout_marginLeft="@dimen/margin_40dp"
+                android:layout_marginRight="@dimen/margin_40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_8dp">
 

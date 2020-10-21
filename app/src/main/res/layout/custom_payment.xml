@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:id="@+id/payment_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Type : "
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/payment_Details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Details : "
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/payment_amountpaid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Amount paid : "
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/payment_paidfor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Paid for : "
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/payment_patmentdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Payment date : "
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/payment_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Transaction # : "
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/payment_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Status : "
+        android:layout_marginBottom="@dimen/textsize_16sp"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+</LinearLayout>

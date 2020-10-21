@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:id="@+id/parent_paymentprofile"
+    tools:context=".activities.paymenthistory.PaymentHistory">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetEnd="0dp"
+            android:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:background="#00000000"
+                    android:src="@drawable/ic_baseline_keyboard_backspace_24">
+
+                </ImageButton>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Payment history"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin_16dp"
+            android:layout_marginTop="@dimen/default_margin_16dp"
+            android:text="Success payments"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/successpayments_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/textsize_16sp"
+            android:background="@color/colorTextHint">
+
+        </View>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin_16dp"
+            android:layout_marginTop="@dimen/default_margin_16dp"
+            android:text="Error payments"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -21,10 +21,12 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
+import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.notifications.Notifications
+import com.casebeaumonde.activities.paymenthistory.PaymentHistory
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.Pricing
@@ -65,11 +67,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var bitMap: Bitmap
     private lateinit var profile_changepassword: Button
     private lateinit var profile_edit_profile: Button
-    private lateinit var profile_chooseyourplan : Button
+    private lateinit var profile_chooseyourplan: Button
+    private lateinit var profile_mypaymentmethods: Button
     private lateinit var followbt: Button
     private var path: String = ""
     private lateinit var changePasswordDialog: Dialog
     private lateinit var dialog: Dialog
+    private lateinit var viewplanDialog: Dialog
     private lateinit var role: String
     private var tabLayout: TabLayout? = null
     private lateinit var username: String
@@ -125,7 +129,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
 
         profile_mygigs.setOnClickListener {
-            startActivity(Intent(context, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
+            startActivity(
+                Intent(context, MyGigs::class.java).putExtra("role", role)
+                    .putExtra("userID", userID)
+            )
         }
 
         profile_followerslayout.setOnClickListener {
@@ -137,12 +144,46 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
 
         profile_chooseyourplan.setOnClickListener {
-            val transaction = manager.beginTransaction()
+
+            if (profile_chooseyourplan.text.toString().equals("My Subscriptions"))
+            {
+                ViewPlanDialog()
+            } else  {
+                val transaction = manager.beginTransaction()
                 transaction.replace(R.id.nav_host_fragment, Pricing())
                 transaction.commit()
-           // startActivity(Intent(context,Pricing::class.java))
+            }
+
         }
 
+    }
+
+    private fun ViewPlanDialog() {
+        viewplanDialog = Dialog(context!!)
+        viewplanDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        viewplanDialog.setContentView(R.layout.manageplandialog)
+        val window = viewplanDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val planname : TextView
+        val cancelplan : Button
+        val viewpayments : Button
+        val changeplan : Button
+        val close : Button
+        planname = viewplanDialog.findViewById(R.id.planname)
+        cancelplan = viewplanDialog.findViewById(R.id.cancelplan)
+        viewpayments = viewplanDialog.findViewById(R.id.viewpayments)
+        changeplan = viewplanDialog.findViewById(R.id.changeplan)
+        close = viewplanDialog.findViewById(R.id.close)
+
+        viewpayments.setOnClickListener { startActivity(Intent(context,PaymentHistory::class.java)) }
+        close.setOnClickListener { viewplanDialog.dismiss() }
+
+        viewplanDialog.show()
     }
 
     private fun openFollowersDialog(s: String) {
@@ -364,6 +405,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_followingcount = view.findViewById(R.id.profile_followingcount)
         profile_followerslayout = view.findViewById(R.id.profile_followerslayout)
         profile_followinglayout = view.findViewById(R.id.profile_followinglayout)
+        profile_mypaymentmethods = view.findViewById(R.id.profile_mypaymentmethods)
         profile_changetv = view.findViewById(R.id.profile_changetv)
         profile_edit_profile = view.findViewById(R.id.profile_edit_profile)
         profile_changepassword = view.findViewById(R.id.profile_changepassword)
@@ -387,7 +429,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun getUserID(id: String?) {
 
         userID = id.toString()
-        startActivity(Intent(context,ViewProfile::class.java).putExtra("userID",userID))
+        startActivity(Intent(context, ViewProfile::class.java).putExtra("userID", userID))
     }
 
     private fun pictureSelectionDialog() {
@@ -497,27 +539,27 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             userProfileResponse.body()?.data?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
 
         role = userProfileResponse.body()?.data?.user?.role.toString()
-        setStringVal(Constants.USER_ROLE,userProfileResponse.body()?.data?.user?.role.toString())
+        setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.data?.user?.role.toString())
 
-        if (userProfileResponse.body()?.data?.user?.customerSubscription !=null)
-        {
-            setStringVal(Constants.CUSTOMERSUBSCRIPTION,"1")
+        if (userProfileResponse.body()?.data?.user?.customerSubscription != null) {
+            setStringVal(Constants.CUSTOMERSUBSCRIPTION, "1")
         }
 
-        if (userProfileResponse.body()?.data?.user?.businessSubscription !=null)
-        {
-            setStringVal(Constants.BUSSINESSSUBSSCRIPTION,"1")
+        if (userProfileResponse.body()?.data?.user?.businessSubscription != null) {
+            setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
         }
         if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
-            profile_mygigs.visibility = View.VISIBLE
+            profile_mygigs.visibility = View.GONE
 
+            profile_chooseyourplan.setText("My Subscriptions")
+            profile_mypaymentmethods.visibility = View.VISIBLE
 
             tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
             tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
             tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Contracts"))
+//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
+//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
+            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Contracts"))
             tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
             tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
             tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
@@ -598,7 +640,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             error,
             getString(R.string.close_up)
         )
-        Log.d("testing",""+error)
+        Log.d("testing", "" + error)
     }
 
     private fun changePassword(
@@ -682,7 +724,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
             p0?.text?.equals("My gigs")!! -> {
-                startActivity(Intent(context, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
+                startActivity(
+                    Intent(context, MyGigs::class.java).putExtra("role", role)
+                        .putExtra("userID", userID)
+                )
             }
 
             p0?.text?.equals("My Wall")!! -> {
@@ -691,6 +736,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             p0?.text?.equals("Notifications")!! -> {
                 startActivity(Intent(context, Notifications::class.java).putExtra("userID", userID))
+            }
+
+            p0?.text?.equals("My Contracts")!! -> {
+                startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
             }
         }
     }
@@ -706,7 +755,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
             p0?.text?.equals("My gigs")!! -> {
-                startActivity(Intent(context, MyGigs::class.java).putExtra("role", role).putExtra("userID",userID))
+                startActivity(
+                    Intent(context, MyGigs::class.java).putExtra("role", role)
+                        .putExtra("userID", userID)
+                )
             }
 
             p0?.text?.equals("My Wall")!! -> {
@@ -715,6 +767,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             p0?.text?.equals("Notifications")!! -> {
                 startActivity(Intent(context, Notifications::class.java).putExtra("userID", userID))
+            }
+
+            p0?.text?.equals("My Contracts")!! -> {
+                startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
             }
         }
     }

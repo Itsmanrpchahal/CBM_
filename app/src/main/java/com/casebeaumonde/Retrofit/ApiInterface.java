@@ -17,6 +17,7 @@ import com.casebeaumonde.activities.myclosets.response.MoveClosetItems;
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
+import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
@@ -340,6 +341,11 @@ public interface ApiInterface {
 
     @GET("api/v1/fetchList")
     Call<FetchListResponse> fetchList (
+            @Header("Authorization") String token
+    );
+
+    @GET("api/v1/payment-profile")
+    Call<PaymentProfileResponse> paymentProfile (
             @Header("Authorization") String token
     );
 }

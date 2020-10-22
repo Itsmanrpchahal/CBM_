@@ -9,6 +9,8 @@ import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
+import com.casebeaumonde.activities.myContracts.tabs.response.MakeOfferResponse;
+import com.casebeaumonde.activities.myContracts.tabs.response.WorkInvitationResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse;
@@ -347,5 +349,22 @@ public interface ApiInterface {
     @GET("api/v1/payment-profile")
     Call<PaymentProfileResponse> paymentProfile (
             @Header("Authorization") String token
+    );
+
+    @GET("api/v1/userInvitation/{input}")
+    Call<WorkInvitationResponse> workinvitations (
+            @Header("Authorization") String token,
+            @Path("input") String id
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/sendOffer")
+    Call<MakeOfferResponse> makeOffer (
+            @Header("Authorization") String token,
+            @Field("designer_id") String designer_id,
+            @Field("gig_id") String gig_id,
+            @Field("rate_type") String rate_type,
+            @Field("comments") String comments,
+            @Field("rate") String rate
     );
 }

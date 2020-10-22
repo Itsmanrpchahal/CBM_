@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:text="Send offer to Roberto Heredia"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@id/tv1"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:background="@color/colorBlack">
+
+                </View>
+
+                <TextView
+                    android:id="@+id/gigtitletv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view1"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="Gig title"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gigtitletv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gigtitletv"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:text="Gig title"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/offer_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_below="@id/view1"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:src="@drawable/login_banner">
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+                <TextView
+                    android:id="@+id/gigdecstv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gigtitletv1"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:text="Gig Decscription"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gigdecstv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gigdecstv"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:text="Gig Decs"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/gigratetype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gigdecstv1"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:text="Rate type"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <RelativeLayout
+                    android:id="@+id/hourlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gigratetype"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/gigrate_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"></Spinner>
+
+                    <TextView
+                        android:id="@+id/rate_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/gig_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hourlayout"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:text="Rate you are willing to pay"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/rateet"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_below="@id/gig_rate"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:textColor="@color/colorBlack"
+                    android:paddingLeft="@dimen/margin_8dp"
+                    android:inputType="number"
+                    android:background="@drawable/blackroundcorners"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    >
+
+                </EditText>
+
+
+                <TextView
+                    android:id="@+id/currentoffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rateet"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:padding="@dimen/margin_8dp"
+                    android:text="Currently offering: $20 per hour"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/commenttv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/currentoffer"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="Comments"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/commetet"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/commenttv"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:gravity="start"
+                    android:inputType="text"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:layout_marginBottom="@dimen/default_margin_16dp"
+                    android:background="@drawable/blackroundcorners"
+                    android:padding="@dimen/margin_8dp"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </EditText>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/commetet"
+                    android:gravity="right"
+                    android:layout_marginTop="@dimen/margin_8dp">
+
+
+                    <Button
+                        android:id="@+id/sendoffer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Send offer"
+                        android:textColor="@color/colorWhite"
+                        android:textAllCaps="false">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Close"
+                        android:textColor="@color/colorWhite"
+                        android:textAllCaps="false"
+                        android:layout_marginLeft="@dimen/default_margin_16dp">
+
+                    </Button>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

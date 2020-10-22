@@ -26,6 +26,11 @@
         <item>Influencer</item>
     </string-array>
 
+    <string-array name="Rate">
+        <item>Hourly</item>
+        <item>Fixed</item>
+    </string-array>
+
     <string-array name="SearchEvent">
         <item>All</item>
         <item>Public</item>

@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.custom_payment.view.*
 
 class PaymentCardsAdapter(
     var context: Context,
-    val cards: MutableList<PaymentProfileResponse.Data.PaymentProfile>
+    val cards: MutableList<PaymentProfileResponse.Datum>
 ) :
     RecyclerView.Adapter<PaymentCardsAdapter.ViewHolder>() {
 
@@ -29,8 +29,8 @@ class PaymentCardsAdapter(
 
     override fun onBindViewHolder(holder: PaymentCardsAdapter.ViewHolder, position: Int) {
         val cardProfile = cards.get(position)
-        holder.itemView.payment_type.setText("Type : "+cardProfile.brand)
-        holder.itemView.payment_Details.setText("Details : Visa ending in ****"+cardProfile.lastNumbers)
+        holder.itemView.payment_type.setText("Type : "+cardProfile.cardBrand)
+        holder.itemView.payment_Details.setText("Details : Visa ending in ****"+cardProfile.last4)
         holder.itemView.payment_amountpaid.setText("Amount paid : $")
         holder.itemView.payment_patmentdate.setText("Payment date : "+Utils.changeDateTimeToDate(cardProfile.createdAt))
     }

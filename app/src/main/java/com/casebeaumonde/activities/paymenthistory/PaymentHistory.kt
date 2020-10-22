@@ -77,9 +77,11 @@ class PaymentHistory : BaseClass(), Controller.PaymentProfileAPI {
 
             successpayments_recycler.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            val adapter = PaymentCardsAdapter(
-                this, paymentProfile.body()?.data?.paymentProfiles!!
-            )
+            val adapter = paymentProfile.body()?.data?.let {
+                PaymentCardsAdapter(
+                    this, it
+                )
+            }
             successpayments_recycler.adapter = adapter
             // payment_type.setText("Type : "+paymentProfile.body().data.paymentProfiles.)
         } else {

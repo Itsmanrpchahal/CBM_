@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/parent_workinvitation"
     tools:context=".activities.myContracts.tabs.WorkInviationFrag">
 
     <LinearLayout
@@ -41,6 +42,26 @@
         </Button>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/workinvitations_recycler"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/worksentinvitations_recycler"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
 
 
 </LinearLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/whiteborderblack"
+        android:padding="@dimen/margin_8dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/inviationimage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/login_banner">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/inviationimage"
+            android:layout_marginLeft="@dimen/textsize_16sp"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/invitation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/invitation_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/invitation_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/makeanofferbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Make an offer"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/default_margin_16dp"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent">
+
+        </Button>
+
+        <ImageButton
+            android:id="@+id/deleteoffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_marginRight="@dimen/default_margin_16dp"
+            android:background="@android:color/transparent">
+
+        </ImageButton>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

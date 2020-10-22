@@ -218,7 +218,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
 
 
-//ToDo : Get USer closets for move and duplicate
+        //ToDo : Get USer closets for move and duplicate
         for (i in 0 until userClosets.size) {
             val title = userClosets.get(i)
             list.add(title.title)

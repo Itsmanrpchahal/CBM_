@@ -22,6 +22,8 @@ import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
+import com.casebeaumonde.activities.myContracts.tabs.response.MakeOfferResponse
+import com.casebeaumonde.activities.myContracts.tabs.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
@@ -70,8 +72,10 @@ public class Controller {
     var followUnFollowAPI: FollowUnFollowAPI? = null
     var duplicateItemAPI: DuplicateItemAPI? = null
     var fetchListAPI: FetchListAPI? = null
-    var outFItAPI : OutFItAPI? = null
-    var paymentProfileAPI : PaymentProfileAPI? = null
+    var outFItAPI: OutFItAPI? = null
+    var paymentProfileAPI: PaymentProfileAPI? = null
+    var workInvitationAPI: WorkInvitationAPI? = null
+    var makeOfferAPI : MakeOfferAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -216,9 +220,14 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(paymentProfile: PaymentProfileAPI)
-    {
+    fun Controller(paymentProfile: PaymentProfileAPI) {
         paymentProfileAPI = paymentProfile
+        webAPI = WebAPI()
+    }
+
+    fun Controller(workInvitation: WorkInvitationAPI,makeOffer: MakeOfferAPI) {
+        workInvitationAPI = workInvitation
+        makeOfferAPI = makeOffer
         webAPI = WebAPI()
     }
 
@@ -852,27 +861,26 @@ public class Controller {
         })
     }
 
-    fun OutFIt(token: String?,items: String?,outfitid : String?,name: String?) {
-        webAPI?.api?.outfitItem(token,items,outfitid, name)?.enqueue(object : Callback<OutFitResponse>
-        {
-            override fun onResponse(
-                call: Call<OutFitResponse>,
-                response: Response<OutFitResponse>
-            ) {
-                val outfit = response
-                outFItAPI?.onOutfitSuccess(outfit)
-            }
+    fun OutFIt(token: String?, items: String?, outfitid: String?, name: String?) {
+        webAPI?.api?.outfitItem(token, items, outfitid, name)
+            ?.enqueue(object : Callback<OutFitResponse> {
+                override fun onResponse(
+                    call: Call<OutFitResponse>,
+                    response: Response<OutFitResponse>
+                ) {
+                    val outfit = response
+                    outFItAPI?.onOutfitSuccess(outfit)
+                }
 
-            override fun onFailure(call: Call<OutFitResponse>, t: Throwable) {
-                outFItAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<OutFitResponse>, t: Throwable) {
+                    outFItAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun PaymentProfile(token: String?){
-        webAPI?.api?.paymentProfile(token)?.enqueue(object : Callback<PaymentProfileResponse>
-        {
+    fun PaymentProfile(token: String?) {
+        webAPI?.api?.paymentProfile(token)?.enqueue(object : Callback<PaymentProfileResponse> {
             override fun onResponse(
                 call: Call<PaymentProfileResponse>,
                 response: Response<PaymentProfileResponse>
@@ -886,6 +894,44 @@ public class Controller {
             }
 
         })
+    }
+
+    fun WorkInvitation(token: String?,id: String?)
+    {
+        webAPI?.api?.workinvitations(token, id)?.enqueue(object : Callback<WorkInvitationResponse>
+        {
+            override fun onResponse(
+                call: Call<WorkInvitationResponse>,
+                response: Response<WorkInvitationResponse>
+            ) {
+                val workinvitation  = response
+                workInvitationAPI?.onWorkInviationSuccess(workinvitation)
+            }
+
+            override fun onFailure(call: Call<WorkInvitationResponse>, t: Throwable) {
+                workInvitationAPI?.error(t.message)
+            }
+        })
+    }
+
+    fun MakeOffer(token: String?,designerId : String,gig_id: String?,rate_type : String,comments : String?,rate : String)
+    {
+            webAPI?.api?.makeOffer(token,designerId,gig_id,rate_type,comments,rate)?.enqueue(object : Callback<MakeOfferResponse>
+            {
+                override fun onResponse(
+                    call: Call<MakeOfferResponse>,
+                    response: Response<MakeOfferResponse>
+                ) {
+                    val makeoffer = response
+                    makeOfferAPI?.onMakeOfferSuccess(makeoffer)
+                }
+
+                override fun onFailure(call: Call<MakeOfferResponse>, t: Throwable) {
+                    makeOfferAPI?.error(t
+                        .message)
+                }
+
+            })
     }
 
     interface NotificationAPI {
@@ -1050,12 +1096,22 @@ public class Controller {
     }
 
     interface OutFItAPI {
-        fun onOutfitSuccess(outfit : Response<OutFitResponse>)
+        fun onOutfitSuccess(outfit: Response<OutFitResponse>)
         fun error(error: String?)
     }
 
     interface PaymentProfileAPI {
         fun onPaymentProfileSuccess(paymentProfile: Response<PaymentProfileResponse>)
+        fun error(error: String?)
+    }
+
+    interface WorkInvitationAPI {
+        fun onWorkInviationSuccess(workInvitation: Response<WorkInvitationResponse>)
+        fun error(error: String?)
+    }
+
+    interface MakeOfferAPI {
+        fun onMakeOfferSuccess(makeOffer : Response<MakeOfferResponse>)
         fun error(error: String?)
     }
 }

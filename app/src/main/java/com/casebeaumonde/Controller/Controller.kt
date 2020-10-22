@@ -2,7 +2,6 @@ package com.casebeaumonde.Controller
 
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
-import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
@@ -22,8 +21,9 @@ import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
-import com.casebeaumonde.activities.myContracts.tabs.response.MakeOfferResponse
-import com.casebeaumonde.activities.myContracts.tabs.response.WorkInvitationResponse
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
+import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
@@ -76,6 +76,7 @@ public class Controller {
     var paymentProfileAPI: PaymentProfileAPI? = null
     var workInvitationAPI: WorkInvitationAPI? = null
     var makeOfferAPI : MakeOfferAPI? = null
+    var offerListAPI : OfferListAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -228,6 +229,12 @@ public class Controller {
     fun Controller(workInvitation: WorkInvitationAPI,makeOffer: MakeOfferAPI) {
         workInvitationAPI = workInvitation
         makeOfferAPI = makeOffer
+        webAPI = WebAPI()
+    }
+
+    fun Controller(offerlist : OfferListAPI)
+    {
+        offerListAPI = offerlist
         webAPI = WebAPI()
     }
 
@@ -934,6 +941,25 @@ public class Controller {
             })
     }
 
+    fun OfferList(token: String?)
+    {
+        webAPI?.api?.offerList(token)?.enqueue(object : Callback<OfferListResponse>
+        {
+            override fun onResponse(
+                call: Call<OfferListResponse>,
+                response: Response<OfferListResponse>
+            ) {
+                val offerlist = response
+                offerListAPI?.onOfferListSuccess(offerlist)
+            }
+
+            override fun onFailure(call: Call<OfferListResponse>, t: Throwable) {
+                offerListAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1112,6 +1138,11 @@ public class Controller {
 
     interface MakeOfferAPI {
         fun onMakeOfferSuccess(makeOffer : Response<MakeOfferResponse>)
+        fun error(error: String?)
+    }
+
+    interface OfferListAPI {
+        fun onOfferListSuccess(offerlist : Response<OfferListResponse>)
         fun error(error: String?)
     }
 }

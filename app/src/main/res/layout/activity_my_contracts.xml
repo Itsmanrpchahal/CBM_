@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        app:tabIndicator="@color/colorWhite"
+        app:tabIndicatorColor="@color/colorWhite"
         app:tabTextColor="@color/colorWhite"
         android:background="@color/colorTextHint">
     </com.google.android.material.tabs.TabLayout>

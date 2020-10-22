@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.myContracts.tabs.response;
+package com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

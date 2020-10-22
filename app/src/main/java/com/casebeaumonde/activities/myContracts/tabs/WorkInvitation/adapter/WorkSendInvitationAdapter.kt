@@ -1,19 +1,17 @@
-package com.casebeaumonde.activities.myContracts.tabs.adapter
+package com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myContracts.tabs.WorkInviationFrag
-import com.casebeaumonde.activities.myContracts.tabs.response.WorkInvitationResponse
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.WorkInviationFrag
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView

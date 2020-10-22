@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/parent_workinvitation"
-    tools:context=".activities.myContracts.tabs.WorkInviationFrag">
+    tools:context=".activities.myContracts.tabs.WorkInvitation.WorkInviationFrag">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,27 +1,26 @@
-package com.casebeaumonde.activities.myContracts.tabs
+package com.casebeaumonde.activities.myContracts.tabs.WorkInvitation
 
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myContracts.tabs.IF.GetInviID_IF
-import com.casebeaumonde.activities.myContracts.tabs.adapter.WorkRecieveInvitationAdapter
-import com.casebeaumonde.activities.myContracts.tabs.adapter.WorkSendInvitationAdapter
-import com.casebeaumonde.activities.myContracts.tabs.response.MakeOfferResponse
-import com.casebeaumonde.activities.myContracts.tabs.response.WorkInvitationResponse
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.IF.GetInviID_IF
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkRecieveInvitationAdapter
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkSendInvitationAdapter
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_business_register.*
 import kotlinx.android.synthetic.main.fragment_work_inviation.*
 import retrofit2.Response
 
@@ -115,32 +114,43 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
 
     override fun onWorkInviationSuccess(workInvitation: Response<WorkInvitationResponse>) {
         pd.dismiss()
+        if (workInvitation.isSuccessful)
+        {
+            sendIvitations = ArrayList()
+            sendIvitations =
+                workInvitation.body()?.data?.user?.sentInvitations as ArrayList<WorkInvitationResponse.Data.User.SentInvitation>
 
-        sendIvitations = ArrayList()
-        sendIvitations =
-            workInvitation.body()?.data?.user?.sentInvitations as ArrayList<WorkInvitationResponse.Data.User.SentInvitation>
-
-        setFullData(sendIvitations, "sent")
-        recieveIvitations = ArrayList()
-        recieveIvitations =
-            workInvitation.body()?.data?.user?.receivedInvitations as ArrayList<WorkInvitationResponse.Data.User.ReceivedInvitation>
-        setRecieveData(recieveIvitations, "recieve")
-
-
-        if (getStringVal(Constants.USER_ROLE).equals("customer")) {
-            type = "sent"
-            worksentinvitations_recycler.visibility = View.VISIBLE
             setFullData(sendIvitations, "sent")
-        } else {
-            workinvitation_recieved.visibility = View.VISIBLE
-            workinvitation_sent.visibility = View.VISIBLE
-
-            workinvitation_recieved.setBackgroundColor(Color.WHITE)
-            workinvitation_recieved.setTextColor(Color.BLACK)
-            type = "recieve"
+            recieveIvitations = ArrayList()
+            recieveIvitations =
+                workInvitation.body()?.data?.user?.receivedInvitations as ArrayList<WorkInvitationResponse.Data.User.ReceivedInvitation>
+            setRecieveData(recieveIvitations, "recieve")
 
 
+            if (getStringVal(Constants.USER_ROLE).equals("customer")) {
+                type = "sent"
+                worksentinvitations_recycler.visibility = View.VISIBLE
+                setFullData(sendIvitations, "sent")
+            } else {
+                workinvitation_recieved.visibility = View.VISIBLE
+                workinvitation_sent.visibility = View.VISIBLE
+
+                workinvitation_recieved.setBackgroundColor(Color.WHITE)
+                workinvitation_recieved.setTextColor(Color.BLACK)
+                type = "recieve"
+
+
+            }
+        }else{
+            utility!!.relative_snackbar(
+                parent_workinvitation!!,
+                workInvitation.message(),
+                getString(R.string.close_up)
+            )
         }
+
+
+
     }
 
     private fun setRecieveData(
@@ -227,6 +237,11 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
         close = makeofferDialog.findViewById(R.id.close)
         rate_title = makeofferDialog.findViewById(R.id.rate_title)
 
+        Glide.with(context!!).load(
+            Constants.BASE_IMAGE_URL + sendIvitations.get(
+                position
+            ).designer.avatar
+        ).placeholder(R.drawable.login_banner).into(offer_image)
         gigtitletv1.setText(sendIvitations.get(position).description)
         gigdecstv1.setText(sendIvitations.get(position).gig.description)
         rateet.setText(sendIvitations.get(position).gig.rate.toString())

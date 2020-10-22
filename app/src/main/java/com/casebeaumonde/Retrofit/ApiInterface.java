@@ -9,8 +9,9 @@ import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
-import com.casebeaumonde.activities.myContracts.tabs.response.MakeOfferResponse;
-import com.casebeaumonde.activities.myContracts.tabs.response.WorkInvitationResponse;
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
+import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse;
+import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse;
@@ -39,8 +40,6 @@ import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -325,7 +324,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/duplicate-item-closet")
-    Call<DuplicateItemResponse> duplicateItem (
+    Call<DuplicateItemResponse> duplicateItem(
             @Header("Authorization") String token,
             @Field("items") String items,
             @Field("closetid") String closetid,
@@ -334,7 +333,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/outfit-item")
-    Call<OutFitResponse> outfitItem (
+    Call<OutFitResponse> outfitItem(
             @Header("Authorization") String token,
             @Field("items") String items,
             @Field("outfitid") String outfitid,
@@ -342,29 +341,34 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/fetchList")
-    Call<FetchListResponse> fetchList (
+    Call<FetchListResponse> fetchList(
             @Header("Authorization") String token
     );
 
     @GET("api/v1/payment-profile")
-    Call<PaymentProfileResponse> paymentProfile (
+    Call<PaymentProfileResponse> paymentProfile(
             @Header("Authorization") String token
     );
 
     @GET("api/v1/userInvitation/{input}")
-    Call<WorkInvitationResponse> workinvitations (
+    Call<WorkInvitationResponse> workinvitations(
             @Header("Authorization") String token,
             @Path("input") String id
     );
 
     @FormUrlEncoded
     @POST("api/v1/sendOffer")
-    Call<MakeOfferResponse> makeOffer (
+    Call<MakeOfferResponse> makeOffer(
             @Header("Authorization") String token,
             @Field("designer_id") String designer_id,
             @Field("gig_id") String gig_id,
             @Field("rate_type") String rate_type,
             @Field("comments") String comments,
             @Field("rate") String rate
+    );
+
+    @GET("api/v1/user-offers")
+    Call<OfferListResponse> offerList(
+            @Header("Authorization") String token
     );
 }

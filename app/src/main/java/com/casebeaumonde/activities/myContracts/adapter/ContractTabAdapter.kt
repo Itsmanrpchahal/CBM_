@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.casebeaumonde.activities.myContracts.tabs.MyContractsFrag
+import com.casebeaumonde.activities.myContracts.tabs.Contract.MyContractsFrag
 import com.casebeaumonde.activities.myContracts.tabs.offers.OffersFrag
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.WorkInviationFrag
 
@@ -31,6 +31,6 @@ class ContractTabAdapter(
             }
             else -> getItem(position)
         }
-    }
 
+    }
 }

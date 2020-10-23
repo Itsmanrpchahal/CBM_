@@ -9,6 +9,7 @@ import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
@@ -369,6 +370,11 @@ public interface ApiInterface {
 
     @GET("api/v1/user-offers")
     Call<OfferListResponse> offerList(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/v1/user-contracts")
+    Call<ContractListResponse> contractList(
             @Header("Authorization") String token
     );
 }

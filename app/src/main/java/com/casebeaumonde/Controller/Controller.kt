@@ -21,6 +21,7 @@ import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
@@ -77,6 +78,7 @@ public class Controller {
     var workInvitationAPI: WorkInvitationAPI? = null
     var makeOfferAPI : MakeOfferAPI? = null
     var offerListAPI : OfferListAPI? = null
+    var contractListAPI : ContractListAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -235,6 +237,12 @@ public class Controller {
     fun Controller(offerlist : OfferListAPI)
     {
         offerListAPI = offerlist
+        webAPI = WebAPI()
+    }
+
+    fun Controller(contractlist: ContractListAPI)
+    {
+        contractListAPI = contractlist
         webAPI = WebAPI()
     }
 
@@ -960,6 +968,25 @@ public class Controller {
         })
     }
 
+    fun ContractList(token: String?)
+    {
+        webAPI?.api?.contractList(token)?.enqueue(object : Callback<ContractListResponse>
+        {
+            override fun onResponse(
+                call: Call<ContractListResponse>,
+                response: Response<ContractListResponse>
+            ) {
+                val contractlist = response
+                contractListAPI?.onContractListSuccess(contractlist)
+            }
+
+            override fun onFailure(call: Call<ContractListResponse>, t: Throwable) {
+                contractListAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1143,6 +1170,11 @@ public class Controller {
 
     interface OfferListAPI {
         fun onOfferListSuccess(offerlist : Response<OfferListResponse>)
+        fun error(error: String?)
+    }
+
+    interface ContractListAPI {
+        fun onContractListSuccess(contractlist : Response<ContractListResponse>)
         fun error(error: String?)
     }
 }

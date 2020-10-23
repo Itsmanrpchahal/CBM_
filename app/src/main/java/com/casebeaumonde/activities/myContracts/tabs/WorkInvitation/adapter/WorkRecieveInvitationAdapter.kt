@@ -36,7 +36,7 @@ class WorkRecieveInvitationAdapter (var context: Context, var data: MutableList<
             Constants.BASE_IMAGE_URL+data.get(
             position).user.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
         holder.itemView.invitation_title.setText(data.get(position).description)
-        holder.itemView.invitation_date.setText(Utils.changeDateTimeToDate(data.get(position).createdAt))
+        holder.itemView.invitation_date.setText(Utils.changeDateTimeToDateTime(data.get(position).createdAt))
         holder.itemView.invitation_status.setText(data.get(position).status)
 
         if (data.get(position).status.equals("accepted"))

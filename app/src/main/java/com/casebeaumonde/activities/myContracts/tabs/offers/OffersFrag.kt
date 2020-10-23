@@ -1,33 +1,36 @@
 package com.casebeaumonde.activities.myContracts.tabs.offers
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkRecieveInvitationAdapter
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkSendInvitationAdapter
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
+import com.casebeaumonde.activities.myContracts.tabs.offers.IF.getOfferID_IF
 import com.casebeaumonde.activities.myContracts.tabs.offers.adapter.RecieveOffersAdapter
 import com.casebeaumonde.activities.myContracts.tabs.offers.adapter.SendOffersAdapter
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
+import com.casebeaumonde.utilities.Utils
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_offers.*
 import kotlinx.android.synthetic.main.fragment_work_inviation.*
 import retrofit2.Response
 
-class OffersFrag : BaseFrag(), Controller.OfferListAPI {
+class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -39,6 +42,7 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI {
     private lateinit var sendOffer: ArrayList<OfferListResponse.Data.User.SentOffer>
     private lateinit var recieveOffer: ArrayList<OfferListResponse.Data.User.ReceivedOffer>
     lateinit var type: String
+    private lateinit var offerDialog: Dialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +51,7 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI {
         var view: View
 
         view = inflater.inflate(R.layout.fragment_offers, container, false)
-
+        getOfferID_IF = this
         findIds(view)
         controller = Controller()
         controller.Controller(this)
@@ -179,6 +183,68 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI {
             error,
             getString(R.string.close_up)
         )
+    }
+
+    companion object {
+        var getOfferID_IF: getOfferID_IF? = null
+    }
+
+
+    override fun getID(id: String?, pos: String?) {
+        showOfferDialog(id, pos)
+    }
+
+    private fun showOfferDialog(id: String?, pos: String?) {
+        offerDialog = Dialog(context!!)
+        offerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        offerDialog.setContentView(R.layout.viewoffer)
+        val window = offerDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val offer_date: TextView
+        val offer_title: TextView
+        val offer_image: CircleImageView
+        val offer_offer_rate : TextView
+        val offer_ratetype : TextView
+        val offers_comments: TextView
+        val offer_status : TextView
+        val commenttv : TextView
+        val offer_close : Button
+
+        offer_date = offerDialog.findViewById(R.id.offer_date)
+        offer_title = offerDialog.findViewById(R.id.offer_title)
+        offer_image = offerDialog.findViewById(R.id.offer_image)
+        offer_offer_rate = offerDialog.findViewById(R.id.offer_offer_rate)
+        offer_ratetype = offerDialog.findViewById(R.id.offer_ratetype)
+        offers_comments = offerDialog.findViewById(R.id.offers_comments)
+        offer_status = offerDialog.findViewById(R.id.offer_status)
+        offer_close = offerDialog.findViewById(R.id.offer_close)
+        commenttv = offerDialog.findViewById(R.id.commenttv)
+
+        if (sendOffer.get(pos?.toInt()!!).status.equals("accepted"))
+        {
+            offer_status.visibility = View.GONE
+            offers_comments.visibility = View.GONE
+            commenttv.visibility = View.GONE
+
+        }
+
+
+        offer_date.setText(Utils.changeDateTimeToDate(sendOffer.get(pos?.toInt()!!).createdAt))
+        offer_title.setText("Offer for gig with title: " + sendOffer.get(pos.toInt()).gig.title)
+        Glide.with(context!!)
+            .load(Constants.BASE_IMAGE_URL + sendOffer.get(pos?.toInt()!!).designer.avatar)
+            .placeholder(R.drawable.login_banner).into(offer_image)
+        offer_offer_rate.setText("Proposed rate: $"+sendOffer.get(pos.toInt()).rate)
+        offer_ratetype.setText("Proposed rate type:"+sendOffer.get(pos.toInt()).rateType)
+        offers_comments.setText(""+sendOffer.get(pos.toInt()).comments)
+        offer_status.setText("Status:"+sendOffer.get(pos.toInt()).status)
+
+        offer_close.setOnClickListener { offerDialog.dismiss() }
+        offerDialog.show()
     }
 
 }

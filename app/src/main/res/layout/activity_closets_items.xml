@@ -49,6 +49,43 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="vertical">
+
+        <include layout="@layout/searchbar"></include>
+
+        <RelativeLayout
+            android:id="@+id/hourlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gigratetype"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@drawable/roundcorners">
+
+            <Spinner
+                android:id="@+id/outfit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </Spinner>
+
+            <TextView
+                android:id="@+id/outfit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/textsize_16sp"
+                android:textColor="@color/colorBlack">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

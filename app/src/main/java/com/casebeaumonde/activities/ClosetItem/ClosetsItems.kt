@@ -7,6 +7,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.View
@@ -27,6 +29,7 @@ import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
+import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse
 import com.casebeaumonde.activities.myclosets.response.FetchListResponse
 import com.casebeaumonde.activities.myclosets.response.MoveClosetItems
@@ -52,11 +55,13 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var closetiems_add: ImageButton
     private lateinit var hearlist: ArrayList<ClosetsItemsResponse.Data.Closet.Item.Heart>
     private lateinit var closetResponse: ArrayList<ClosetsItemsResponse.Data.Closet.Item>
+    private lateinit var closetResponsefilter: ArrayList<ClosetsItemsResponse.Data.Closet.Item>
     private lateinit var dialog: Dialog
     private lateinit var logoutDialog: Dialog
     private lateinit var Viewdialog: Dialog
     private lateinit var userID: String
     private lateinit var userClosets: ArrayList<ClosetsItemsResponse.Data.AllCloset>
+    private lateinit var search_ET: EditText
     private lateinit var list: ArrayList<String>
     private lateinit var listID: ArrayList<String>
     private lateinit var closet_showselectbt: Button
@@ -66,6 +71,8 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var closet_duplicateitembt: Button
     private lateinit var closet_makeoutfitbt: Button
     private lateinit var moveItemDialog: Dialog
+    private lateinit var outfit_spinner : Spinner
+    private lateinit var outfit_title:TextView
     private lateinit var checkedClosetIDs: ArrayList<String>
     private lateinit var selectedItems: ArrayList<String>
     private lateinit var listData: ArrayList<String>
@@ -99,6 +106,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     }
 
     private fun listeners() {
+
+
+
         closetitems_back.setOnClickListener {
             onBackPressed()
         }
@@ -171,6 +181,56 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             }
         }
 
+        search_ET.addTextChangedListener(object : TextWatcher
+        {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (count > 0) {
+                    searchByTitle(s.toString())
+                } else {
+                    setFullData(closetResponse,select,selectAll)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.isNotEmpty()) {
+
+                    searchByTitle(s.toString())
+                } else {
+                    closetsItems_recycler.visibility = View.VISIBLE
+                    setFullData(closetResponse,select,selectAll)
+                }
+            }
+
+        })
+
+    }
+
+    private fun searchByTitle(toString: String) {
+        closetResponsefilter = ArrayList()
+        if (closetResponse.size > 0) {
+            for (i in closetResponse!!.indices) {
+                val closetModel = closetResponse!![i]
+                if (closetModel.title!!.toLowerCase().contains(toString.toLowerCase()))
+                    closetResponsefilter!!.add(closetModel)
+
+                if (closetResponsefilter.size > 0) {
+                    closetsItems_recycler.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    //closets =  response
+                    val adapter = ClosetsItemAdapter(this, closetResponsefilter!!,userID
+                        , select, selectAll
+                    )
+                    closetsItems_recycler.adapter = adapter
+                }
+            }
+            if (closetResponsefilter.size == 0) {
+                closetsItems_recycler.visibility = View.GONE
+            }
+        }
     }
 
 
@@ -387,6 +447,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         closet_moveitembt = findViewById(R.id.closet_moveitembt)
         closet_duplicateitembt = findViewById(R.id.closet_duplicateitembt)
         closet_makeoutfitbt = findViewById(R.id.closet_makeoutfitbt)
+        search_ET = findViewById(R.id.search_ET)
+        outfit_spinner = findViewById(R.id.outfit_spinner)
+        outfit_title = findViewById(R.id.outfit_title)
     }
 
     //ToDo: Get  Closet All Items
@@ -407,6 +470,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             ) {
                 closetiems_add.visibility = View.VISIBLE
             }
+
+
+
         } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
@@ -536,8 +602,41 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     override fun onFetchListSuccess(fetchList: Response<FetchListResponse>) {
         pd.dismiss()
         if (fetchList.isSuccessful) {
+            outFitTitle = ArrayList()
+            outFitID = ArrayList()
             outFitRes = ArrayList()
             outFitRes.addAll(fetchList.body()?.data?.outfits!!)
+
+            //ToDo: Get Outfits
+            for (i in 0 until outFitRes.size) {
+                val title = outFitRes.get(i)
+                outFitTitle.add(title.title)
+                outFitID.add(title.id.toString())
+            }
+
+            val adapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, outFitTitle
+            )
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            outfit_spinner.adapter = adapter
+            outfit_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    outfit_title.setText(outFitTitle[position])
+                    val pos = outFitID[position]
+                    searchByOutFit(outFitTitle[position],outFitID[position])
+                    //rateType = outFitTitle[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
         } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
@@ -545,6 +644,10 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 getString(R.string.close_up)
             )
         }
+    }
+
+    private fun searchByOutFit(title: String, id: String) {
+
     }
 
     //ToDo: Outfit

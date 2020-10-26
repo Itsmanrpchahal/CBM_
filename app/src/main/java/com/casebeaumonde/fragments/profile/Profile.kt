@@ -30,10 +30,14 @@ import com.casebeaumonde.activities.paymenthistory.PaymentHistory
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.Pricing
+import com.casebeaumonde.fragments.profile.IF.GetCardID
 import com.casebeaumonde.fragments.profile.IF.GetUserID
+import com.casebeaumonde.fragments.profile.adapter.CardsAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowerAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowingAdapter
+import com.casebeaumonde.fragments.profile.profileResponse.DeletePaymentMethodResponse
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
+import com.casebeaumonde.fragments.profile.profileResponse.PaymentMethodResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -50,7 +54,7 @@ import retrofit2.Response
 import java.io.File
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener, GetUserID {
+    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener, GetUserID ,Controller.PaymentMethodAPI, GetCardID,Controller.DeleteCardAPI{
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
@@ -74,6 +78,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var changePasswordDialog: Dialog
     private lateinit var dialog: Dialog
     private lateinit var viewplanDialog: Dialog
+    private lateinit var mypaymentdialog: Dialog
     private lateinit var role: String
     private var tabLayout: TabLayout? = null
     private lateinit var username: String
@@ -82,8 +87,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var businessSubscription: String
     private lateinit var customerSubscription: String
+    lateinit var payment_method_recycler : RecyclerView
+    lateinit var close_paymentdialog : Button
     private lateinit var followers: ArrayList<UserProfileResponse.Data.User.Follower>
     private lateinit var following: ArrayList<UserProfileResponse.Data.User.Following>
+    private lateinit var cards : ArrayList<PaymentMethodResponse.Data.PaymentProfile>
     lateinit var manager: FragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,15 +108,27 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         manager = fragmentManager!!
         controller = Controller()
-        controller.Controller(this, this, this)
+        controller.Controller(this, this, this,this,this)
         getUserID = this
+        getCardID = this
         findIds(view)
         listeners()
 
-        controller.setUserProfileAPI(
-            "Bearer " + getStringVal(Constants.TOKEN),
-            getStringVal(Constants.USERID)
-        )
+        if (utility.isConnectingToInternet(context)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+
+            controller.setUserProfileAPI(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                getStringVal(Constants.USERID)
+            )
+
+
+        }else {
+            utility.relative_snackbar(parent_profile!!, "No Internet Connectivity", getString(R.string.close_up))
+        }
+
+
         userID = getStringVal(Constants.USERID).toString()
 
         return view
@@ -424,6 +444,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     companion object {
         var getUserID: GetUserID? = null
+        var getCardID : GetCardID? = null
     }
 
     override fun getUserID(id: String?) {
@@ -574,6 +595,28 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
             tabLayout!!.setOnTabSelectedListener(this)
         }
+
+        profile_mypaymentmethods.setOnClickListener {
+            mypaymentdialog = Dialog(context!!)
+            mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+            mypaymentdialog.setContentView(R.layout.managepaymentmethid)
+            val window = mypaymentdialog.window
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            pd.show()
+            controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
+
+            payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
+            close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
+
+            close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
+
+            mypaymentdialog.show()
+        }
     }
 
     override fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>) {
@@ -631,6 +674,24 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             )
         }
 
+    }
+
+    override fun onPaymentSuccess(paymentMethod: Response<PaymentMethodResponse>) {
+        pd.dismiss()
+        if (paymentMethod.isSuccessful)
+        {
+            cards = paymentMethod.body()?.data?.paymentProfiles as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+            payment_method_recycler.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val adapter = CardsAdapter(context!!, cards)
+            payment_method_recycler.adapter = adapter
+        }else{
+            utility!!.relative_snackbar(
+                parent_profile,
+                paymentMethod.message(),
+                getString(R.string.close_up)
+            )
+        }
     }
 
     override fun error(error: String?) {
@@ -775,5 +836,24 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
     }
 
+    override fun getCardID(id: String?) {
+        pd.show()
+        controller.DeletePaymentCard("Bearer "+getStringVal(Constants.TOKEN), id.toString())
+    }
+
+    override fun onDeleteCardSuccess(deleteCard: Response<DeletePaymentMethodResponse>) {
+        pd.dismiss()
+        if (deleteCard.isSuccessful)
+        {
+            controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
+        }else {
+            utility.relative_snackbar(
+                parent_profile!!,
+                deleteCard.message(),
+                getString(R.string.close_up)
+            )
+        }
+
+    }
 
 }

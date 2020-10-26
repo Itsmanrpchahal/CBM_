@@ -5,14 +5,17 @@ import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemRespon
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse;
+import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse;
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
+import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse;
@@ -33,9 +36,11 @@ import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.pricing.response.PricingResponse;
+import com.casebeaumonde.fragments.profile.profileResponse.DeletePaymentMethodResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.FollowUnFollowResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse;
+import com.casebeaumonde.fragments.profile.profileResponse.PaymentMethodResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
 import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
@@ -377,4 +382,41 @@ public interface ApiInterface {
     Call<ContractListResponse> contractList(
             @Header("Authorization") String token
     );
+
+
+    @FormUrlEncoded
+    @POST("api/v1/fetch-outfit-item")
+    Call<OutfitFilterResponse> outfitfilter(
+            @Header("Authorization") String token,
+            @Field("outfitid") String outfitid,
+            @Field("closetid") String closetid
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/open-claim")
+    Call<SendClaimResponse> sendClaim(
+            @Header("Authorization") String token,
+            @Field("contract_id") String contract_id,
+            @Field("description") String description
+    );
+
+    @GET("api/v1/set-offer-decision/{input}/{input1}")
+    Call<SetOfferDecisionResponse> setOfferdecision(
+            @Header("Authorization") String token,
+            @Path("input") String id,
+            @Path("input1") String action
+    );
+
+    @GET("api/v1/payment-methods")
+    Call<PaymentMethodResponse> paymentMethod(
+            @Header("Authorization") String token
+    );
+
+
+    @DELETE("api/v1/remove-payment-method/{input}")
+    Call<DeletePaymentMethodResponse> deleteCard(
+            @Header("Authorization") String token,
+            @Path("input") String cardID
+    );
+
 }

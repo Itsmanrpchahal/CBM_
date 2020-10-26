@@ -25,6 +25,7 @@ import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
+import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
@@ -44,7 +45,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     SelectedCloset_ID,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
     Controller.AdDItemToAnotherClosetAPI, Controller.MoveItemAPI, Controller.DuplicateItemAPI,
-    Controller.FetchListAPI, Controller.OutFItAPI {
+    Controller.FetchListAPI, Controller.OutFItAPI,Controller.OutfitFilterAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -90,7 +91,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         checkedClosetIDs = ArrayList()
         selectedItems = ArrayList()
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this, this, this)
+        controller.Controller(this, this, this, this, this, this, this, this,this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
         controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
         closetitemidIf = this
@@ -614,6 +615,14 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 outFitID.add(title.id.toString())
             }
 
+
+
+            outFitTitle.add("Select Outfit")
+            outFitID.add("000")
+
+            outFitTitle.reverse()
+            outFitID.reverse()
+
             val adapter = ArrayAdapter(
                 this!!,
                 android.R.layout.simple_spinner_dropdown_item, outFitTitle
@@ -628,7 +637,12 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 ) {
                     outfit_title.setText(outFitTitle[position])
                     val pos = outFitID[position]
-                    searchByOutFit(outFitTitle[position],outFitID[position])
+
+                    if (!outFitTitle[position].equals("Select Outfit"))
+                    {
+                        searchByOutFit(outFitTitle[position],outFitID[position])
+                    }
+
                     //rateType = outFitTitle[position]
                 }
 
@@ -647,7 +661,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     }
 
     private fun searchByOutFit(title: String, id: String) {
-
+        //pd.show()
+      // searchByTitle(title)
+        //controller.OutFitFilter("Bearer "+getStringVal(Constants.TOKEN),id,closetID)
     }
 
     //ToDo: Outfit
@@ -670,10 +686,27 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
     }
 
+    override fun onOutfitFilterSuccess(outfiFIlter: Response<OutfitFilterResponse>) {
+
+        pd.dismiss()
+        if (outfiFIlter.isSuccessful)
+        {
+
+        }else
+        {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                outfiFIlter.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
 
     override fun error(error: String?) {
         pd.dismiss()
         //dialog.dismiss()
+        Log.d("error",""+error)
         utility!!.relative_snackbar(parent_closetsItems!!, error, getString(R.string.close_up))
     }
 

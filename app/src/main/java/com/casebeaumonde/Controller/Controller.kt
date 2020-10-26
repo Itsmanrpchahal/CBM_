@@ -2,16 +2,11 @@ package com.casebeaumonde.Controller
 
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
-import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
-import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
-import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
-import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse
+import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
-import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
-import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.fragments.users.Response.UsersResponse
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
@@ -22,16 +17,17 @@ import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
+import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
-import com.casebeaumonde.fragments.profile.profileResponse.FollowUnFollowResponse
-import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse
+import com.casebeaumonde.fragments.profile.profileResponse.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,6 +75,11 @@ public class Controller {
     var makeOfferAPI : MakeOfferAPI? = null
     var offerListAPI : OfferListAPI? = null
     var contractListAPI : ContractListAPI? = null
+    var outfitFilterAPI : OutfitFilterAPI? = null
+    var sendClaimAPI : SendClaimAPI? = null
+    var setOfferDesicionAPI : SetOfferDecisionAPI ? = null
+    var paymentMethodAPI : PaymentMethodAPI? = null
+    var deleteCardAPI : DeleteCardAPI? = null
 
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
@@ -96,11 +97,15 @@ public class Controller {
     fun Controller(
         userProfile: UserProfileAPI,
         updateAvatar: UpdateAvatarAPI,
-        updateProfile: UpdateProfileAPI
+        updateProfile: UpdateProfileAPI,
+        paymentMethod : PaymentMethodAPI,
+        deleteCard : DeleteCardAPI
     ) {
         userProfileAPI = userProfile
         updateAvatarAPI = updateAvatar
         updateProfileAPI = updateProfile
+        paymentMethodAPI = paymentMethod
+        deleteCardAPI = deleteCard
         webAPI = WebAPI()
     }
 
@@ -152,7 +157,8 @@ public class Controller {
         moveClosetItem: MoveItemAPI,
         duplicateItem: DuplicateItemAPI,
         fetchList: FetchListAPI,
-        outfit: OutFItAPI
+        outfit: OutFItAPI,
+        outfitFilter : OutfitFilterAPI
     ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
@@ -162,6 +168,7 @@ public class Controller {
         duplicateItemAPI = duplicateItem
         fetchListAPI = fetchList
         outFItAPI = outfit
+        outfitFilterAPI = outfitFilter
         webAPI = WebAPI()
     }
 
@@ -234,15 +241,17 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(offerlist : OfferListAPI)
+    fun Controller(offerlist : OfferListAPI,setOffer  : SetOfferDecisionAPI)
     {
         offerListAPI = offerlist
+        setOfferDesicionAPI = setOffer
         webAPI = WebAPI()
     }
 
-    fun Controller(contractlist: ContractListAPI)
+    fun Controller(contractlist: ContractListAPI,sendClaim : SendClaimAPI)
     {
         contractListAPI = contractlist
+        sendClaimAPI = sendClaim
         webAPI = WebAPI()
     }
 
@@ -987,6 +996,104 @@ public class Controller {
         })
     }
 
+    fun OutFitFilter(token: String?,outfitid : String?,closetID : String?)
+    {
+        webAPI?.api?.outfitfilter(token,outfitid,closetID)?.enqueue(object : Callback<OutfitFilterResponse>
+        {
+            override fun onResponse(
+                call: Call<OutfitFilterResponse>,
+                response: Response<OutfitFilterResponse>
+            ) {
+                val outfileFilter = response
+                outfitFilterAPI?.onOutfitFilterSuccess(outfileFilter)
+            }
+
+            override fun onFailure(call: Call<OutfitFilterResponse>, t: Throwable) {
+                outfitFilterAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun SendClaim(token: String?,contract_id: String,description : String)
+    {
+        webAPI?.api?.sendClaim(token, contract_id, description)?.enqueue(object : Callback<SendClaimResponse>
+        {
+            override fun onResponse(
+                call: Call<SendClaimResponse>,
+                response: Response<SendClaimResponse>
+            ) {
+                val sendClaim = response
+                sendClaimAPI?.onSendClaimSuccess(sendClaim)
+            }
+
+            override fun onFailure(call: Call<SendClaimResponse>, t: Throwable) {
+                sendInvitationAPI?.error(t
+                    .message)
+            }
+
+        })
+    }
+
+    fun SetOfferDecision(token: String?,id: String?,action : String)
+    {
+        webAPI?.api?.setOfferdecision(token, id, action)?.enqueue(object : Callback<SetOfferDecisionResponse>
+        {
+            override fun onResponse(
+                call: Call<SetOfferDecisionResponse>,
+                response: Response<SetOfferDecisionResponse>
+            ) {
+                val setOffer = response
+                setOfferDesicionAPI?.onSetOfferSuccess(setOffer)
+            }
+
+            override fun onFailure(call: Call<SetOfferDecisionResponse>, t: Throwable) {
+               setOfferDesicionAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun SetPaymentMethod(token: String?)
+    {
+        webAPI?.api?.paymentMethod(token)?.enqueue(object : Callback<PaymentMethodResponse>
+        {
+            override fun onResponse(
+                call: Call<PaymentMethodResponse>,
+                response: Response<PaymentMethodResponse>
+            ) {
+                val paymentmethod = response
+                paymentMethodAPI?.onPaymentSuccess(paymentmethod)
+            }
+
+            override fun onFailure(call: Call<PaymentMethodResponse>, t: Throwable) {
+               paymentMethodAPI?.error(t
+                   .message)
+            }
+
+        })
+    }
+
+
+    fun DeletePaymentCard(token: String?,cardID : String)
+    {
+        webAPI?.api?.deleteCard(token, cardID)?.enqueue(object : Callback<DeletePaymentMethodResponse>
+        {
+            override fun onResponse(
+                call: Call<DeletePaymentMethodResponse>,
+                response: Response<DeletePaymentMethodResponse>
+            ) {
+                val deleteCard = response
+                deleteCardAPI?.onDeleteCardSuccess(deleteCard)
+            }
+
+            override fun onFailure(call: Call<DeletePaymentMethodResponse>, t: Throwable) {
+                deleteCardAPI?.error(t.message!!)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1175,6 +1282,31 @@ public class Controller {
 
     interface ContractListAPI {
         fun onContractListSuccess(contractlist : Response<ContractListResponse>)
+        fun error(error: String?)
+    }
+
+    interface OutfitFilterAPI {
+        fun onOutfitFilterSuccess(outfiFIlter : Response<OutfitFilterResponse>)
+        fun error(error: String?)
+    }
+
+    interface SendClaimAPI {
+        fun onSendClaimSuccess(sendClaim : Response<SendClaimResponse>)
+        fun error(error: String?)
+    }
+
+    interface SetOfferDecisionAPI {
+        fun onSetOfferSuccess(setOffer : Response<SetOfferDecisionResponse>)
+        fun error(error: String?)
+    }
+
+    interface PaymentMethodAPI  {
+        fun onPaymentSuccess(paymentMethod : Response<PaymentMethodResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteCardAPI {
+        fun onDeleteCardSuccess(deleteCard : Response<DeletePaymentMethodResponse>)
         fun error(error: String?)
     }
 }

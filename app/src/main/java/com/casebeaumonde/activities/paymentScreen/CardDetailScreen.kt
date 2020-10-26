@@ -142,8 +142,8 @@ class CardDetailScreen : AppCompatActivity() {
                 val stripe1 = Stripe(this, "pk_test_OTNta0F2CKTUpYDDM7igKdml")
                 stripe1.createToken(card2, object : TokenCallback {
                     override fun onSuccess(token: Token?) {
-                        Toast.makeText(this@CardDetailScreen, "" + token, Toast.LENGTH_SHORT).show()
-                        Log.d("token", "" + token)
+
+                        Log.d("token", "" + token?.card)
                         Log.d("card", "" + card2)
                     }
 

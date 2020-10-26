@@ -8,29 +8,27 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkRecieveInvitationAdapter
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkSendInvitationAdapter
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.IF.getOfferID_IF
 import com.casebeaumonde.activities.myContracts.tabs.offers.adapter.RecieveOffersAdapter
 import com.casebeaumonde.activities.myContracts.tabs.offers.adapter.SendOffersAdapter
+import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_offers.*
-import kotlinx.android.synthetic.main.fragment_work_inviation.*
+import org.jetbrains.annotations.Nullable
 import retrofit2.Response
 
-class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
+class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
+    Controller.SetOfferDecisionAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -54,7 +52,7 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
         getOfferID_IF = this
         findIds(view)
         controller = Controller()
-        controller.Controller(this)
+        controller.Controller(this, this)
         lisenters()
         if (utility.isConnectingToInternet(context)) {
             pd.show()
@@ -176,10 +174,11 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
         // }
     }
 
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
-            parent_workinvitation!!,
+            parent_offers!!,
             error,
             getString(R.string.close_up)
         )
@@ -190,11 +189,16 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
     }
 
 
-    override fun getID(id: String?, pos: String?) {
-        showOfferDialog(id, pos)
+    override fun getID(
+        id: String?,
+        pos: String?,
+        type: String?,
+        offerID: String?
+    ) {
+        showOfferDialog(id, pos, type.toString(), offerID)
     }
 
-    private fun showOfferDialog(id: String?, pos: String?) {
+    private fun showOfferDialog(id: String?, pos: String?, type: String, offerID: String?) {
         offerDialog = Dialog(context!!)
         offerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         offerDialog.setContentView(R.layout.viewoffer)
@@ -207,12 +211,14 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
         val offer_date: TextView
         val offer_title: TextView
         val offer_image: CircleImageView
-        val offer_offer_rate : TextView
-        val offer_ratetype : TextView
+        val offer_offer_rate: TextView
+        val offer_ratetype: TextView
         val offers_comments: TextView
-        val offer_status : TextView
-        val commenttv : TextView
-        val offer_close : Button
+        val offer_status: TextView
+        val commenttv: TextView
+        val offer_close: Button
+        val offer_accept: Button
+        val offer_decline: Button
 
         offer_date = offerDialog.findViewById(R.id.offer_date)
         offer_title = offerDialog.findViewById(R.id.offer_title)
@@ -223,28 +229,92 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF {
         offer_status = offerDialog.findViewById(R.id.offer_status)
         offer_close = offerDialog.findViewById(R.id.offer_close)
         commenttv = offerDialog.findViewById(R.id.commenttv)
+        offer_accept = offerDialog.findViewById(R.id.offer_accept)
+        offer_decline = offerDialog.findViewById(R.id.offer_decline)
 
-        if (sendOffer.get(pos?.toInt()!!).status.equals("accepted"))
-        {
-            offer_status.visibility = View.GONE
-            offers_comments.visibility = View.GONE
-            commenttv.visibility = View.GONE
+        if (type.equals("send")) {
+            if (sendOffer.get(pos?.toInt()!!).status.equals("accepted")) {
+                offer_status.visibility = View.GONE
+                offers_comments.visibility = View.GONE
+                commenttv.visibility = View.GONE
 
+            }
+
+            if (!getStringVal(Constants.USER_ROLE).equals("customer")) {
+                offer_accept.visibility = View.VISIBLE
+                offer_decline.visibility = View.VISIBLE
+            }
+
+
+            offer_date.setText(Utils.changeDateTimeToDate(sendOffer.get(pos?.toInt()!!).createdAt))
+            offer_title.setText("Offer for gig with title: " + sendOffer.get(pos.toInt()).gig.title)
+            Glide.with(context!!)
+                .load(Constants.BASE_IMAGE_URL + sendOffer.get(pos?.toInt()!!).designer.avatar)
+                .placeholder(R.drawable.login_banner).into(offer_image)
+            offer_offer_rate.setText("Proposed rate: $" + sendOffer.get(pos.toInt()).rate)
+            offer_ratetype.setText("Proposed rate type:" + sendOffer.get(pos.toInt()).rateType)
+            offers_comments.setText("" + sendOffer.get(pos.toInt()).comments)
+            offer_status.setText("Status:" + sendOffer.get(pos.toInt()).status)
+        } else {
+            if (recieveOffer.get(pos?.toInt()!!).status.equals("accepted")) {
+                offer_status.visibility = View.GONE
+                offers_comments.visibility = View.GONE
+                commenttv.visibility = View.GONE
+                offer_decline.visibility = View.VISIBLE
+            } else {
+                offer_accept.visibility = View.VISIBLE
+            }
+
+
+
+            offer_date.setText(Utils.changeDateTimeToDate(recieveOffer.get(pos?.toInt()!!).createdAt))
+            offer_title.setText("Offer for gig with title: " + recieveOffer.get(pos.toInt()).gig.title)
+            Glide.with(context!!)
+                .load(Constants.BASE_IMAGE_URL + recieveOffer.get(pos?.toInt()!!).designer.avatar)
+                .placeholder(R.drawable.login_banner).into(offer_image)
+            offer_offer_rate.setText("Proposed rate: $" + recieveOffer.get(pos.toInt()).rate)
+            offer_ratetype.setText("Proposed rate type:" + recieveOffer.get(pos.toInt()).rateType)
+            offers_comments.setText("" + recieveOffer.get(pos.toInt()).comments)
+            offer_status.setText("Status:" + recieveOffer.get(pos.toInt()).status)
         }
 
 
-        offer_date.setText(Utils.changeDateTimeToDate(sendOffer.get(pos?.toInt()!!).createdAt))
-        offer_title.setText("Offer for gig with title: " + sendOffer.get(pos.toInt()).gig.title)
-        Glide.with(context!!)
-            .load(Constants.BASE_IMAGE_URL + sendOffer.get(pos?.toInt()!!).designer.avatar)
-            .placeholder(R.drawable.login_banner).into(offer_image)
-        offer_offer_rate.setText("Proposed rate: $"+sendOffer.get(pos.toInt()).rate)
-        offer_ratetype.setText("Proposed rate type:"+sendOffer.get(pos.toInt()).rateType)
-        offers_comments.setText(""+sendOffer.get(pos.toInt()).comments)
-        offer_status.setText("Status:"+sendOffer.get(pos.toInt()).status)
+        offer_accept.setOnClickListener {
+            pd.show()
+            controller.SetOfferDecision("Bearer " + getStringVal(Constants.TOKEN), offerID, "1")
+        }
+        offer_decline.setOnClickListener {
+            pd.show()
+            controller.SetOfferDecision("Bearer " + getStringVal(Constants.TOKEN), offerID, "0")
+        }
+
+
 
         offer_close.setOnClickListener { offerDialog.dismiss() }
         offerDialog.show()
     }
 
+    override fun onSetOfferSuccess(setOffer: Response<SetOfferDecisionResponse>) {
+        pd.dismiss()
+        if (setOffer.isSuccessful) {
+            offerDialog.dismiss()
+            controller.OfferList(
+                "Bearer " + getStringVal(Constants.TOKEN)
+            )
+            
+            utility!!.relative_snackbar(
+                parent_offers!!,
+                setOffer.body()?.message,
+                getString(R.string.close_up)
+            )
+        } else {
+            offerDialog.dismiss()
+            utility!!.relative_snackbar(
+                parent_offers!!,
+                setOffer.message(),
+                getString(R.string.close_up)
+            )
+        }
+
+    }
 }

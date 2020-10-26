@@ -49,8 +49,8 @@ class CardDetailScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail_screen)
-        planname = intent.getStringExtra("planname")
-        planprice = intent.getStringExtra("planprice")
+        planname = intent.getStringExtra("planname")!!
+        planprice = intent.getStringExtra("planprice")!!
         findIds()
         plan_name.setText(planname)
         plan_price.setText("$ " + planprice + "/month")

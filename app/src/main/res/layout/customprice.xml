@@ -62,7 +62,7 @@
                         android:id="@+id/planrate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6"
+                        android:text="-"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/margin_32dp"
                         android:textStyle="bold">
@@ -80,6 +80,92 @@
 
                     </TextView>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/ortv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Or"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/textsize_16sp"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center">
+
+                </TextView>
+
+                <LinearLayout
+                    android:id="@+id/year_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/textsize_16sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/textsize_24sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/planrate_yearly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/margin_32dp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/YEAR"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/textsize_24sp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/save_percent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="save"
+                            android:textSize="@dimen/textsize_16sp"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="@dimen/margin_8dp">
+
+                        </TextView>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/trail_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/textsize_16sp"
+                    android:layout_gravity="center">
+
+                </TextView>
 
                 <TextView
                     android:id="@+id/seeplandetail"

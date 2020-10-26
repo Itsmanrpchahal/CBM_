@@ -160,9 +160,6 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
         sentInvitations: MutableList<OfferListResponse.Data.User.SentOffer>,
         type: String
     ) {
-
-        //if (getStringVal(Constants.USER_ROLE).equals("customer") || type.equals("sent")) {
-
         offersentinvitations_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val adapter =
@@ -171,7 +168,6 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
                 sentInvitations
             )
         offersentinvitations_recycler.adapter = adapter
-        // }
     }
 
 
@@ -301,7 +297,7 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
             controller.OfferList(
                 "Bearer " + getStringVal(Constants.TOKEN)
             )
-            
+
             utility!!.relative_snackbar(
                 parent_offers!!,
                 setOffer.body()?.message,
@@ -309,6 +305,9 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
             )
         } else {
             offerDialog.dismiss()
+            controller.OfferList(
+                "Bearer " + getStringVal(Constants.TOKEN)
+            )
             utility!!.relative_snackbar(
                 parent_offers!!,
                 setOffer.message(),

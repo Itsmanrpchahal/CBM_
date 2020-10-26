@@ -47,10 +47,9 @@ class NotificationAdapter(
             Utils.changeDateTimeToDate(notificationModel.createdAt).toString()
 
 
-            Glide.with(context)
-                .load(Constants.BASE_IMAGE_URL + "" + notificationModel.data.user.avatar)
-                .placeholder(R.drawable.login_banner).into(holder.itemView.notification_image)
-
+        Glide.with(context)
+            .load(Constants.BASE_IMAGE_URL + "" + notificationModel.data.user.avatar!!)
+            .placeholder(R.drawable.login_banner).into(holder.itemView.notification_image)
 
 
 

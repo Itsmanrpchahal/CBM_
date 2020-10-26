@@ -14,28 +14,28 @@
         android:weightSum="2">
 
         <Button
-            android:id="@+id/contract_recieved"
+            android:id="@+id/contract_contractor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlack"
-            android:text="Customer"
-            android:visibility="gone"
+            android:text="Contractor"
+            android:visibility="visible"
+            android:layout_marginLeft="2dp"
             android:textColor="@color/colorWhite"
-            android:layout_marginRight="2dp"
             android:textAllCaps="false"
             android:layout_weight="1">
 
         </Button>
 
         <Button
-            android:id="@+id/contract_sent"
+            android:id="@+id/contract_customer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlack"
-            android:text="Contractor"
-            android:visibility="gone"
-            android:layout_marginLeft="2dp"
+            android:text="Customer"
+            android:visibility="visible"
             android:textColor="@color/colorWhite"
+            android:layout_marginRight="2dp"
             android:textAllCaps="false"
             android:layout_weight="1">
 

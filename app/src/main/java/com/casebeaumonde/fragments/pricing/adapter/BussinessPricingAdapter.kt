@@ -13,6 +13,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.paymentScreen.CardDetailScreen
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import kotlinx.android.synthetic.main.customprice.view.*
+import org.w3c.dom.Text
 
 class BussinessPricingAdapter (val context: Context, val pricing: ArrayList<PricingResponse.Data.BusinessPlan>) : RecyclerView.Adapter<BussinessPricingAdapter.ViewHolder>()
 {
@@ -25,10 +26,13 @@ class BussinessPricingAdapter (val context: Context, val pricing: ArrayList<Pric
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.levelplan.setText(pricing.get(position).name)
-        holder.itemView.planrate.setText(pricing.get(position).monthlyPrice)
+        holder.itemView.planrate.setText(pricing.get(position).monthlyPrice.toString())
         holder.itemView.subscribebt.setOnClickListener {
-            context.startActivity(Intent(context, CardDetailScreen::class.java).putExtra("planname",pricing.get(position).name))
+            context.startActivity(Intent(context, CardDetailScreen::class.java).putExtra("planname",pricing.get(position).name).putExtra("planprice",pricing.get(position).monthlyPrice))
         }
+        holder.itemView.planrate_yearly.setText(pricing.get(position).annualCharge.toString())
+        holder.itemView.trail_text.setText(pricing.get(position).trialDays.toString()+" days trail")
+        holder.itemView.save_percent.setText(" (save"+pricing.get(position).yearlySavingPercent.toString()+"%)")
     }
 
     override fun getItemCount(): Int {
@@ -43,9 +47,16 @@ class BussinessPricingAdapter (val context: Context, val pricing: ArrayList<Pric
             val levelplan : TextView
             val planrate : TextView
             val subscribebt : Button
+            val planrate_yearly : TextView
+            val trail_text : TextView
+            val save_percent: TextView
+
             levelplan = itemView.findViewById(R.id.levelplan)
             planrate = itemView.findViewById(R.id.planrate)
             subscribebt = itemView.findViewById(R.id.subscribebt)
+            planrate_yearly = itemView.findViewById(R.id.planrate_yearly)
+            trail_text = itemView.findViewById(R.id.trail_text)
+            save_percent = itemView.findViewById(R.id.save_percent)
         }
     }
 }

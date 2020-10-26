@@ -9,7 +9,6 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,6 +16,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myContracts.tabs.Contract.IF.GetContractID_IF
 import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractCustomerAdapter
+import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractorAdapter
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.constants.BaseFrag
@@ -25,7 +25,6 @@ import com.casebeaumonde.utilities.Utility
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_my_contracts.*
-import kotlinx.android.synthetic.main.fragment_offers.*
 import retrofit2.Response
 
 class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendClaimAPI,
@@ -34,8 +33,8 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var controller: Controller
-    private lateinit var contract_recieved: Button
-    private lateinit var contract_sent: Button
+    private lateinit var contract_customer: Button
+    private lateinit var contract_contractor: Button
     private lateinit var contracts_as_customer_recycler: RecyclerView
     private lateinit var contracts_as_contractor_recycler: RecyclerView
     private lateinit var contract: ArrayList<ContractListResponse.Data.User.ContractsAsContractor>
@@ -74,8 +73,8 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
     }
 
     private fun findIds(view: View?) {
-        contract_recieved = view!!.findViewById(R.id.contract_recieved)
-        contract_sent = view.findViewById(R.id.contract_sent)
+        contract_customer = view!!.findViewById(R.id.contract_customer)
+        contract_contractor = view.findViewById(R.id.contract_contractor)
         contracts_as_customer_recycler = view.findViewById(R.id.contracts_as_customer_recycler)
         contracts_as_contractor_recycler = view.findViewById(R.id.contracts_as_contractor_recycler)
         utility = Utility()
@@ -91,23 +90,23 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
     }
 
     private fun lisenters() {
-        contract_recieved.setOnClickListener {
-            contract_recieved.setBackgroundColor(Color.WHITE)
-            contract_recieved.setTextColor(Color.BLACK)
-            contract_sent.setBackgroundColor(Color.BLACK)
-            contract_sent.setTextColor(Color.WHITE)
+        contract_customer.setOnClickListener {
+            contract_customer.setBackgroundColor(Color.WHITE)
+            contract_customer.setTextColor(Color.BLACK)
+            contract_contractor.setBackgroundColor(Color.BLACK)
+            contract_contractor.setTextColor(Color.WHITE)
             type = "sent"
             contracts_as_customer_recycler.visibility = View.GONE
             contracts_as_contractor_recycler.visibility = View.VISIBLE
             //setFullData(sendOffer, type)
         }
 
-        contract_sent.setOnClickListener {
-            contract_recieved.setBackgroundColor(Color.BLACK)
-            contract_recieved.setTextColor(Color.WHITE)
-            contract_sent.setBackgroundColor(Color.WHITE)
-            contract_sent.setTextColor(Color.BLACK)
-            type = "recieve"
+        contract_contractor.setOnClickListener {
+            contract_customer.setBackgroundColor(Color.BLACK)
+            contract_customer.setTextColor(Color.WHITE)
+            contract_contractor.setBackgroundColor(Color.WHITE)
+            contract_contractor.setTextColor(Color.BLACK)
+            type = "type"
             contracts_as_customer_recycler.visibility = View.VISIBLE
             contracts_as_contractor_recycler.visibility = View.GONE
             //setRecieveData(recieveOffer, type)
@@ -121,21 +120,38 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
         customer =
             contractlist.body()?.data?.user?.contractsAsCustomer as ArrayList<ContractListResponse.Data.User.ContractsAsCustomer>
 
+        contract = contractlist.body()?.data?.user?.contractsAsContractor as ArrayList<ContractListResponse.Data.User.ContractsAsContractor>
+
         if (contractlist.body()?.data?.user?.role.equals("customer")) {
             type = "customer"
             //worksentinvitations_recycler.visibility = View.VISIBLE
             setFullData(customer, "customer")
             contracts_as_customer_recycler.visibility = View.VISIBLE
+            contract_customer.visibility = View.GONE
+            contract_contractor.visibility = View.GONE
 
         } else {
-            contract_recieved.visibility = View.VISIBLE
-            contract_sent.visibility = View.VISIBLE
-            contract_recieved.setBackgroundColor(Color.WHITE)
-            contract_recieved.setTextColor(Color.BLACK)
-            type = "recieve"
-            //setRecieveData(recieveOffer, type)
+            contract_customer.visibility = View.VISIBLE
+            contract_contractor.visibility = View.VISIBLE
+            contract_contractor.setBackgroundColor(Color.WHITE)
+            contract_contractor.setTextColor(Color.BLACK)
+            type = "bussiness"
+            contracts_as_contractor_recycler.visibility = View.VISIBLE
+
+            setContractData(contract,"bussiness")
         }
 
+    }
+
+    private fun setContractData(contract: ArrayList<ContractListResponse.Data.User.ContractsAsContractor>, s: String) {
+        contracts_as_contractor_recycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val adapter =
+            ContractorAdapter(
+                context!!,
+                contract
+            )
+        contracts_as_contractor_recycler.adapter = adapter
     }
 
     private fun setFullData(

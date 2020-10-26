@@ -7,28 +7,28 @@ import java.util.List;
 
 public class PricingResponse {
 
-@SerializedName("code")
-@Expose
-private String code;
-@SerializedName("data")
-@Expose
-private Data data;
+    @SerializedName("code")
+    @Expose
+    private String code;
+    @SerializedName("data")
+    @Expose
+    private Data data;
 
-public String getCode() {
-return code;
-}
+    public String getCode() {
+        return code;
+    }
 
-public void setCode(String code) {
-this.code = code;
-}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-public Data getData() {
-return data;
-}
+    public Data getData() {
+        return data;
+    }
 
-public void setData(Data data) {
-this.data = data;
-}
+    public void setData(Data data) {
+        this.data = data;
+    }
 
     public class Data {
 
@@ -90,13 +90,13 @@ this.data = data;
             private String description;
             @SerializedName("monthly_price")
             @Expose
-            private String monthlyPrice;
+            private Double monthlyPrice;
             @SerializedName("yearly_price")
             @Expose
-            private String yearlyPrice;
+            private Double yearlyPrice;
             @SerializedName("yearly_saving_percent")
             @Expose
-            private String yearlySavingPercent;
+            private Integer yearlySavingPercent;
             @SerializedName("benefits")
             @Expose
             private Object benefits;
@@ -188,27 +188,27 @@ this.data = data;
                 this.description = description;
             }
 
-            public String getMonthlyPrice() {
+            public Double getMonthlyPrice() {
                 return monthlyPrice;
             }
 
-            public void setMonthlyPrice(String monthlyPrice) {
+            public void setMonthlyPrice(Double monthlyPrice) {
                 this.monthlyPrice = monthlyPrice;
             }
 
-            public String getYearlyPrice() {
+            public Double getYearlyPrice() {
                 return yearlyPrice;
             }
 
-            public void setYearlyPrice(String yearlyPrice) {
+            public void setYearlyPrice(Double yearlyPrice) {
                 this.yearlyPrice = yearlyPrice;
             }
 
-            public String getYearlySavingPercent() {
+            public Integer getYearlySavingPercent() {
                 return yearlySavingPercent;
             }
 
-            public void setYearlySavingPercent(String yearlySavingPercent) {
+            public void setYearlySavingPercent(Integer yearlySavingPercent) {
                 this.yearlySavingPercent = yearlySavingPercent;
             }
 
@@ -388,89 +388,7 @@ this.data = data;
                 this.planFeatures = planFeatures;
             }
 
-            public class PlanFeature {
-
-                @SerializedName("id")
-                @Expose
-                private Integer id;
-                @SerializedName("featureable_id")
-                @Expose
-                private Integer featureableId;
-                @SerializedName("featureable_type")
-                @Expose
-                private String featureableType;
-                @SerializedName("feature")
-                @Expose
-                private String feature;
-                @SerializedName("status")
-                @Expose
-                private String status;
-                @SerializedName("created_at")
-                @Expose
-                private String createdAt;
-                @SerializedName("updated_at")
-                @Expose
-                private String updatedAt;
-
-                public Integer getId() {
-                    return id;
-                }
-
-                public void setId(Integer id) {
-                    this.id = id;
-                }
-
-                public Integer getFeatureableId() {
-                    return featureableId;
-                }
-
-                public void setFeatureableId(Integer featureableId) {
-                    this.featureableId = featureableId;
-                }
-
-                public String getFeatureableType() {
-                    return featureableType;
-                }
-
-                public void setFeatureableType(String featureableType) {
-                    this.featureableType = featureableType;
-                }
-
-                public String getFeature() {
-                    return feature;
-                }
-
-                public void setFeature(String feature) {
-                    this.feature = feature;
-                }
-
-                public String getStatus() {
-                    return status;
-                }
-
-                public void setStatus(String status) {
-                    this.status = status;
-                }
-
-                public String getCreatedAt() {
-                    return createdAt;
-                }
-
-                public void setCreatedAt(String createdAt) {
-                    this.createdAt = createdAt;
-                }
-
-                public String getUpdatedAt() {
-                    return updatedAt;
-                }
-
-                public void setUpdatedAt(String updatedAt) {
-                    this.updatedAt = updatedAt;
-                }
-
-            }
         }
-
 
         public class BusinessPlan {
 
@@ -497,19 +415,19 @@ this.data = data;
             private Integer intervalCount;
             @SerializedName("monthly_price")
             @Expose
-            private String monthlyPrice;
+            private Integer monthlyPrice;
             @SerializedName("number_of_users")
             @Expose
-            private String numberOfUsers;
+            private Integer numberOfUsers;
             @SerializedName("yearly_price")
             @Expose
-            private String yearlyPrice;
+            private Integer yearlyPrice;
             @SerializedName("annual_charge")
             @Expose
             private String annualCharge;
             @SerializedName("yearly_saving_percent")
             @Expose
-            private String yearlySavingPercent;
+            private Integer yearlySavingPercent;
             @SerializedName("trial_days")
             @Expose
             private String trialDays;
@@ -654,27 +572,27 @@ this.data = data;
                 this.intervalCount = intervalCount;
             }
 
-            public String getMonthlyPrice() {
+            public Integer getMonthlyPrice() {
                 return monthlyPrice;
             }
 
-            public void setMonthlyPrice(String monthlyPrice) {
+            public void setMonthlyPrice(Integer monthlyPrice) {
                 this.monthlyPrice = monthlyPrice;
             }
 
-            public String getNumberOfUsers() {
+            public Integer getNumberOfUsers() {
                 return numberOfUsers;
             }
 
-            public void setNumberOfUsers(String numberOfUsers) {
+            public void setNumberOfUsers(Integer numberOfUsers) {
                 this.numberOfUsers = numberOfUsers;
             }
 
-            public String getYearlyPrice() {
+            public Integer getYearlyPrice() {
                 return yearlyPrice;
             }
 
-            public void setYearlyPrice(String yearlyPrice) {
+            public void setYearlyPrice(Integer yearlyPrice) {
                 this.yearlyPrice = yearlyPrice;
             }
 
@@ -686,11 +604,11 @@ this.data = data;
                 this.annualCharge = annualCharge;
             }
 
-            public String getYearlySavingPercent() {
+            public Integer getYearlySavingPercent() {
                 return yearlySavingPercent;
             }
 
-            public void setYearlySavingPercent(String yearlySavingPercent) {
+            public void setYearlySavingPercent(Integer yearlySavingPercent) {
                 this.yearlySavingPercent = yearlySavingPercent;
             }
 
@@ -1007,6 +925,7 @@ this.data = data;
                 }
 
             }
+
         }
 
         public class BusinessRole {
@@ -1150,5 +1069,90 @@ this.data = data;
             }
 
         }
+
+        public class PlanFeature {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("featureable_id")
+            @Expose
+            private Integer featureableId;
+            @SerializedName("featureable_type")
+            @Expose
+            private String featureableType;
+            @SerializedName("feature")
+            @Expose
+            private String feature;
+            @SerializedName("status")
+            @Expose
+            private String status;
+            @SerializedName("created_at")
+            @Expose
+            private String createdAt;
+            @SerializedName("updated_at")
+            @Expose
+            private String updatedAt;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public Integer getFeatureableId() {
+                return featureableId;
+            }
+
+            public void setFeatureableId(Integer featureableId) {
+                this.featureableId = featureableId;
+            }
+
+            public String getFeatureableType() {
+                return featureableType;
+            }
+
+            public void setFeatureableType(String featureableType) {
+                this.featureableType = featureableType;
+            }
+
+            public String getFeature() {
+                return feature;
+            }
+
+            public void setFeature(String feature) {
+                this.feature = feature;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public void setCreatedAt(String createdAt) {
+                this.createdAt = createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public void setUpdatedAt(String updatedAt) {
+                this.updatedAt = updatedAt;
+            }
+
+        }
+
+
     }
+
 }

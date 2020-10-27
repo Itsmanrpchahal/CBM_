@@ -1,8 +1,11 @@
 package com.casebeaumonde.utilities;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Utils {
 
@@ -44,5 +47,17 @@ public class Utils {
         }
         return time_stamp;
 
+    }
+
+    public static String getTimeStamp(String dateTime) {
+        DateFormat formatter = new SimpleDateFormat("MMM d, yyyy hh:mm aaa");
+        Calendar c = Calendar.getInstance();
+        Date date = null;
+        try {
+            date = formatter.parse(formatter.format(c.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return String.valueOf(date);
     }
 }

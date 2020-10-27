@@ -6,8 +6,10 @@ import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
+import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
+import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse;
@@ -69,6 +71,11 @@ public interface ApiInterface {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
+    @POST("api/v1/forgot-password")
+    Call<ForgotPassworResponse> forgotPassword(
+            @Field("email") String email
+    );
 
     @GET("api/v1/logout")
     Call<LogoutResponse> logoutCall(
@@ -417,6 +424,12 @@ public interface ApiInterface {
     Call<DeletePaymentMethodResponse> deleteCard(
             @Header("Authorization") String token,
             @Path("input") String cardID
+    );
+
+    @GET("api/v1/userEventInvitations/{input}")
+    Call<UserInvitationsResponse> userInvitations(
+            @Header("Authorization") String token,
+            @Path("input") String userID
     );
 
 }

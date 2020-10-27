@@ -3,6 +3,7 @@ package com.casebeaumonde.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
+import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
@@ -16,6 +17,7 @@ import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
+import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
@@ -80,7 +82,15 @@ public class Controller {
     var setOfferDesicionAPI : SetOfferDecisionAPI ? = null
     var paymentMethodAPI : PaymentMethodAPI? = null
     var deleteCardAPI : DeleteCardAPI? = null
+    var fOrgotPasswordAPI : FOrgotPasswordAPI? = null
+    var userInviatationsAPI : UserInviatationsAPI? = null
 
+
+    fun Controller(fOrgotPassword: FOrgotPasswordAPI)
+    {
+        fOrgotPasswordAPI = fOrgotPassword
+        webAPI = WebAPI()
+    }
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
         notificationAPI = notification
@@ -253,6 +263,31 @@ public class Controller {
         contractListAPI = contractlist
         sendClaimAPI = sendClaim
         webAPI = WebAPI()
+    }
+
+    fun Controller(userInvitation : UserInviatationsAPI)
+    {
+        userInviatationsAPI = userInvitation
+        webAPI = WebAPI()
+    }
+
+    fun setForgotPassword(email: String)
+    {
+        webAPI?.api?.forgotPassword(email)?.enqueue(object :Callback<ForgotPassworResponse>
+        {
+            override fun onResponse(
+                call: Call<ForgotPassworResponse>,
+                response: Response<ForgotPassworResponse>
+            ) {
+                val forgot = response
+                fOrgotPasswordAPI?.onForgotPasswordSuccess(forgot)
+            }
+
+            override fun onFailure(call: Call<ForgotPassworResponse>, t: Throwable) {
+                fOrgotPasswordAPI?.error(t.message)
+            }
+
+        })
     }
 
     fun setNotificationAPI(token: String?, userId: String?) {
@@ -1094,6 +1129,25 @@ public class Controller {
         })
     }
 
+    fun UserInvitation(token: String?,userId: String?)
+    {
+        webAPI?.api?.userInvitations(token,userId)?.enqueue(object : Callback<UserInvitationsResponse>
+        {
+            override fun onResponse(
+                call: Call<UserInvitationsResponse>,
+                response: Response<UserInvitationsResponse>
+            ) {
+                val userInvitation = response
+                userInviatationsAPI?.onUserInvitationSuccess(userInvitation)
+            }
+
+            override fun onFailure(call: Call<UserInvitationsResponse>, t: Throwable) {
+                userInviatationsAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1307,6 +1361,16 @@ public class Controller {
 
     interface DeleteCardAPI {
         fun onDeleteCardSuccess(deleteCard : Response<DeletePaymentMethodResponse>)
+        fun error(error: String?)
+    }
+
+    interface FOrgotPasswordAPI {
+        fun onForgotPasswordSuccess(forgotPassword : Response<ForgotPassworResponse>)
+        fun error(error: String?)
+    }
+
+    interface UserInviatationsAPI {
+        fun onUserInvitationSuccess(userInvitations : Response<UserInvitationsResponse>)
         fun error(error: String?)
     }
 }

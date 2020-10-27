@@ -14,9 +14,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
+import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.userRegister.RegisterActivity
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse
 import com.casebeaumonde.constants.BaseClass
@@ -29,7 +31,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 
-class LoginActivity : BaseClass() {
+class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
 
     private lateinit var login_Email_ET: EditText
     private lateinit var login_Password_ET: EditText
@@ -38,11 +40,20 @@ class LoginActivity : BaseClass() {
     private lateinit var login_resgiter_TV: TextView
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
+    private lateinit var  dialog: Dialog
+    lateinit var controller: Controller
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        controller = Controller()
+        controller.Controller(this)
+        utility = Utility()
+        pd = ProgressDialog(this)
+        pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        pd!!.isIndeterminate = true
+        pd!!.setCancelable(false)
         findIds()
         lisenters()
     }
@@ -83,9 +94,38 @@ class LoginActivity : BaseClass() {
     }
 
     private fun forgotPassword() {
-        val dialog = Dialog(this!!)
+         dialog = Dialog(this!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.forgotpasswordlayout)
+
+        val forgot_email: EditText
+        val forgot_submitbt: Button
+        forgot_email = dialog.findViewById(R.id.forgot_email)
+        forgot_submitbt = dialog.findViewById(R.id.forgot_submitbt)
+
+        forgot_submitbt.setOnClickListener {
+            when {
+                forgot_email.text.isEmpty() -> {
+                    forgot_email.requestFocus()
+                    forgot_email.error = "Enter email"
+                }
+                else -> {
+                    hideKeyboard()
+                    if (utility.isConnectingToInternet(this)) {
+                        pd.show()
+                        pd.setContentView(R.layout.loading)
+                        controller.setForgotPassword(forgot_email.text.toString())
+                    } else {
+                        utility.relative_snackbar(
+                            parent_main!!,
+                            "No Internet Connectivity",
+                            getString(R.string.close_up)
+                        )
+                    }
+                }
+            }
+        }
+
         dialog.show()
     }
 
@@ -115,39 +155,57 @@ class LoginActivity : BaseClass() {
             pd.show()
             pd.setContentView(R.layout.loading)
 
-            val loginCall = WebAPI.getInstance().api.loginCall(username,password)
-            loginCall.enqueue(object :Callback<LoginResponse>
-            {
+            val loginCall = WebAPI.getInstance().api.loginCall(username, password)
+            loginCall.enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     pd.dismiss()
-                    utility!!.relative_snackbar(parent_login!!, t.localizedMessage, getString(R.string.close_up))
-                     }
+                    utility!!.relative_snackbar(
+                        parent_login!!,
+                        t.localizedMessage,
+                        getString(R.string.close_up)
+                    )
+                }
+
                 override fun onResponse(
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
                     pd.dismiss()
-                    if (response.isSuccessful){
+                    if (response.isSuccessful) {
                         val responsedata = response.body().toString()
-                        Log.d("TEST",""+responsedata)
+                        Log.d("TEST", "" + responsedata)
                         val data = response.body()?.getData()?.userId
-                        if (response.body()?.getData()?.token != null )
-                        {
-                            setStringVal(Constants.USERID, response.body()?.getData()?.userId.toString())
-                            setStringVal(Constants.TOKEN,response.body()?.getData()?.token)
-                            startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                        if (response.body()?.getData()?.token != null) {
+                            setStringVal(
+                                Constants.USERID,
+                                response.body()?.getData()?.userId.toString()
+                            )
+                            setStringVal(Constants.TOKEN, response.body()?.getData()?.token)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
-                        }else{
-                            utility!!.relative_snackbar(parent_login!!, "Invalid Username or Password", getString(R.string.close_up))
+                        } else {
+                            utility!!.relative_snackbar(
+                                parent_login!!,
+                                "Invalid Username or Password",
+                                getString(R.string.close_up)
+                            )
                         }
-                    }else{
-                        utility!!.relative_snackbar(parent_login!!, response.message(), getString(R.string.close_up))
+                    } else {
+                        utility!!.relative_snackbar(
+                            parent_login!!,
+                            response.message(),
+                            getString(R.string.close_up)
+                        )
                     }
                 }
             })
 
-        }else{
-            utility.relative_snackbar(parent_main!!, "No Internet Connectivity", getString(R.string.close_up))
+        } else {
+            utility.relative_snackbar(
+                parent_main!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
         }
     }
 
@@ -155,10 +213,37 @@ class LoginActivity : BaseClass() {
         try {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-        }catch (e : Exception)
-        {
+        } catch (e: Exception) {
 
         }
 
+    }
+
+    override fun onForgotPasswordSuccess(forgotPassword: Response<ForgotPassworResponse>) {
+        pd.dismiss()
+        if (forgotPassword.isSuccessful)
+        {
+            dialog.dismiss()
+            utility!!.relative_snackbar(
+                parent_login!!,
+                forgotPassword.body()?.message,
+                getString(R.string.close_up)
+            )
+        }else {
+            utility!!.relative_snackbar(
+                parent_login!!,
+                forgotPassword.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun error(error: String?) {
+        pd.dismiss()
+        utility!!.relative_snackbar(
+            parent_login!!,
+            error,
+            getString(R.string.close_up)
+        )
     }
 }

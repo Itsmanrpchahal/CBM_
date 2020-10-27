@@ -42,7 +42,7 @@ import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
 import java.lang.Exception
 
-class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserProfileAPI{
+class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserProfileAPI {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navView: MaterialNavigationView
     private lateinit var opennavigation: ImageView
@@ -265,8 +265,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     Glide.with(this@MainActivity)
                         .load(userProfileResponse.body()!!.data!!.filePath + userProfileResponse.body()!!.data!!.user!!.avatar)
                         .placeholder(R.drawable.login_banner).into(userImage)
-                }catch (e: Exception)
-                {
+                } catch (e: Exception) {
 
                 }
 
@@ -275,8 +274,9 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     }
 
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
-        toolbar_notifiction.setBadgeValue(notificationsResponseResponse.body()?.data?.notification?.size!!)
-        toolbar_notifiction.setBadgeTextColor(R.color.colorBlue)
+
+        toolbar_notifiction.setBadgeValue(9)
+        toolbar_notifiction.setBadgeTextColor(resources.getColor(R.color.colorBlue))
     }
 
     override fun error(error: String?) {

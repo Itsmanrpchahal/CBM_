@@ -48,12 +48,8 @@ class NotificationAdapter(
 
 
         Glide.with(context)
-            .load(Constants.BASE_IMAGE_URL + "" + notificationModel.data.user.avatar!!)
+            .load(Constants.BASE_IMAGE_URL + "" + notificationModel?.data?.user?.avatar.toString()!!)
             .placeholder(R.drawable.login_banner).into(holder.itemView.notification_image)
-
-
-
-        Log.d("image", "" + notificationModel.data.user.avatar)
 
 
         holder.itemView.remove_notification.setOnClickListener {

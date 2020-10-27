@@ -21,6 +21,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
+import com.casebeaumonde.activities.EventsInvitations.EventsInvitations
 import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
@@ -802,6 +803,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             p0?.text?.equals("My Contracts")!! -> {
                 startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
             }
+
+            p0?.text?.equals("Events Invitations")!! -> {
+                startActivity(Intent(context,EventsInvitations::class.java).putExtra("userID",userID))
+            }
         }
     }
 
@@ -832,6 +837,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             p0?.text?.equals("My Contracts")!! -> {
                 startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
+            }
+
+            p0?.text?.equals("Events Invitations")!! -> {
+                startActivity(Intent(context,EventsInvitations::class.java).putExtra("userID",userID))
             }
         }
     }

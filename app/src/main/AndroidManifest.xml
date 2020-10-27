@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.paymenthistory.PaymentHistory"></activity>
+        <activity android:name=".activities.EventsInvitations.EventsInvitations"></activity>
+        <activity android:name=".activities.paymenthistory.PaymentHistory" />
         <activity android:name=".activities.myContracts.MyContracts" />
         <activity android:name=".activities.paymentScreen.CardDetailScreen" />
         <activity android:name=".fragments.profile.ViewProfile" />

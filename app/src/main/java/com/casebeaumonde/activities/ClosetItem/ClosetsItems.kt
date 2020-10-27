@@ -22,6 +22,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
+import com.casebeaumonde.activities.ClosetItem.adapter.FilterOutFitItems
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
@@ -45,7 +46,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     SelectedCloset_ID,
     Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
     Controller.AdDItemToAnotherClosetAPI, Controller.MoveItemAPI, Controller.DuplicateItemAPI,
-    Controller.FetchListAPI, Controller.OutFItAPI,Controller.OutfitFilterAPI {
+    Controller.FetchListAPI, Controller.OutFItAPI, Controller.OutfitFilterAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -57,6 +58,8 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var hearlist: ArrayList<ClosetsItemsResponse.Data.Closet.Item.Heart>
     private lateinit var closetResponse: ArrayList<ClosetsItemsResponse.Data.Closet.Item>
     private lateinit var closetResponsefilter: ArrayList<ClosetsItemsResponse.Data.Closet.Item>
+    private lateinit var outfitResponse: ArrayList<OutfitFilterResponse.Data.ClosetItem>
+    private lateinit var filterOutfitResponse: ArrayList<OutfitFilterResponse.Data.ClosetItem>
     private lateinit var dialog: Dialog
     private lateinit var logoutDialog: Dialog
     private lateinit var Viewdialog: Dialog
@@ -72,8 +75,8 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var closet_duplicateitembt: Button
     private lateinit var closet_makeoutfitbt: Button
     private lateinit var moveItemDialog: Dialog
-    private lateinit var outfit_spinner : Spinner
-    private lateinit var outfit_title:TextView
+    private lateinit var outfit_spinner: Spinner
+    private lateinit var outfit_title: TextView
     private lateinit var checkedClosetIDs: ArrayList<String>
     private lateinit var selectedItems: ArrayList<String>
     private lateinit var listData: ArrayList<String>
@@ -91,7 +94,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         checkedClosetIDs = ArrayList()
         selectedItems = ArrayList()
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this, this, this,this)
+        controller.Controller(this, this, this, this, this, this, this, this, this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
         controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
         closetitemidIf = this
@@ -107,7 +110,6 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     }
 
     private fun listeners() {
-
 
 
         closetitems_back.setOnClickListener {
@@ -182,8 +184,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             }
         }
 
-        search_ET.addTextChangedListener(object : TextWatcher
-        {
+        search_ET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -192,7 +193,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 if (count > 0) {
                     searchByTitle(s.toString())
                 } else {
-                    setFullData(closetResponse,select,selectAll)
+                    setFullData(closetResponse, select, selectAll)
                 }
             }
 
@@ -202,7 +203,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     searchByTitle(s.toString())
                 } else {
                     closetsItems_recycler.visibility = View.VISIBLE
-                    setFullData(closetResponse,select,selectAll)
+                    setFullData(closetResponse, select, selectAll)
                 }
             }
 
@@ -222,8 +223,8 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     closetsItems_recycler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     //closets =  response
-                    val adapter = ClosetsItemAdapter(this, closetResponsefilter!!,userID
-                        , select, selectAll
+                    val adapter = ClosetsItemAdapter(
+                        this, closetResponsefilter!!, userID, select, selectAll
                     )
                     closetsItems_recycler.adapter = adapter
                 }
@@ -253,7 +254,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         var cancelitem: Button
         var addnewclosetet: EditText
         var checkbox: CheckBox
-        var addoutfit : CheckBox
+        var addoutfit: CheckBox
         listview = moveItemDialog.findViewById(R.id.listview)
         outfitlist = moveItemDialog.findViewById(R.id.outfitlist)
         moveitem = moveItemDialog.findViewById(R.id.moveitem)
@@ -473,7 +474,6 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             }
 
 
-
         } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
@@ -543,6 +543,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         pd.dismiss()
         Viewdialog.dismiss()
         if (addItemToAnotherCloset.isSuccessful) {
+            controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
                 addItemToAnotherCloset.body()?.messsage,
@@ -565,6 +566,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         moveItemDialog.dismiss()
         setClosetAPI()
         if (moveItem.isSuccessful) {
+            controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
                 moveItem.body()?.message,
@@ -585,6 +587,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         moveItemDialog.dismiss()
         setClosetAPI()
         if (duplicateItem.isSuccessful) {
+            controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
                 duplicateItem.body()?.message,
@@ -638,12 +641,16 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     outfit_title.setText(outFitTitle[position])
                     val pos = outFitID[position]
 
-                    if (!outFitTitle[position].equals("Select Outfit"))
-                    {
-                        searchByOutFit(outFitTitle[position],outFitID[position])
+
+                    if (!outFitTitle[position].equals("Select Outfit")) {
+                        pd.show()
+                        searchByOutFit(outFitTitle[position], outFitID[position])
+                    } else {
+                        pd.show()
+                        controller.ClosetItems("Bearer " + getStringVal(Constants.TOKEN), closetID)
                     }
 
-                    //rateType = outFitTitle[position]
+                    //rateType = outFitTitle[position]e
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -661,9 +668,9 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     }
 
     private fun searchByOutFit(title: String, id: String) {
-        //pd.show()
-      // searchByTitle(title)
-        //controller.OutFitFilter("Bearer "+getStringVal(Constants.TOKEN),id,closetID)
+        pd.show()
+        // searchByTitle(title)
+        controller.OutFitFilter("Bearer " + getStringVal(Constants.TOKEN), id, closetID)
     }
 
     //ToDo: Outfit
@@ -689,11 +696,19 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     override fun onOutfitFilterSuccess(outfiFIlter: Response<OutfitFilterResponse>) {
 
         pd.dismiss()
-        if (outfiFIlter.isSuccessful)
-        {
-
-        }else
-        {
+        if (outfiFIlter.isSuccessful) {
+            closetsItems_recycler.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            val adapter = getStringVal(Constants.USERID)?.let {
+                FilterOutFitItems(
+                    this, outfiFIlter.body()?.data?.closetItem!!,
+                    it, select, selectAll
+                )
+            }
+            outfitResponse = ArrayList()
+            outfitResponse.addAll(outfiFIlter.body()?.data?.closetItem!!)
+            closetsItems_recycler.adapter = adapter
+        } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
                 outfiFIlter.message(),
@@ -706,7 +721,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     override fun error(error: String?) {
         pd.dismiss()
         //dialog.dismiss()
-        Log.d("error",""+error)
+        Log.d("error", "" + error)
         utility!!.relative_snackbar(parent_closetsItems!!, error, getString(R.string.close_up))
     }
 

@@ -80,4 +80,5 @@
     <string name="endingIn">"Card ending in "</string>
     <string name="progressMessage"><![CDATA[Making Payment Please Don\'t Cancel or Close This Window&#8230;]]></string>
     <string name="aboutext">"Life isnâ€™t black and white. Come build an exquisite world with CASA BEAU MONDE. Created with you in mind, to improve the way you shop and communicate about fashion. Whether youâ€™re an inspiring fashionista or an aspiring one, youâ€™re home with us. Here you will be able to curate and create all the pretty things and live the most stylish of lives with our latest fashion and shopping technology. We canâ€™t wait to see how your build your house of beautiful things with us.  "</string>
+    <string name="confirmationtext">"Please confirm you want to change your current plan subscription. The new plan amount will be charge now and the amount of the remaining days of the current plan subscription will be refunded. In order to change your plan subscription, you must have at least one verified payment method registered in your profile. "</string>
 </resources>

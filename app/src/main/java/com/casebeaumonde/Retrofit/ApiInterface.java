@@ -37,6 +37,7 @@ import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemRespon
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
+import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse;
 import com.casebeaumonde.fragments.pricing.response.PricingResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.DeletePaymentMethodResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
@@ -430,6 +431,14 @@ public interface ApiInterface {
     Call<UserInvitationsResponse> userInvitations(
             @Header("Authorization") String token,
             @Path("input") String userID
+    );
+
+    @GET("api/v1/change-subscription/{input}/{input1}/{input2}")
+    Call<ChangePlanResponse> changePlan(
+            @Header("Authorization") String token,
+            @Path("input") String id,
+            @Path("input1") String type,
+            @Path("input2") String charge_type
     );
 
 }

@@ -28,6 +28,7 @@ import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
 import okhttp3.MultipartBody
@@ -84,6 +85,7 @@ public class Controller {
     var deleteCardAPI : DeleteCardAPI? = null
     var fOrgotPasswordAPI : FOrgotPasswordAPI? = null
     var userInviatationsAPI : UserInviatationsAPI? = null
+    var changePlanAPI : ChangePlanAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI)
@@ -235,8 +237,9 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(pricing: PricingAPI) {
+    fun Controller(pricing: PricingAPI,changeplan : ChangePlanAPI) {
         pricingAPI = pricing
+        changePlanAPI = changeplan
         webAPI = WebAPI()
     }
 
@@ -1148,6 +1151,26 @@ public class Controller {
         })
     }
 
+    fun ChangePlan(token: String?,id: String?,type: String?,plantype : String)
+    {
+        webAPI?.api?.changePlan(token,id,type,plantype)?.enqueue(object :Callback<ChangePlanResponse>
+        {
+            override fun onResponse(
+                call: Call<ChangePlanResponse>,
+                response: Response<ChangePlanResponse>
+            ) {
+                val changeplan = response
+                changePlanAPI?.onChangePlanSuccess(changeplan)
+            }
+
+            override fun onFailure(call: Call<ChangePlanResponse>, t: Throwable) {
+                changePlanAPI?.error(t.message)
+            }
+
+        })
+    }
+
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1371,6 +1394,11 @@ public class Controller {
 
     interface UserInviatationsAPI {
         fun onUserInvitationSuccess(userInvitations : Response<UserInvitationsResponse>)
+        fun error(error: String?)
+    }
+
+    interface ChangePlanAPI {
+        fun onChangePlanSuccess(changePlan : Response<ChangePlanResponse>)
         fun error(error: String?)
     }
 }

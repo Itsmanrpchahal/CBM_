@@ -93,6 +93,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var followers: ArrayList<UserProfileResponse.Data.User.Follower>
     private lateinit var following: ArrayList<UserProfileResponse.Data.User.Following>
     private lateinit var cards : ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+    private  lateinit var plan : String
     lateinit var manager: FragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -170,8 +171,15 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             {
                 ViewPlanDialog()
             } else  {
+
+                val bundle = Bundle()
+                bundle.putString(Constants.FROM,"pricing")
+
+
                 val transaction = manager.beginTransaction()
-                transaction.replace(R.id.nav_host_fragment, Pricing())
+                val priceFrag = Pricing()
+                priceFrag.arguments = bundle
+                transaction.replace(R.id.nav_host_fragment, priceFrag)
                 transaction.commit()
             }
 
@@ -201,8 +209,22 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         changeplan = viewplanDialog.findViewById(R.id.changeplan)
         close = viewplanDialog.findViewById(R.id.close)
 
+        planname.setText(plan)
         viewpayments.setOnClickListener { startActivity(Intent(context,PaymentHistory::class.java)) }
         close.setOnClickListener { viewplanDialog.dismiss() }
+        changeplan.setOnClickListener {
+            viewplanDialog.dismiss()
+            val bundle = Bundle()
+            bundle.putString(Constants.FROM,"changeplan")
+            bundle.putString(Constants.PLANNAME,plan)
+
+
+            val transaction = manager.beginTransaction()
+            val priceFrag = Pricing()
+            priceFrag.arguments = bundle
+            transaction.replace(R.id.nav_host_fragment, priceFrag)
+            transaction.commit()
+        }
 
         viewplanDialog.show()
     }
@@ -535,7 +557,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
         Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
-
+        plan = userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
         profile_username.text =
             userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
         Glide.with(context!!)

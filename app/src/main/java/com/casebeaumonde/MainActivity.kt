@@ -142,18 +142,24 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     call: Call<LogoutResponse>,
                     response: Response<LogoutResponse>
                 ) {
-
                     pd.dismiss()
                     if (response.isSuccessful) {
                         val code = response.body()?.getCode()
                         if (code == 200) {
-                            startActivity(
-                                Intent(
-                                    this@MainActivity,
-                                    LoginActivity::class.java
-                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            )
+//                            startActivity(
+//                                Intent(
+//                                    this@MainActivity,
+//                                    MainActivity::class.java
+//                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                    .setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+//
+//                            )
+                           // finish()
                             finish()
+                            overridePendingTransition(0, 0)
+                            overridePendingTransition(0, 0)
+
                             clearStringVal(Constants.TOKEN)
                             clearStringVal(Constants.USERID)
                         }

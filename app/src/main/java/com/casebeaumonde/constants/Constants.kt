@@ -2,6 +2,7 @@ package com.casebeaumonde.constants
 
 object Constants
 {
+    val STRIPEKEY: String? = "pk_test_OTNta0F2CKTUpYDDM7igKdml"
     val EVENTID: String? = "EVENTID"
     val FIRSTNAME: String? = "FIRSTNAME"
     val LASTNAME: String? = "LASTNAME"
@@ -19,4 +20,5 @@ object Constants
     val USER_ROLE = "USER_ROLE"
     val FROM = "from"
     val PLANNAME = "planname"
+    val SUBSCRIPTION_ID ="subsciptionid"
 }

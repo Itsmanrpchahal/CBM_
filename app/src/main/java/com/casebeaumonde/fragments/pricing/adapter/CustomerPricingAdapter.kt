@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
@@ -61,9 +62,6 @@ class CustomerPricingAdapter(
             if (holder.itemView.subscribebt.text.equals("Change Plan")) {
 
                 Pricing.getpriceidIf?.getID(pricing.get(position).id.toString(), "customer")
-            } else if (token.equals(""))
-            {
-                context.startActivity(Intent(context,LoginActivity::class.java).putExtra(Constants.FROM,"onBoard").setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
             }
             else  {
                 context.startActivity(

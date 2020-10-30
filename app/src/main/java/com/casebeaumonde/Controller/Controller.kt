@@ -36,6 +36,7 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 public class Controller {
@@ -88,6 +89,8 @@ public class Controller {
     var userInviatationsAPI: UserInviatationsAPI? = null
     var changePlanAPI: ChangePlanAPI? = null
     var subscribePlanAPI: SubscribePlanAPI? = null
+    var cancelPlanAPI : CancelPlanAPI? = null
+    var addPaymentMethodAPI : AddPaymentMethodAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -112,13 +115,17 @@ public class Controller {
         updateAvatar: UpdateAvatarAPI,
         updateProfile: UpdateProfileAPI,
         paymentMethod: PaymentMethodAPI,
-        deleteCard: DeleteCardAPI
+        deleteCard: DeleteCardAPI,
+        cancelPlan : CancelPlanAPI,
+        addMethod : AddPaymentMethodAPI
     ) {
         userProfileAPI = userProfile
         updateAvatarAPI = updateAvatar
         updateProfileAPI = updateProfile
         paymentMethodAPI = paymentMethod
         deleteCardAPI = deleteCard
+        cancelPlanAPI = cancelPlan
+        addPaymentMethodAPI = addMethod
         webAPI = WebAPI()
     }
 
@@ -1213,6 +1220,44 @@ public class Controller {
         })
     }
 
+    fun CancelPlan (token: String?,id: String?,type: String?)
+    {
+        webAPI?.api?.cancelPlan(token, id, type)?.enqueue(object : Callback<CancelPlanResponse>
+        {
+            override fun onResponse(
+                call: Call<CancelPlanResponse>,
+                response: Response<CancelPlanResponse>
+            ) {
+               val cancelPlan = response
+                cancelPlanAPI?.onCancelPlan(cancelPlan)
+            }
+
+            override fun onFailure(call: Call<CancelPlanResponse>, t: Throwable) {
+                cancelPlanAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun AddPaymentMethod(token: String?,brand: String,payment_method_type: String,stripetoken: String)
+    {
+        webAPI?.api?.addpaymentMethod(token, brand, payment_method_type, stripetoken)?.enqueue(object : Callback<CancelPlanResponse>
+        {
+            override fun onResponse(
+                call: Call<CancelPlanResponse>,
+                response: Response<CancelPlanResponse>
+            ) {
+                val addpaymentmethod = response
+                addPaymentMethodAPI?.onAddPaymentSuccess(addpaymentmethod)
+            }
+
+            override fun onFailure(call: Call<CancelPlanResponse>, t: Throwable) {
+                addPaymentMethodAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -1447,6 +1492,16 @@ public class Controller {
 
     interface SubscribePlanAPI {
         fun onSubscribeSuccess(subscribe: Response<SubscribePlanResponse>)
+        fun error(error: String?)
+    }
+
+    interface CancelPlanAPI {
+        fun onCancelPlan(cancelPlan : Response<CancelPlanResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddPaymentMethodAPI {
+        fun onAddPaymentSuccess(addPayment : Response<CancelPlanResponse>)
         fun error(error: String?)
     }
 }

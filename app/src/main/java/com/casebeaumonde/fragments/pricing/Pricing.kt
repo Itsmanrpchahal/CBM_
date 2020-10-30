@@ -14,6 +14,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.home.HomeFragment
 import com.casebeaumonde.fragments.pricing.IF.GetPriceID_IF
 import com.casebeaumonde.fragments.pricing.adapter.BussinessPricingAdapter
 import com.casebeaumonde.fragments.pricing.adapter.CustomerPricingAdapter
@@ -172,6 +173,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
             changePlanDialog.dismiss()
             val transaction = manager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment, Profile())
+            transaction.remove(HomeFragment())
             transaction.commit()
             utility!!.relative_snackbar(
                 parent_pricing!!,

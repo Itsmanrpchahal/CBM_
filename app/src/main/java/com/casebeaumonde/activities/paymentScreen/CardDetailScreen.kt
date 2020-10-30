@@ -162,15 +162,9 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
                 pd.setContentView(R.layout.loading)
 
                 val card2 = Card(cardnumber, MONTH, YEAR, cardcvc)
-                val stripe1 = Stripe(this, "pk_test_OTNta0F2CKTUpYDDM7igKdml")
+                val stripe1 = Stripe(this, Constants.STRIPEKEY)
                 stripe1.createToken(card2, object : TokenCallback {
                     override fun onSuccess(token: Token?) {
-
-                        Log.d("token", "" + token?.type + "  ")
-                        Log.d(
-                            "card",
-                            "" + card2.brand + "  " + MONTH + "/" + YEAR + " " + card2.last4 + "  " + cardholdername + " " + planID + "  " + plantype
-                        )
 
                         controller.SubscribePlan(
                             "Bearer " + getStringVal(Constants.TOKEN),
@@ -181,14 +175,17 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
                             cardholdername,
                             "card",
                             planID.toString(),
-                            token.toString(),
+                            token?.id!!,
                             "customer"
                         )
                     }
 
                     override fun onError(error: Exception?) {
-                        Toast.makeText(this@CardDetailScreen, "Error" + error, Toast.LENGTH_SHORT)
-                            .show()
+                        utility!!.relative_snackbar(
+                            parent_cardscreen!!,
+                            error?.message,
+                            getString(R.string.close_up)
+                        )
                     }
                 })
             }
@@ -246,7 +243,7 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
         pd.dismiss()
         utility!!.relative_snackbar(
             parent_cardscreen!!,
-            subscribe.body()?.code,
+            subscribe.body()?.message,
             getString(R.string.close_up)
         )
     }

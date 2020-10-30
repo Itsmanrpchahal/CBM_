@@ -1,6 +1,7 @@
 package com.casebeaumonde.fragments.profile
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -36,15 +37,17 @@ import com.casebeaumonde.fragments.profile.IF.GetUserID
 import com.casebeaumonde.fragments.profile.adapter.CardsAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowerAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowingAdapter
-import com.casebeaumonde.fragments.profile.profileResponse.DeletePaymentMethodResponse
-import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse
-import com.casebeaumonde.fragments.profile.profileResponse.PaymentMethodResponse
-import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
+import com.casebeaumonde.fragments.profile.profileResponse.*
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
+import com.stripe.android.Stripe
+import com.stripe.android.TokenCallback
+import com.stripe.android.model.Card
+import com.stripe.android.model.Token
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_card_detail_screen.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MultipartBody
@@ -53,9 +56,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener, GetUserID ,Controller.PaymentMethodAPI, GetCardID,Controller.DeleteCardAPI{
+    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener, GetUserID ,Controller.PaymentMethodAPI, GetCardID,Controller.DeleteCardAPI
+,Controller.CancelPlanAPI,Controller.AddPaymentMethodAPI{
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
@@ -80,11 +87,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var dialog: Dialog
     private lateinit var viewplanDialog: Dialog
     private lateinit var mypaymentdialog: Dialog
+    private lateinit var addPaymentMethod: Dialog
     private lateinit var role: String
     private var tabLayout: TabLayout? = null
     private lateinit var username: String
     private lateinit var userID: String
     private lateinit var followfollowingDialog: Dialog
+    private lateinit var cancelPlanDialog: Dialog
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var businessSubscription: String
     private lateinit var customerSubscription: String
@@ -95,6 +104,21 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var cards : ArrayList<PaymentMethodResponse.Data.PaymentProfile>
     private  lateinit var plan : String
     lateinit var manager: FragmentManager
+    lateinit var plan_cardholdername: EditText
+    lateinit var plan_cardnumber: EditText
+    lateinit var plan_cvc: EditText
+    lateinit var plan_billingzipcode: EditText
+    lateinit var plan_carddate: EditText
+    lateinit var plan_verfybt: Button
+    lateinit var plan_cancel: Button
+    private lateinit var cardholdername: String
+    private lateinit var cardnumber: String
+    private lateinit var cardexpDateyear: String
+    private lateinit var cardcvc: String
+    private lateinit var cardbilligcode: String
+    val c = Calendar.getInstance()
+    private var MONTH: Int = 0
+    private var YEAR: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -110,7 +134,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         manager = fragmentManager!!
         controller = Controller()
-        controller.Controller(this, this, this,this,this)
+        controller.Controller(this, this, this,this,this,this,this)
         getUserID = this
         getCardID = this
         findIds(view)
@@ -180,6 +204,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 val priceFrag = Pricing()
                 priceFrag.arguments = bundle
                 transaction.replace(R.id.nav_host_fragment, priceFrag)
+                transaction.addToBackStack(null)
                 transaction.commit()
             }
 
@@ -223,10 +248,54 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             val priceFrag = Pricing()
             priceFrag.arguments = bundle
             transaction.replace(R.id.nav_host_fragment, priceFrag)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
 
+        cancelplan.setOnClickListener {
+            cancelPlanDialog = Dialog(context!!)
+            cancelPlanDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+            cancelPlanDialog.setContentView(R.layout.cancelplandialog)
+            val window = cancelPlanDialog.window
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            var keepsubscrition : Button
+            var cancelsubscrition : Button
+
+            keepsubscrition = cancelPlanDialog.findViewById(R.id.keepsubscrition)
+            cancelsubscrition = cancelPlanDialog.findViewById(R.id.cancelsubscrition)
+
+            keepsubscrition.setOnClickListener { cancelPlanDialog.dismiss() }
+            cancelsubscrition.setOnClickListener {
+                pd.show()
+
+                if (utility.isConnectingToInternet(context)) {
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+
+                    controller.CancelPlan(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        getStringVal(Constants.SUBSCRIPTION_ID),
+                        getStringVal(Constants.USER_ROLE)
+                    )
+
+                } else {
+                    utility.relative_snackbar(
+                        parent_profile!!,
+                        "No Internet Connectivity",
+                        getString(R.string.close_up)
+                    )
+                }
+            }
+
+            cancelPlanDialog.show()
+        }
         viewplanDialog.show()
+
     }
 
     private fun openFollowersDialog(s: String) {
@@ -563,7 +632,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             profile_username.text =
                 userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
             Glide.with(context!!)
-                .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar)
+                .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar.toString()!!)
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)
             profile_followerscount.text =
                 userProfileResponse.body()?.data?.user?.followers?.size.toString()
@@ -574,6 +643,9 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.data?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.data?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.data?.user?.phone)
+            setStringVal(Constants.SUBSCRIPTION_ID,
+                userProfileResponse.body()?.data?.user?.customerSubscription?.id.toString()
+            )
             setStringVal(
                 Constants.ABOUT,
                 userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
@@ -634,11 +706,16 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
                 pd.show()
                 controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
-
+                val addpaymentmethod : Button
                 payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
                 close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
+                addpaymentmethod = mypaymentdialog.findViewById(R.id.addpaymentmethod)
 
                 close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
+
+                addpaymentmethod.setOnClickListener {
+                    addPaymentMethodDialog()
+                }
 
                 mypaymentdialog.show()
             }
@@ -650,6 +727,139 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             )
         }
 
+    }
+
+    private fun addPaymentMethodDialog() {
+        addPaymentMethod = Dialog(context!!)
+        addPaymentMethod.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        addPaymentMethod.setContentView(R.layout.addpaymentmethod)
+        val window = addPaymentMethod.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+
+
+        plan_carddate = addPaymentMethod.findViewById(R.id.plan_carddate)
+        plan_cardholdername = addPaymentMethod.findViewById(R.id.plan_cardholdername)
+        plan_cardnumber = addPaymentMethod.findViewById(R.id.plan_cardnumber)
+        plan_billingzipcode = addPaymentMethod.findViewById(R.id.plan_billingzipcode)
+        plan_verfybt = addPaymentMethod.findViewById(R.id.plan_verfybt)
+        plan_cvc = addPaymentMethod.findViewById(R.id.plan_cvc)
+        plan_cancel = addPaymentMethod.findViewById(R.id.plan_cancel)
+
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        // create an OnDateSetListener
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(
+                view: DatePicker, year: Int, monthOfYear: Int,
+                dayOfMonth: Int
+            ) {
+                c.set(Calendar.YEAR, year)
+                c.set(Calendar.MONTH, monthOfYear)
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                MONTH = monthOfYear
+                YEAR = year
+
+                updateDateInView()
+            }
+        }
+
+
+        // when you click on the button, show DatePickerDialog that is set with OnDateSetListener
+        plan_carddate.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View) {
+                DatePickerDialog(
+                    context!!, R.style.DialogTheme,
+                    dateSetListener,
+                    // set DatePickerDialog to point to today's date when it loads up
+                    c.get(Calendar.YEAR),
+                    c.get(Calendar.MONTH),
+                    c.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
+        })
+
+        plan_verfybt.setOnClickListener {
+            //val card = CardUtils.isValidCardNumber("4242424242424242")
+            checkValidations()
+        }
+
+        plan_cancel.setOnClickListener { addPaymentMethod.dismiss() }
+
+        addPaymentMethod.show()
+    }
+
+    private fun checkValidations() {
+        when {
+            plan_cardholdername.text.isEmpty() -> {
+                plan_cardholdername.requestFocus()
+                plan_cardholdername.error = "Enter name on card"
+            }
+
+            plan_cardnumber.text.isEmpty() -> {
+                plan_cardnumber.requestFocus()
+                plan_cardnumber.error = "Enter card number"
+            }
+
+            plan_carddate.text.isEmpty() -> {
+                plan_carddate.requestFocus()
+                plan_carddate.error = "Enter expiration date"
+            }
+
+            plan_cvc.text.isEmpty() -> {
+                plan_cvc.requestFocus()
+                plan_cvc.error = "Enter card verification code"
+            }
+
+            plan_billingzipcode.text.isEmpty() -> {
+                plan_billingzipcode.requestFocus()
+                plan_billingzipcode.error = "Enter billing zip code"
+            }
+            else -> {
+                cardholdername = plan_cardholdername.text.toString()
+                cardnumber = plan_cardnumber.text.toString()
+                cardexpDateyear = plan_carddate.text.toString()
+                cardcvc = plan_cvc.text.toString()
+                cardbilligcode = plan_billingzipcode.text.toString()
+                val dateyear = cardexpDateyear.split("/").toTypedArray()
+                Log.d("dateyear", "" + dateyear)
+                pd.show()
+                pd.setContentView(R.layout.loading)
+
+                val card2 = Card(cardnumber, MONTH, YEAR, cardcvc)
+                val stripe1 = Stripe(context!!, Constants.STRIPEKEY)
+                stripe1.createToken(card2, object : TokenCallback {
+                    override fun onSuccess(token: Token?) {
+                        pd.show()
+                        controller.AddPaymentMethod("Bearer "+getStringVal(Constants.TOKEN)
+                            ,card2.brand
+                            ,"customer"
+                            , token?.id!!
+                        )
+                        Log.d("testCard",""+token)
+                    }
+
+                    override fun onError(error: Exception?) {
+                        utility!!.relative_snackbar(
+                            parent_cardscreen!!,
+                            error?.message,
+                            getString(R.string.close_up)
+                        )
+                    }
+                })
+            }
+        }
+    }
+
+    private fun updateDateInView() {
+        val myFormat = "MM/yyyy" // mention the format you need
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        plan_carddate.setText(sdf.format(c.time))
     }
 
     override fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>) {
@@ -706,8 +916,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 getString(R.string.close_up)
             )
         }
-
     }
+
 
     override fun onPaymentSuccess(paymentMethod: Response<PaymentMethodResponse>) {
         pd.dismiss()
@@ -725,6 +935,42 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun onCancelPlan(cancelPlan: Response<CancelPlanResponse>) {
+
+        if (cancelPlan.isSuccessful)
+        {
+            pd.dismiss()
+            cancelPlanDialog.dismiss()
+            viewplanDialog.dismiss()
+//            val transaction = manager.beginTransaction()
+//            val priceFrag = Pricing()
+//            transaction.replace(R.id.nav_host_fragment, Profile())
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+
+
+        }else {
+            pd.dismiss()
+            utility!!.relative_snackbar(
+                parent_profile,
+                cancelPlan.message(),
+                getString(R.string.close_up)
+            )
+
+        }
+    }
+
+    override fun onAddPaymentSuccess(addPayment: Response<CancelPlanResponse>) {
+        pd.dismiss()
+        addPaymentMethod.dismiss()
+        mypaymentdialog.dismiss()
+        utility!!.relative_snackbar(
+            parent_profile,
+            "Card added successfully",
+            getString(R.string.close_up)
+        )
     }
 
     override fun error(error: String?) {

@@ -13,6 +13,7 @@ import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.userRegister.RegisterActivity
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.pricing.Pricing
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 
 class HomeFragment : BaseFrag() {
@@ -23,6 +24,7 @@ class HomeFragment : BaseFrag() {
     private lateinit var onboard_loginBt : Button
     private lateinit var onboard_registerBt : Button
     private lateinit var onboard_pricing : TextView
+    private lateinit var onboard_contact : TextView
     private lateinit var manager : FragmentManager
 
 
@@ -37,7 +39,7 @@ class HomeFragment : BaseFrag() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
-        manager = fragmentManager!!
+
         findIds(view)
         listeners()
 
@@ -54,7 +56,13 @@ class HomeFragment : BaseFrag() {
         }
 
         onboard_pricing.setOnClickListener {
-
+//            val bundle = Bundle()
+//            bundle.putString(Constants.FROM,"logout")
+//            val pricing = Pricing()
+//            pricing.arguments = bundle
+//            val transaction = manager.beginTransaction()
+//                transaction.replace(R.id.nav_host_fragment, pricing)
+//                transaction.commit()
         }
     }
 
@@ -62,11 +70,14 @@ class HomeFragment : BaseFrag() {
         onboard_loginBt = view.findViewById(R.id.onboard_loginBt)
         onboard_registerBt = view.findViewById(R.id.onboard_registerBt)
         onboard_pricing = view.findViewById(R.id.onboard_pricing)
+        onboard_contact = view.findViewById(R.id.onboard_contact)
 
         if (!getStringVal(Constants.TOKEN).equals(""))
         {
             onboard_loginBt.visibility = View.GONE
             onboard_registerBt.visibility = View.GONE
+            onboard_pricing.visibility = View.GONE
+            onboard_contact.visibility = View.GONE
         }
     }
 

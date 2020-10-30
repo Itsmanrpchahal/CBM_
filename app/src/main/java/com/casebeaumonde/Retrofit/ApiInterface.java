@@ -40,6 +40,7 @@ import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse;
 import com.casebeaumonde.fragments.pricing.response.PricingResponse;
+import com.casebeaumonde.fragments.profile.profileResponse.CancelPlanResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.DeletePaymentMethodResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.FollowUnFollowResponse;
@@ -456,5 +457,23 @@ public interface ApiInterface {
             @Field("token") String Stripetoken,
             @Field("type") String type
     );
+
+    @GET("api/v1/cancel-plan/{input}/{input1}")
+    Call<CancelPlanResponse> cancelPlan(
+            @Header("Authorization") String token,
+            @Path("input") String id,
+            @Path("input1") String type
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/add-payment-method")
+    Call<CancelPlanResponse> addpaymentMethod(
+            @Header("Authorization") String token,
+            @Field("brand") String brand,
+            @Field("payment_method_type") String payment_method_type,
+            @Field("token") String stripetoken
+            );
+
 
 }

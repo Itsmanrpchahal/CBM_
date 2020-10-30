@@ -1,26 +1,42 @@
 package com.casebeaumonde.activities.paymentScreen
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
+import com.casebeaumonde.constants.BaseClass
+import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.utilities.Utility
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
 import com.stripe.android.model.Card
 import com.stripe.android.model.Token
+import kotlinx.android.synthetic.main.activity_card_detail_screen.*
+import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.security.auth.callback.Callback
 
-class CardDetailScreen : AppCompatActivity() {
+class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
 
+
+    private lateinit var utility: Utility
+    private lateinit var pd: ProgressDialog
+    private lateinit var controller: Controller
     private lateinit var plan_carddate: EditText
     private lateinit var plan_name: TextView
     private lateinit var plan_price: TextView
@@ -34,13 +50,15 @@ class CardDetailScreen : AppCompatActivity() {
     private val PUBLISHABLE_KEY = "pk_test_OTNta0F2CKTUpYDDM7igKdml"
     private lateinit var planname: String
     private lateinit var planprice: String
-    private lateinit var cardholdername : String
-    private lateinit var cardnumber : String
-    private lateinit var cardexpDateyear : String
-    private lateinit var cardcvc : String
-    private lateinit var cardbilligcode : String
-    private  var MONTH : Int = 0
-    private var YEAR : Int = 0
+    private lateinit var planID: String
+    private lateinit var plantype: String
+    private lateinit var cardholdername: String
+    private lateinit var cardnumber: String
+    private lateinit var cardexpDateyear: String
+    private lateinit var cardcvc: String
+    private lateinit var cardbilligcode: String
+    private var MONTH: Int = 0
+    private var YEAR: Int = 0
     var token: Token? = null
     val c = Calendar.getInstance()
     lateinit var stripe: Stripe
@@ -51,6 +69,10 @@ class CardDetailScreen : AppCompatActivity() {
         setContentView(R.layout.activity_card_detail_screen)
         planname = intent.getStringExtra("planname")!!
         planprice = intent.getStringExtra("planprice")!!
+        planID = intent.getStringExtra("planID")!!
+        plantype = intent.getStringExtra("plantype")!!
+        controller = Controller()
+        controller.Controller(this)
         findIds()
         plan_name.setText(planname)
         plan_price.setText("$ " + planprice + "/month")
@@ -135,16 +157,33 @@ class CardDetailScreen : AppCompatActivity() {
                 cardcvc = plan_cvc.text.toString()
                 cardbilligcode = plan_billingzipcode.text.toString()
                 val dateyear = cardexpDateyear.split("/").toTypedArray()
-                Log.d("dateyear",""+dateyear)
-                Toast.makeText(this,""+MONTH+" "+YEAR,Toast.LENGTH_LONG).show()
+                Log.d("dateyear", "" + dateyear)
+                pd.show()
+                pd.setContentView(R.layout.loading)
 
                 val card2 = Card(cardnumber, MONTH, YEAR, cardcvc)
                 val stripe1 = Stripe(this, "pk_test_OTNta0F2CKTUpYDDM7igKdml")
                 stripe1.createToken(card2, object : TokenCallback {
                     override fun onSuccess(token: Token?) {
 
-                        Log.d("token", "" + token?.card)
-                        Log.d("card", "" + card2)
+                        Log.d("token", "" + token?.type + "  ")
+                        Log.d(
+                            "card",
+                            "" + card2.brand + "  " + MONTH + "/" + YEAR + " " + card2.last4 + "  " + cardholdername + " " + planID + "  " + plantype
+                        )
+
+                        controller.SubscribePlan(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            card2.brand,
+                            "monthly",
+                            MONTH.toString() + "/" + YEAR,
+                            card2.last4,
+                            cardholdername,
+                            "card",
+                            planID.toString(),
+                            token.toString(),
+                            "customer"
+                        )
                     }
 
                     override fun onError(error: Exception?) {
@@ -163,6 +202,12 @@ class CardDetailScreen : AppCompatActivity() {
     }
 
     private fun findIds() {
+        utility = Utility()
+        pd = ProgressDialog(this)
+        pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        pd!!.isIndeterminate = true
+        pd!!.setCancelable(false)
         plan_carddate = findViewById(R.id.plan_carddate)
         plan_name = findViewById(R.id.plan_name)
         plan_price = findViewById(R.id.plan_price)
@@ -195,5 +240,23 @@ class CardDetailScreen : AppCompatActivity() {
         ) {
             throw RuntimeException("Location services are required in order to " + "connect to a reader.")
         }
+    }
+
+    override fun onSubscribeSuccess(subscribe: Response<SubscribePlanResponse>) {
+        pd.dismiss()
+        utility!!.relative_snackbar(
+            parent_cardscreen!!,
+            subscribe.body()?.code,
+            getString(R.string.close_up)
+        )
+    }
+
+    override fun error(error: String?) {
+        pd.dismiss()
+        utility!!.relative_snackbar(
+            parent_cardscreen!!,
+            error,
+            getString(R.string.close_up)
+        )
     }
 }

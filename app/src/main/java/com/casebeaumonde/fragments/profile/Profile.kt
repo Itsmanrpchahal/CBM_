@@ -556,90 +556,100 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
-        Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
-        plan = userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
-        profile_username.text =
-            userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
-        Glide.with(context!!)
-            .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar)
-            .placeholder(R.drawable.login_banner).into(profile_profilePic)
-        profile_followerscount.text =
-            userProfileResponse.body()?.data?.user?.followers?.size.toString()
-        profile_followingcount.text =
-            userProfileResponse.body()?.data?.user?.following?.size.toString()
-        username = userProfileResponse.body()?.data?.user?.firstname!!
-        setStringVal(Constants.FIRSTNAME, userProfileResponse.body()?.data?.user?.firstname)
-        setStringVal(Constants.LASTNAME, userProfileResponse.body()?.data?.user?.lastname)
-        setStringVal(Constants.EMAIL, userProfileResponse.body()?.data?.user?.email)
-        setStringVal(Constants.PHONE, userProfileResponse.body()?.data?.user?.phone)
-        setStringVal(
-            Constants.ABOUT,
-            userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
-        )
-
-        followers =
-            userProfileResponse.body()?.data?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
-        following =
-            userProfileResponse.body()?.data?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
-
-        role = userProfileResponse.body()?.data?.user?.role.toString()
-        setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.data?.user?.role.toString())
-
-        if (userProfileResponse.body()?.data?.user?.customerSubscription != null) {
-            setStringVal(Constants.CUSTOMERSUBSCRIPTION, "1")
-        }
-
-        if (userProfileResponse.body()?.data?.user?.businessSubscription != null) {
-            setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
-        }
-        if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
-            profile_mygigs.visibility = View.GONE
-
-            profile_chooseyourplan.setText("My Subscriptions")
-            profile_mypaymentmethods.visibility = View.VISIBLE
-
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Contracts"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
-            tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-            tabLayout!!.setOnTabSelectedListener(this)
-        } else {
-            profile_mygigs.visibility = View.GONE
-
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-            tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
-            tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-            tabLayout!!.setOnTabSelectedListener(this)
-        }
-
-        profile_mypaymentmethods.setOnClickListener {
-            mypaymentdialog = Dialog(context!!)
-            mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-            mypaymentdialog.setContentView(R.layout.managepaymentmethid)
-            val window = mypaymentdialog.window
-            window?.setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT
+        if(userProfileResponse.isSuccessful)
+        {
+            Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
+            plan = userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
+            profile_username.text =
+                userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
+            Glide.with(context!!)
+                .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar)
+                .placeholder(R.drawable.login_banner).into(profile_profilePic)
+            profile_followerscount.text =
+                userProfileResponse.body()?.data?.user?.followers?.size.toString()
+            profile_followingcount.text =
+                userProfileResponse.body()?.data?.user?.following?.size.toString()
+            username = userProfileResponse.body()?.data?.user?.firstname!!
+            setStringVal(Constants.FIRSTNAME, userProfileResponse.body()?.data?.user?.firstname)
+            setStringVal(Constants.LASTNAME, userProfileResponse.body()?.data?.user?.lastname)
+            setStringVal(Constants.EMAIL, userProfileResponse.body()?.data?.user?.email)
+            setStringVal(Constants.PHONE, userProfileResponse.body()?.data?.user?.phone)
+            setStringVal(
+                Constants.ABOUT,
+                userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
             )
 
-            pd.show()
-            controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
+            followers =
+                userProfileResponse.body()?.data?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
+            following =
+                userProfileResponse.body()?.data?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
 
-            payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
-            close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
+            role = userProfileResponse.body()?.data?.user?.role.toString()
+            setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.data?.user?.role.toString())
 
-            close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
+            if (userProfileResponse.body()?.data?.user?.customerSubscription != null) {
+                setStringVal(Constants.CUSTOMERSUBSCRIPTION, "1")
+            }
 
-            mypaymentdialog.show()
+            if (userProfileResponse.body()?.data?.user?.businessSubscription != null) {
+                setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
+            }
+            if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
+                profile_mygigs.visibility = View.GONE
+
+                profile_chooseyourplan.setText("My Subscriptions")
+                profile_mypaymentmethods.visibility = View.VISIBLE
+
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
+               // tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
+//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
+//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Contracts"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
+                tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+                tabLayout!!.setOnTabSelectedListener(this)
+            } else {
+                profile_mygigs.visibility = View.GONE
+
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
+                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
+                tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
+                tabLayout!!.setOnTabSelectedListener(this)
+            }
+
+            profile_mypaymentmethods.setOnClickListener {
+                mypaymentdialog = Dialog(context!!)
+                mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+                mypaymentdialog.setContentView(R.layout.managepaymentmethid)
+                val window = mypaymentdialog.window
+                window?.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                )
+
+                pd.show()
+                controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
+
+                payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
+                close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
+
+                close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
+
+                mypaymentdialog.show()
+            }
+        } else {
+            utility!!.relative_snackbar(
+                parent_profile,
+                userProfileResponse.message(),
+                getString(R.string.close_up)
+            )
         }
+
     }
 
     override fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>) {
@@ -807,12 +817,12 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
             }
 
-            p0?.text?.equals("My gigs")!! -> {
-                startActivity(
-                    Intent(context, MyGigs::class.java).putExtra("role", role)
-                        .putExtra("userID", userID)
-                )
-            }
+//            p0?.text?.equals("My gigs")!! -> {
+//                startActivity(
+//                    Intent(context, MyGigs::class.java).putExtra("role", role)
+//                        .putExtra("userID", userID)
+//                )
+//            }
 
             p0?.text?.equals("My Wall")!! -> {
                 startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))
@@ -842,12 +852,12 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
             }
 
-            p0?.text?.equals("My gigs")!! -> {
-                startActivity(
-                    Intent(context, MyGigs::class.java).putExtra("role", role)
-                        .putExtra("userID", userID)
-                )
-            }
+//            p0?.text?.equals("My gigs")!! -> {
+//                startActivity(
+//                    Intent(context, MyGigs::class.java).putExtra("role", role)
+//                        .putExtra("userID", userID)
+//                )
+//            }
 
             p0?.text?.equals("My Wall")!! -> {
                 startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))

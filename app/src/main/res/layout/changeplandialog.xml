@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_16dp"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_baseline_error_outline_24"
+                android:layout_margin="@dimen/textsize_16sp">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plan change confirmation"
+                android:layout_below="@id/error"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/textsize_24sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/decs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirmationtext"
+                android:textColor="@color/colorBlack"
+                android:layout_below="@id/text"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_margin="@dimen/margin_8dp"
+                android:textAlignment="center">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/decs"
+                android:gravity="right"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/margin_8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/cancelbt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Cancel"
+                    android:padding="@dimen/margin_8dp"
+                    android:textAllCaps="false"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textColor="@color/colorWhite"
+                    android:background="@color/colorOrange">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/changebt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Change plan"
+                    android:padding="@dimen/margin_8dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:background="#337AB7"
+                    android:layout_margin="@dimen/margin_8dp">
+
+                </Button>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

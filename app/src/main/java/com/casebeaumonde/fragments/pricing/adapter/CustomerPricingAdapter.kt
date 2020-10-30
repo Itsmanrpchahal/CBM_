@@ -12,7 +12,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.paymentScreen.CardDetailScreen
+import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.Pricing
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import kotlinx.android.synthetic.main.customprice.view.*
@@ -21,7 +23,8 @@ class CustomerPricingAdapter(
     val context: Context,
     val pricing: ArrayList<PricingResponse.Data.CustomerPlan>,
     val from: String,
-    val planname: String
+    val planname: String,
+    val token: String?
 ) : RecyclerView.Adapter<CustomerPricingAdapter.ViewHolder>() {
 
 
@@ -58,7 +61,11 @@ class CustomerPricingAdapter(
             if (holder.itemView.subscribebt.text.equals("Change Plan")) {
 
                 Pricing.getpriceidIf?.getID(pricing.get(position).id.toString(), "customer")
-            } else {
+            } else if (token.equals(""))
+            {
+                context.startActivity(Intent(context,LoginActivity::class.java).putExtra(Constants.FROM,"onBoard").setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            }
+            else  {
                 context.startActivity(
 
                     Intent(context, CardDetailScreen::class.java).putExtra(
@@ -66,6 +73,8 @@ class CustomerPricingAdapter(
                             position
                         ).name
                     ).putExtra("planprice", pricing.get(position).monthlyPrice.toString())
+                        .putExtra("planID",pricing.get(position).id.toString())
+                        .putExtra("plantype","customer")
                 )
             }
         }

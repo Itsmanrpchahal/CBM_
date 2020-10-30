@@ -26,6 +26,7 @@ import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.Wor
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
+import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
@@ -75,21 +76,21 @@ public class Controller {
     var outFItAPI: OutFItAPI? = null
     var paymentProfileAPI: PaymentProfileAPI? = null
     var workInvitationAPI: WorkInvitationAPI? = null
-    var makeOfferAPI : MakeOfferAPI? = null
-    var offerListAPI : OfferListAPI? = null
-    var contractListAPI : ContractListAPI? = null
-    var outfitFilterAPI : OutfitFilterAPI? = null
-    var sendClaimAPI : SendClaimAPI? = null
-    var setOfferDesicionAPI : SetOfferDecisionAPI ? = null
-    var paymentMethodAPI : PaymentMethodAPI? = null
-    var deleteCardAPI : DeleteCardAPI? = null
-    var fOrgotPasswordAPI : FOrgotPasswordAPI? = null
-    var userInviatationsAPI : UserInviatationsAPI? = null
-    var changePlanAPI : ChangePlanAPI? = null
+    var makeOfferAPI: MakeOfferAPI? = null
+    var offerListAPI: OfferListAPI? = null
+    var contractListAPI: ContractListAPI? = null
+    var outfitFilterAPI: OutfitFilterAPI? = null
+    var sendClaimAPI: SendClaimAPI? = null
+    var setOfferDesicionAPI: SetOfferDecisionAPI? = null
+    var paymentMethodAPI: PaymentMethodAPI? = null
+    var deleteCardAPI: DeleteCardAPI? = null
+    var fOrgotPasswordAPI: FOrgotPasswordAPI? = null
+    var userInviatationsAPI: UserInviatationsAPI? = null
+    var changePlanAPI: ChangePlanAPI? = null
+    var subscribePlanAPI: SubscribePlanAPI? = null
 
 
-    fun Controller(fOrgotPassword: FOrgotPasswordAPI)
-    {
+    fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
         webAPI = WebAPI()
     }
@@ -110,8 +111,8 @@ public class Controller {
         userProfile: UserProfileAPI,
         updateAvatar: UpdateAvatarAPI,
         updateProfile: UpdateProfileAPI,
-        paymentMethod : PaymentMethodAPI,
-        deleteCard : DeleteCardAPI
+        paymentMethod: PaymentMethodAPI,
+        deleteCard: DeleteCardAPI
     ) {
         userProfileAPI = userProfile
         updateAvatarAPI = updateAvatar
@@ -170,7 +171,7 @@ public class Controller {
         duplicateItem: DuplicateItemAPI,
         fetchList: FetchListAPI,
         outfit: OutFItAPI,
-        outfitFilter : OutfitFilterAPI
+        outfitFilter: OutfitFilterAPI
     ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
@@ -237,9 +238,14 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(pricing: PricingAPI,changeplan : ChangePlanAPI) {
+    fun Controller(pricing: PricingAPI, changeplan: ChangePlanAPI) {
         pricingAPI = pricing
         changePlanAPI = changeplan
+        webAPI = WebAPI()
+    }
+
+    fun Controller(pricing: PricingAPI) {
+        pricingAPI = pricing
         webAPI = WebAPI()
     }
 
@@ -248,36 +254,36 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(workInvitation: WorkInvitationAPI,makeOffer: MakeOfferAPI) {
+    fun Controller(workInvitation: WorkInvitationAPI, makeOffer: MakeOfferAPI) {
         workInvitationAPI = workInvitation
         makeOfferAPI = makeOffer
         webAPI = WebAPI()
     }
 
-    fun Controller(offerlist : OfferListAPI,setOffer  : SetOfferDecisionAPI)
-    {
+    fun Controller(offerlist: OfferListAPI, setOffer: SetOfferDecisionAPI) {
         offerListAPI = offerlist
         setOfferDesicionAPI = setOffer
         webAPI = WebAPI()
     }
 
-    fun Controller(contractlist: ContractListAPI,sendClaim : SendClaimAPI)
-    {
+    fun Controller(contractlist: ContractListAPI, sendClaim: SendClaimAPI) {
         contractListAPI = contractlist
         sendClaimAPI = sendClaim
         webAPI = WebAPI()
     }
 
-    fun Controller(userInvitation : UserInviatationsAPI)
-    {
+    fun Controller(userInvitation: UserInviatationsAPI) {
         userInviatationsAPI = userInvitation
         webAPI = WebAPI()
     }
 
-    fun setForgotPassword(email: String)
-    {
-        webAPI?.api?.forgotPassword(email)?.enqueue(object :Callback<ForgotPassworResponse>
-        {
+    fun Controller(subscribePlan: SubscribePlanAPI) {
+        subscribePlanAPI = subscribePlan
+        webAPI = WebAPI()
+    }
+
+    fun setForgotPassword(email: String) {
+        webAPI?.api?.forgotPassword(email)?.enqueue(object : Callback<ForgotPassworResponse> {
             override fun onResponse(
                 call: Call<ForgotPassworResponse>,
                 response: Response<ForgotPassworResponse>
@@ -958,15 +964,13 @@ public class Controller {
         })
     }
 
-    fun WorkInvitation(token: String?,id: String?)
-    {
-        webAPI?.api?.workinvitations(token, id)?.enqueue(object : Callback<WorkInvitationResponse>
-        {
+    fun WorkInvitation(token: String?, id: String?) {
+        webAPI?.api?.workinvitations(token, id)?.enqueue(object : Callback<WorkInvitationResponse> {
             override fun onResponse(
                 call: Call<WorkInvitationResponse>,
                 response: Response<WorkInvitationResponse>
             ) {
-                val workinvitation  = response
+                val workinvitation = response
                 workInvitationAPI?.onWorkInviationSuccess(workinvitation)
             }
 
@@ -976,10 +980,16 @@ public class Controller {
         })
     }
 
-    fun MakeOffer(token: String?,designerId : String,gig_id: String?,rate_type : String,comments : String?,rate : String)
-    {
-            webAPI?.api?.makeOffer(token,designerId,gig_id,rate_type,comments,rate)?.enqueue(object : Callback<MakeOfferResponse>
-            {
+    fun MakeOffer(
+        token: String?,
+        designerId: String,
+        gig_id: String?,
+        rate_type: String,
+        comments: String?,
+        rate: String
+    ) {
+        webAPI?.api?.makeOffer(token, designerId, gig_id, rate_type, comments, rate)
+            ?.enqueue(object : Callback<MakeOfferResponse> {
                 override fun onResponse(
                     call: Call<MakeOfferResponse>,
                     response: Response<MakeOfferResponse>
@@ -989,17 +999,17 @@ public class Controller {
                 }
 
                 override fun onFailure(call: Call<MakeOfferResponse>, t: Throwable) {
-                    makeOfferAPI?.error(t
-                        .message)
+                    makeOfferAPI?.error(
+                        t
+                            .message
+                    )
                 }
 
             })
     }
 
-    fun OfferList(token: String?)
-    {
-        webAPI?.api?.offerList(token)?.enqueue(object : Callback<OfferListResponse>
-        {
+    fun OfferList(token: String?) {
+        webAPI?.api?.offerList(token)?.enqueue(object : Callback<OfferListResponse> {
             override fun onResponse(
                 call: Call<OfferListResponse>,
                 response: Response<OfferListResponse>
@@ -1015,10 +1025,8 @@ public class Controller {
         })
     }
 
-    fun ContractList(token: String?)
-    {
-        webAPI?.api?.contractList(token)?.enqueue(object : Callback<ContractListResponse>
-        {
+    fun ContractList(token: String?) {
+        webAPI?.api?.contractList(token)?.enqueue(object : Callback<ContractListResponse> {
             override fun onResponse(
                 call: Call<ContractListResponse>,
                 response: Response<ContractListResponse>
@@ -1034,68 +1042,65 @@ public class Controller {
         })
     }
 
-    fun OutFitFilter(token: String?,outfitid : String?,closetID : String?)
-    {
-        webAPI?.api?.outfitfilter(token,outfitid,closetID)?.enqueue(object : Callback<OutfitFilterResponse>
-        {
-            override fun onResponse(
-                call: Call<OutfitFilterResponse>,
-                response: Response<OutfitFilterResponse>
-            ) {
-                val outfileFilter = response
-                outfitFilterAPI?.onOutfitFilterSuccess(outfileFilter)
-            }
+    fun OutFitFilter(token: String?, outfitid: String?, closetID: String?) {
+        webAPI?.api?.outfitfilter(token, outfitid, closetID)
+            ?.enqueue(object : Callback<OutfitFilterResponse> {
+                override fun onResponse(
+                    call: Call<OutfitFilterResponse>,
+                    response: Response<OutfitFilterResponse>
+                ) {
+                    val outfileFilter = response
+                    outfitFilterAPI?.onOutfitFilterSuccess(outfileFilter)
+                }
 
-            override fun onFailure(call: Call<OutfitFilterResponse>, t: Throwable) {
-                outfitFilterAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<OutfitFilterResponse>, t: Throwable) {
+                    outfitFilterAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun SendClaim(token: String?,contract_id: String,description : String)
-    {
-        webAPI?.api?.sendClaim(token, contract_id, description)?.enqueue(object : Callback<SendClaimResponse>
-        {
-            override fun onResponse(
-                call: Call<SendClaimResponse>,
-                response: Response<SendClaimResponse>
-            ) {
-                val sendClaim = response
-                sendClaimAPI?.onSendClaimSuccess(sendClaim)
-            }
+    fun SendClaim(token: String?, contract_id: String, description: String) {
+        webAPI?.api?.sendClaim(token, contract_id, description)
+            ?.enqueue(object : Callback<SendClaimResponse> {
+                override fun onResponse(
+                    call: Call<SendClaimResponse>,
+                    response: Response<SendClaimResponse>
+                ) {
+                    val sendClaim = response
+                    sendClaimAPI?.onSendClaimSuccess(sendClaim)
+                }
 
-            override fun onFailure(call: Call<SendClaimResponse>, t: Throwable) {
-                sendInvitationAPI?.error(t
-                    .message)
-            }
+                override fun onFailure(call: Call<SendClaimResponse>, t: Throwable) {
+                    sendInvitationAPI?.error(
+                        t
+                            .message
+                    )
+                }
 
-        })
+            })
     }
 
-    fun SetOfferDecision(token: String?,id: String?,action : String)
-    {
-        webAPI?.api?.setOfferdecision(token, id, action)?.enqueue(object : Callback<SetOfferDecisionResponse>
-        {
-            override fun onResponse(
-                call: Call<SetOfferDecisionResponse>,
-                response: Response<SetOfferDecisionResponse>
-            ) {
-                val setOffer = response
-                setOfferDesicionAPI?.onSetOfferSuccess(setOffer)
-            }
+    fun SetOfferDecision(token: String?, id: String?, action: String) {
+        webAPI?.api?.setOfferdecision(token, id, action)
+            ?.enqueue(object : Callback<SetOfferDecisionResponse> {
+                override fun onResponse(
+                    call: Call<SetOfferDecisionResponse>,
+                    response: Response<SetOfferDecisionResponse>
+                ) {
+                    val setOffer = response
+                    setOfferDesicionAPI?.onSetOfferSuccess(setOffer)
+                }
 
-            override fun onFailure(call: Call<SetOfferDecisionResponse>, t: Throwable) {
-               setOfferDesicionAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<SetOfferDecisionResponse>, t: Throwable) {
+                    setOfferDesicionAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun SetPaymentMethod(token: String?)
-    {
-        webAPI?.api?.paymentMethod(token)?.enqueue(object : Callback<PaymentMethodResponse>
-        {
+    fun SetPaymentMethod(token: String?) {
+        webAPI?.api?.paymentMethod(token)?.enqueue(object : Callback<PaymentMethodResponse> {
             override fun onResponse(
                 call: Call<PaymentMethodResponse>,
                 response: Response<PaymentMethodResponse>
@@ -1105,66 +1110,104 @@ public class Controller {
             }
 
             override fun onFailure(call: Call<PaymentMethodResponse>, t: Throwable) {
-               paymentMethodAPI?.error(t
-                   .message)
+                paymentMethodAPI?.error(
+                    t
+                        .message
+                )
             }
 
         })
     }
 
 
-    fun DeletePaymentCard(token: String?,cardID : String)
-    {
-        webAPI?.api?.deleteCard(token, cardID)?.enqueue(object : Callback<DeletePaymentMethodResponse>
-        {
-            override fun onResponse(
-                call: Call<DeletePaymentMethodResponse>,
-                response: Response<DeletePaymentMethodResponse>
-            ) {
-                val deleteCard = response
-                deleteCardAPI?.onDeleteCardSuccess(deleteCard)
-            }
+    fun DeletePaymentCard(token: String?, cardID: String) {
+        webAPI?.api?.deleteCard(token, cardID)
+            ?.enqueue(object : Callback<DeletePaymentMethodResponse> {
+                override fun onResponse(
+                    call: Call<DeletePaymentMethodResponse>,
+                    response: Response<DeletePaymentMethodResponse>
+                ) {
+                    val deleteCard = response
+                    deleteCardAPI?.onDeleteCardSuccess(deleteCard)
+                }
 
-            override fun onFailure(call: Call<DeletePaymentMethodResponse>, t: Throwable) {
-                deleteCardAPI?.error(t.message!!)
-            }
+                override fun onFailure(call: Call<DeletePaymentMethodResponse>, t: Throwable) {
+                    deleteCardAPI?.error(t.message!!)
+                }
 
-        })
+            })
     }
 
-    fun UserInvitation(token: String?,userId: String?)
-    {
-        webAPI?.api?.userInvitations(token,userId)?.enqueue(object : Callback<UserInvitationsResponse>
-        {
-            override fun onResponse(
-                call: Call<UserInvitationsResponse>,
-                response: Response<UserInvitationsResponse>
-            ) {
-                val userInvitation = response
-                userInviatationsAPI?.onUserInvitationSuccess(userInvitation)
-            }
+    fun UserInvitation(token: String?, userId: String?) {
+        webAPI?.api?.userInvitations(token, userId)
+            ?.enqueue(object : Callback<UserInvitationsResponse> {
+                override fun onResponse(
+                    call: Call<UserInvitationsResponse>,
+                    response: Response<UserInvitationsResponse>
+                ) {
+                    val userInvitation = response
+                    userInviatationsAPI?.onUserInvitationSuccess(userInvitation)
+                }
 
-            override fun onFailure(call: Call<UserInvitationsResponse>, t: Throwable) {
-                userInviatationsAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<UserInvitationsResponse>, t: Throwable) {
+                    userInviatationsAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun ChangePlan(token: String?,id: String?,type: String?,plantype : String)
-    {
-        webAPI?.api?.changePlan(token,id,type,plantype)?.enqueue(object :Callback<ChangePlanResponse>
-        {
+    fun ChangePlan(token: String?, id: String?, type: String?, plantype: String) {
+        webAPI?.api?.changePlan(token, id, type, plantype)
+            ?.enqueue(object : Callback<ChangePlanResponse> {
+                override fun onResponse(
+                    call: Call<ChangePlanResponse>,
+                    response: Response<ChangePlanResponse>
+                ) {
+                    val changeplan = response
+                    changePlanAPI?.onChangePlanSuccess(changeplan)
+                }
+
+                override fun onFailure(call: Call<ChangePlanResponse>, t: Throwable) {
+                    changePlanAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun SubscribePlan(
+        token: String?,
+        brand: String,
+        charge_type: String,
+        exp_date: String,
+        last_4: String,
+        name: String,
+        payment_method_type: String,
+        plan_id: String,
+        stripetoken: String,
+        type: String
+    ) {
+        webAPI?.api?.subscribePlan(
+            token,
+            brand,
+            charge_type,
+            exp_date,
+            last_4,
+            name,
+            payment_method_type,
+            plan_id,
+            stripetoken,
+            type
+        )?.enqueue(object : Callback<SubscribePlanResponse> {
             override fun onResponse(
-                call: Call<ChangePlanResponse>,
-                response: Response<ChangePlanResponse>
+                call: Call<SubscribePlanResponse>,
+                response: Response<SubscribePlanResponse>
             ) {
-                val changeplan = response
-                changePlanAPI?.onChangePlanSuccess(changeplan)
+                val subscribeplan = response
+                subscribePlanAPI?.onSubscribeSuccess(subscribeplan)
             }
 
-            override fun onFailure(call: Call<ChangePlanResponse>, t: Throwable) {
-                changePlanAPI?.error(t.message)
+            override fun onFailure(call: Call<SubscribePlanResponse>, t: Throwable) {
+                subscribePlanAPI?.error(t.message)
             }
 
         })
@@ -1348,57 +1391,62 @@ public class Controller {
     }
 
     interface MakeOfferAPI {
-        fun onMakeOfferSuccess(makeOffer : Response<MakeOfferResponse>)
+        fun onMakeOfferSuccess(makeOffer: Response<MakeOfferResponse>)
         fun error(error: String?)
     }
 
     interface OfferListAPI {
-        fun onOfferListSuccess(offerlist : Response<OfferListResponse>)
+        fun onOfferListSuccess(offerlist: Response<OfferListResponse>)
         fun error(error: String?)
     }
 
     interface ContractListAPI {
-        fun onContractListSuccess(contractlist : Response<ContractListResponse>)
+        fun onContractListSuccess(contractlist: Response<ContractListResponse>)
         fun error(error: String?)
     }
 
     interface OutfitFilterAPI {
-        fun onOutfitFilterSuccess(outfiFIlter : Response<OutfitFilterResponse>)
+        fun onOutfitFilterSuccess(outfiFIlter: Response<OutfitFilterResponse>)
         fun error(error: String?)
     }
 
     interface SendClaimAPI {
-        fun onSendClaimSuccess(sendClaim : Response<SendClaimResponse>)
+        fun onSendClaimSuccess(sendClaim: Response<SendClaimResponse>)
         fun error(error: String?)
     }
 
     interface SetOfferDecisionAPI {
-        fun onSetOfferSuccess(setOffer : Response<SetOfferDecisionResponse>)
+        fun onSetOfferSuccess(setOffer: Response<SetOfferDecisionResponse>)
         fun error(error: String?)
     }
 
-    interface PaymentMethodAPI  {
-        fun onPaymentSuccess(paymentMethod : Response<PaymentMethodResponse>)
+    interface PaymentMethodAPI {
+        fun onPaymentSuccess(paymentMethod: Response<PaymentMethodResponse>)
         fun error(error: String?)
     }
 
     interface DeleteCardAPI {
-        fun onDeleteCardSuccess(deleteCard : Response<DeletePaymentMethodResponse>)
+        fun onDeleteCardSuccess(deleteCard: Response<DeletePaymentMethodResponse>)
         fun error(error: String?)
     }
 
     interface FOrgotPasswordAPI {
-        fun onForgotPasswordSuccess(forgotPassword : Response<ForgotPassworResponse>)
+        fun onForgotPasswordSuccess(forgotPassword: Response<ForgotPassworResponse>)
         fun error(error: String?)
     }
 
     interface UserInviatationsAPI {
-        fun onUserInvitationSuccess(userInvitations : Response<UserInvitationsResponse>)
+        fun onUserInvitationSuccess(userInvitations: Response<UserInvitationsResponse>)
         fun error(error: String?)
     }
 
     interface ChangePlanAPI {
-        fun onChangePlanSuccess(changePlan : Response<ChangePlanResponse>)
+        fun onChangePlanSuccess(changePlan: Response<ChangePlanResponse>)
+        fun error(error: String?)
+    }
+
+    interface SubscribePlanAPI {
+        fun onSubscribeSuccess(subscribe: Response<SubscribePlanResponse>)
         fun error(error: String?)
     }
 }

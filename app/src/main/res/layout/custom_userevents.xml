@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/whiteborderblack"
+    android:layout_marginTop="@dimen/margin_8dp"
+    android:padding="@dimen/default_margin_16dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/whiteborderblack">
+
+        <ImageView
+            android:id="@+id/event_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/login_banner"
+            android:scaleType="fitXY"
+            android:padding="2dp">
+
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/event_sentby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sent by"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/event_sentat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sent at"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event name"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/textsize_24sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/event_decs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripition"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/textsize_12sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/event_startdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/event_enddate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/event_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/details_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Details"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent">
+
+        </Button>
+
+        <Button
+            android:id="@+id/accept_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:layout_toRightOf="@id/details_bt"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent">
+
+        </Button>
+
+        <Button
+            android:id="@+id/decline_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decline"
+            android:layout_toRightOf="@id/accept_bt"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent">
+
+        </Button>
+    </RelativeLayout>
+
+</LinearLayout>

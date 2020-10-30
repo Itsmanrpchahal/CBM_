@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
@@ -42,6 +43,7 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
     private lateinit var pd: ProgressDialog
     private lateinit var  dialog: Dialog
     lateinit var controller: Controller
+    private lateinit var from : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -176,6 +178,7 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
                         Log.d("TEST", "" + responsedata)
                         val data = response.body()?.getData()?.userId
                         if (response.body()?.getData()?.token != null) {
+
                             setStringVal(
                                 Constants.USERID,
                                 response.body()?.getData()?.userId.toString()
@@ -183,7 +186,8 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
                             setStringVal(Constants.TOKEN, response.body()?.getData()?.token)
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
-                        } else {
+                        }
+                        else {
                             utility!!.relative_snackbar(
                                 parent_login!!,
                                 "Invalid Username or Password",

@@ -7,67 +7,53 @@
 
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Profile"/>
 
         <item
             android:id="@+id/nav_users"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Users" />
 
         <item
             android:id="@+id/nav_pricing"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Pricing"/>
 
         <item
             android:id="@+id/nav_designers"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Designers"/>
 
         <item
             android:id="@+id/nav_hireanexpert"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Hire An Expert"/>
 
         <item
             android:id="@+id/nav_shop"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Shop"/>
 
         <item
             android:id="@+id/nav_cart"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Cart"/>
 
         <item
             android:id="@+id/nav_closets"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Closets"/>
 
         <item
             android:id="@+id/nav_liveevents"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Live Events"/>
 
         <item
             android:id="@+id/nav_chat"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Chat"/>
 
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_baseline_camera_24"
-            android:title="Home" />
+        <item android:id="@+id/nav_home"
+            android:title="Home"></item>
 
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="About"/>
 
         <item
             android:id="@+id/nav_contactUs"
-            android:icon="@drawable/ic_photo_camera_black_48dp"
             android:title="Contact Us"/>
 
     </group>

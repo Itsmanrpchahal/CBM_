@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/toolbarrelative"
+    android:visibility="visible"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -58,6 +60,7 @@
             android:src="@drawable/ic_baseline_shopping_cart_24"
             android:layout_alignParentRight="true"
             app:ibv_showCounter="true"
+            android:visibility="gone"
             android:layout_marginRight="@dimen/default_margin_16dp">
 
         </ru.nikartm.support.ImageBadgeView>

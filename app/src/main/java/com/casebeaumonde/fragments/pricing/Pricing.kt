@@ -23,8 +23,6 @@ import com.casebeaumonde.fragments.profile.Profile
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_live_events.*
 import kotlinx.android.synthetic.main.fragment_pricing.*
-import org.jetbrains.annotations.NotNull
-import org.jetbrains.annotations.Nullable
 import retrofit2.Response
 
 class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.ChangePlanAPI{
@@ -100,8 +98,8 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
 
             priciing_recyclerview.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            val adapter = CustomerPricingAdapter(
-                context!!, customerPricing, from.toString(), planname.toString()
+            val adapter = CustomerPricingAdapter (
+                context!!, customerPricing, from.toString(), planname.toString(),getStringVal(Constants.TOKEN)
             )
             priciing_recyclerview.adapter = adapter
             adapter.notifyDataSetChanged()
@@ -116,10 +114,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
             )
             priciing_recyclerview.adapter = adapter
         }
-
     }
-
-
 
     override fun error(error: String?) {
         pd.dismiss()
@@ -165,7 +160,6 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
                     getString(R.string.close_up)
                 )
             }
-
         }
 
         changePlanDialog.show()

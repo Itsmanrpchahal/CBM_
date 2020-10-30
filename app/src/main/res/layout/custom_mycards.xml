@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@color/colorWhite"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/visa">
+
+    </ImageView>
+
+
+    <TextView
+        android:id="@+id/cardnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/card_image"
+        android:text="Card"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/cardnumber"
+        android:gravity="right">
+
+
+        <Button
+            android:id="@+id/setas_default_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="Set as default"
+            android:textAlignment="textEnd"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold">
+
+        </Button>
+
+
+        <Button
+            android:id="@+id/remove_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setas_default_card"
+            android:background="@android:color/transparent"
+            android:text="Remove"
+            android:textAlignment="textEnd"
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="bold">
+
+        </Button>
+    </RelativeLayout>
+
+
+</RelativeLayout>

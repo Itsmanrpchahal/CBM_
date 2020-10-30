@@ -48,16 +48,20 @@ class SplashScreen : BaseClass() {
         Handler().postDelayed({
 
             val userID = getStringVal(Constants.TOKEN)
-            if (!userID.equals(""))
-            {
-                startActivity(Intent(this,
-                    MainActivity::class.java))
-                finish()
-            }else{
-                startActivity(Intent(this,
-                    OnBoardScreen::class.java))
-                finish()
-            }
+//            if (!userID.equals(""))
+//            {
+//                startActivity(Intent(this,
+//                    MainActivity::class.java))
+//                finish()
+//            }else{
+//                startActivity(Intent(this,
+//                    OnBoardScreen::class.java))
+//                finish()
+//            }
+
+            startActivity(Intent(this,
+                MainActivity::class.java))
+            finish()
 
         },4000)
     }

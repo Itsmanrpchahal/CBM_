@@ -27,6 +27,7 @@ import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
+import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
@@ -439,6 +440,21 @@ public interface ApiInterface {
             @Path("input") String id,
             @Path("input1") String type,
             @Path("input2") String charge_type
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/store-subscription")
+    Call<SubscribePlanResponse> subscribePlan(
+            @Header("Authorization") String token,
+            @Field("brand") String brand,
+            @Field("charge_type") String charge_type,
+            @Field("exp_date") String exp_date,
+            @Field("last_4") String last_4,
+            @Field("name") String name,
+            @Field("payment_method_type") String payment_method_type,
+            @Field("plan_id") String plan_id,
+            @Field("token") String Stripetoken,
+            @Field("type") String type
     );
 
 }

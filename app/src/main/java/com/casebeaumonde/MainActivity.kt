@@ -8,13 +8,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -26,6 +24,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.Retrofit.WebAPI
+import com.casebeaumonde.activities.OnBoardScreen
 import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.constants.BaseClass
@@ -34,9 +33,11 @@ import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utility
+import com.google.android.material.appbar.AppBarLayout
 import com.shreyaspatil.material.navigationview.MaterialNavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.changeplandialog.view.*
 import retrofit2.Call
 import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
@@ -58,6 +59,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     private lateinit var toolbar_notifiction: ImageBadgeView
     private lateinit var userImage: CircleImageView
     lateinit var controller: Controller
+    lateinit var toolbarrelative: RelativeLayout
+    lateinit var appbarmain: AppBarLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,31 +70,53 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
         findIds()
 
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_profile,
-                R.id.nav_users,
-                R.id.nav_pricing,
-                R.id.nav_designers,
-                R.id.nav_hireanexpert,
-                R.id.nav_shop,
-                R.id.nav_cart,
-                R.id.nav_closets,
-                R.id.nav_liveevents,
-                R.id.nav_chat,
-                R.id.nav_home,
-                R.id.nav_about,
-                R.id.nav_contactUs
-            ), drawerLayout
-        )
+
+        if (getStringVal(Constants.TOKEN).equals("")) {
+            navView.inflateMenu(R.menu.activity_main_drawer1)
+            navView.visibility = View.GONE
+            appbarmain.visibility = View.GONE
+            appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.nav_home,
+                    R.id.nav_pricing,
+                    R.id.nav_shop,
+                    R.id.nav_about,
+                    R.id.nav_contactUs
+                ), drawerLayout
+            )
+            toolbarrelative.visibility = View.GONE
+            // setupActionBarWithNavController(frameLayout, appBarConfiguration)
+            // navView.setupWithNavController(frameLayout)
+
+        } else {
+            navView.inflateMenu(R.menu.activity_main_drawer)
+            appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.nav_profile,
+                    R.id.nav_users,
+                    R.id.nav_pricing,
+                    R.id.nav_designers,
+                    R.id.nav_hireanexpert,
+                    R.id.nav_shop,
+                    R.id.nav_cart,
+                    R.id.nav_closets,
+                    R.id.nav_liveevents,
+                    R.id.nav_chat,
+                    R.id.nav_home,
+                    R.id.nav_about,
+                    R.id.nav_contactUs
+                ), drawerLayout
+            )
+        }
 
         setupActionBarWithNavController(frameLayout, appBarConfiguration)
         navView.setupWithNavController(frameLayout)
+
+
         //navView.setNavigationItemSelectedListener(this)
-
-
         // Show ItemStyle
         println("ItemStyle=${navView.checkedItem}")
+
 
         listeners()
 
@@ -102,8 +127,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         toolbar_notifiction.setOnClickListener {
             startActivity(Intent(this, Notifications::class.java))
         }
-
-
     }
 
     private fun logout() {
@@ -124,7 +147,12 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     if (response.isSuccessful) {
                         val code = response.body()?.getCode()
                         if (code == 200) {
-                            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    LoginActivity::class.java
+                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            )
                             finish()
                             clearStringVal(Constants.TOKEN)
                             clearStringVal(Constants.USERID)
@@ -172,6 +200,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         toolbar_username = findViewById(R.id.toolbar_username)
         toolbar_notifiction = findViewById(R.id.toolbar_notifiction)
         userImage = findViewById(R.id.userImage)
+        toolbarrelative = findViewById(R.id.toolbarrelative)
+        appbarmain = findViewById(R.id.appbarmain)
 
         val ha = Handler()
         ha.postDelayed(object : Runnable {
@@ -198,8 +228,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        navView.setItemStyle(MaterialNavigationView.ITEM_STYLE_DEFAULT)
-        menuInflater.inflate(R.menu.menu, menu)
+        if (!getStringVal(Constants.TOKEN).equals("")) {
+            navView.setItemStyle(MaterialNavigationView.ITEM_STYLE_DEFAULT)
+            menuInflater.inflate(R.menu.menu, menu)
+        }
+
         return true
     }
 
@@ -275,8 +308,10 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
 
-        toolbar_notifiction.setBadgeValue(9)
-        toolbar_notifiction.setBadgeTextColor(resources.getColor(R.color.colorBlue))
+        if (notificationsResponseResponse.isSuccessful) {
+            toolbar_notifiction.setBadgeValue(notificationsResponseResponse.body()?.data?.notification?.size!!)
+            toolbar_notifiction.setBadgeTextColor(resources.getColor(R.color.colorBlue))
+        }
     }
 
     override fun error(error: String?) {

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="@dimen/margin_8dp"
+        app:cardCornerRadius="5dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Offer details"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textStyle="bold">
+
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/offer_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="right">
+
+                </TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:background="@color/colorBlack">
+
+            </View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_marginTop="@dimen/margin_8dp">
+
+                <TextView
+                    android:id="@+id/offer_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorTextHint"
+                    android:gravity="start">
+
+                </TextView>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/offer_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:src="@drawable/login_banner">
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/offer_offer_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorTextHint"
+                    android:gravity="start">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/offer_ratetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rate type"
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorTextHint"
+                    android:gravity="start">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/commenttv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comments:"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorTextHint"
+                    android:gravity="start">
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/offers_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comments:"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="start">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/offer_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status:"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorTextHint"
+                    android:gravity="start">
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A contract have been generated by Casa Beau Monde. We have sent you an email with more details about this process."
+                    android:textColor="@color/colorBlack"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:layout_marginRight="@dimen/margin_8dp">
+
+                </TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:background="@color/colorBlack">
+
+            </View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:layout_margin="@dimen/margin_8dp">
+
+                <Button
+                    android:id="@+id/offer_accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#AFABAB"
+                    android:layout_gravity="right"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:text="Accept"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/offer_decline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#AFABAB"
+                    android:layout_gravity="right"
+                    android:text="Decline"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/offer_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#AFABAB"
+                    android:layout_gravity="right"
+                    android:text="Close"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false">
+
+                </Button>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

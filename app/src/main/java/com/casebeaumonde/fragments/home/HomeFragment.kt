@@ -1,22 +1,29 @@
 package com.casebeaumonde.fragments.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
+import androidx.fragment.app.FragmentManager
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.login.LoginActivity
+import com.casebeaumonde.activities.userRegister.RegisterActivity
+import com.casebeaumonde.constants.BaseFrag
+import com.casebeaumonde.constants.Constants
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 
-class HomeFragment : Fragment(), View.OnClickListener {
+class HomeFragment : BaseFrag() {
 
     private lateinit var add : Button
     private lateinit var spinner : SearchableSpinner
     private lateinit var data : ArrayList<String>
+    private lateinit var onboard_loginBt : Button
+    private lateinit var onboard_registerBt : Button
+    private lateinit var onboard_pricing : TextView
+    private lateinit var manager : FragmentManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,40 +37,38 @@ class HomeFragment : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
-
+        manager = fragmentManager!!
         findIds(view)
-        add.setOnClickListener(this)
+        listeners()
+
         return view
     }
 
+    private fun listeners() {
+        onboard_loginBt.setOnClickListener {
+            context?.startActivity(Intent(context,LoginActivity::class.java))
+        }
+
+        onboard_registerBt.setOnClickListener {
+            context?.startActivity(Intent(context,RegisterActivity::class.java))
+        }
+
+        onboard_pricing.setOnClickListener {
+
+        }
+    }
+
     private fun findIds(view: View) {
-        add = view.findViewById(R.id.add)!!
-        spinner = view.findViewById(R.id.spinner)
+        onboard_loginBt = view.findViewById(R.id.onboard_loginBt)
+        onboard_registerBt = view.findViewById(R.id.onboard_registerBt)
+        onboard_pricing = view.findViewById(R.id.onboard_pricing)
 
-        val users = listOf("Select Item","Veniam penatibus", "reprehenderit", "fusce", "Ullamcorper lacinia", "Etiam dis")
-
-        val adapter = context?.let { ArrayAdapter<String>(it,android.R.layout.simple_spinner_dropdown_item,users) }
-        spinner.adapter = adapter
-
-        spinner.setTitle("Select Item")
-        spinner.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                Toast.makeText(context,""+users.get(position),Toast.LENGTH_LONG).show()
-            }
-
-        })
+        if (!getStringVal(Constants.TOKEN).equals(""))
+        {
+            onboard_loginBt.visibility = View.GONE
+            onboard_registerBt.visibility = View.GONE
+        }
     }
 
-    override fun onClick(v: View?) {
 
-    }
 }

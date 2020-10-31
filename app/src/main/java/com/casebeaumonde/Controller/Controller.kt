@@ -37,6 +37,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.HashMap
 
 
 public class Controller {
@@ -91,6 +92,8 @@ public class Controller {
     var subscribePlanAPI: SubscribePlanAPI? = null
     var cancelPlanAPI : CancelPlanAPI? = null
     var addPaymentMethodAPI : AddPaymentMethodAPI? = null
+    var filterClosetItemsAPI : FilterClosetItemsAPI? = null
+
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -178,7 +181,8 @@ public class Controller {
         duplicateItem: DuplicateItemAPI,
         fetchList: FetchListAPI,
         outfit: OutFItAPI,
-        outfitFilter: OutfitFilterAPI
+        outfitFilter: OutfitFilterAPI,
+        filterClosetItem : FilterClosetItemsAPI
     ) {
         closetItemsAPI = closetItems
         addTofavClosetItemAPI = addTofavClosetItem
@@ -189,6 +193,7 @@ public class Controller {
         fetchListAPI = fetchList
         outFItAPI = outfit
         outfitFilterAPI = outfitFilter
+        filterClosetItemsAPI = filterClosetItem
         webAPI = WebAPI()
     }
 
@@ -1258,6 +1263,25 @@ public class Controller {
         })
     }
 
+    fun FilterCloseItems(token: String?,closet_id: String, hashMap: HashMap<String,String>)
+    {
+        webAPI?.api?.filterCLosetItems(token,closet_id,hashMap)?.enqueue(object :Callback<List<FilterResponse>>
+        {
+            override fun onResponse(
+                call: Call<List<FilterResponse>>,
+                response: Response<List<FilterResponse>>
+            ) {
+                val filtercloset = response
+                filterClosetItemsAPI?.onFilterClosetItemSuccess(filtercloset)
+            }
+
+            override fun onFailure(call: Call<List<FilterResponse>>, t: Throwable) {
+               filterClosetItemsAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -1502,6 +1526,11 @@ public class Controller {
 
     interface AddPaymentMethodAPI {
         fun onAddPaymentSuccess(addPayment : Response<CancelPlanResponse>)
+        fun error(error: String?)
+    }
+
+    interface FilterClosetItemsAPI {
+        fun onFilterClosetItemSuccess(filtersucces : Response<List<FilterResponse>>)
         fun error(error: String?)
     }
 }

@@ -54,6 +54,7 @@ import com.casebeaumonde.activities.notifications.response.RemoveNotificationRes
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -481,7 +482,9 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/filter-closet")
-    Call<FilterResponse> filterCLosetItems(
+    Call<List<FilterResponse>> filterCLosetItems(
+            @Header("Authorization") String token,
+            @Field("closetid") String closetid,
             @FieldMap HashMap<String,String> map
     );
 

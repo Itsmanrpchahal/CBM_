@@ -22,11 +22,9 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
+import com.casebeaumonde.activities.ClosetItem.adapter.FilterAdapter
 import com.casebeaumonde.activities.ClosetItem.adapter.FilterOutFitItems
-import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
-import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
-import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
-import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse
+import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
@@ -40,13 +38,21 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import retrofit2.Response
-import java.lang.reflect.Field
 
-class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
+class ClosetsItems : BaseClass(),
+    Controller.ClosetItemsAPI,
+    ClosetItemID_IF,
+    ViewClosetID_IF,
     SelectedCloset_ID,
-    Controller.AddTofavClosetItemAPI, Controller.DeleteClosetItemAPI,
-    Controller.AdDItemToAnotherClosetAPI, Controller.MoveItemAPI, Controller.DuplicateItemAPI,
-    Controller.FetchListAPI, Controller.OutFItAPI, Controller.OutfitFilterAPI {
+    Controller.AddTofavClosetItemAPI,
+    Controller.DeleteClosetItemAPI,
+    Controller.AdDItemToAnotherClosetAPI,
+    Controller.MoveItemAPI,
+    Controller.DuplicateItemAPI,
+    Controller.FetchListAPI,
+    Controller.OutFItAPI,
+    Controller.OutfitFilterAPI,
+    Controller.FilterClosetItemsAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -83,18 +89,26 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var outFitRes: ArrayList<FetchListResponse.Data.Outfit>
     private lateinit var outFitTitle: ArrayList<String>
     private lateinit var outFitID: ArrayList<String>
-    private lateinit var category_spinner : Spinner
-    private lateinit var brand_spinner : Spinner
-    private lateinit var color_spinner : Spinner
+    private lateinit var category_spinner: Spinner
+    private lateinit var brand_spinner: Spinner
+    private lateinit var color_spinner: Spinner
     private lateinit var size_spinner: Spinner
     private lateinit var price_spinner: Spinner
-    private lateinit var category_title : TextView
-    private lateinit var brand_title : TextView
-    private lateinit var color_title : TextView
-    private lateinit var size_title : TextView
+    private lateinit var category_title: TextView
+    private lateinit var brand_title: TextView
+    private lateinit var color_title: TextView
+    private lateinit var size_title: TextView
     private lateinit var price_title: TextView
     private lateinit var categoryTitle: ArrayList<String>
     private lateinit var categoryID: ArrayList<String>
+    private lateinit var brandTitle: ArrayList<String>
+    private lateinit var brandID: ArrayList<String>
+    private lateinit var colorTitle : ArrayList<String>
+    private lateinit var colorID : ArrayList<String>
+    private lateinit var sizeTitle : ArrayList<String>
+    private lateinit var sizeID : ArrayList<String>
+    private lateinit var priceTitle : ArrayList<String>
+    private lateinit var hashMap: HashMap<String, String>
 
     var select: Int = 0
     var selectAll: Int = 0
@@ -103,11 +117,11 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_closets_items)
         findIds()
-
+        hashMap = HashMap()
         checkedClosetIDs = ArrayList()
         selectedItems = ArrayList()
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this, this, this, this)
+        controller.Controller(this, this, this, this, this, this, this, this, this, this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
         controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
         closetitemidIf = this
@@ -681,15 +695,17 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
             }
 
             //ToDo:---------------------------- Get Category------------------------------------
-            categoryTitle= ArrayList()
+            categoryTitle = ArrayList()
             categoryID = ArrayList()
-
+            categoryTitle.add("Select Category")
+            categoryID.add("000")
             //ToDo: Get Categories
             for (i in 0 until fetchList.body()?.data?.categories?.size!!) {
                 val title = fetchList.body()?.data?.categories?.get(i)
                 categoryTitle.add(title?.name!!)
                 categoryID.add(title?.id.toString())
             }
+
 
             val categoryadapter = ArrayAdapter(
                 this!!,
@@ -709,10 +725,25 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
 
                     if (!categoryTitle[position].equals("Select Category")) {
                         pd.show()
-                        searchByOutFit(categoryTitle[position], categoryID[position])
-                    } else {
-                        pd.show()
-
+                        hashMap.put("category_id", categoryID[position])
+                        Log.d("hashmap", "" + hashMap)
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                        //searchByOutFit(categoryTitle[position], categoryID[position])
+                    }else {
+                        hashMap.remove("category_id")
+                        if (hashMap.size==0)
+                        {
+                            setClosetAPI()
+                        }
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
                     }
 
                     //rateType = outFitTitle[position]e
@@ -722,6 +753,245 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     // write code to perform some action
                 }
             }
+
+            //ToDo:---------------------------- Get brand------------------------------------
+            brandTitle = ArrayList()
+            brandID = ArrayList()
+            brandTitle.add("Select Brand")
+            brandID.add("000")
+            //ToDo: Get Categories
+            for (i in 0 until fetchList.body()?.data?.brands?.size!!) {
+                val title = fetchList.body()?.data?.brands?.get(i)
+                brandTitle.add(title?.name!!)
+                brandID.add(title?.id.toString())
+            }
+
+
+            val brandadapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, brandTitle
+            )
+            brandadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            brand_spinner.adapter = brandadapter
+            brand_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    brand_title.setText(brandTitle[position])
+                    val pos = brandID[position]
+
+                    if (!brandTitle[position].equals("Select Brand")) {
+                        pd.show()
+                        hashMap.put("brand", brandTitle[position])
+                        Log.d("hashmap", "" + hashMap)
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                        //searchByOutFit(categoryTitle[position], categoryID[position])
+                    }else {
+                        hashMap.remove("brand")
+                        if (hashMap.size==0)
+                        {
+                            setClosetAPI()
+                        }
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                    }
+
+                    //rateType = outFitTitle[position]e
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
+            //ToDo:---------------------------- Get Color------------------------------------
+            colorTitle = ArrayList()
+            colorID = ArrayList()
+            colorTitle.add("Select Color")
+            colorID.add("000")
+            //ToDo: Get Color
+            for (i in 0 until fetchList.body()?.data?.colors?.size!!) {
+                val title = fetchList.body()?.data?.colors?.get(i)
+                colorTitle.add(title?.name!!)
+                colorID.add(title?.id.toString())
+            }
+
+
+            val coloradapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, colorTitle
+            )
+            brandadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            color_spinner.adapter = coloradapter
+            color_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    color_title.setText(colorTitle[position])
+                    val pos = colorID[position]
+
+                    if (!colorTitle[position].equals("Select Color")) {
+                        pd.show()
+                        hashMap.put("color", colorTitle[position])
+                        Log.d("hashmap", "" + hashMap)
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                        //searchByOutFit(categoryTitle[position], categoryID[position])
+                    }else {
+                        hashMap.remove("color")
+                        if (hashMap.size==0)
+                        {
+                            setClosetAPI()
+                        }
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                    }
+
+                    //rateType = outFitTitle[position]e
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
+            //ToDo:---------------------------- Get Size------------------------------------
+            sizeTitle = ArrayList()
+            sizeID = ArrayList()
+            sizeTitle.add("Select Size")
+            sizeID.add("000")
+            //ToDo: Get Color
+            for (i in 0 until fetchList.body()?.data?.sizes?.size!!) {
+                val title = fetchList.body()?.data?.sizes?.get(i)
+                sizeTitle.add(title?.name!!)
+                sizeID.add(title?.id.toString())
+            }
+
+
+            val sizeadapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, sizeTitle
+            )
+            sizeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            size_spinner.adapter = sizeadapter
+            size_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    size_title.setText(sizeTitle[position])
+                    val pos = sizeID[position]
+
+                    if (!sizeTitle[position].equals("Select Size")) {
+                        pd.show()
+                        hashMap.put("size", sizeTitle[position])
+                        Log.d("hashmap", "" + hashMap)
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                        //searchByOutFit(categoryTitle[position], categoryID[position])
+                    }else {
+                        hashMap.remove("size")
+                        if (hashMap.size==0)
+                        {
+                            setClosetAPI()
+                        }
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                    }
+
+                    //rateType = outFitTitle[position]e
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
+
+            //ToDo:---------------------------- Get Price------------------------------------
+            priceTitle = ArrayList()
+            priceTitle.add("Select Price")
+            //ToDo: Get Color
+
+            val prices = resources.getStringArray(R.array.Price)
+
+            for (i in 0 until prices?.size!!) {
+                val title = prices?.get(i)
+                priceTitle.add(title)
+            }
+
+            val priceadapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, priceTitle
+            )
+            priceadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            price_spinner.adapter = priceadapter
+            price_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    price_title.setText(priceTitle[position])
+
+                    if (!priceTitle[position].equals("Select Price")) {
+                        pd.show()
+                        hashMap.put("price", priceTitle[position])
+                        Log.d("hashmap", "" + hashMap)
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+                        //searchByOutFit(categoryTitle[position], categoryID[position])
+                    }else {
+                        hashMap.remove("price")
+                        if (hashMap.size==0)
+                        {
+                            setClosetAPI()
+                        }
+                        controller.FilterCloseItems(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            closetID,
+                            hashMap
+                        )
+
+                        Log.d("hashmap", "" + hashMap)
+                    }
+
+                    //rateType = outFitTitle[position]e
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
+
 
         } else {
             utility!!.relative_snackbar(
@@ -782,12 +1052,39 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         }
     }
 
+    override fun onFilterClosetItemSuccess(filtersucces: Response<List<FilterResponse>>) {
+        pd.dismiss()
+
+        if (filtersucces.isSuccessful) {
+            closetsItems_recycler.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            val adapter = getStringVal(Constants.USERID)?.let {
+                getStringVal(Constants.USERID)?.let { it1 ->
+                    FilterAdapter(
+                        this, filtersucces,
+                        it, select, selectAll
+                    )
+                }
+            }
+            outfitResponse = ArrayList()
+          //  outfitResponse.addAll(filtersucces)
+            closetsItems_recycler.adapter = adapter
+        } else {
+            utility!!.relative_snackbar(
+                parent_closetsItems!!,
+                filtersucces.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+
 
     override fun error(error: String?) {
         pd.dismiss()
         //dialog.dismiss()
         Log.d("error", "" + error)
-        utility!!.relative_snackbar(parent_closetsItems!!, error, getString(R.string.close_up))
+        //utility!!.relative_snackbar(parent_closetsItems!!, error, getString(R.string.close_up))
     }
 
     override fun getClosetID(id: String?) {

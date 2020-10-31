@@ -12,48 +12,46 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
-import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse
+import com.casebeaumonde.activities.ClosetItem.response.FilterResponse
 import com.casebeaumonde.constants.Constants
 import kotlinx.android.synthetic.main.closetsitems.view.*
+import retrofit2.Response
 
-class FilterOutFitItems(
+class FilterAdapter(
     val context: Context,
-    val list: MutableList<OutfitFilterResponse.Data.ClosetItem>,
+    val filterData: Response<List<FilterResponse>>,
     var userid: String,
     var select: Int,
-    var selectAll: Int
-) :
-    RecyclerView.Adapter<FilterOutFitItems.ViewHolder>() {
-    lateinit var hearlist : ArrayList<OutfitFilterResponse.Data.ClosetItem>
+    var selectAll: Int):
+    RecyclerView.Adapter<FilterAdapter.ViewHodler>()
+{
+    lateinit var hearlist : ArrayList<FilterResponse>
     lateinit var dialog : Dialog
     var selected: ArrayList<String> = ArrayList<String>()
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): FilterOutFitItems.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterAdapter.ViewHodler {
         var v = LayoutInflater.from(parent.context).inflate(R.layout.closetsitems, parent, false)
         selected = ArrayList()
-        return ViewHolder(v)
+        return ViewHodler(v)
     }
 
-    override fun onBindViewHolder(holder: FilterOutFitItems.ViewHolder, position: Int) {
-        var closetsItems = list.get(position)
+    override fun onBindViewHolder(holder: FilterAdapter.ViewHodler, position: Int) {
+        var closetsItems = filterData.body()?.get(position)
         Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner).into(
             holder.itemView.closetItemImage
         )
         holder.itemView.closetitem_name.text = closetsItems?.title
         holder.itemView.closetitem_uploadby.text = closetsItems?.creator?.firstname
 
-        if (closetsItems?.hearts.size != 0)
+        if (closetsItems?.hearts?.size != 0)
         {
-            holder.itemView.closetitem_favcount.text = closetsItems?.hearts.size.toString()
+            holder.itemView.closetitem_favcount.text = closetsItems?.hearts?.size.toString()
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {
-            ClosetsItems.closetitemidIf!!.getClosetID(closetsItems.id.toString())
+            ClosetsItems.closetitemidIf!!.getClosetID(closetsItems?.id.toString())
         }
-       // searchUserHeart(list, holder.itemView.closetitem_favorite)
+        // searchUserHeart(list, holder.itemView.closetitem_favorite)
 
         holder.itemView.setOnClickListener {
             ClosetsItems.viewclosetidIf!!.getID(position)
@@ -76,36 +74,18 @@ class FilterOutFitItems(
         holder.itemView.select_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                ClosetsItems.selectedclosetId?.getID(closetsItems.id.toString(), "1")
+                ClosetsItems.selectedclosetId?.getID(closetsItems?.id.toString(), "1")
             }  else {
-                ClosetsItems.selectedclosetId?.getID(closetsItems.id.toString(), "0")
+                ClosetsItems.selectedclosetId?.getID(closetsItems?.id.toString(), "0")
             }
         }
     }
 
-//    fun searchUserHeart(
-//        closetsItems: MutableList<OutfitFilterResponse.Data.ClosetItem>,
-//        closetitemFavorite: CheckBox
-//    )
-//    {
-//        if (closetsItems.hearts.size>0)
-//        {
-//            for (i in closetsItems.hearts!!.indices)
-//            {
-//                val heart = closetsItems.hearts!![i]
-//                if (heart.toString().equals(userid))
-//                {
-//                    closetitemFavorite.isChecked = true
-//                }
-//            }
-//        }
-//    }
-
     override fun getItemCount(): Int {
-        return list.size
+        return filterData.body()?.size!!
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHodler(itemView : View):RecyclerView.ViewHolder(itemView) {
         fun bindItems()
         {
             var closetItemImage : ImageView
@@ -123,5 +103,4 @@ class FilterOutFitItems(
             select_checkbox = itemView.findViewById(R.id.select_checkbox)
         }
     }
-
 }

@@ -55,6 +55,150 @@
         android:weightSum="2"
         android:orientation="vertical">
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_8dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/category_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/category_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/brand_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/brand_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/color_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/color_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/size_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/size_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/price_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/price_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
         <include layout="@layout/searchbar"></include>
 
         <RelativeLayout

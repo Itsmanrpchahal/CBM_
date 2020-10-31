@@ -5,6 +5,7 @@ import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemRespon
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse;
 import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse;
+import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
@@ -52,10 +53,13 @@ import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -475,5 +479,10 @@ public interface ApiInterface {
             @Field("token") String stripetoken
             );
 
+    @FormUrlEncoded
+    @POST("api/v1/filter-closet")
+    Call<FilterResponse> filterCLosetItems(
+            @FieldMap HashMap<String,String> map
+    );
 
 }

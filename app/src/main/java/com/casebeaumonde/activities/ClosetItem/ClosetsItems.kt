@@ -31,7 +31,6 @@ import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse
 import com.casebeaumonde.activities.myclosets.response.FetchListResponse
 import com.casebeaumonde.activities.myclosets.response.MoveClosetItems
@@ -41,6 +40,7 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import retrofit2.Response
+import java.lang.reflect.Field
 
 class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, ViewClosetID_IF,
     SelectedCloset_ID,
@@ -83,6 +83,18 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
     private lateinit var outFitRes: ArrayList<FetchListResponse.Data.Outfit>
     private lateinit var outFitTitle: ArrayList<String>
     private lateinit var outFitID: ArrayList<String>
+    private lateinit var category_spinner : Spinner
+    private lateinit var brand_spinner : Spinner
+    private lateinit var color_spinner : Spinner
+    private lateinit var size_spinner: Spinner
+    private lateinit var price_spinner: Spinner
+    private lateinit var category_title : TextView
+    private lateinit var brand_title : TextView
+    private lateinit var color_title : TextView
+    private lateinit var size_title : TextView
+    private lateinit var price_title: TextView
+    private lateinit var categoryTitle: ArrayList<String>
+    private lateinit var categoryID: ArrayList<String>
 
     var select: Int = 0
     var selectAll: Int = 0
@@ -91,6 +103,7 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_closets_items)
         findIds()
+
         checkedClosetIDs = ArrayList()
         selectedItems = ArrayList()
         controller = Controller()
@@ -452,6 +465,17 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
         search_ET = findViewById(R.id.search_ET)
         outfit_spinner = findViewById(R.id.outfit_spinner)
         outfit_title = findViewById(R.id.outfit_title)
+
+        category_spinner = findViewById(R.id.category_spinner)
+        brand_spinner = findViewById(R.id.brand_spinner)
+        color_spinner = findViewById(R.id.color_spinner)
+        size_spinner = findViewById(R.id.size_spinner)
+        price_spinner = findViewById(R.id.price_spinner)
+        category_title = findViewById(R.id.category_title)
+        brand_title = findViewById(R.id.brand_title)
+        color_title = findViewById(R.id.color_title)
+        size_title = findViewById(R.id.size_title)
+        price_title = findViewById(R.id.price_title)
     }
 
     //ToDo: Get  Closet All Items
@@ -618,8 +642,6 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                 outFitID.add(title.id.toString())
             }
 
-
-
             outFitTitle.add("Select Outfit")
             outFitID.add("000")
 
@@ -648,6 +670,49 @@ class ClosetsItems : BaseClass(), Controller.ClosetItemsAPI, ClosetItemID_IF, Vi
                     } else {
                         pd.show()
                         controller.ClosetItems("Bearer " + getStringVal(Constants.TOKEN), closetID)
+                    }
+
+                    //rateType = outFitTitle[position]e
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
+            //ToDo:---------------------------- Get Category------------------------------------
+            categoryTitle= ArrayList()
+            categoryID = ArrayList()
+
+            //ToDo: Get Categories
+            for (i in 0 until fetchList.body()?.data?.categories?.size!!) {
+                val title = fetchList.body()?.data?.categories?.get(i)
+                categoryTitle.add(title?.name!!)
+                categoryID.add(title?.id.toString())
+            }
+
+            val categoryadapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, categoryTitle
+            )
+            categoryadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            category_spinner.adapter = categoryadapter
+            category_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    category_title.setText(categoryTitle[position])
+                    val pos = categoryID[position]
+
+
+                    if (!categoryTitle[position].equals("Select Category")) {
+                        pd.show()
+                        searchByOutFit(categoryTitle[position], categoryID[position])
+                    } else {
+                        pd.show()
+
                     }
 
                     //rateType = outFitTitle[position]e

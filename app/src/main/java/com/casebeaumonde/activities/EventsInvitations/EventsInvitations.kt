@@ -77,7 +77,7 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
     override fun onUserInvitationSuccess(userInvitations: Response<UserInvitationsResponse>) {
        pd.dismiss()
        
-        events = userInvitations.body()?.data?.events as ArrayList<UserInvitationsResponse.Data.Event>
+        events = userInvitations.body()?.data?.events!! as ArrayList<UserInvitationsResponse.Data.Event>
 
         val c = Calendar.getInstance()
 

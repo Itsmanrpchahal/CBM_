@@ -960,7 +960,9 @@ class ClosetsItems : BaseClass(),
 
                     if (!priceTitle[position].equals("Select Price")) {
                         pd.show()
-                        hashMap.put("price", priceTitle[position])
+                        val priice = priceTitle[position]
+
+                        hashMap.put("price", priice.replace("$",""))
                         Log.d("hashmap", "" + hashMap)
                         controller.FilterCloseItems(
                             "Bearer " + getStringVal(Constants.TOKEN),

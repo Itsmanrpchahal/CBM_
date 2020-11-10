@@ -1,7 +1,9 @@
 package com.casebeaumonde.activities.paymentScreen
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.casebeaumonde.Controller.Controller
+import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
 import com.casebeaumonde.constants.BaseClass
@@ -181,6 +184,7 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
                     }
 
                     override fun onError(error: Exception?) {
+                        pd.dismiss()
                         utility!!.relative_snackbar(
                             parent_cardscreen!!,
                             error?.message,
@@ -241,11 +245,23 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
 
     override fun onSubscribeSuccess(subscribe: Response<SubscribePlanResponse>) {
         pd.dismiss()
-        utility!!.relative_snackbar(
-            parent_cardscreen!!,
-            subscribe.body()?.message,
-            getString(R.string.close_up)
-        )
+        if (subscribe.isSuccessful)
+        {
+            utility!!.relative_snackbar(
+                parent_cardscreen!!,
+                subscribe.body()?.message,
+                getString(R.string.close_up)
+            )
+            finish()
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_cardscreen!!,
+                subscribe.body()?.message,
+                getString(R.string.close_up)
+            )
+        }
+
     }
 
     override fun error(error: String?) {

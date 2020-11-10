@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.FragmentManager
@@ -21,12 +22,14 @@ import com.casebeaumonde.fragments.pricing.adapter.CustomerPricingAdapter
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.Profile
+import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_live_events.*
 import kotlinx.android.synthetic.main.fragment_pricing.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Response
 
-class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.ChangePlanAPI{
+class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.ChangePlanAPI,Controller.UserProfileAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -53,14 +56,27 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
         manager = fragmentManager!!
         getpriceidIf = this
         controller = Controller()
-        from = arguments?.getString(Constants.FROM).toString()
-        planname = arguments?.getString(Constants.PLANNAME).toString()
 
-        controller.Controller(this,this)
+        from = arguments?.getString(Constants.FROM).toString()
+       // planname = arguments?.getString(Constants.PLANNAME).toString()
+
+        controller.Controller(this,this,this)
+
+
+
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         if (utility.isConnectingToInternet(context)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.Pricing("Bearer " + getStringVal(Constants.TOKEN))
+            controller.setUserProfileAPI(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                getStringVal(Constants.USERID)
+            )
         } else {
             utility!!.relative_snackbar(
                 parent_liveevents!!,
@@ -68,9 +84,6 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
                 getString(R.string.close_up)
             )
         }
-
-
-        return view
     }
 
     private fun findIDs(view: View?) {
@@ -114,6 +127,22 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
                 context!!, bussinessPricing
             )
             priciing_recyclerview.adapter = adapter
+        }
+    }
+
+    override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
+        pd.dismiss()
+        if(userProfileResponse.isSuccessful) {
+            Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
+            planname =
+                userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
+            controller.Pricing("Bearer " + getStringVal(Constants.TOKEN))
+        }else {
+            utility!!.relative_snackbar(
+                parent_liveevents!!,
+                userProfileResponse.message(),
+                getString(R.string.close_up)
+            )
         }
     }
 
@@ -171,10 +200,21 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
         if (changePlan.isSuccessful)
         {
             changePlanDialog.dismiss()
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.nav_host_fragment, Profile())
-            transaction.remove(HomeFragment())
-            transaction.commit()
+
+            if (utility.isConnectingToInternet(context)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                controller.setUserProfileAPI(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    getStringVal(Constants.USERID)
+                )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_liveevents!!,
+                    getString(R.string.nointernet),
+                    getString(R.string.close_up)
+                )
+            }
             utility!!.relative_snackbar(
                 parent_pricing!!,
                 changePlan.body()?.data?.message,

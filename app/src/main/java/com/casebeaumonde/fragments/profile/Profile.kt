@@ -72,6 +72,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var profile_profilePic: CircleImageView
     private lateinit var profile_followerscount: TextView
     private lateinit var profile_followingcount: TextView
+    private lateinit var editptofile_paypaltext : TextView
+    private lateinit var editprofile_paypal_email : EditText
     private lateinit var profile_followerslayout: LinearLayout
     private lateinit var profile_followinglayout: LinearLayout
     private lateinit var profile_changetv: ImageView
@@ -131,13 +133,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         val view: View
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false)
-
+        findIds(view)
         manager = fragmentManager!!
         controller = Controller()
         controller.Controller(this, this, this,this,this,this,this)
         getUserID = this
         getCardID = this
-        findIds(view)
+
         listeners()
 
         if (utility.isConnectingToInternet(context)) {
@@ -207,9 +209,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
-
         }
-
     }
 
     private fun ViewPlanDialog() {
@@ -441,12 +441,21 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         editprofile_about = dialog.findViewById(R.id.editprofile_about)
         changepassword_changebt = dialog.findViewById(R.id.changepassword_changebt)
         changepassword_closebt = dialog.findViewById(R.id.changepassword_closebt)
+        editptofile_paypaltext = dialog.findViewById(R.id.editptofile_paypaltext)
+        editprofile_paypal_email = dialog.findViewById(R.id.editprofile_paypal_email)
+        if (!Constants.USER_ROLE.equals("customer"))
+        {
+            editprofile_paypal_email.visibility = View.VISIBLE
+            editptofile_paypaltext.visibility = View.VISIBLE
+        }
 
         editprofile_firstname.setText(getStringVal(Constants.FIRSTNAME))
         editprofile_lastname.setText(getStringVal(Constants.LASTNAME))
         editprofile_email.setText(getStringVal(Constants.EMAIL))
         editprofile_phone.setText(getStringVal(Constants.PHONE))
         editprofile_about.setText(getStringVal(Constants.ABOUT))
+        editprofile_paypal_email.setText(getStringVal(Constants.PAYPALID))
+
 
         changepassword_closebt.setOnClickListener {
             dialog.dismiss()
@@ -478,6 +487,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                     editprofile_about.requestFocus()
                     editprofile_about.error = getString(R.string.enterabout)
                 }
+
                 else -> {
                     if (utility.isConnectingToInternet(context)) {
                         pd.show()
@@ -487,6 +497,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                             editprofile_firstname.text.toString(),
                             editprofile_lastname.text.toString(),
                             editprofile_email.text.toString(),
+                            editprofile_paypal_email.text.toString(),
                             editprofile_phone.text.toString(),
                             editprofile_about.text.toString(),
                             getStringVal(Constants.USERID).toString()
@@ -632,7 +643,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             profile_username.text =
                 userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
             Glide.with(context!!)
-                .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar.toString()!!)
+                .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar?.toString())
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)
             profile_followerscount.text =
                 userProfileResponse.body()?.data?.user?.followers?.size.toString()
@@ -643,6 +654,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.data?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.data?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.data?.user?.phone)
+            setStringVal(Constants.PAYPALID,userProfileResponse.body()?.data?.user?.paypal_email.toString())
             setStringVal(Constants.SUBSCRIPTION_ID,
                 userProfileResponse.body()?.data?.user?.customerSubscription?.id.toString()
             )
@@ -658,6 +670,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             role = userProfileResponse.body()?.data?.user?.role.toString()
             setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.data?.user?.role.toString())
+
 
             if (userProfileResponse.body()?.data?.user?.customerSubscription != null) {
                 setStringVal(Constants.CUSTOMERSUBSCRIPTION, "1")
@@ -898,6 +911,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.data?.user?.lastname)
             setStringVal(Constants.EMAIL, updateProfileResponse.body()?.data?.user?.email)
             setStringVal(Constants.PHONE, updateProfileResponse.body()?.data?.user?.phone)
+            setStringVal(Constants.PAYPALID,updateProfileResponse.body()?.data?.user?.paypal_email.toString())
             setStringVal(
                 Constants.ABOUT,
                 updateProfileResponse.body()?.data?.user?.profile?.aboutMe
@@ -944,13 +958,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             pd.dismiss()
             cancelPlanDialog.dismiss()
             viewplanDialog.dismiss()
-//            val transaction = manager.beginTransaction()
-//            val priceFrag = Pricing()
-//            transaction.replace(R.id.nav_host_fragment, Profile())
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-
-
+            val transaction = manager.beginTransaction()
+            transaction.replace(R.id.nav_host_fragment, Profile())
+            transaction.addToBackStack(null)
+            transaction.commit()
         }else {
             pd.dismiss()
             utility!!.relative_snackbar(

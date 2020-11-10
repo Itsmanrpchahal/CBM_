@@ -78,6 +78,18 @@ this.data = data;
         @SerializedName("percent")
         @Expose
         private String percent;
+        @SerializedName("paypal_email")
+        @Expose
+        private String paypal_email;
+
+        public String getPaypal_email() {
+            return paypal_email;
+        }
+
+        public void setPaypal_email(String paypal_email) {
+            this.paypal_email = paypal_email;
+        }
+
         @SerializedName("pending_balance")
         @Expose
         private String pendingBalance;

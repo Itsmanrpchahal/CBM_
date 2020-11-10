@@ -96,6 +96,34 @@
             </EditText>
 
             <TextView
+                android:id="@+id/editptofile_paypaltext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:text="@string/paypalemail"
+                android:visibility="gone"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/editprofile_paypal_email"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:hint="@string/paypalemail"
+                android:visibility="gone"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/blackroundcorners">
+
+            </EditText>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone"

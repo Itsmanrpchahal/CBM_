@@ -478,6 +478,18 @@ public class UserProfileResponse {
             @SerializedName("status")
             @Expose
             private String status;
+            @SerializedName("paypal_email")
+            @Expose
+            private String paypal_email;
+
+            public String getPaypal_email() {
+                return paypal_email;
+            }
+
+            public void setPaypal_email(String paypal_email) {
+                this.paypal_email = paypal_email;
+            }
+
             @SerializedName("affiliate_id")
             @Expose
             private Integer affiliateId;

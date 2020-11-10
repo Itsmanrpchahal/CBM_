@@ -144,6 +144,7 @@ public interface ApiInterface {
             @Field("firstname") String firstname,
             @Field("lastname") String lastname,
             @Field("email") String email,
+            @Field("paypal_email") String paypal_email,
             @Field("phone") String phone,
             @Field("about_me") String about_me,
             @Field("id") String id

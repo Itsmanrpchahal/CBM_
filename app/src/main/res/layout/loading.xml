@@ -17,7 +17,9 @@
             android:layout_height="wrap_content"
             style="@style/AVLoadingIndicatorView"
             android:background="#00000000"
-            app:indicatorColor="@color/colorBlack"></com.wang.avi.AVLoadingIndicatorView>
+            app:indicatorColor="@color/colorBlack">
+
+        </com.wang.avi.AVLoadingIndicatorView>
 
     </RelativeLayout>
 

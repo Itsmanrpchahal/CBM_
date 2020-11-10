@@ -250,9 +250,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(pricing: PricingAPI, changeplan: ChangePlanAPI) {
+    fun Controller(pricing: PricingAPI, changeplan: ChangePlanAPI,userProfile : UserProfileAPI) {
         pricingAPI = pricing
         changePlanAPI = changeplan
+        userProfileAPI = userProfile
         webAPI = WebAPI()
     }
 
@@ -387,11 +388,12 @@ public class Controller {
         firstname: String,
         lastname: String,
         email: String,
+        paypal_email : String,
         phone: String,
         about: String,
         userID: String
     ) {
-        webAPI?.api?.editProfile(token, firstname, lastname, email, phone, about, userID)
+        webAPI?.api?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID)
             ?.enqueue(object : Callback<EditProfileResponse> {
                 override fun onResponse(
                     call: Call<EditProfileResponse>,

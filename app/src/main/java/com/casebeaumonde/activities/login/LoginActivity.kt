@@ -184,7 +184,7 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
                                 response.body()?.getData()?.userId.toString()
                             )
                             setStringVal(Constants.TOKEN, response.body()?.getData()?.token)
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                             finish()
                         }
                         else {

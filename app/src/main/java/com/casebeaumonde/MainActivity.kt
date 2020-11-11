@@ -71,6 +71,15 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         findIds()
 
 
+
+
+
+        listeners()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         if (getStringVal(Constants.TOKEN).equals("")) {
             navView.inflateMenu(R.menu.activity_main_drawer1)
             navView.visibility = View.GONE
@@ -116,10 +125,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         //navView.setNavigationItemSelectedListener(this)
         // Show ItemStyle
         println("ItemStyle=${navView.checkedItem}")
-
-
-        listeners()
-
     }
 
 
@@ -132,6 +137,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     private fun logout() {
         //hideKeyboard()
         if (utility!!.isConnectingToInternet(this)) {
+            logoutDialog.dismiss()
             pd.show()
             pd.setContentView(R.layout.loading)
 
@@ -155,7 +161,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 //                                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 //
 //                            )
-                           // finish()
+                            // finish()
                             finish()
                             overridePendingTransition(0, 0)
                             overridePendingTransition(0, 0)

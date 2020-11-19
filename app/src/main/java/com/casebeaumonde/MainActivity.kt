@@ -69,11 +69,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         manager = getSupportFragmentManager()
 
         findIds()
-
-
-
-
-
         listeners()
 
     }

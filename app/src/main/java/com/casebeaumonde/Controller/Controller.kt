@@ -26,6 +26,7 @@ import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.Wor
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
+import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
@@ -38,7 +39,6 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import kotlin.collections.HashMap
 
 
@@ -97,6 +97,7 @@ public class Controller {
     var filterClosetItemsAPI : FilterClosetItemsAPI? = null
     var getChatUsersAPI : GetChatUsersAPI? = null
     var getCHatAPI : GetChatAPI? = null
+    var senduserchatAPI : SendUserChatAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -303,8 +304,9 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(getChat : GetChatAPI){
+    fun Controller(getChat : GetChatAPI,senduserchat: SendUserChatAPI){
         getCHatAPI = getChat
+        senduserchatAPI = senduserchat
         webAPI = WebAPI()
     }
 
@@ -1591,6 +1593,11 @@ public class Controller {
 
     interface GetChatAPI {
         fun onGetChatSuccess(getCHat : Response<GetChatResponse>)
+        fun error(error: String?)
+    }
+
+    interface SendUserChatAPI {
+        fun onGetUserChatSuccess(senduserchat : Response<SendChatResponse>)
         fun error(error: String?)
     }
 }

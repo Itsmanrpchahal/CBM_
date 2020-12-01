@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.casebeaumonde" >
+    package="com.casebeaumonde">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,12 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Translucent"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".activities.openchat.SendChat"
             android:label="@string/title_activity_send_chat"
-            android:theme="@style/Translucent.NoActionBar" >
-        </activity>
+            android:theme="@style/Translucent.NoActionBar"></activity>
         <activity android:name=".activities.EventsInvitations.EventsInvitations" />
         <activity android:name=".activities.paymenthistory.PaymentHistory" />
         <activity android:name=".activities.myContracts.MyContracts" />
@@ -47,7 +46,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.casebeaumonde.fileProvider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -56,7 +55,7 @@
         <activity
             android:name=".activities.login.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activities.SplashScreen" >
+        <activity android:name=".activities.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

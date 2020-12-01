@@ -501,4 +501,13 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Path("input") String id
     );
+
+
+//    @FormUrlEncoded
+//    @POST("api/v1/addMessage")
+//    Call<SendChatResponse> getuserChat(
+//            @Header("Authorization") String token,
+//            @Field("to_id") String to_id,
+//            @Field("message") String message
+//    );
 }

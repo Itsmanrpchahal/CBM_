@@ -93,4 +93,13 @@
     <string name="aboutext">"Life isnâ€™t black and white. Come build an exquisite world with CASA BEAU MONDE. Created with you in mind, to improve the way you shop and communicate about fashion. Whether youâ€™re an inspiring fashionista or an aspiring one, youâ€™re home with us. Here you will be able to curate and create all the pretty things and live the most stylish of lives with our latest fashion and shopping technology. We canâ€™t wait to see how your build your house of beautiful things with us.  "</string>
     <string name="confirmationtext">"Please confirm you want to change your current plan subscription. The new plan amount will be charge now and the amount of the remaining days of the current plan subscription will be refunded. In order to change your plan subscription, you must have at least one verified payment method registered in your profile. "</string>
     <string name="paypalemail">Paypal Email (Optional)</string>
+    <string name="title_activity_send_chat">SendChat</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

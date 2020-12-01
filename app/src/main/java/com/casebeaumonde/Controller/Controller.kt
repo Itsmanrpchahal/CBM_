@@ -25,10 +25,12 @@ import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListRe
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
+import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.chat.GetChatUsers
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
@@ -93,7 +95,8 @@ public class Controller {
     var cancelPlanAPI : CancelPlanAPI? = null
     var addPaymentMethodAPI : AddPaymentMethodAPI? = null
     var filterClosetItemsAPI : FilterClosetItemsAPI? = null
-
+    var getChatUsersAPI : GetChatUsersAPI? = null
+    var getCHatAPI : GetChatAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -292,6 +295,16 @@ public class Controller {
 
     fun Controller(subscribePlan: SubscribePlanAPI) {
         subscribePlanAPI = subscribePlan
+        webAPI = WebAPI()
+    }
+
+    fun Controller(getChatUsers: GetChatUsersAPI){
+        getChatUsersAPI = getChatUsers
+        webAPI = WebAPI()
+    }
+
+    fun Controller(getChat : GetChatAPI){
+        getCHatAPI = getChat
         webAPI = WebAPI()
     }
 
@@ -1284,6 +1297,41 @@ public class Controller {
         })
     }
 
+    fun GetChatUsers(token: String?)
+    {
+        webAPI?.api?.getChatUsers(token)?.enqueue(object : Callback<GetChatUsers>
+        {
+            override fun onResponse(call: Call<GetChatUsers>, response: Response<GetChatUsers>) {
+                val getchatusers = response
+                getChatUsersAPI?.onGetChatUsersSuccess(getchatusers)
+            }
+
+            override fun onFailure(call: Call<GetChatUsers>, t: Throwable) {
+                getChatUsersAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun GetChat(token: String?,id: String?)
+    {
+        webAPI?.api?.getCHat(token, id)?.enqueue(object :Callback<GetChatResponse>
+        {
+            override fun onResponse(
+                call: Call<GetChatResponse>,
+                response: Response<GetChatResponse>
+            ) {
+                val getChat = response
+                getCHatAPI?.onGetChatSuccess(getChat)
+            }
+
+            override fun onFailure(call: Call<GetChatResponse>, t: Throwable) {
+                getCHatAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -1533,6 +1581,16 @@ public class Controller {
 
     interface FilterClosetItemsAPI {
         fun onFilterClosetItemSuccess(filtersucces : Response<List<FilterResponse>>)
+        fun error(error: String?)
+    }
+
+    interface GetChatUsersAPI {
+        fun onGetChatUsersSuccess(chatUsers : Response<GetChatUsers>)
+        fun error(error: String?)
+    }
+
+    interface GetChatAPI {
+        fun onGetChatSuccess(getCHat : Response<GetChatResponse>)
         fun error(error: String?)
     }
 }

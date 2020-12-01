@@ -27,6 +27,7 @@ import com.casebeaumonde.activities.myclosets.response.MoveClosetItems;
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
+import com.casebeaumonde.activities.openchat.response.GetChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
@@ -38,6 +39,7 @@ import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse;
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
+import com.casebeaumonde.fragments.chat.GetChatUsers;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse;
 import com.casebeaumonde.fragments.pricing.response.PricingResponse;
@@ -489,4 +491,14 @@ public interface ApiInterface {
             @FieldMap HashMap<String,String> map
     );
 
+    @GET("api/v1/getChatUsers/{id}")
+    Call<GetChatUsers> getChatUsers(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/v1/getMessageFor/{input}")
+    Call<GetChatResponse> getCHat(
+            @Header("Authorization") String token,
+            @Path("input") String id
+    );
 }

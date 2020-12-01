@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/nav_chat"
-        android:name="com.casebeaumonde.fragments.Chat"
+        android:name="com.casebeaumonde.fragments.chat.Chat"
         android:label="Chat"
         tools:layout="@layout/fragment_chat"/>
 

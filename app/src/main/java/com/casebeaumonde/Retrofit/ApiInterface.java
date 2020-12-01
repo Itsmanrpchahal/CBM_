@@ -28,6 +28,7 @@ import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
 import com.casebeaumonde.activities.openchat.response.GetChatResponse;
+import com.casebeaumonde.activities.openchat.response.SendChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
 import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
@@ -503,11 +504,11 @@ public interface ApiInterface {
     );
 
 
-//    @FormUrlEncoded
-//    @POST("api/v1/addMessage")
-//    Call<SendChatResponse> getuserChat(
-//            @Header("Authorization") String token,
-//            @Field("to_id") String to_id,
-//            @Field("message") String message
-//    );
+    @FormUrlEncoded
+    @POST("api/v1/addMessage")
+    Call<SendChatResponse> sendChat(
+            @Header("Authorization") String token,
+            @Field("to_id") String to_id,
+            @Field("message") String message
+    );
 }

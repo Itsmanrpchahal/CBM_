@@ -1334,6 +1334,25 @@ public class Controller {
         })
     }
 
+    fun SendChat(token: String?,id: String?,message:String)
+    {
+        webAPI?.api?.sendChat(token,id,message)?.enqueue(object :Callback<SendChatResponse>
+        {
+            override fun onResponse(
+                call: Call<SendChatResponse>,
+                response: Response<SendChatResponse>
+            ) {
+                val sendChat = response
+                senduserchatAPI?.onGetUserChatSuccess(sendChat)
+            }
+
+            override fun onFailure(call: Call<SendChatResponse>, t: Throwable) {
+               senduserchatAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)

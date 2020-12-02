@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/recievemesg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@drawable/recivemesg"
+        android:visibility="gone"
+        android:padding="@dimen/margin_8dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/sendmesg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@drawable/sendmesg"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:padding="@dimen/margin_8dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+</RelativeLayout>

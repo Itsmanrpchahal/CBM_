@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parent_sendchat"
+    android:orientation="vertical"
+    tools:context=".activities.openchat.SendChat">
+
+
+   <androidx.appcompat.widget.Toolbar
+       android:id="@+id/toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:contentInsetStart="0dp"
+       android:contentInsetLeft="0dp"
+       android:contentInsetEnd="0dp"
+       android:contentInsetRight="0dp"
+       app:contentInsetEnd="0dp"
+       app:contentInsetLeft="0dp"
+       app:contentInsetRight="0dp"
+       app:contentInsetStart="0dp">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <ImageButton
+               android:id="@+id/back"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/margin_8dp"
+               android:background="@android:color/transparent"
+               android:src="@drawable/ic_baseline_keyboard_backspace_24">
+
+           </ImageButton>
+
+           <TextView
+               android:id="@+id/chatname"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/colorWhite"
+               android:textSize="@dimen/textsize_16sp"
+               android:textStyle="bold"
+               android:layout_centerInParent="true">
+
+           </TextView>
+
+       </RelativeLayout>
+
+   </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_recycler"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/whiteborder">
+
+        <EditText
+            android:id="@+id/sendmesg_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Message"
+            android:background="@android:color/transparent"
+            android:textColor="@color/colorWhite"
+            android:layout_toLeftOf="@id/sendmesg_bt"
+            android:singleLine="true"
+            android:inputType="textShortMessage"
+            android:textSize="@dimen/textsize_16sp"
+            android:padding="@dimen/margin_8dp">
+
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/sendmesg_bt"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/whitemesgbt"
+            android:layout_marginRight="@dimen/margin_8dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_baseline_send_24"
+            android:padding="@dimen/margin_8dp">
+
+        </ImageButton>
+    </RelativeLayout>
+
+</RelativeLayout>

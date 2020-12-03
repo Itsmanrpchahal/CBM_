@@ -150,7 +150,8 @@ public interface ApiInterface {
             @Field("paypal_email") String paypal_email,
             @Field("phone") String phone,
             @Field("about_me") String about_me,
-            @Field("id") String id
+            @Field("id") String id,
+            @Field("chat_invitation") String chat_invitation
     );
 
     @DELETE("api/v1/removeNotification/{input}")

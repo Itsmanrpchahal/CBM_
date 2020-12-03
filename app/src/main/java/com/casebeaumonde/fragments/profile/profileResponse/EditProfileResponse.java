@@ -66,6 +66,18 @@ this.data = data;
         @SerializedName("email")
         @Expose
         private String email;
+        @SerializedName("chat_invitation")
+        @Expose
+        private String chat_invitation;
+
+        public String getChat_invitation() {
+            return chat_invitation;
+        }
+
+        public void setChat_invitation(String chat_invitation) {
+            this.chat_invitation = chat_invitation;
+        }
+
         @SerializedName("company")
         @Expose
         private String company;

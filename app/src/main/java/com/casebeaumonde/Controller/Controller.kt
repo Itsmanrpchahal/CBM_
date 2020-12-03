@@ -406,9 +406,10 @@ public class Controller {
         paypal_email : String,
         phone: String,
         about: String,
-        userID: String
+        userID: String,
+        chat_invitation:String
     ) {
-        webAPI?.api?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID)
+        webAPI?.api?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID,chat_invitation)
             ?.enqueue(object : Callback<EditProfileResponse> {
                 override fun onResponse(
                     call: Call<EditProfileResponse>,

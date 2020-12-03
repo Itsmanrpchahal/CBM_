@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
@@ -22,6 +23,7 @@ import com.casebeaumonde.utilities.Utility
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel
+import com.pusher.client.channel.ChannelEventListener
 import com.pusher.client.channel.PusherEvent
 import com.pusher.client.channel.SubscriptionEventListener
 import com.pusher.client.connection.ConnectionEventListener
@@ -68,8 +70,8 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
                 getString(R.string.close_up)
             )
         }
-
-        setupPusher()
+        setPusher()
+//             setupPusher()
         listeners()
     }
 
@@ -78,20 +80,35 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         options.setCluster("us2")
 
         val pusher = Pusher("27d208f3a07f7bb15e7e", options)
-        pusher.connect()
+        pusher.connect(object : ConnectionEventListener {
+            override fun onConnectionStateChange(change: ConnectionStateChange) {
+                println(
+                    "State changed to " + change.currentState +
+                            " from " + change.previousState
+                )
+            }
+
+            override fun onError(message: String, code: String, e: java.lang.Exception) {
+                println("There was a problem connecting!")
+            }
+        }, ConnectionState.ALL)
+
+        // Subscribe to a channel
+        // Subscribe to a channel
         val channel: Channel = pusher.subscribe("chat")
-        channel.bind("my-event", object : SubscriptionEventListener {
-            fun onEvent(channelName: String?, eventName: String?, data: String?) {
-                println(data)
-                Log.d("PUSHER", "" + eventName)
+        Toast.makeText(this, "" + channel.name, Toast.LENGTH_SHORT).show()
 
-            }
+        // Bind to listen for events called "my-event" sent to "my-channel"
+        channel.bind("my-event") { event ->
+            Log.i("Pusher", "Received event with data: ${event.eventName}")
 
-            override fun onEvent(event: PusherEvent?) {
-                println(event)
-                Log.d("PUSHER1", "" + event)
-            }
-        })
+        }
+
+// Disconnect from the service
+        pusher.disconnect()
+
+// Reconnect, with all channel subscriptions and event bindings automatically recreated
+        pusher.connect()
     }
 
     private fun setupPusher() {
@@ -107,14 +124,18 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
                     "State changed from ${change.previousState} to ${change.currentState}"
                 )
 
-                val pusher = com.pusher.rest.Pusher("1112339", "27d208f3a07f7bb15e7e", "7a06f986f6da3b8d6f5d")
-                pusher.setCluster("us2")
+//                val pusher = com.pusher.rest.Pusher(
+//                    "1112339",
+//                    "27d208f3a07f7bb15e7e",
+//                    "7a06f986f6da3b8d6f5d"
+//                )
+//                pusher.setCluster("us2")
 
-                pusher.trigger(
-                    "chat",
-                    "my-event",
-                    ""
-                )
+//                pusher.trigger(
+//                    "chat",
+//                    "my-event",
+//                    ""
+//                )
             }
 
             override fun onError(
@@ -129,10 +150,23 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
             }
         }, ConnectionState.ALL)
 
-        var channel = pusher.subscribe("chat")
-        channel.bind("my-event") { event ->
-            Log.i("Pusher1", "Received event with data: ${event.data}")
-        }
+//        var channel = pusher.subscribe("chat")
+//        Toast.makeText(this, "" + channel.toString(), Toast.LENGTH_SHORT).show()
+
+        pusher.subscribe("chat").bind("event-name", object : ChannelEventListener {
+            override fun onSubscriptionSucceeded(channelName: String) {
+                Log.d("PUSH", "onSubscriptionSucceeded: ")
+            }
+
+            override fun onEvent(event: PusherEvent) {
+                Log.d("PUSH", "onEvent: data " + event.data + " user id " + event.userId)
+            }
+        })
+
+        // Disconnect from the service
+        pusher.disconnect();
+        // Reconnect, with all channel subscriptions and event bindings automatically recreated
+        pusher.connect()
     }
 
     private fun listeners() {

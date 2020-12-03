@@ -148,6 +148,58 @@
 
             </EditText>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chat invitation from"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_alluser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User I follow"
+                    android:textColor="@color/colorBlack"
+                    android:buttonTint="@color/colorBlack"
+                    android:textStyle="bold">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/radio_userifollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Users"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:textColor="@color/colorBlack"
+                    android:buttonTint="@color/colorBlack"
+                    android:textStyle="bold">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/radio_noone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No One"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:textColor="@color/colorBlack"
+                    android:buttonTint="@color/colorBlack"
+                    android:textStyle="bold">
+
+                </RadioButton>
+            </RadioGroup>
 
             <TextView
                 android:layout_width="wrap_content"

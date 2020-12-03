@@ -113,11 +113,16 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     lateinit var plan_carddate: EditText
     lateinit var plan_verfybt: Button
     lateinit var plan_cancel: Button
+    lateinit var radio_alluser : RadioButton
+    lateinit var radio_userifollow : RadioButton
+    lateinit var radio_noone : RadioButton
+    lateinit var radiogroup : RadioGroup
     private lateinit var cardholdername: String
     private lateinit var cardnumber: String
     private lateinit var cardexpDateyear: String
     private lateinit var cardcvc: String
     private lateinit var cardbilligcode: String
+    private lateinit var mesgFrom : String
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
@@ -210,6 +215,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 transaction.commit()
             }
         }
+
+
     }
 
     private fun ViewPlanDialog() {
@@ -443,6 +450,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         changepassword_closebt = dialog.findViewById(R.id.changepassword_closebt)
         editptofile_paypaltext = dialog.findViewById(R.id.editptofile_paypaltext)
         editprofile_paypal_email = dialog.findViewById(R.id.editprofile_paypal_email)
+        radio_noone = dialog.findViewById(R.id.radio_noone)
+        radio_userifollow = dialog.findViewById(R.id.radio_userifollow)
+        radio_alluser = dialog.findViewById(R.id.radio_alluser)
+        radiogroup = dialog.findViewById(R.id.radiogroup)
         if (!Constants.USER_ROLE.equals("customer"))
         {
             editprofile_paypal_email.visibility = View.VISIBLE
@@ -459,6 +470,23 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         changepassword_closebt.setOnClickListener {
             dialog.dismiss()
+        }
+
+        radiogroup.setOnCheckedChangeListener { group, checkedId ->
+
+            when {
+                radio_alluser.isChecked -> {
+                   mesgFrom = "1"
+                }
+
+                radio_userifollow.isChecked -> {
+                   mesgFrom = "2"
+                }
+
+                radio_noone.isChecked -> {
+                    mesgFrom = "3"
+                }
+            }
         }
 
         changepassword_changebt.setOnClickListener {
@@ -500,7 +528,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                             editprofile_paypal_email.text.toString(),
                             editprofile_phone.text.toString(),
                             editprofile_about.text.toString(),
-                            getStringVal(Constants.USERID).toString()
+                            getStringVal(Constants.USERID).toString(),mesgFrom
                         )
                     } else {
                         utility!!.relative_snackbar(
@@ -537,6 +565,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         tabLayout = view.findViewById(R.id.tabLayout)
         pd.show()
         pd.setContentView(R.layout.loading)
+
         //userID = getStringVal(Constants.USERID).toString()
     }
 

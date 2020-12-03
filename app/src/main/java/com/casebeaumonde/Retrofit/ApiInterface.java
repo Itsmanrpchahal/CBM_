@@ -27,6 +27,7 @@ import com.casebeaumonde.activities.myclosets.response.MoveClosetItems;
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
+import com.casebeaumonde.activities.openchat.response.BlockResponse;
 import com.casebeaumonde.activities.openchat.response.GetChatResponse;
 import com.casebeaumonde.activities.openchat.response.SendChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
@@ -511,5 +512,11 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Field("to_id") String to_id,
             @Field("message") String message
+    );
+
+    @GET("api/v1/blockUser/{input}")
+    Call<BlockResponse> blockUser(
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 }

@@ -25,6 +25,7 @@ import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListRe
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
+import com.casebeaumonde.activities.openchat.response.BlockResponse
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
@@ -98,6 +99,7 @@ public class Controller {
     var getChatUsersAPI : GetChatUsersAPI? = null
     var getCHatAPI : GetChatAPI? = null
     var senduserchatAPI : SendUserChatAPI? = null
+    var blockUserAPI : BlockUserAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -304,9 +306,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(getChat : GetChatAPI,senduserchat: SendUserChatAPI){
+    fun Controller(getChat : GetChatAPI,senduserchat: SendUserChatAPI,blockUser: BlockUserAPI){
         getCHatAPI = getChat
         senduserchatAPI = senduserchat
+        blockUserAPI = blockUser
         webAPI = WebAPI()
     }
 
@@ -1354,6 +1357,22 @@ public class Controller {
         })
     }
 
+    fun BlockUser(token: String?,id: String?)
+    {
+        webAPI?.api?.blockUser(token, id)?.enqueue(object : Callback<BlockResponse>
+        {
+            override fun onResponse(call: Call<BlockResponse>, response: Response<BlockResponse>) {
+                val blockUser = response
+                blockUserAPI?.onBlockUserSuccess(blockUser)
+            }
+
+            override fun onFailure(call: Call<BlockResponse>, t: Throwable) {
+                blockUserAPI?.error(t.message)
+            }
+
+        })
+
+    }
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -1618,6 +1637,11 @@ public class Controller {
 
     interface SendUserChatAPI {
         fun onGetUserChatSuccess(senduserchat : Response<SendChatResponse>)
+        fun error(error: String?)
+    }
+
+    interface BlockUserAPI {
+        fun onBlockUserSuccess(blockUser : Response<BlockResponse>)
         fun error(error: String?)
     }
 }

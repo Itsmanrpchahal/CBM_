@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.openchat.adapter.GetChatAdapter
+import com.casebeaumonde.activities.openchat.response.BlockResponse
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.constants.BaseClass
@@ -21,7 +22,6 @@ import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel
 import com.pusher.client.channel.ChannelEventListener
-import com.pusher.client.channel.PusherEvent
 import com.pusher.client.channel.SubscriptionEventListener
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
@@ -32,7 +32,7 @@ import retrofit2.Response
 import java.util.*
 
 
-class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI {
+class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI ,Controller.BlockUserAPI{
 
     private lateinit var back: ImageButton
     private lateinit var chatname: TextView
@@ -54,7 +54,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
 
         findIds()
         controller = Controller()
-        controller.Controller(this, this)
+        controller.Controller(this, this,this)
         id = intent?.getStringExtra("id").toString()
         name = intent?.getStringExtra("chatname").toString()
         chatname.setText(name)
@@ -70,7 +70,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
             )
         }
 //        setPusher()
-             setupPusher()
+             setupPusher1()
         listeners()
     }
 
@@ -98,14 +98,29 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         Toast.makeText(this, "" + channel.name, Toast.LENGTH_SHORT).show()
 
         // Bind to listen for events called "my-event" sent to "my-channel"
-        channel.bind("my-event") { event ->
-            Log.i("Pusher", "Received event with data: ${event.eventName}")
-        }
+//        channel.bind("my-event") { event ->
+//            Log.i("Pusher", "Received event with data: ${event.eventName}")
+//        }
 
 // Disconnect from the service
         pusher.disconnect()
 
 // Reconnect, with all channel subscriptions and event bindings automatically recreated
+        pusher.connect()
+    }
+
+    private fun setupPusher1() {
+        val options = PusherOptions()
+        options.setCluster("us2")
+
+        val pusher = Pusher("27d208f3a07f7bb15e7e", options)
+        val channel = pusher.subscribe("chat")
+
+        channel.bind("my-event") { channelName, eventName, data ->
+            val jsonObject = JSONObject(data)
+            Toast.makeText(this,""+jsonObject,Toast.LENGTH_SHORT).show()
+        }
+
         pusher.connect()
     }
 
@@ -135,21 +150,20 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
             }
         }, ConnectionState.ALL)
 
-        pusher.subscribe("chat").bind("my-event", object : ChannelEventListener {
-            override fun onSubscriptionSucceeded(channelName: String) {
-                Log.d("PUSH", "onSubscriptionSucceeded: "+channelName)
-Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
-            }
+//        pusher.subscribe("chat").bind("chat", object : ChannelEventListener {
+//            override fun onSubscriptionSucceeded(channelName: String) {
+//                Log.d("PUSH", "onSubscriptionSucceeded: "+channelName)
+//                Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
+//            }
+//
+//            override fun onEvent(event: PusherEvent) {
+//                Log.d("PUSH", "onEvent: data " + event.data + " user id " + event.userId)
+//                val jasonData = JSONObject(event.data)
+//                Log.d("data",""+jasonData)
+//                Toast.makeText(this@SendChat,"JJ",Toast.LENGTH_SHORT).show()
+//            }
+//        })
 
-            override fun onEvent(event: PusherEvent) {
-                Log.d("PUSH", "onEvent: data " + event.data + " user id " + event.userId)
-                val jasonData = JSONObject(event.data)
-                Log.d("data",""+jasonData)
-                Toast.makeText(this@SendChat,"JJ",Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        pusher.connect()
     }
 
     private fun listeners() {
@@ -159,8 +173,6 @@ Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
         sendmesg_bt.setOnClickListener {
             if (!sendmesg_et.text.toString().equals("")) {
                 if (utility.isConnectingToInternet(this)) {
-//                    pd.show()
-//                    pd.setContentView(R.layout.loading)
                     controller.SendChat(
                         "Bearer " + getStringVal(Constants.TOKEN),
                         id,
@@ -173,6 +185,21 @@ Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
                         getString(R.string.close_up)
                     )
                 }
+            }
+        }
+
+        blockbt.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+                controller.BlockUser(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    id
+                )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_sendchat!!,
+                    getString(R.string.nointernet),
+                    getString(R.string.close_up)
+                )
             }
         }
     }
@@ -196,6 +223,12 @@ Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
         pd.dismiss()
         chatdata = getCHat.body()?.data?.messages as ArrayList<GetChatResponse.Data.Message>
         setFullData(chatdata)
+        if(getCHat.body()?.data?.blocked==0)
+        {
+            blockbt.setText("Block")
+        }else {
+            blockbt.setText("UnBlock")
+        }
     }
 
     private fun setFullData(chatdata: ArrayList<GetChatResponse.Data.Message>) {
@@ -215,6 +248,26 @@ Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
         sendmesg_et.setText("")
 
         controller.GetChat("Bearer " + getStringVal(Constants.TOKEN), id)
+
+    }
+
+    override fun onBlockUserSuccess(blockUser: Response<BlockResponse>) {
+        pd.dismiss()
+        if (blockUser.isSuccessful)
+        {
+            if (blockUser.body()?.message.equals("User Blocked successfully"))
+            {
+                blockbt.setText("UnBlock")
+            }else {
+                blockbt.setText("Block")
+            }
+            utility!!.relative_snackbar(
+                parent_sendchat!!,
+                blockUser.body()?.message,
+                getString(R.string.close_up)
+            )
+
+        }
 
     }
 

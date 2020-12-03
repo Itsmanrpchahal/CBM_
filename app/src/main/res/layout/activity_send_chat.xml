@@ -52,6 +52,19 @@
 
    </androidx.appcompat.widget.Toolbar>
 
+    <Button
+        android:id="@+id/blockbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_centerHorizontal="true"
+        android:text="Block"
+        android:textColor="@color/colorWhite"
+        android:textAllCaps="false"
+        android:layout_below="@id/toolbar">
+
+    </Button>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recycler"
         android:layout_below="@id/toolbar"

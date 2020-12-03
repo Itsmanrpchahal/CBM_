@@ -6,10 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
@@ -30,6 +27,7 @@ import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
 import kotlinx.android.synthetic.main.activity_send_chat.*
+import org.json.JSONObject
 import retrofit2.Response
 import java.util.*
 
@@ -48,6 +46,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
     private lateinit var name: String
     private lateinit var chatdata: ArrayList<GetChatResponse.Data.Message>
     private lateinit var pusher: Pusher
+    private lateinit var blockbt : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +69,8 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
                 getString(R.string.close_up)
             )
         }
-        setPusher()
-//             setupPusher()
+//        setPusher()
+             setupPusher()
         listeners()
     }
 
@@ -101,7 +100,6 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         // Bind to listen for events called "my-event" sent to "my-channel"
         channel.bind("my-event") { event ->
             Log.i("Pusher", "Received event with data: ${event.eventName}")
-
         }
 
 // Disconnect from the service
@@ -123,19 +121,6 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
                     "Pusher",
                     "State changed from ${change.previousState} to ${change.currentState}"
                 )
-
-//                val pusher = com.pusher.rest.Pusher(
-//                    "1112339",
-//                    "27d208f3a07f7bb15e7e",
-//                    "7a06f986f6da3b8d6f5d"
-//                )
-//                pusher.setCluster("us2")
-
-//                pusher.trigger(
-//                    "chat",
-//                    "my-event",
-//                    ""
-//                )
             }
 
             override fun onError(
@@ -150,22 +135,20 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
             }
         }, ConnectionState.ALL)
 
-//        var channel = pusher.subscribe("chat")
-//        Toast.makeText(this, "" + channel.toString(), Toast.LENGTH_SHORT).show()
-
-        pusher.subscribe("chat").bind("event-name", object : ChannelEventListener {
+        pusher.subscribe("chat").bind("my-event", object : ChannelEventListener {
             override fun onSubscriptionSucceeded(channelName: String) {
-                Log.d("PUSH", "onSubscriptionSucceeded: ")
+                Log.d("PUSH", "onSubscriptionSucceeded: "+channelName)
+Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
             }
 
             override fun onEvent(event: PusherEvent) {
                 Log.d("PUSH", "onEvent: data " + event.data + " user id " + event.userId)
+                val jasonData = JSONObject(event.data)
+                Log.d("data",""+jasonData)
+                Toast.makeText(this@SendChat,"JJ",Toast.LENGTH_SHORT).show()
             }
         })
 
-        // Disconnect from the service
-        pusher.disconnect();
-        // Reconnect, with all channel subscriptions and event bindings automatically recreated
         pusher.connect()
     }
 
@@ -206,6 +189,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         chat_recycler = findViewById(R.id.chat_recycler)
         sendmesg_et = findViewById(R.id.sendmesg_et)
         sendmesg_bt = findViewById(R.id.sendmesg_bt)
+        blockbt = findViewById(R.id.blockbt)
     }
 
     override fun onGetChatSuccess(getCHat: Response<GetChatResponse>) {

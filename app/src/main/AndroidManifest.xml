@@ -34,6 +34,7 @@
         <activity android:name=".activities.myGigs.MyGigs" />
         <activity android:name=".activities.notifications.Notifications" />
         <activity android:name=".activities.OnBoardScreen" />
+
         <activity
             android:name=".activities.businessRegister.BusinessRegisterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

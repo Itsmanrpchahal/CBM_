@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
 import android.widget.*
@@ -18,21 +19,25 @@ import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
+import com.google.gson.Gson
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel
 import com.pusher.client.channel.ChannelEventListener
+import com.pusher.client.channel.PrivateChannelEventListener
 import com.pusher.client.channel.SubscriptionEventListener
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
+import com.pusher.client.util.HttpAuthorizer
 import kotlinx.android.synthetic.main.activity_send_chat.*
 import org.json.JSONObject
 import retrofit2.Response
 import java.util.*
 
 
-class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI ,Controller.BlockUserAPI{
+class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
+    Controller.BlockUserAPI {
 
     private lateinit var back: ImageButton
     private lateinit var chatname: TextView
@@ -46,7 +51,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
     private lateinit var name: String
     private lateinit var chatdata: ArrayList<GetChatResponse.Data.Message>
     private lateinit var pusher: Pusher
-    private lateinit var blockbt : Button
+    private lateinit var blockbt: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +59,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
 
         findIds()
         controller = Controller()
-        controller.Controller(this, this,this)
+        controller.Controller(this, this, this)
         id = intent?.getStringExtra("id").toString()
         name = intent?.getStringExtra("chatname").toString()
         chatname.setText(name)
@@ -70,7 +75,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
             )
         }
 //        setPusher()
-             setupPusher1()
+        setupPusher()
         listeners()
     }
 
@@ -79,6 +84,18 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         options.setCluster("us2")
 
         val pusher = Pusher("27d208f3a07f7bb15e7e", options)
+        val channel: Channel = pusher.subscribe("chat")
+        val eventListener =
+            SubscriptionEventListener { channel, event, data ->
+                runOnUiThread {
+                    println("Received event with data: $data")
+                    val gson = Gson()
+
+                }
+            }
+
+        channel.bind("client-NewMessage", eventListener);
+
         pusher.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {
                 println(
@@ -94,12 +111,12 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
 
         // Subscribe to a channel
         // Subscribe to a channel
-        val channel: Channel = pusher.subscribe("chat")
-        Toast.makeText(this, "" + channel.name, Toast.LENGTH_SHORT).show()
 
-        // Bind to listen for events called "my-event" sent to "my-channel"
-//        channel.bind("my-event") { event ->
-//            Log.i("Pusher", "Received event with data: ${event.eventName}")
+        //  Toast.makeText(this, "" + channel.name, Toast.LENGTH_SHORT).show()
+
+//        channel.bind("client-NewMessage") { channelName, eventName, data ->
+//            val jsonObject = JSONObject(data)
+//            Toast.makeText(this, "" + jsonObject.toString(), Toast.LENGTH_SHORT).show()
 //        }
 
 // Disconnect from the service
@@ -107,6 +124,34 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
 
 // Reconnect, with all channel subscriptions and event bindings automatically recreated
         pusher.connect()
+
+    }
+
+    private fun subscribeToChannel() {
+        val authorizer = HttpAuthorizer("http://10.0.2.2:5000/pusher/auth/private")
+        val options = PusherOptions().setAuthorizer(authorizer)
+        options.setCluster("us2")
+
+        val pusher = Pusher("27d208f3a07f7bb15e7e", options)
+        pusher.connect()
+
+
+        pusher.subscribePrivate("client-NewMessage", object : PrivateChannelEventListener {
+            override fun onEvent(channelName: String?, eventName: String?, data: String?) {
+
+                val jsonObject = JSONObject(data)
+            }
+
+            override fun onAuthenticationFailure(p0: String?, p1: java.lang.Exception?) {
+                Log.e("ChatRoom", p1!!.localizedMessage)
+            }
+
+            override fun onSubscriptionSucceeded(p0: String?) {
+                Log.i("ChatRoom", "Successful subscription")
+            }
+
+        }, "client-NewMessage")
+
     }
 
     private fun setupPusher1() {
@@ -116,9 +161,9 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         val pusher = Pusher("27d208f3a07f7bb15e7e", options)
         val channel = pusher.subscribe("chat")
 
-        channel.bind("my-event") { channelName, eventName, data ->
+        channel.bind("client-NewMessage") { channelName, eventName, data ->
             val jsonObject = JSONObject(data)
-            Toast.makeText(this,""+jsonObject,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "" + jsonObject, Toast.LENGTH_SHORT).show()
         }
 
         pusher.connect()
@@ -150,19 +195,22 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
             }
         }, ConnectionState.ALL)
 
-//        pusher.subscribe("chat").bind("chat", object : ChannelEventListener {
-//            override fun onSubscriptionSucceeded(channelName: String) {
-//                Log.d("PUSH", "onSubscriptionSucceeded: "+channelName)
-//                Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onEvent(event: PusherEvent) {
-//                Log.d("PUSH", "onEvent: data " + event.data + " user id " + event.userId)
-//                val jasonData = JSONObject(event.data)
-//                Log.d("data",""+jasonData)
-//                Toast.makeText(this@SendChat,"JJ",Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        pusher.subscribe("Chat", object : ChannelEventListener {
+            override fun onEvent(channelName: String?, eventName: String?, data: String?) {
+                Log.d(
+                    "PUSH",
+                    "onEvent: data " + channelName.toString() + " user id " + data.toString()
+                )
+                Log.d("test","TEST")
+            }
+
+            override fun onSubscriptionSucceeded(channelName: String?) {
+                Log.d("PUSH", "onSubscriptionSucceeded: " + channelName)
+            }
+        }, "client-NewMessage")
+
+        pusher.disconnect()
+        pusher.connect()
 
     }
 
@@ -223,10 +271,9 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
         pd.dismiss()
         chatdata = getCHat.body()?.data?.messages as ArrayList<GetChatResponse.Data.Message>
         setFullData(chatdata)
-        if(getCHat.body()?.data?.blocked==0)
-        {
+        if (getCHat.body()?.data?.blocked == 0) {
             blockbt.setText("Block")
-        }else {
+        } else {
             blockbt.setText("UnBlock")
         }
     }
@@ -253,12 +300,10 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI 
 
     override fun onBlockUserSuccess(blockUser: Response<BlockResponse>) {
         pd.dismiss()
-        if (blockUser.isSuccessful)
-        {
-            if (blockUser.body()?.message.equals("User Blocked successfully"))
-            {
+        if (blockUser.isSuccessful) {
+            if (blockUser.body()?.message.equals("User Blocked successfully")) {
                 blockbt.setText("UnBlock")
-            }else {
+            } else {
                 blockbt.setText("Block")
             }
             utility!!.relative_snackbar(

@@ -70,7 +70,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             navView.inflateMenu(R.menu.activity_main_drawer1)
             navView.visibility = View.GONE
             appbarmain.visibility = View.GONE
-            
             appBarConfiguration = AppBarConfiguration(
                 setOf(
                     R.id.nav_home,

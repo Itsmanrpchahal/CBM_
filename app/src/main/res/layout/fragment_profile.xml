@@ -25,6 +25,7 @@
                 android:layout_marginTop="@dimen/textsize_16sp"
                 android:layout_gravity="center">
 
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_profilePic"
                     android:layout_width="130dp"
@@ -38,7 +39,7 @@
                     android:id="@+id/profile_changetv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/edit">
 

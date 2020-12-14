@@ -70,6 +70,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             navView.inflateMenu(R.menu.activity_main_drawer1)
             navView.visibility = View.GONE
             appbarmain.visibility = View.GONE
+            
             appBarConfiguration = AppBarConfiguration(
                 setOf(
                     R.id.nav_home,
@@ -234,27 +235,27 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if (!getStringVal(Constants.TOKEN).equals("")) {
-            navView.setItemStyle(MaterialNavigationView.ITEM_STYLE_DEFAULT)
-            menuInflater.inflate(R.menu.menu, menu)
-        }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        if (!getStringVal(Constants.TOKEN).equals("")) {
+//            navView.setItemStyle(MaterialNavigationView.ITEM_STYLE_DEFAULT)
+//            menuInflater.inflate(R.menu.menu, menu)
+//        }
+//
+//        return true
+//    }
 
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.logout -> {
-
-              logoutDialog()
-
-            }
-        }
-        return false
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//
+//        when (item.itemId) {
+//            R.id.logout -> {
+//
+//              logoutDialog()
+//
+//            }
+//        }
+//        return false
+//    }
 
     fun logoutDialog()
     {

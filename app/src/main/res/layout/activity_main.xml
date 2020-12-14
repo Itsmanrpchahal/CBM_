@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
     <com.shreyaspatil.material.navigationview.MaterialNavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -24,8 +25,11 @@
         android:theme="@style/Widget.NavigationView.RippleEffect"
         app:insetForeground="@android:color/transparent"
         app:itemIconTint="@color/navigation_item_tint"
-        app:itemStyle="default_style"
-        app:itemTextColor="@color/navigation_item_tint" />
+        app:headerLayout="@layout/nav_header_main"
+        app:itemStyle="rounded_right"
+        app:itemTextColor="@color/navigation_item_tint" >
+
+    </com.shreyaspatil.material.navigationview.MaterialNavigationView>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

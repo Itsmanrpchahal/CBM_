@@ -84,4 +84,5 @@
         android:name="com.casebeaumonde.fragments.ContactUs"
         android:label="Contact Us"
         tools:layout="@layout/fragment_contact_us"/>
+
 </navigation>

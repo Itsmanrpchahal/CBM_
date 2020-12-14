@@ -12,7 +12,6 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -24,14 +23,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.Retrofit.WebAPI
-import com.casebeaumonde.activities.OnBoardScreen
-import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
+import com.casebeaumonde.activities.notifications.Notifications
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
-import com.casebeaumonde.activities.notifications.Notifications
-import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.utilities.Utility
 import com.google.android.material.appbar.AppBarLayout
 import com.shreyaspatil.material.navigationview.MaterialNavigationView
@@ -41,7 +38,6 @@ import kotlinx.android.synthetic.main.changeplandialog.view.*
 import retrofit2.Call
 import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
-import java.lang.Exception
 
 class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserProfileAPI {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -70,11 +66,6 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
         findIds()
         listeners()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
         if (getStringVal(Constants.TOKEN).equals("")) {
             navView.inflateMenu(R.menu.activity_main_drawer1)
             navView.visibility = View.GONE
@@ -111,6 +102,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     R.id.nav_contactUs
                 ), drawerLayout
             )
+
+            navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener({ menuItem ->
+                logoutDialog()
+                true
+            })
         }
 
         setupActionBarWithNavController(frameLayout, appBarConfiguration)
@@ -120,6 +116,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         //navView.setNavigationItemSelectedListener(this)
         // Show ItemStyle
         println("ItemStyle=${navView.checkedItem}")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
     }
 
 
@@ -248,35 +249,40 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         when (item.itemId) {
             R.id.logout -> {
 
-                logoutDialog = Dialog(this)
-                logoutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                logoutDialog.setCancelable(false)
-                logoutDialog.setContentView(R.layout.logout_dialog)
-                val window = logoutDialog.window
-                window?.setLayout(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT
-                )
-
-                val no: Button
-                val yes: Button
-
-                no = logoutDialog.findViewById(R.id.logout_no)
-                yes = logoutDialog.findViewById(R.id.logout_yes)
-
-                no.setOnClickListener {
-                    logoutDialog.dismiss()
-                }
-
-                yes.setOnClickListener {
-                    logout()
-                }
-
-                logoutDialog.show()
+              logoutDialog()
 
             }
         }
         return false
+    }
+
+    fun logoutDialog()
+    {
+        logoutDialog = Dialog(this)
+        logoutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        logoutDialog.setCancelable(false)
+        logoutDialog.setContentView(R.layout.logout_dialog)
+        val window = logoutDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+
+        no = logoutDialog.findViewById(R.id.logout_no)
+        yes = logoutDialog.findViewById(R.id.logout_yes)
+
+        no.setOnClickListener {
+            logoutDialog.dismiss()
+        }
+
+        yes.setOnClickListener {
+            logout()
+        }
+
+        logoutDialog.show()
     }
 
     override fun onSupportNavigateUp(): Boolean {

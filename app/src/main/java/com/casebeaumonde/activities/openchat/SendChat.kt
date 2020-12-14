@@ -3,9 +3,10 @@ package com.casebeaumonde.activities.openchat
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.wifi.p2p.WifiP2pManager
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
+import android.util.Log.println
 import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,20 +20,18 @@ import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
-import com.google.gson.Gson
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.channel.Channel
 import com.pusher.client.channel.ChannelEventListener
-import com.pusher.client.channel.PrivateChannelEventListener
 import com.pusher.client.channel.SubscriptionEventListener
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
-import com.pusher.client.util.HttpAuthorizer
 import kotlinx.android.synthetic.main.activity_send_chat.*
-import org.json.JSONObject
+import org.apache.http.client.methods.RequestBuilder.put
 import retrofit2.Response
+import java.sql.DriverManager.println
 import java.util.*
 
 
@@ -74,99 +73,8 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 getString(R.string.close_up)
             )
         }
-//        setPusher()
         setupPusher()
         listeners()
-    }
-
-    private fun setPusher() {
-        val options = PusherOptions()
-        options.setCluster("us2")
-
-        val pusher = Pusher("27d208f3a07f7bb15e7e", options)
-        val channel: Channel = pusher.subscribe("chat")
-        val eventListener =
-            SubscriptionEventListener { channel, event, data ->
-                runOnUiThread {
-                    println("Received event with data: $data")
-                    val gson = Gson()
-
-                }
-            }
-
-        channel.bind("client-NewMessage", eventListener);
-
-        pusher.connect(object : ConnectionEventListener {
-            override fun onConnectionStateChange(change: ConnectionStateChange) {
-                println(
-                    "State changed to " + change.currentState +
-                            " from " + change.previousState
-                )
-            }
-
-            override fun onError(message: String, code: String, e: java.lang.Exception) {
-                println("There was a problem connecting!")
-            }
-        }, ConnectionState.ALL)
-
-        // Subscribe to a channel
-        // Subscribe to a channel
-
-        //  Toast.makeText(this, "" + channel.name, Toast.LENGTH_SHORT).show()
-
-//        channel.bind("client-NewMessage") { channelName, eventName, data ->
-//            val jsonObject = JSONObject(data)
-//            Toast.makeText(this, "" + jsonObject.toString(), Toast.LENGTH_SHORT).show()
-//        }
-
-// Disconnect from the service
-        pusher.disconnect()
-
-// Reconnect, with all channel subscriptions and event bindings automatically recreated
-        pusher.connect()
-
-    }
-
-    private fun subscribeToChannel() {
-        val authorizer = HttpAuthorizer("http://10.0.2.2:5000/pusher/auth/private")
-        val options = PusherOptions().setAuthorizer(authorizer)
-        options.setCluster("us2")
-
-        val pusher = Pusher("27d208f3a07f7bb15e7e", options)
-        pusher.connect()
-
-
-        pusher.subscribePrivate("client-NewMessage", object : PrivateChannelEventListener {
-            override fun onEvent(channelName: String?, eventName: String?, data: String?) {
-
-                val jsonObject = JSONObject(data)
-            }
-
-            override fun onAuthenticationFailure(p0: String?, p1: java.lang.Exception?) {
-                Log.e("ChatRoom", p1!!.localizedMessage)
-            }
-
-            override fun onSubscriptionSucceeded(p0: String?) {
-                Log.i("ChatRoom", "Successful subscription")
-            }
-
-        }, "client-NewMessage")
-
-    }
-
-    private fun setupPusher1() {
-        val options = PusherOptions()
-        options.setCluster("us2")
-
-        val pusher = Pusher("27d208f3a07f7bb15e7e", options)
-        val channel = pusher.subscribe("chat")
-
-        channel.bind("client-NewMessage") { channelName, eventName, data ->
-            val jsonObject = JSONObject(data)
-            Toast.makeText(this, "" + jsonObject, Toast.LENGTH_SHORT).show()
-        }
-
-        pusher.connect()
     }
 
     private fun setupPusher() {
@@ -182,6 +90,8 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                     "State changed from ${change.previousState} to ${change.currentState}"
                 )
             }
+
+
 
             override fun onError(
                 message: String,
@@ -199,19 +109,29 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
             override fun onEvent(channelName: String?, eventName: String?, data: String?) {
                 Log.d(
                     "PUSH",
-                    "onEvent: data " + channelName.toString() + " user id " + data.toString()
+                    "onEvent: data " + channelName.toString() + " user id "
                 )
-                Log.d("test","TEST")
+                Log.d("test", "TEST")
             }
 
             override fun onSubscriptionSucceeded(channelName: String?) {
                 Log.d("PUSH", "onSubscriptionSucceeded: " + channelName)
             }
-        }, "client-NewMessage")
+        }, "NewMessage").bind("NewMessage",object : WifiP2pManager.ChannelListener,
+            SubscriptionEventListener {
+            override fun onEvent(channelName: String?, eventName: String?, data: String?) {
+                Toast.makeText(this@SendChat,""+channelName,Toast.LENGTH_SHORT).show()
+            }
 
-        pusher.disconnect()
+            override fun onChannelDisconnected() {
+                Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+        Log.d("text",""+pusher.connection.state)
         pusher.connect()
-
+        Log.d("text1",""+pusher.connection.state)
     }
 
     private fun listeners() {

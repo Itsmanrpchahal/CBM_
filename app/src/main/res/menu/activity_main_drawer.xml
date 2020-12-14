@@ -56,6 +56,11 @@
             android:id="@+id/nav_contactUs"
             android:title="Contact Us"/>
 
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"/>
+
     </group>
 
 </menu>

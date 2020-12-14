@@ -109,7 +109,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
             override fun onEvent(channelName: String?, eventName: String?, data: String?) {
                 Log.d(
                     "PUSH",
-                    "onEvent: data " + channelName.toString() + " user id "
+                    "onEvent: data " + data
                 )
                 Log.d("test", "TEST")
             }
@@ -117,21 +117,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
             override fun onSubscriptionSucceeded(channelName: String?) {
                 Log.d("PUSH", "onSubscriptionSucceeded: " + channelName)
             }
-        }, "NewMessage").bind("NewMessage",object : WifiP2pManager.ChannelListener,
-            SubscriptionEventListener {
-            override fun onEvent(channelName: String?, eventName: String?, data: String?) {
-                Toast.makeText(this@SendChat,""+channelName,Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onChannelDisconnected() {
-                Toast.makeText(this@SendChat,"HERE",Toast.LENGTH_SHORT).show()
-            }
-
-        })
-
-        Log.d("text",""+pusher.connection.state)
-        pusher.connect()
-        Log.d("text1",""+pusher.connection.state)
+        }, "NewMessage")  ;
     }
 
     private fun listeners() {

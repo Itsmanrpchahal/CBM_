@@ -111,13 +111,15 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                     "PUSH",
                     "onEvent: data " + data
                 )
-                Log.d("test", "TEST")
+                Log.d("test", "TESTnbb")
             }
 
             override fun onSubscriptionSucceeded(channelName: String?) {
                 Log.d("PUSH", "onSubscriptionSucceeded: " + channelName)
             }
-        }, "NewMessage")  ;
+        }, "NewMessage")
+
+        pusher.connect()
     }
 
     private fun listeners() {

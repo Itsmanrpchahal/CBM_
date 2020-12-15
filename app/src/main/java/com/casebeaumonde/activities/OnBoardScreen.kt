@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
-import com.casebeaumonde.activities.userRegister.RegisterActivity
 
 class OnBoardScreen : AppCompatActivity() {
 

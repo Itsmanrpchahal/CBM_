@@ -5,383 +5,389 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/bregister_parent"
-    android:background="@drawable/login_banner"
     tools:context=".activities.businessRegister.BusinessRegisterActivity">
 
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/login_banner">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="@dimen/default_margin_16dp"
-                android:background="@drawable/whiteborder"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/register_forbusiness"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_32dp"
-                    android:text="@string/wanttocustomer"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_32dp"
-                    android:text="@string/team"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners">
-
-
-                    <Spinner
-                        android:id="@+id/business_team_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@drawable/roundcorners">
-
-                    </Spinner>
-
-                    <TextView
-                        android:id="@+id/spinnertitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:gravity="center_vertical"
-                        android:text="-Select Team-"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/textsize_16sp">
-
-                    </TextView>
-
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/companyname"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_companyname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="Company Name"
-                    android:inputType="text"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/firstname"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_firstname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="First Name"
-                    android:inputType="text"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/lastname"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_lastname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="Last Name"
-                    android:inputType="text"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/email"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="Email"
-                    android:inputType="text"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/password"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/confirmpassword"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_cpassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="Confirm Password"
-                    android:inputType="textPassword"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/phone"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <EditText
-                    android:id="@+id/bregister_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:hint="Phone"
-                    android:inputType="phone"
-                    android:padding="@dimen/margin_8dp"
-                    android:textColor="@color/colorTextHint"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </EditText>
-
-                <CheckBox
-                    android:id="@+id/business_agreecheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorWhite"
-                    android:text="@string/paypalaccept"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </CheckBox>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/margin_8dp"
-                    android:text="@string/profileimage"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textStyle="bold">
-
-                </TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8dp"
-                    android:background="@drawable/roundcorners"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/margin_8dp">
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/default_margin_16dp"
+                    android:background="@drawable/whiteborder"
+                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/bregister_upload"
+                    <TextView
+                        android:id="@+id/register_forbusiness"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Upload"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_32dp"
+                        android:text="@string/wanttocustomer"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_32dp"
+                        android:text="@string/team"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners">
+
+
+                        <Spinner
+                            android:id="@+id/business_team_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/roundcorners">
+
+                        </Spinner>
+
+                        <TextView
+                            android:id="@+id/spinnertitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_8dp"
+                            android:gravity="center_vertical"
+                            android:text="-Select Team-"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/textsize_16sp">
+
+                        </TextView>
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/companyname"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_companyname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="Company Name"
+                        android:inputType="text"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/firstname"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_firstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="First Name"
+                        android:inputType="text"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/lastname"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="Last Name"
+                        android:inputType="text"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/email"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="Email"
+                        android:inputType="text"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/password"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/confirmpassword"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_cpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/phone"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/bregister_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:hint="Phone"
+                        android:inputType="phone"
+                        android:padding="@dimen/margin_8dp"
+                        android:textColor="@color/colorTextHint"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </EditText>
+
+                    <CheckBox
+                        android:id="@+id/business_agreecheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorWhite"
+                        android:text="@string/paypalaccept"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </CheckBox>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:text="@string/profileimage"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:background="@drawable/roundcorners"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/margin_8dp">
+
+                        <Button
+                            android:id="@+id/bregister_upload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Upload"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite">
+
+                        </Button>
+
+
+                        <TextView
+                            android:id="@+id/buploadfilename"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/textsize_16sp">
+
+                        </TextView>
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/bregister_agreecheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorWhite"
+                        android:text="@string/agreetext"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </CheckBox>
+
+                    <Button
+                        android:id="@+id/bregister_regiter_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/margin_40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_32dp"
+                        android:background="@drawable/roundcorners"
+                        android:text="Register"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorWhite">
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/textsize_16sp">
 
                     </Button>
 
-
-                    <TextView
-                        android:id="@+id/buploadfilename"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/textsize_16sp">
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_32dp"
+                        android:layout_marginBottom="@dimen/margin_32dp"
+                        android:orientation="horizontal">
 
-                    </TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Allready have account?"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/textsize_16sp">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/register_login"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Login"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/textsize_16sp">
+
+                        </TextView>
+                    </LinearLayout>
                 </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/bregister_agreecheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorWhite"
-                    android:text="@string/agreetext"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </CheckBox>
-
-                <Button
-                    android:id="@+id/bregister_regiter_bt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/margin_40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin_32dp"
-                    android:background="@drawable/roundcorners"
-                    android:text="Register"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </Button>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/margin_32dp"
-                    android:layout_marginBottom="@dimen/margin_32dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Allready have account?"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/register_login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" Login"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp">
-
-                    </TextView>
-                </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
-    </ScrollView>
+
 </RelativeLayout>

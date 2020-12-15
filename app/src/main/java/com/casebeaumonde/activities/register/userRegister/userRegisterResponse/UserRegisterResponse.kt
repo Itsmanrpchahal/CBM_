@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.userRegister.userRegisterResponse
+package com.casebeaumonde.activities.register.userRegister.userRegisterResponse
 
 import com.google.gson.annotations.Expose
 

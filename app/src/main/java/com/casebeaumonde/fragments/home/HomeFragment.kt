@@ -2,7 +2,6 @@ package com.casebeaumonde.fragments.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,9 @@ import android.widget.*
 import androidx.fragment.app.FragmentManager
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
-import com.casebeaumonde.activities.userRegister.RegisterActivity
+import com.casebeaumonde.activities.register.userRegister.RegisterActivity
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.pricing.Pricing
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 
 class HomeFragment : BaseFrag() {

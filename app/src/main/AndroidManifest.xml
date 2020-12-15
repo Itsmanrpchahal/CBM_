@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.register.userRegister.RegisterTypeScreen"></activity>
         <activity
             android:name=".activities.openchat.SendChat"
             android:label="@string/title_activity_send_chat"
@@ -39,7 +40,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.userRegister.RegisterActivity"
+            android:name=".activities.register.userRegister.RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <provider

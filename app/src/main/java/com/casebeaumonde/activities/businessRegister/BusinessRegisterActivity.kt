@@ -24,7 +24,7 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
-import com.casebeaumonde.activities.userRegister.RegisterActivity
+import com.casebeaumonde.activities.register.userRegister.RegisterActivity
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions

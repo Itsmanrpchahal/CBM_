@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.userRegister
+package com.casebeaumonde.activities.register.userRegister
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -25,7 +25,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity
 import com.casebeaumonde.activities.login.LoginActivity
-import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse
+import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions

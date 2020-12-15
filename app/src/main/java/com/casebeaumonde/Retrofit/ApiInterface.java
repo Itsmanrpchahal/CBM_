@@ -32,7 +32,7 @@ import com.casebeaumonde.activities.openchat.response.GetChatResponse;
 import com.casebeaumonde.activities.openchat.response.SendChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
-import com.casebeaumonde.activities.userRegister.userRegisterResponse.UserRegisterResponse;
+import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
 import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse;

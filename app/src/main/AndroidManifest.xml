@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.register.userRegister.RegisterTypeScreen"></activity>
+        <activity android:name=".activities.forgotPassword.ForgotActivity"></activity>
+        <activity android:name=".activities.register.userRegister.RegisterTypeScreen" />
         <activity
             android:name=".activities.openchat.SendChat"
             android:label="@string/title_activity_send_chat"

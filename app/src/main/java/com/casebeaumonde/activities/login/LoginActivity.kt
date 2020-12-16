@@ -18,6 +18,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
+import com.casebeaumonde.activities.forgotPassword.ForgotActivity
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.register.userRegister.RegisterActivity
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse
@@ -90,7 +91,8 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         }
 
         login_forgot_TV.setOnClickListener {
-            forgotPassword()
+            //forgotPassword()
+            startActivity(Intent(this,ForgotActivity::class.java))
         }
     }
 

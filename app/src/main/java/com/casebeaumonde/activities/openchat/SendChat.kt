@@ -79,7 +79,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
 
     private fun setupPusher() {
         val options = PusherOptions()
-        options.setCluster("us2");
+        options.setCluster("us2")
 
         pusher = Pusher("27d208f3a07f7bb15e7e", options)
 
@@ -101,7 +101,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 Log.i(
                     "Pusher",
                     "There was a problem connecting! code ($code), message ($message), exception($e)"
-                )
+                )   
             }
         }, ConnectionState.ALL)
 

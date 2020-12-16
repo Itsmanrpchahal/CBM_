@@ -91,8 +91,8 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         }
 
         login_forgot_TV.setOnClickListener {
-            //forgotPassword()
-            startActivity(Intent(this,ForgotActivity::class.java))
+            forgotPassword()
+//            startActivity(Intent(this,ForgotActivity::class.java))
         }
     }
 

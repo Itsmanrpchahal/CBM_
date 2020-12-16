@@ -101,7 +101,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 Log.i(
                     "Pusher",
                     "There was a problem connecting! code ($code), message ($message), exception($e)"
-                )   
+                )
             }
         }, ConnectionState.ALL)
 

@@ -23,7 +23,7 @@ import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 
 
-class SplashScreen : BaseClass() {
+class   SplashScreen : BaseClass() {
     private lateinit var gif : GifImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

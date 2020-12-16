@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.register.userRegister.RegisterActivity
+import com.casebeaumonde.activities.register.userRegister.RegisterTypeScreen
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -61,6 +62,7 @@ class HomeFragment : BaseFrag() {
 //            val transaction = manager.beginTransaction()
 //                transaction.replace(R.id.nav_host_fragment, pricing)
 //                transaction.commit()
+            startActivity(Intent(context,RegisterTypeScreen::class.java))
         }
     }
 

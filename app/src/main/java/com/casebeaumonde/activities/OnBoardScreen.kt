@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.login.LoginActivity
+import com.casebeaumonde.activities.register.userRegister.RegisterTypeScreen
 
 class OnBoardScreen : AppCompatActivity() {
 
@@ -30,7 +31,7 @@ class OnBoardScreen : AppCompatActivity() {
             //startActivity(Intent(this,RegisterActivity::class.java))
         }
         onboard_pricing.setOnClickListener {
-           // startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this,RegisterTypeScreen::class.java))
         }
     }
 

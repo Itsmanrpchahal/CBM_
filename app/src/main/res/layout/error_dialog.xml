@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -21,7 +23,7 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:src="@drawable/ic_attention"
-                     android:layout_marginTop="@dimen/default_margin_16dp">
+                     android:layout_marginTop="@dimen/margin_32dp">
 
                  </ImageView>
 
@@ -40,9 +42,28 @@
                  <TextView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:text="">
+                     android:text="OPPS! LOOKS LIKE \n SOMETHINGS WENT WRONG"
+                     android:textColor="@color/colorBlack"
+                     android:layout_gravity="center"
+                     android:textAlignment="center"
+                     android:textSize="@dimen/textsize_16sp"
+                     android:layout_marginTop="@dimen/default_margin_16dp">
 
                  </TextView>
+
+
+                 <Button
+                     android:id="@+id/goback"
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/buttonheight"
+                     android:background="@color/colorBlack"
+                     android:text="GO BACK"
+                     android:layout_marginLeft="@dimen/default_margin_16dp"
+                     android:layout_marginRight="@dimen/default_margin_16dp"
+                     android:layout_marginTop="@dimen/default_margin_16dp"
+                     android:layout_marginBottom="@dimen/margin_32dp">
+
+                 </Button>
              </LinearLayout>
 
     </androidx.cardview.widget.CardView>

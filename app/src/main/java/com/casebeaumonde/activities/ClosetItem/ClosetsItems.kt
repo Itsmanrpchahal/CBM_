@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
 import com.casebeaumonde.activities.ClosetItem.adapter.FilterAdapter
@@ -37,6 +38,10 @@ import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
+import kotlinx.android.synthetic.main.activity_event_detail_screen.*
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class ClosetsItems : BaseClass(),
@@ -103,11 +108,11 @@ class ClosetsItems : BaseClass(),
     private lateinit var categoryID: ArrayList<String>
     private lateinit var brandTitle: ArrayList<String>
     private lateinit var brandID: ArrayList<String>
-    private lateinit var colorTitle : ArrayList<String>
-    private lateinit var colorID : ArrayList<String>
-    private lateinit var sizeTitle : ArrayList<String>
-    private lateinit var sizeID : ArrayList<String>
-    private lateinit var priceTitle : ArrayList<String>
+    private lateinit var colorTitle: ArrayList<String>
+    private lateinit var colorID: ArrayList<String>
+    private lateinit var sizeTitle: ArrayList<String>
+    private lateinit var sizeID: ArrayList<String>
+    private lateinit var priceTitle: ArrayList<String>
     private lateinit var hashMap: HashMap<String, String>
 
     var select: Int = 0
@@ -123,12 +128,43 @@ class ClosetsItems : BaseClass(),
         controller = Controller()
         controller.Controller(this, this, this, this, this, this, this, this, this, this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
-        controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
+            controller.EventDetail("Bearer " + getStringVal(Constants.TOKEN), closetID)
+            setViewAnalyticsAPI(closetID, "closet_item");
+        } else {
+            utility!!.relative_snackbar(
+                parent_eventdetail!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+
         closetitemidIf = this
         viewclosetidIf = this
         selectedclosetId = this
         userID = intent.getStringExtra("userID")
         listeners()
+    }
+
+    private fun setViewAnalyticsAPI(closetID: String, s: String) {
+        val viewAnalytics = WebAPI.getInstance().api.viewAnalytics(
+            "Bearer " + getStringVal(Constants.TOKEN),
+            closetID,
+            s
+        )
+        viewAnalytics.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+            }
+
+        })
     }
 
     override fun onResume() {
@@ -733,10 +769,9 @@ class ClosetsItems : BaseClass(),
                             hashMap
                         )
                         //searchByOutFit(categoryTitle[position], categoryID[position])
-                    }else {
+                    } else {
                         hashMap.remove("category_id")
-                        if (hashMap.size==0)
-                        {
+                        if (hashMap.size == 0) {
                             setClosetAPI()
                         }
                         controller.FilterCloseItems(
@@ -792,10 +827,9 @@ class ClosetsItems : BaseClass(),
                             hashMap
                         )
                         //searchByOutFit(categoryTitle[position], categoryID[position])
-                    }else {
+                    } else {
                         hashMap.remove("brand")
-                        if (hashMap.size==0)
-                        {
+                        if (hashMap.size == 0) {
                             setClosetAPI()
                         }
                         controller.FilterCloseItems(
@@ -851,10 +885,9 @@ class ClosetsItems : BaseClass(),
                             hashMap
                         )
                         //searchByOutFit(categoryTitle[position], categoryID[position])
-                    }else {
+                    } else {
                         hashMap.remove("color")
-                        if (hashMap.size==0)
-                        {
+                        if (hashMap.size == 0) {
                             setClosetAPI()
                         }
                         controller.FilterCloseItems(
@@ -910,10 +943,9 @@ class ClosetsItems : BaseClass(),
                             hashMap
                         )
                         //searchByOutFit(categoryTitle[position], categoryID[position])
-                    }else {
+                    } else {
                         hashMap.remove("size")
-                        if (hashMap.size==0)
-                        {
+                        if (hashMap.size == 0) {
                             setClosetAPI()
                         }
                         controller.FilterCloseItems(
@@ -962,7 +994,7 @@ class ClosetsItems : BaseClass(),
                         pd.show()
                         val priice = priceTitle[position]
 
-                        hashMap.put("price", priice.replace("$",""))
+                        hashMap.put("price", priice.replace("$", ""))
                         Log.d("hashmap", "" + hashMap)
                         controller.FilterCloseItems(
                             "Bearer " + getStringVal(Constants.TOKEN),
@@ -970,10 +1002,9 @@ class ClosetsItems : BaseClass(),
                             hashMap
                         )
                         //searchByOutFit(categoryTitle[position], categoryID[position])
-                    }else {
+                    } else {
                         hashMap.remove("price")
-                        if (hashMap.size==0)
-                        {
+                        if (hashMap.size == 0) {
                             setClosetAPI()
                         }
                         controller.FilterCloseItems(
@@ -992,7 +1023,6 @@ class ClosetsItems : BaseClass(),
                     // write code to perform some action
                 }
             }
-
 
 
         } else {
@@ -1069,7 +1099,7 @@ class ClosetsItems : BaseClass(),
                 }
             }
             outfitResponse = ArrayList()
-          //  outfitResponse.addAll(filtersucces)
+            //  outfitResponse.addAll(filtersucces)
             closetsItems_recycler.adapter = adapter
         } else {
             utility!!.relative_snackbar(
@@ -1079,7 +1109,6 @@ class ClosetsItems : BaseClass(),
             )
         }
     }
-
 
 
     override fun error(error: String?) {

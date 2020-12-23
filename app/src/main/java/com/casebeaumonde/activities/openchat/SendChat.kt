@@ -3,10 +3,9 @@ package com.casebeaumonde.activities.openchat
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.wifi.p2p.WifiP2pManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import android.util.Log.println
 import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,16 +21,12 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
-import com.pusher.client.channel.Channel
-import com.pusher.client.channel.ChannelEventListener
-import com.pusher.client.channel.SubscriptionEventListener
+import com.pusher.client.channel.*
 import com.pusher.client.connection.ConnectionEventListener
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
 import kotlinx.android.synthetic.main.activity_send_chat.*
-import org.apache.http.client.methods.RequestBuilder.put
 import retrofit2.Response
-import java.sql.DriverManager.println
 import java.util.*
 
 
@@ -51,6 +46,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
     private lateinit var chatdata: ArrayList<GetChatResponse.Data.Message>
     private lateinit var pusher: Pusher
     private lateinit var blockbt: Button
+    private lateinit var channel : Channel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +58,9 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         id = intent?.getStringExtra("id").toString()
         name = intent?.getStringExtra("chatname").toString()
         chatname.setText(name)
-        if (utility.isConnectingToInternet(this)) {
-            pd.show()
+
+        if (utility.isConnectingToInternet(this@SendChat)) {
+            // pd.show()
             pd.setContentView(R.layout.loading)
             controller.GetChat("Bearer " + getStringVal(Constants.TOKEN), id)
         } else {
@@ -73,16 +70,21 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 getString(R.string.close_up)
             )
         }
+
         setupPusher()
+
         listeners()
     }
 
+
     private fun setupPusher() {
+
         val options = PusherOptions()
         options.setCluster("us2")
 
+       // options.authorizer
         pusher = Pusher("27d208f3a07f7bb15e7e", options)
-
+        //pusher.subscribePrivate("Chat").trigger("NewMessage","message")
         pusher.connect(object : ConnectionEventListener {
             override fun onConnectionStateChange(change: ConnectionStateChange) {
                 Log.i(
@@ -90,7 +92,6 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                     "State changed from ${change.previousState} to ${change.currentState}"
                 )
             }
-
 
 
             override fun onError(
@@ -118,8 +119,6 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 Log.d("PUSH", "onSubscriptionSucceeded: " + channelName)
             }
         }, "NewMessage")
-
-        pusher.connect()
     }
 
     private fun listeners() {

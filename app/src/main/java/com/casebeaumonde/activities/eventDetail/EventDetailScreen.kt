@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
 import com.casebeaumonde.activities.eventDetail.IF.EventID_IF
@@ -25,6 +26,10 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_event_detail_screen.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_IF,EventID_IF,Controller.AddTofavClosetItemAPI,Controller.AdDItemToAnotherClosetAPI{
@@ -55,6 +60,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
             pd.show()
             pd.setContentView(R.layout.loading)
             controller.EventDetail("Bearer " + getStringVal(Constants.TOKEN), id)
+            setViewAnalyticsAPI(id,"event_item");
         } else {
             utility!!.relative_snackbar(
                 parent_eventdetail!!,
@@ -62,6 +68,23 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
                 getString(R.string.close_up)
             )
         }
+    }
+
+    private fun setViewAnalyticsAPI(id: String, s: String) {
+
+        val viewAnalytics = WebAPI.getInstance().api.viewAnalytics("Bearer "+getStringVal(Constants.TOKEN),id,s)
+        viewAnalytics.enqueue(object : Callback<ResponseBody>
+        {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+            }
+
+        })
+
     }
 
     private fun listeners() {

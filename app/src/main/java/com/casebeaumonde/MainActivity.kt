@@ -148,17 +148,17 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     if (response.isSuccessful) {
                         val code = response.body()?.getCode()
                         if (code == 200) {
-//                            startActivity(
-//                                Intent(
-//                                    this@MainActivity,
-//                                    MainActivity::class.java
-//                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                                    .setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-//
-//                            )
-                            // finish()
-                            finish()
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    MainActivity::class.java
+                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    .setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+
+                            )
+                             finish()
+                            //finish()
                             overridePendingTransition(0, 0)
                             overridePendingTransition(0, 0)
 

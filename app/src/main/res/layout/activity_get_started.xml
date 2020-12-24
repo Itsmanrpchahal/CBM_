@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBlack"
+    tools:context=".activities.questionaries.GetStartedActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/default_margin_16dp"
+                        android:src="@drawable/ic_baseline_close_24"
+                        android:background="@android:color/transparent">
+
+                    </ImageButton>
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/cbmlogo"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TELL US A LITTLE BIT ABOUT YOURSELF"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp"
+                android:textAlignment="center">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tell us a little about yourself!  Helping us understand what your preferences are makes building your beautiful world with CASA BEAU MONDE limitless!  This will create your foundation for successful creation and collaboration."
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textAlignment="center">
+            </TextView>
+
+            <Button
+                android:id="@+id/getstarted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/default_margin_16dp"
+                android:text="GET STARTED"
+                android:textColor="@color/colorBlack"
+                android:padding="@dimen/default_margin_16dp">
+
+            </Button>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

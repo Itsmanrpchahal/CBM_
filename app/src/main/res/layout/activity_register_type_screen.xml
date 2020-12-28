@@ -22,6 +22,7 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_baseline_arrow_back_ios_24"
                 android:background="@android:color/transparent">
 
@@ -69,20 +70,18 @@
 
     </View>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/margin_32dp"
-        android:layout_marginLeft="@dimen/textsize_24sp"
-        android:layout_marginRight="@dimen/textsize_24sp">
+        android:layout_marginTop="@dimen/margin_32dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/retailercard"
-            android:layout_width="160dp"
-            android:layout_height="160dp">
+            android:id="@+id/personalcard"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_marginLeft="@dimen/textsize_24sp"
+            android:layout_alignParentLeft="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -95,7 +94,8 @@
                     android:id="@+id/textRetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Retail/Boutique"
+                    android:text="PERSONAL"
+                    android:drawableTop="@drawable/personal"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/colorWhite">
@@ -106,10 +106,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/influencercard"
+            android:id="@+id/busissnesscard"
             android:layout_marginLeft="@dimen/default_margin_16dp"
-            android:layout_width="160dp"
-            android:layout_height="160dp">
+            android:layout_width="170dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/textsize_24sp"
+            android:layout_height="170dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -122,8 +124,9 @@
                     android:id="@+id/textInfluencer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/bussiness"
                     android:textAlignment="center"
-                    android:text="Influencer/Stylist/Personal Shopper"
+                    android:text="BUSINESS"
                     android:textAllCaps="true"
                     android:textColor="@color/colorWhite">
 
@@ -132,9 +135,10 @@
 
         </androidx.cardview.widget.CardView>
         
-    </LinearLayout>
+    </RelativeLayout>
 
     <Button
+        android:id="@+id/continue_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/buttonheight"
         android:layout_marginLeft="@dimen/textsize_24sp"

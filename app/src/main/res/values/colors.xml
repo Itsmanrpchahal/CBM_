@@ -9,4 +9,6 @@
     <color name="colorBlue">#3F51B5</color>
     <color name="colorGreen">#136C16</color>
     <color name="colorOrange">#FFAF3A</color>
+    <color name="colorBackground">#222222</color>
+    <color name="colorShadow">#8A707070</color>
 </resources>

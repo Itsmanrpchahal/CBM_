@@ -23,7 +23,8 @@
         <activity android:name=".activities.questionaries.UploadBodyTypeImage" />
         <activity android:name=".activities.questionaries.SelectBodyTalk" />
         <activity android:name=".activities.questionaries.ColorPickerScreen" />
-        <activity android:name=".activities.questionaries.TellAboutYourSelf" /> <!-- <activity android:name=".activities.questionaries.GetStartedActivity" /> -->
+        <activity android:name=".activities.questionaries.TellAboutYourSelf" />
+         <activity android:name=".activities.questionaries.GetStartedActivity" />
         <activity android:name=".activities.forgotPassword.ForgotActivity" />
         <activity android:name=".activities.register.userRegister.RegisterTypeScreen" />
         <activity
@@ -64,7 +65,7 @@
         <activity
             android:name=".activities.login.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activities.questionaries.GetStartedActivity">
+        <activity android:name=".activities.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

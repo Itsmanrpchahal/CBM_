@@ -7,7 +7,7 @@
     android:layout_centerVertical="true"
     android:gravity="center"
     android:id="@+id/parent_register"
-    android:background="@drawable/login_banner"
+    android:background="@color/colorBackground"
     tools:context=".activities.register.userRegister.RegisterActivity">
 
     <ScrollView

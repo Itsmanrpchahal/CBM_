@@ -11,4 +11,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="buttonheight">50dp</dimen>
     <dimen name="toolbartv">20dp</dimen>
+    <dimen name="textsize_40sp">40sp</dimen>
 </resources>

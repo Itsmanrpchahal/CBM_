@@ -1,21 +1,28 @@
 package com.casebeaumonde.activities.register.userRegister
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity
 
 class RegisterTypeScreen : AppCompatActivity() {
 
-    private lateinit var retailercard : CardView
-    private lateinit var influencercard : CardView
+    private lateinit var back : ImageButton
+    private lateinit var personalcard : CardView
+    private lateinit var busissnesscard : CardView
     private lateinit var textRetail : TextView
     private lateinit var textInfluencer : TextView
+    private lateinit var continue_bt : Button
+      var type : String ="Personal"
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,33 +36,47 @@ class RegisterTypeScreen : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ResourceAsColor")
     private fun listeners() {
-        influencercard.setCardBackgroundColor(getColor(R.color.colorBlack))
-        retailercard.setCardBackgroundColor(getColor(R.color.colorWhite))
+        busissnesscard.setCardBackgroundColor(getColor(R.color.colorBlack))
+        personalcard.setCardBackgroundColor(getColor(R.color.colorWhite))
         textRetail.setTextColor(getColor(R.color.colorBlack))
         textInfluencer.setTextColor(getColor(R.color.colorWhite))
 
-         retailercard.setOnClickListener {
-            retailercard.setCardBackgroundColor(getColor(R.color.colorWhite))
-            influencercard.setCardBackgroundColor(getColor(R.color.colorBlack))
+        personalcard.setOnClickListener {
+            personalcard.setCardBackgroundColor(getColor(R.color.colorWhite))
+            busissnesscard.setCardBackgroundColor(getColor(R.color.colorBlack))
              textRetail.setTextColor(getColor(R.color.colorBlack))
              textInfluencer.setTextColor(getColor(R.color.colorWhite))
-
+                type = "Personal"
         }
 
-        influencercard.setOnClickListener {
-            retailercard.setCardBackgroundColor(getColor(R.color.colorBlack))
-            influencercard.setCardBackgroundColor(getColor(R.color.colorWhite))
+        busissnesscard.setOnClickListener {
+            personalcard.setCardBackgroundColor(getColor(R.color.colorBlack))
+            busissnesscard.setCardBackgroundColor(getColor(R.color.colorWhite))
             textRetail.setTextColor(getColor(R.color.colorWhite))
             textInfluencer.setTextColor(getColor(R.color.colorBlack))
+            type = "Bussiness"
         }
 
+        back.setOnClickListener { onBackPressed() }
 
+        continue_bt.setOnClickListener {
+           if(type.equals("Personal"))
+           {
+               startActivity(Intent(this,RegisterActivity::class.java))
+           } else {
+               startActivity(Intent(this,BusinessRegisterActivity::class.java))
+           }
+
+
+        }
     }
 
     private fun findIds() {
-        retailercard = findViewById(R.id.retailercard)
-        influencercard = findViewById(R.id.influencercard)
+        back = findViewById(R.id.back)
+        personalcard = findViewById(R.id.personalcard)
+        busissnesscard = findViewById(R.id.busissnesscard)
         textRetail = findViewById(R.id.textRetail)
         textInfluencer = findViewById(R.id.textInfluencer)
+        continue_bt = findViewById(R.id.continue_bt)
     }
 }

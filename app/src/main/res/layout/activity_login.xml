@@ -2,89 +2,169 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_banner"
-    android:id="@+id/parent_login"
     tools:context=".activities.login.LoginActivity">
 
-
-    <ScrollView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/login_banner">
+
+    </ImageView>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/default_margin_16dp"
-            android:background="@drawable/whiteborder">
+            android:layout_height="match_parent"
+            android:background="@color/colorShadow"
+            android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/colorBackground"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/default_margin_16dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+                    </ImageButton>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="LOGIN"
+                        android:textSize="@dimen/toolbartv">
+
+                    </TextView>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:src="@drawable/cbmlogo">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LOGIN"
                 android:textColor="@color/colorWhite"
-                android:text="@string/email"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_32dp"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:textSize="@dimen/textsize_16sp">
+                android:layout_gravity="center"
+                android:fontFamily="@font/oswaldlight"
+                android:gravity="center"
+                android:textSize="@dimen/textsize_40sp">
 
             </TextView>
+
 
             <EditText
                 android:id="@+id/login_Email_ET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
-                android:hint="Enter Email"
+                android:background="@android:color/transparent"
+                app:backgroundTint="@color/colorWhite"
+                android:hint="EMAIL"
                 android:inputType="textEmailAddress"
-                android:textSize="@dimen/textsize_16sp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
                 android:padding="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners">
+                android:textColor="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:fontFamily="@font/oswaldlight"
+                android:textSize="@dimen/textsize_16sp">
 
             </EditText>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:text="@string/password"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:textSize="@dimen/textsize_16sp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
 
-            </TextView>
+            </View>
+
 
             <EditText
                 android:id="@+id/login_Password_ET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
-                android:hint="Enter Password"
+                android:background="@android:color/transparent"
+                android:hint="PASSWORD"
+                app:backgroundTint="@color/colorWhite"
                 android:inputType="textPassword"
-                android:textSize="@dimen/textsize_16sp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
                 android:padding="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners">
+                android:fontFamily="@font/oswaldlight"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
             </EditText>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorWhite"
+                android:text="REMEMBER ME"
+                android:gravity="center"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_gravity="center"
+                android:textSize="@dimen/textsize_16sp">
+
+            </CheckBox>
+
             <Button
                 android:id="@+id/login_LoginBT"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_40dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buttonheight"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/oswaldlight"
                 android:background="@drawable/roundcorners"
                 android:text="@string/login"
+                android:textAllCaps="true"
                 android:textColor="@color/colorBlack"
-                android:textAllCaps="false"
                 android:textSize="@dimen/textsize_16sp">
 
             </Button>
@@ -93,12 +173,15 @@
                 android:id="@+id/login_forgot_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:text="@string/forgotpassword"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
-                android:textSize="@dimen/textsize_16sp">
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:text="@string/forgotpassword"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textStyle="bold">
 
             </TextView>
 
@@ -106,17 +189,18 @@
                 android:id="@+id/login_resgiter_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:text="@string/donthaveaccount"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/margin_32dp"
-                android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
-                android:textSize="@dimen/textsize_16sp">
+                android:fontFamily="@font/oswaldlight"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginBottom="@dimen/margin_32dp"
+                android:text="@string/donthaveaccount"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textAllCaps="true"
+                android:textStyle="bold">
 
             </TextView>
         </LinearLayout>
-
-    </ScrollView>
 
 </RelativeLayout>

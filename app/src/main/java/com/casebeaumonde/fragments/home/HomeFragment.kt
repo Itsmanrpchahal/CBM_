@@ -51,7 +51,8 @@ class HomeFragment : BaseFrag() {
         }
 
         onboard_registerBt.setOnClickListener {
-            context?.startActivity(Intent(context,RegisterActivity::class.java))
+//            context?.startActivity(Intent(context,RegisterActivity::class.java))
+            context?.startActivity(Intent(context,RegisterTypeScreen::class.java))
         }
 
         onboard_pricing.setOnClickListener {

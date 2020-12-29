@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +63,7 @@ class NotificationAdapter(
         fun bindItems(notificationsResponse: NotificationsResponse) {
             var notification_text: TextView
             var notification_time: TextView
-            var notification_image: CircleImageView
+            var notification_image: ImageView
             var remove_notification: Button
             notification_text = itemView.findViewById(R.id.notification_text)
             notification_time = itemView.findViewById(R.id.notification_time)

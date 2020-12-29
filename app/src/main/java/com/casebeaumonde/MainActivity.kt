@@ -66,6 +66,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
         findIds()
         listeners()
+
         if (getStringVal(Constants.TOKEN).equals("")) {
             navView.inflateMenu(R.menu.activity_main_drawer1)
             navView.visibility = View.GONE

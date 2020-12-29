@@ -39,6 +39,7 @@ import java.io.File
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var register_forbusiness: TextView
+    private lateinit var back : ImageButton
     private lateinit var register_firstname: EditText
     private lateinit var register_lastname: EditText
     private lateinit var register_email: EditText
@@ -87,6 +88,7 @@ class RegisterActivity : AppCompatActivity() {
         agreecheck = findViewById(R.id.agreecheck)
         register_regiter_bt = findViewById(R.id.register_regiter_bt)
         register_login = findViewById(R.id.register_login)
+        back = findViewById(R.id.back)
     }
 
     private fun listerners() {
@@ -142,6 +144,8 @@ class RegisterActivity : AppCompatActivity() {
                 checked = "0"
             }
         }
+
+        back.setOnClickListener { onBackPressed() }
     }
 
     private fun checkValidations() {

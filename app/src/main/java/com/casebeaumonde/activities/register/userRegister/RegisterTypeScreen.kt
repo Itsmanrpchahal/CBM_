@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import com.casebeaumonde.R
@@ -21,7 +18,7 @@ class RegisterTypeScreen : AppCompatActivity() {
     private lateinit var busissnesscard : CardView
     private lateinit var textRetail : TextView
     private lateinit var textInfluencer : TextView
-    private lateinit var continue_bt : Button
+    private lateinit var continue_bt : LinearLayout
       var type : String ="Personal"
 
     @RequiresApi(Build.VERSION_CODES.M)

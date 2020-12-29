@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
@@ -39,6 +40,7 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
     private lateinit var login_LoginBT: Button
     private lateinit var login_forgot_TV: TextView
     private lateinit var login_resgiter_TV: TextView
+    private lateinit var back : ImageButton
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var  dialog: Dialog
@@ -68,6 +70,7 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
 
+        back = findViewById(R.id.back)
         login_Email_ET = findViewById(R.id.login_Email_ET)
         login_Password_ET = findViewById(R.id.login_Password_ET)
         login_LoginBT = findViewById(R.id.login_LoginBT)
@@ -94,6 +97,8 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
             forgotPassword()
 //            startActivity(Intent(this,ForgotActivity::class.java))
         }
+
+        back.setOnClickListener { onBackPressed() }
     }
 
     private fun forgotPassword() {

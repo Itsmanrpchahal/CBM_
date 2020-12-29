@@ -19,20 +19,67 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/default_margin_16dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/whiteborder"
-            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_8dp">
+
+                    <ImageButton
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                        android:background="@android:color/transparent">
+
+                    </ImageButton>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign Up"
+                        android:fontFamily="@font/oswaldlight"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/toolbartv"
+                        android:textColor="@color/colorWhite"
+                        android:layout_centerInParent="true">
+
+                    </TextView>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:src="@drawable/cbmlogo">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SIGN UP"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:fontFamily="@font/oswaldlight"
+                android:gravity="center"
+                android:textSize="@dimen/textsize_40sp">
+
+            </TextView>
 
             <TextView
                 android:id="@+id/register_forbusiness"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/margin_32dp"
                 android:text="@string/wanttobusiness"
@@ -41,6 +88,231 @@
                 android:textStyle="bold">
 
             </TextView>
+
+            <EditText
+                android:id="@+id/register_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="EMAIL"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/register_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PASSWORD"
+                android:inputType="textPassword"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/register_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PHONE NUMBER"
+                android:inputType="number"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/register_aboutme"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="ABOUT ME"
+                android:textColorHint="@color/colorWhite"
+                android:gravity="start"
+                android:inputType="text"
+                android:padding="@dimen/margin_8dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:fontFamily="@font/oswaldlight"
+                android:text="UPLOAD PROFILE PICTURE"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:layout_margin="@dimen/default_margin_16dp"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/uploadfilename"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorWhite"
+                        android:gravity="start"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp"
+                        android:backgroundTint="@android:color/transparent">
+
+                    </TextView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorWhite">
+
+                    </View>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/register_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="UPLOAD PHOTO"
+                    android:fontFamily="@font/oswaldlight"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/whiteborderblack"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite">
+
+                </Button>
+
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/agreecheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorWhite"
+                android:text="@string/agreetext"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </CheckBox>
+
+            <Button
+                android:id="@+id/register_regiter_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buttonheight"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:fontFamily="@font/oswaldlight"
+                android:background="@drawable/roundcorners"
+                android:text="SIGN UP"
+                android:textAllCaps="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/textsize_16sp">
+
+            </Button>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/donthaveaccount"
+                android:fontFamily="@font/oswaldlight"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/default_margin_16dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/default_margin_16dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/whiteborder"
+            android:orientation="vertical">
+
+
 
 
             <TextView
@@ -111,7 +383,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/register_email"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
@@ -137,20 +409,7 @@
 
             </TextView>
 
-            <EditText
-                android:id="@+id/register_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="@dimen/margin_8dp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
 
-            </EditText>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -191,50 +450,8 @@
 
             </TextView>
 
-            <EditText
-                android:id="@+id/register_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:hint="Phone"
-                android:inputType="phone"
-                android:padding="@dimen/margin_8dp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
-
-            </EditText>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/about"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/register_aboutme"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_gravity="start"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:gravity="start"
-                android:inputType="text"
-                android:padding="@dimen/margin_8dp"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
-
-            </EditText>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -257,19 +474,11 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/margin_8dp">
 
-                <Button
-                    android:id="@+id/register_upload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Upload"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite">
 
-                </Button>
 
 
                 <TextView
-                    android:id="@+id/uploadfilename"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -281,31 +490,6 @@
             </LinearLayout>
 
 
-            <CheckBox
-                android:id="@+id/agreecheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorWhite"
-                android:text="@string/agreetext"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp">
-
-            </CheckBox>
-
-
-            <Button
-                android:id="@+id/register_regiter_bt"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_32dp"
-                android:background="@drawable/roundcorners"
-                android:text="Register"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/textsize_16sp">
-
-            </Button>
 
 
             <LinearLayout

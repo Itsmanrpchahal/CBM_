@@ -290,8 +290,22 @@
 
             </Button>
 
+            <TextView
+                android:id="@+id/forgotpassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FORGOT YOUR PASSWORD?"
+                android:fontFamily="@font/oswaldlight"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
 
             <TextView
+                android:id="@+id/donthaveaccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/donthaveaccount"

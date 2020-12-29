@@ -21,24 +21,31 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity
 import com.casebeaumonde.activities.login.LoginActivity
+import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse
+import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseClass(),Controller.FOrgotPasswordAPI {
 
     private lateinit var register_forbusiness: TextView
+    private lateinit var forgotpassword : TextView
+    private lateinit var donthaveaccount : TextView
     private lateinit var back : ImageButton
     private lateinit var register_firstname: EditText
     private lateinit var register_lastname: EditText
@@ -57,6 +64,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var pd: ProgressDialog
     private lateinit var part : MultipartBody.Part
     private lateinit var bitMap: Bitmap
+    private lateinit var  dialog: Dialog
+    lateinit var controller: Controller
     var c:String = ""
 
 
@@ -70,6 +79,8 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun findids() {
+        controller = Controller()
+        controller.Controller(this)
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -89,6 +100,8 @@ class RegisterActivity : AppCompatActivity() {
         register_regiter_bt = findViewById(R.id.register_regiter_bt)
         register_login = findViewById(R.id.register_login)
         back = findViewById(R.id.back)
+        donthaveaccount = findViewById(R.id.donthaveaccount)
+        forgotpassword = findViewById(R.id.forgotpassword)
     }
 
     private fun listerners() {
@@ -146,6 +159,46 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         back.setOnClickListener { onBackPressed() }
+
+        donthaveaccount.setOnClickListener { startActivity(Intent(this,RegisterTypeScreen::class.java)) }
+
+        forgotpassword.setOnClickListener { forgotPassword() }
+    }
+
+    private fun forgotPassword() {
+        dialog = Dialog(this!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.forgotpasswordlayout)
+
+        val forgot_email: EditText
+        val forgot_submitbt: Button
+        forgot_email = dialog.findViewById(R.id.forgot_email)
+        forgot_submitbt = dialog.findViewById(R.id.forgot_submitbt)
+
+        forgot_submitbt.setOnClickListener {
+            when {
+                forgot_email.text.isEmpty() -> {
+                    forgot_email.requestFocus()
+                    forgot_email.error = "Enter email"
+                }
+                else -> {
+                    hideKeyboard()
+                    if (utility.isConnectingToInternet(this)) {
+                        pd.show()
+                        pd.setContentView(R.layout.loading)
+                        controller.setForgotPassword(forgot_email.text.toString())
+                    } else {
+                        utility.relative_snackbar(
+                            parent_register!!,
+                            "No Internet Connectivity",
+                            getString(R.string.close_up)
+                        )
+                    }
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun checkValidations() {
@@ -385,6 +438,33 @@ class RegisterActivity : AppCompatActivity() {
 
     ) {
         pictureSelectionDialog()
+    }
 
+    override fun onForgotPasswordSuccess(forgotPassword: Response<ForgotPassworResponse>) {
+        pd.dismiss()
+        if (forgotPassword.isSuccessful)
+        {
+            dialog.dismiss()
+            utility!!.relative_snackbar(
+                parent_register!!,
+                forgotPassword.body()?.message,
+                getString(R.string.close_up)
+            )
+        }else {
+            utility!!.relative_snackbar(
+                parent_register!!,
+                forgotPassword.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun error(error: String?) {
+        pd.dismiss()
+        utility!!.relative_snackbar(
+            parent_register!!,
+            error,
+            getString(R.string.close_up)
+        )
     }
 }

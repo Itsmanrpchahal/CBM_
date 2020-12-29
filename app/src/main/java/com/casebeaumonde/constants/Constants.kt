@@ -22,4 +22,5 @@ object Constants
     val PLANNAME = "planname"
     val SUBSCRIPTION_ID ="subsciptionid"
     val PAYPALID = "paypalid"
+    val REMEMBERME = "rememberme"
 }

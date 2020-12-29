@@ -11,10 +11,7 @@ import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
@@ -33,19 +30,21 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
 
-class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
+class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
 
     private lateinit var login_Email_ET: EditText
     private lateinit var login_Password_ET: EditText
+    private lateinit var rememberme_checkbox: CheckBox
     private lateinit var login_LoginBT: Button
     private lateinit var login_forgot_TV: TextView
     private lateinit var login_resgiter_TV: TextView
-    private lateinit var back : ImageButton
+    private lateinit var back: ImageButton
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
-    private lateinit var  dialog: Dialog
+    private lateinit var dialog: Dialog
     lateinit var controller: Controller
-    private lateinit var from : String
+    private lateinit var from: String
+    private var remember: String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +75,7 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         login_LoginBT = findViewById(R.id.login_LoginBT)
         login_forgot_TV = findViewById(R.id.login_forgot_TV)
         login_resgiter_TV = findViewById(R.id.login_resgiter_TV)
+        rememberme_checkbox = findViewById(R.id.rememberme_checkbox)
     }
 
     private fun lisenters() {
@@ -99,10 +99,18 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         }
 
         back.setOnClickListener { onBackPressed() }
+
+        rememberme_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                remember = "1"
+            } else {
+                remember = "0"
+            }
+        }
     }
 
     private fun forgotPassword() {
-         dialog = Dialog(this!!)
+        dialog = Dialog(this!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.forgotpasswordlayout)
 
@@ -185,15 +193,23 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
                         val data = response.body()?.getData()?.userId
                         if (response.body()?.getData()?.token != null) {
 
+
                             setStringVal(
                                 Constants.USERID,
                                 response.body()?.getData()?.userId.toString()
                             )
                             setStringVal(Constants.TOKEN, response.body()?.getData()?.token)
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                            setStringVal(Constants.REMEMBERME,remember)
+
+                            startActivity(
+                                Intent(
+                                    this@LoginActivity,
+                                    MainActivity::class.java
+                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            )
                             finish()
-                        }
-                        else {
+                        } else {
                             utility!!.relative_snackbar(
                                 parent_login!!,
                                 "Invalid Username or Password",
@@ -231,15 +247,14 @@ class LoginActivity : BaseClass(),Controller.FOrgotPasswordAPI {
 
     override fun onForgotPasswordSuccess(forgotPassword: Response<ForgotPassworResponse>) {
         pd.dismiss()
-        if (forgotPassword.isSuccessful)
-        {
+        if (forgotPassword.isSuccessful) {
             dialog.dismiss()
             utility!!.relative_snackbar(
                 parent_login!!,
                 forgotPassword.body()?.message,
                 getString(R.string.close_up)
             )
-        }else {
+        } else {
             utility!!.relative_snackbar(
                 parent_login!!,
                 forgotPassword.message(),

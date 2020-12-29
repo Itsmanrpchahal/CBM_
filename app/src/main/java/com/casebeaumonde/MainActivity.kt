@@ -58,7 +58,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     lateinit var toolbarrelative: RelativeLayout
     lateinit var appbarmain: AppBarLayout
 
-
+//test
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

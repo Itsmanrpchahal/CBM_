@@ -30,6 +30,7 @@ class ClosetsItemAdapter(
     lateinit var hearlist : ArrayList<ClosetsItemsResponse.Data.Closet.Item.Heart>
     lateinit var dialog : Dialog
     var selected: ArrayList<String> = ArrayList<String>()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.casebeaumonde.R;
 import com.casebeaumonde.activities.questionaries.describeyourself.DescribeYourself;
+import com.casebeaumonde.activities.questionaries.selectbrands.IF.SelectedBrand_IF;
+import com.casebeaumonde.activities.questionaries.selectbrands.SelectBrands;
 import com.casebeaumonde.constants.Data;
 
 import java.util.ArrayList;
@@ -39,10 +45,23 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyHolder> impl
         Data data = dataList.get(position);
         holder.title.setText(data.getTitle());
 
+
+        holder.star.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked)
+            {
+                SelectBrands.selectedbrandIf.getID(String.valueOf(position),"1");
+            }  else {
+                SelectBrands.selectedbrandIf.getID(String.valueOf(position),"0");
+            }
+
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, DescribeYourself.class));
+                Intent intent = new Intent(context,DescribeYourself.class);
+                context.startActivity(intent);
+//                context.startActivity(new Intent(context, DescribeYourself.class));
             }
         });
 
@@ -83,9 +102,11 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyHolder> impl
 
     public class MyHolder extends RecyclerView.ViewHolder {
         TextView title;
+        CheckBox star;
         public MyHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tvName);
+            star = itemView.findViewById(R.id.star);
         }
     }
 }

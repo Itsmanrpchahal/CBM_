@@ -41,7 +41,7 @@ class UploadBodyTypeImage : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item, languages
         )
         hair_spinner.adapter = adapter
-        hair_spinner.onItemSelectedListener = object :
+        /*hair_spinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -56,7 +56,7 @@ class UploadBodyTypeImage : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // write code to perform some action
             }
-        }
+        }*/
     }
 
     private fun setEyecolorSpinner() {
@@ -66,22 +66,22 @@ class UploadBodyTypeImage : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item, languages
         )
         eye_color_spinner.adapter = adapter
-        eye_color_spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                if (position != 0) {
-                    // spinnertitle.setText(languages[position])
-                }
-                //  userType = languages[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
+//        eye_color_spinner.onItemSelectedListener = object :
+//            AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>,
+//                view: View, position: Int, id: Long
+//            ) {
+//                /*if (position != 0) {
+//                    // spinnertitle.setText(languages[position])
+//                }*/
+//                //  userType = languages[position]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>) {
+//                // write code to perform some action
+//            }
+//        }
     }
 
     private fun findIds() {

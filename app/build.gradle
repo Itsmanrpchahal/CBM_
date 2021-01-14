@@ -118,13 +118,13 @@ dependencies {
     implementation 'com.stripe:stripe-android:8.2.0'
     implementation "com.stripe:stripeterminal:1.0.17"
 
-    //ToDo: Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
-
-    //ToDo: Declare the dependencies for the Crashlytics and Analytics libraries
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+//    //ToDo: Import the BoM for the Firebase platform
+//    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+//
+//    //ToDo: Declare the dependencies for the Crashlytics and Analytics libraries
+//    // When using the BoM, you don't specify versions in Firebase library dependencies
+//    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+//    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //ToDo: Pusher
    //implementation 'com.pusher:pusher-java-client:2.2.1'

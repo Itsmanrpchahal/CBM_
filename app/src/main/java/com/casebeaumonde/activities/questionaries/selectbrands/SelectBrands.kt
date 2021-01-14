@@ -1,9 +1,12 @@
 package com.casebeaumonde.activities.questionaries.selectbrands
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
+import com.casebeaumonde.activities.questionaries.selectbrands.IF.SelectedBrand_IF
 import com.casebeaumonde.activities.questionaries.selectbrands.adapter.DataAdapter
 import com.casebeaumonde.constants.Data
 import fastscroll.app.fastscrollalphabetindex.AlphabetIndexFastScrollRecyclerView
@@ -11,17 +14,18 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SelectBrands : AppCompatActivity(){
+class SelectBrands : AppCompatActivity(),SelectedBrand_IF{
 
     private lateinit var dataList : ArrayList<Data>
     private lateinit var recyclerView : AlphabetIndexFastScrollRecyclerView
+    private lateinit var selectedBrands : ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_brands)
         dataList = java.util.ArrayList()
-
+        selectedBrands = ArrayList()
         findIds()
         initData()
         Collections.sort(dataList, Data.titleNameComparator)
@@ -38,7 +42,9 @@ class SelectBrands : AppCompatActivity(){
         recyclerView.setIndexbarHighLateTextColor("#FF4081")
         recyclerView.setIndexBarHighLateTextVisibility(true)
         recyclerView.setIndexBarTransparentValue(1.0.toFloat())
+        adapter.notifyDataSetChanged()
 
+        selectedbrandIf = this
     }
 
     private fun findIds() {
@@ -110,6 +116,22 @@ class SelectBrands : AppCompatActivity(){
         dataList.add(Data("int"))
         dataList.add(Data("cpple"))
         dataList.add(Data("lDnt"))
+    }
+
+    companion object{
+        lateinit var selectedbrandIf: SelectedBrand_IF
+
+    }
+
+    override fun getID(id: String?, s: String?) {
+        if (s.equals("0")) {
+            if (selectedBrands.contains(id)) {
+                selectedBrands.remove(id)
+            }
+        } else {
+            selectedBrands.add(id.toString())
+            Log.d("selectBrands",""+selectedBrands)
+        }
     }
 
 }

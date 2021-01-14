@@ -7,14 +7,17 @@
     android:gravity="center"
     android:padding="5dp">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@android:color/darker_gray"
-        android:text="Simple">
 
-    </Button>
+    <CheckBox
+       android:id="@+id/selectbt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_40dp"
+        android:button="@drawable/selectbt"
+        android:text="Test"
+        android:textAlignment="center"
+        android:background="@android:color/darker_gray"
+        android:textColor="@color/colorWhite">
+
+    </CheckBox>
 
 </LinearLayout>

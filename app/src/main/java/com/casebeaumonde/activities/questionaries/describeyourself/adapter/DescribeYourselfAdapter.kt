@@ -2,13 +2,17 @@ package com.casebeaumonde.activities.questionaries.describeyourself.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
+import com.casebeaumonde.activities.questionaries.describeyourself.DescribeYourself
 import com.casebeaumonde.activities.questionaries.selectStores.SelectStores
 import kotlinx.android.synthetic.main.describeyourself_layout.view.*
 
@@ -23,8 +27,21 @@ class DescribeYourselfAdapter(var context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.button.setOnClickListener {
-            context.startActivity(Intent(context,SelectStores::class.java))
+//        holder.itemView.setOnClickListener {
+//            context.startActivity(Intent(context,SelectStores::class.java))
+//        }
+
+        holder.itemView.selectbt.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if (isChecked)
+            {
+                DescribeYourself.selectyourselfIf?.getID(position.toString(),"1");
+                holder.selectbt.setTextColor(Color.BLACK)
+                Toast.makeText(context,""+position,Toast.LENGTH_SHORT).show()
+            }  else {
+                DescribeYourself.selectyourselfIf?.getID(position.toString(),"0");
+                holder.selectbt.setTextColor(Color.WHITE)
+            }
         }
     }
 
@@ -33,10 +50,10 @@ class DescribeYourselfAdapter(var context: Context) :
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        private lateinit var button : Button
+         lateinit var selectbt : CheckBox
         fun bindItems()
         {
-            button = itemView.findViewById(R.id.button)
+            selectbt = itemView.findViewById(R.id.selectbt)
         }
     }
 }

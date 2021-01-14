@@ -515,7 +515,6 @@ class ClosetsItems : BaseClass(),
         search_ET = findViewById(R.id.search_ET)
         outfit_spinner = findViewById(R.id.outfit_spinner)
         outfit_title = findViewById(R.id.outfit_title)
-
         category_spinner = findViewById(R.id.category_spinner)
         brand_spinner = findViewById(R.id.brand_spinner)
         color_spinner = findViewById(R.id.color_spinner)

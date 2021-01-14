@@ -6,17 +6,19 @@
     android:orientation="horizontal">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_star_border_24">
+   <CheckBox
+       android:id="@+id/star"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:button="@drawable/custom_check_box_bt">
 
-    </ImageView>
+   </CheckBox>
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/textsize_14sp"/>

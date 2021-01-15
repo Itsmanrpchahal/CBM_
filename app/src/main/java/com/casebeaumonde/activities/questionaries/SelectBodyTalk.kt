@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.questionaries.uploadBodyType.UploadBodyTypeImage
 
 class SelectBodyTalk : AppCompatActivity() {
 
@@ -22,7 +22,7 @@ class SelectBodyTalk : AppCompatActivity() {
 
     private fun listeners() {
         back.setOnClickListener { onBackPressed() }
-        continue_bt.setOnClickListener {startActivity( Intent(this,UploadBodyTypeImage::class.java) )}
+        continue_bt.setOnClickListener {startActivity( Intent(this, UploadBodyTypeImage::class.java) )}
     }
 
     private fun findIds() {

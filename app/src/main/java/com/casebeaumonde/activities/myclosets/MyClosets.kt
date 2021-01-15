@@ -55,7 +55,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var create_closets: ImageButton
     private lateinit var closets_recyler: RecyclerView
     private lateinit var part: MultipartBody.Part
-    public lateinit var bitMap: Bitmap
+    lateinit var bitMap: Bitmap
     private var path: String = ""
     private lateinit var createcloset_title: EditText
     private lateinit var createcloset_checkbox: CheckBox

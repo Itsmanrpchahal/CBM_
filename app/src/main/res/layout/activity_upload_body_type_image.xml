@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBlack"
-    tools:context=".activities.questionaries.UploadBodyTypeImage">
+    android:id="@+id/parent_uploadbody"
+    tools:context=".activities.questionaries.uploadBodyType.UploadBodyTypeImage">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -119,14 +120,14 @@
 
                 </Button>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="File name"
-                    android:textColor="@color/colorWhite"
-                    android:layout_marginLeft="@dimen/margin_8dp">
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="File name"-->
+<!--                    android:textColor="@color/colorWhite"-->
+<!--                    android:layout_marginLeft="@dimen/margin_8dp">-->
 
-                </TextView>
+<!--                </TextView>-->
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

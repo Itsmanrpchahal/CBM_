@@ -33,15 +33,16 @@ class DescribeYourselfAdapter(var context: Context) :
 
         holder.itemView.selectbt.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            if (isChecked)
-            {
-                DescribeYourself.selectyourselfIf?.getID(position.toString(),"1");
-                holder.selectbt.setTextColor(Color.BLACK)
-                Toast.makeText(context,""+position,Toast.LENGTH_SHORT).show()
-            }  else {
-                DescribeYourself.selectyourselfIf?.getID(position.toString(),"0");
-                holder.selectbt.setTextColor(Color.WHITE)
-            }
+//            if (isChecked)
+//            {
+//                DescribeYourself.selectyourselfIf?.getID(position.toString(),"1");
+//                holder.itemView.selectbt.setTextColor(Color.BLACK)
+//                Toast.makeText(context,""+position,Toast.LENGTH_SHORT).show()
+//            }  else {
+//                DescribeYourself.selectyourselfIf?.getID(position.toString(),"0");
+//                holder.itemView.selectbt.setTextColor(Color.WHITE)
+//            }
+            context.startActivity(Intent(context,SelectStores::class.java))
         }
     }
 
@@ -50,9 +51,10 @@ class DescribeYourselfAdapter(var context: Context) :
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-         lateinit var selectbt : CheckBox
+
         fun bindItems()
         {
+             var selectbt : CheckBox
             selectbt = itemView.findViewById(R.id.selectbt)
         }
     }

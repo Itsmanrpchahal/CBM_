@@ -17,23 +17,41 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.questionaries.selectStores.SelectStores" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name=".activities.questionaries.describeyourself.DescribeYourself" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activities.questionaries.selectbrands.SelectBrands" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activities.questionaries.uploadBodyType.UploadBodyTypeImage" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activities.questionaries.SelectBodyTalk" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activities.questionaries.ColorPickerScreen" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".activities.questionaries.TellAboutYourSelf" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-                 <activity android:name=".activities.questionaries.GetStartedActivity" />
-        <activity android:name=".activities.forgotPassword.ForgotActivity" android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".activities.questionaries.selectStores.SelectStores"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
+        <activity
+            android:name=".activities.questionaries.describeyourself.DescribeYourself"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.questionaries.selectbrands.SelectBrands"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.questionaries.uploadBodyType.UploadBodyTypeImage"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.questionaries.SelectBodyTalk"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.questionaries.ColorPickerScreen"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.questionaries.TellAboutYourSelf"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+<!--        <activity android:name=".activities.questionaries.GetStartedActivity" />-->
+        <activity
+            android:name=".activities.forgotPassword.ForgotActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activities.register.userRegister.RegisterTypeScreen" />
         <activity
             android:name=".activities.openchat.SendChat"
@@ -113,7 +131,8 @@
         <activity
             android:name=".activities.login.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".activities.SplashScreen"
+        <activity
+            android:name=".activities.questionaries.GetStartedActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

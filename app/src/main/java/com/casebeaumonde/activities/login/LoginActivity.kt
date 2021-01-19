@@ -45,7 +45,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
     lateinit var controller: Controller
     private lateinit var from: String
     private var remember: String = "0"
-
+//Test
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

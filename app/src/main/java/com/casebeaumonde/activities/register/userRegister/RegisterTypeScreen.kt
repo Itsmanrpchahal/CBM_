@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity
+import kotlinx.android.synthetic.main.changeplandialog.*
 
 class RegisterTypeScreen : AppCompatActivity() {
 
@@ -42,6 +43,8 @@ class RegisterTypeScreen : AppCompatActivity() {
             personalcard.setCardBackgroundColor(getColor(R.color.colorWhite))
             busissnesscard.setCardBackgroundColor(getColor(R.color.colorBlack))
              textRetail.setTextColor(getColor(R.color.colorBlack))
+            textRetail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.personal,0,0)
+            textInfluencer.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.bussiness,0,0)
              textInfluencer.setTextColor(getColor(R.color.colorWhite))
                 type = "Personal"
         }
@@ -51,6 +54,8 @@ class RegisterTypeScreen : AppCompatActivity() {
             busissnesscard.setCardBackgroundColor(getColor(R.color.colorWhite))
             textRetail.setTextColor(getColor(R.color.colorWhite))
             textInfluencer.setTextColor(getColor(R.color.colorBlack))
+            textRetail.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.personalwhite,0,0)
+            textInfluencer.setCompoundDrawablesRelativeWithIntrinsicBounds(0,R.drawable.bussinessblack,0,0)
             type = "Bussiness"
         }
 

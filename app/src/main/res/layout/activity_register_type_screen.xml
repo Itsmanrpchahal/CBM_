@@ -72,16 +72,20 @@
 
     </View>
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:weightSum="2"
         android:layout_marginTop="@dimen/margin_32dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/personalcard"
-            android:layout_width="170dp"
+            android:layout_width="match_parent"
             android:layout_height="170dp"
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
             android:layout_marginLeft="@dimen/textsize_24sp"
             android:layout_alignParentLeft="true">
 
@@ -110,8 +114,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/busissnesscard"
-            android:layout_marginLeft="@dimen/default_margin_16dp"
-            android:layout_width="170dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/textsize_24sp"
             android:layout_height="170dp">
@@ -139,7 +144,7 @@
 
         </androidx.cardview.widget.CardView>
         
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/continue_bt"

@@ -47,7 +47,7 @@
             android:name=".activities.questionaries.TellAboutYourSelf"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-<!--        <activity android:name=".activities.questionaries.GetStartedActivity" />-->
+        <activity android:name=".activities.questionaries.GetStartedActivity" />
         <activity
             android:name=".activities.forgotPassword.ForgotActivity"
             android:screenOrientation="portrait"
@@ -132,7 +132,7 @@
             android:name=".activities.login.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.questionaries.GetStartedActivity"
+            android:name=".activities.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

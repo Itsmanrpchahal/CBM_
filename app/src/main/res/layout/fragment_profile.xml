@@ -16,24 +16,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorWhite"
             android:orientation="vertical">
 
 
             <RelativeLayout
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
+                android:layout_height="130dp"
                 android:layout_marginTop="@dimen/textsize_16sp"
+                android:background="@drawable/square_border"
                 android:layout_gravity="center">
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/profile_profilePic"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
+                    android:layout_margin="8dp"
                     android:layout_centerInParent="true"
                     android:scaleType="centerCrop">
 
-                </de.hdodenhof.circleimageview.CircleImageView>
+                </ImageView>
 
                 <ImageView
                     android:id="@+id/profile_changetv"
@@ -53,7 +56,7 @@
                 android:text="Username"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_gravity="center"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/textsize_24sp">
 
             </TextView>
@@ -70,31 +73,30 @@
 
 
                 <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="@dimen/margin_8dp"
-                    android:background="@drawable/whitecirclebackground"
-                    android:src="@drawable/facebook">
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@drawable/twitter">
 
                 </ImageButton>
 
                 <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="@dimen/margin_8dp"
-                    android:background="@drawable/whitecirclebackground"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/instagram">
 
                 </ImageButton>
 
-
                 <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/whitecirclebackground"
-                    android:src="@drawable/twitter">
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/facebook">
 
                 </ImageButton>
+
+
             </LinearLayout>
 
             <View

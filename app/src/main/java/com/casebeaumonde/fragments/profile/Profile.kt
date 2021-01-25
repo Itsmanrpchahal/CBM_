@@ -69,7 +69,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var pd: ProgressDialog
     private lateinit var profile_username: TextView
     private lateinit var profile_mygigs: Button
-    private lateinit var profile_profilePic: CircleImageView
+    private lateinit var profile_profilePic: ImageView
     private lateinit var profile_followerscount: TextView
     private lateinit var profile_followingcount: TextView
     private lateinit var editptofile_paypaltext : TextView

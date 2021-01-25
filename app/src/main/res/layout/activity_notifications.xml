@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colorBlack"
     android:id="@+id/parent_notifications"
     tools:context=".activities.notifications.Notifications">
@@ -42,11 +42,46 @@
       </RelativeLayout>
    </androidx.appcompat.widget.Toolbar>
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/notification_recyler"
+   <ScrollView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_below="@id/notification_toolbar">
+       android:layout_marginTop="55dp">
 
-   </androidx.recyclerview.widget.RecyclerView>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/notification_recyler"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/notification_toolbar">
+
+         </androidx.recyclerview.widget.RecyclerView>
+
+
+         <Button
+             android:id="@+id/clear_notifications"
+             android:layout_width="wrap_content"
+             android:layout_height="@dimen/buttonheight"
+             android:layout_gravity="end"
+             android:padding="8dp"
+             android:layout_marginTop="@dimen/default_margin_16dp"
+             android:layout_marginLeft="@dimen/default_margin_16dp"
+             android:layout_marginRight="@dimen/default_margin_16dp"
+             android:fontFamily="@font/oswaldlight"
+             android:background="@drawable/roundcorners"
+             android:text="   Clear all notifications   "
+             android:layout_alignParentRight="true"
+             android:layout_below="@id/notification_recyler"
+             android:textAllCaps="true"
+             android:textColor="@color/colorBlack"
+             android:textSize="@dimen/textsize_16sp">
+
+         </Button>
+      </LinearLayout>
+   </ScrollView>
+
+
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.casebeaumonde.utilities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,8 +9,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 
+import com.casebeaumonde.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.Nullable;
@@ -56,6 +59,16 @@ public class Utility {
                     }
                 });
         snackbar.show();
+    }
+
+    public void showOppsDialog(Context context, Dialog dialog)
+    {
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.opps_dialog);
+
+
+        dialog.show();
     }
 
     public static boolean isValidPassword(final String password) {

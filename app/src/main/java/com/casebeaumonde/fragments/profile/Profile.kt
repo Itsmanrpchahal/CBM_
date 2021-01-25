@@ -68,6 +68,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var profile_username: TextView
+    private lateinit var user_decs : TextView
     private lateinit var profile_mygigs: Button
     private lateinit var profile_profilePic: ImageView
     private lateinit var profile_followerscount: TextView
@@ -155,7 +156,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 "Bearer " + getStringVal(Constants.TOKEN),
                 getStringVal(Constants.USERID)
             )
-
 
         }else {
             utility.relative_snackbar(parent_profile!!, "No Internet Connectivity", getString(R.string.close_up))
@@ -551,6 +551,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
         profile_username = view.findViewById(R.id.profile_username)
+        user_decs = view.findViewById(R.id.user_decs)
         profile_profilePic = view.findViewById(R.id.profile_profilePic)
         profile_followerscount = view.findViewById(R.id.profile_followerscount)
         profile_followingcount = view.findViewById(R.id.profile_followingcount)
@@ -671,6 +672,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             plan = userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
             profile_username.text =
                 userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
+
             Glide.with(context!!)
                 .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar?.toString())
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)

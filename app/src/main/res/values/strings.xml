@@ -154,7 +154,7 @@
     <string name="newconfirmpassword">New password confirmation</string>
     <string name="closettitle">Closet Title*</string>
     <string name="closetcheck">This closet is designed for a customer</string>
-    <string name="description">Description*</string>
+    <string name="description">Item description</string>
     <string name="image">Cover Image</string>
     <string name="enterfirstname">Enter Firstname</string>
     <string name="enterlastname">Enter Lastname</string>
@@ -173,7 +173,7 @@
     <string name="logouttext">Are you sure you want to logout?</string>
     <string name="onboardtext">Life isn\'t black and white. Come build Your exquisite world with CASA BEAU MONDE. Created with you in mind, to improve the way you shop and communicate about fashion. Whether you are an inspiring fashionista or an aspiring one, you\'re home with us. Here you will be able to curate and create all the pretty things and live the most stylish of lives with our latest fashion and shopping technology. We can\'t wait to see how you build your beautiful world with us.</string>
     <string name="enterabout">Enter About</string>
-    <string name="title">Title</string>
+    <string name="title">Item Title</string>
     <string name="hours">Hours</string>
     <string name="rate">Rate</string>
     <string name="status">Status</string>

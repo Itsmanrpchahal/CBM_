@@ -21,6 +21,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title"
                 android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:textSize="@dimen/textsize_16sp">
@@ -32,13 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
-                android:hint="Title"
+                android:hint="Test Item Title"
                 android:inputType="text"
                 android:textSize="@dimen/textsize_16sp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:padding="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners">
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite"
+                android:padding="@dimen/margin_8dp">
 
             </EditText>
 
@@ -47,6 +50,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/description"
                 android:textStyle="bold"
+                android:fontFamily="@font/oswaldlight"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:textSize="@dimen/textsize_16sp">
@@ -58,15 +63,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:layout_margin="@dimen/margin_8dp"
-                android:hint="Description"
-                android:textAlignment="viewStart"
+                android:hint="Enter Item Description"
                 android:gravity="start"
                 android:inputType="text"
                 android:textSize="@dimen/textsize_16sp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:padding="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners">
+                android:backgroundTint="@color/colorWhite">
 
             </EditText>
 
@@ -74,6 +78,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/category"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -91,7 +98,7 @@
                     android:id="@+id/additemclosets_categoryspinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_40dp"
-                    android:background="@drawable/roundcorners">
+                    android:backgroundTint="@color/colorWhite">
 
                 </Spinner>
 
@@ -99,8 +106,11 @@
                     android:id="@+id/additemclosets_category"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:fontFamily="@font/oswaldlight"
                     android:text="Select Category"
-                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorWhite"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_8dp">
@@ -108,12 +118,22 @@
                 </TextView>
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/picture"
-                android:textStyle="bold"
+                android:text="Image Upload"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:textSize="@dimen/textsize_16sp">
@@ -124,17 +144,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
+                android:background="@drawable/whiteborder"
                 android:orientation="horizontal"
-                android:padding="@dimen/margin_8dp">
+                android:padding="4dp">
 
                 <Button
                     android:id="@+id/additemclosets__upload"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:text="Upload"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite">
+                    android:background="@color/colorWhite"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorBlack">
 
                 </Button>
 
@@ -144,8 +165,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:text="Filename123.png"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/textsize_16sp">
 
                 </TextView>
@@ -155,6 +177,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/size"
+                android:fontFamily="@font/oswaldlight"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -171,7 +196,7 @@
                     android:id="@+id/additemclosets_Sizespinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_40dp"
-                    android:background="@drawable/roundcorners"
+                    android:backgroundTint="@color/colorWhite"
                     >
 
                 </Spinner>
@@ -181,7 +206,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Select Brand"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorWhite"
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_8dp">
@@ -190,11 +216,23 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/color"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/oswaldlight"
                 android:textStyle="bold"
+                android:textAllCaps="true"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:textSize="@dimen/textsize_16sp">
@@ -210,7 +248,7 @@
                     android:id="@+id/additemclosets_Colorpinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_40dp"
-                    android:background="@drawable/roundcorners">
+                    android:backgroundTint="@color/colorWhite">
 
                 </Spinner>
 
@@ -219,7 +257,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Select Brand"
-                    android:textColor="@color/colorBlack"
+                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_8dp">
@@ -228,12 +267,24 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/brand"
-                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:textSize="@dimen/textsize_16sp">
@@ -248,8 +299,8 @@
                 <Spinner
                     android:id="@+id/additemclosets_Brandpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/roundcorners"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:backgroundTint="@color/colorWhite"
                     >
 
                 </Spinner>
@@ -257,9 +308,10 @@
                 <TextView
                     android:id="@+id/additemclosets_brands"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:text="Select Brand"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorWhite"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/margin_8dp">
@@ -268,12 +320,24 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/price"
-                android:textStyle="bold"
+                android:fontFamily="@font/oswaldlight"
+                android:textAllCaps="true"
+                android:visibility="gone"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:textSize="@dimen/textsize_16sp">
@@ -286,14 +350,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
                 android:hint="Price"
+                android:visibility="gone"
                 android:textAlignment="viewStart"
                 android:gravity="start"
                 android:inputType="numberDecimal"
                 android:textSize="@dimen/textsize_16sp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:padding="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners">
+                android:backgroundTint="@color/colorWhite">
 
             </EditText>
 
@@ -309,11 +374,12 @@
                 <Button
                     android:id="@+id/aditemtocloset_add"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:text="Add"
+                    android:fontFamily="@font/oswaldlight"
                     android:background="@color/colorWhite"
                     android:textColor="@color/colorBlack"
-                    android:textAllCaps="false">
+                    android:textAllCaps="true">
 
                 </Button>
 
@@ -322,6 +388,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cancel"
+                    android:visibility="gone"
                     android:background="@color/colorWhite"
                     android:textColor="@color/colorBlack"
                     android:textAllCaps="false"

@@ -11,16 +11,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:orientation="vertical">
 
 
         <ImageView
             android:id="@+id/closet_banner"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/whiteborder"
-            android:padding="@dimen/margin_8dp"
+            android:background="@android:color/darker_gray"
             android:src="@drawable/login_banner">
 
         </ImageView>
@@ -29,6 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8dp"
             android:orientation="horizontal">
 
             <TextView
@@ -36,8 +35,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8dp"
+                android:fontFamily="@font/oswaldlight"
                 android:singleLine="true"
                 android:text="User name"
+                android:textStyle="bold"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">
 
@@ -48,6 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:singleLine="true"
                 android:text="Go to closet"
@@ -62,10 +65,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/closet_username"
                 android:singleLine="true"
-                android:text="Decs"
-                android:textColor="@color/colorWhite">
+                android:text="Closet Description"
+                android:textAllCaps="true"
+                android:textColor="@color/colorLightWhite">
 
             </TextView>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorWhite"
+                android:layout_below="@id/closet_descripition">
+
+            </View>
 
             <TextView
                 android:id="@+id/closet_visibilty"
@@ -73,6 +86,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/closet_descripition"
                 android:layout_marginTop="@dimen/default_margin_16dp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:singleLine="true"
                 android:text="Visibility: Public"
                 android:textColor="@color/colorWhite">
@@ -83,6 +98,8 @@
                 android:id="@+id/closet_customer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_below="@id/closet_visibilty"
                 android:singleLine="true"
                 android:text="Customer: "
@@ -94,6 +111,8 @@
                 android:id="@+id/closet_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_below="@id/closet_customer"
                 android:singleLine="true"
                 android:text="Status:"
@@ -108,6 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/closet_status"
                 android:singleLine="true"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
                 android:text="Created at:"
                 android:textColor="@color/colorWhite">
 
@@ -125,9 +146,10 @@
                     android:id="@+id/closets_additem"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/oswaldlight"
                     android:background="@android:color/transparent"
-                    android:text="Add Items"
-                    android:textAllCaps="false">
+                    android:text="Add Items">
 
                 </Button>
 
@@ -136,9 +158,21 @@
                     android:id="@+id/closets_edititem"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/oswaldlight"
                     android:background="@android:color/transparent"
-                    android:text="Edit"
-                    android:textAllCaps="false">
+                    android:text="Edit">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/closets_duplicate"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Duplicate"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/oswaldlight">
 
                 </Button>
 
@@ -148,7 +182,8 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:text="Delete"
-                    android:textAllCaps="false">
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/oswaldlight">
 
                 </Button>
             </LinearLayout>

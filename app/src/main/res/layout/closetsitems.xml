@@ -3,16 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBlack"
-    android:padding="5dp"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:background="@android:color/darker_gray">
 
     <ImageView
         android:id="@+id/closetItemImage"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:padding="@dimen/margin_8dp"
-        android:background="@drawable/whiteborder">
+        android:src="@drawable/login_banner">
 
     </ImageView>
 
@@ -31,6 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
+        android:padding="@dimen/margin_8dp"
+        android:background="@color/colorBackground"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -44,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Closet Name"
+                android:fontFamily="@font/oswaldlight"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp"
                 android:layout_marginTop="@dimen/margin_8dp"
@@ -52,10 +53,30 @@
             </TextView>
 
             <TextView
+                android:id="@+id/closet_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Closet title"
+                android:textAllCaps="true"
+                android:textSize="@dimen/textsize_12sp">
+
+            </TextView>
+
+            <View
+                android:layout_width="120dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <TextView
                 android:id="@+id/closetitem_uploadby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Upload by"
+                android:visibility="gone"
                 android:textColor="@color/colorWhite"
                 >
 
@@ -66,11 +87,23 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_8dp"
             android:layout_alignParentRight="true"
             android:gravity="center"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/default_margin_16dp">
+
+            <CheckBox
+                android:id="@+id/hainger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_hanger"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:button="@drawable/ic_hanger">
+
+            </CheckBox>
 
             <CheckBox
                 android:id="@+id/closetitem_favorite"

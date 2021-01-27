@@ -2,156 +2,189 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:padding="@dimen/default_margin_16dp"
     android:id="@+id/createcloset_layout"
-    android:background="@color/colorWhite">
+    android:background="@drawable/whiteborder">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/closettitle"
-        android:textStyle="bold"
-        android:textColor="@color/colorTextHint"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-
-    <EditText
-        android:id="@+id/createcloset_title"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textSize="@dimen/textsize_16sp"
-        android:padding="@dimen/margin_8dp"
-        android:textColor="@color/colorBlack"
-        android:background="@drawable/blackroundcorners">
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true">
 
-    </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack"
+            android:layout_margin="2dp"
+            android:padding="@dimen/default_margin_16dp"
+            android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/createcloset_checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_16dp"
-        android:text="@string/closetcheck"
-        android:textStyle="bold"
-        android:buttonTint="@color/colorTextHint"
-        android:drawableTint="@color/colorTextHint"
-        android:textSize="@dimen/textsize_16sp"
-        android:textColor="@color/colorTextHint">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add closet"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp">
 
-    </CheckBox>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/default_margin_16dp"
-        android:textColor="@color/colorTextHint"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
+            </TextView>
 
 
-    <EditText
-        android:id="@+id/createcloset_description"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:padding="@dimen/margin_8dp"
-        android:gravity="start"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/textsize_16sp"
-        android:background="@drawable/blackroundcorners">
+            <EditText
+                android:id="@+id/createcloset_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:textSize="@dimen/textsize_16sp"
+                android:hint="Closet Title"
+                android:fontFamily="@font/oswaldlight"
+                android:textColorHint="@color/colorWhite"
+                android:padding="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite">
 
-    </EditText>
+            </EditText>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/image"
-        android:textStyle="bold"
-        android:layout_marginTop="@dimen/default_margin_16dp"
-        android:textColor="@color/colorTextHint"
-        android:textSize="@dimen/textsize_16sp">
+            <CheckBox
+                android:id="@+id/createcloset_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:text="@string/closetcheck"
+                android:textStyle="bold"
+                android:fontFamily="@font/oswaldlight"
+                android:buttonTint="@color/colorWhite"
+                android:drawableTint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorWhite">
 
-    </TextView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/blackroundcorners"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_8dp">
-
-        <Button
-            android:id="@+id/createcloset_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite">
-
-        </Button>
+            </CheckBox>
 
 
-        <TextView
-            android:id="@+id/createcloset_uploadfilename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:hint="No file chosen"
-            android:textColorHint="@color/colorBlack"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/textsize_16sp">
+            <EditText
+                android:id="@+id/createcloset_description"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:padding="@dimen/margin_8dp"
+                android:gravity="start"
+                android:fontFamily="@font/oswaldlight"
+                android:hint="Description"
+                android:textColorHint="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:backgroundTint="@color/colorWhite">
 
-        </TextView>
-    </LinearLayout>
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image"
+                android:textStyle="bold"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:padding="@dimen/margin_8dp">
+
+                <Button
+                    android:id="@+id/createcloset_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Upload file"
+                    android:fontFamily="@font/oswaldlight"
+                    android:background="@color/colorWhite"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorBlack">
+
+                </Button>
 
 
-    <ImageButton
-        android:id="@+id/createcloset_imagerperview"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/blackroundcorners"
-        android:src="@drawable/login_banner"
-        android:scaleType="centerCrop">
+                <TextView
+                    android:id="@+id/createcloset_uploadfilename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:hint="No File Chosen."
+                    android:fontFamily="@font/oswaldlight"
+                    android:textColorHint="@color/colorWhite"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
 
-    </ImageButton>
+                </TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite">
+
+            </View>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/createcloset_imagerperview"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:background="@drawable/blackroundcorners"
+                android:src="@drawable/login_banner"
+                android:scaleType="centerCrop">
 
-        <Button
-            android:id="@+id/createcloset_savebt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:textColor="@color/colorWhite"
-            android:textAllCaps="false">
+            </ImageButton>
 
-        </Button>
 
-        <Button
-            android:id="@+id/createcloset_cancelbt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  Cancel  "
-            android:textColor="@color/colorWhite"
-            android:textAllCaps="false"
-            android:layout_marginLeft="@dimen/default_margin_16dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:orientation="horizontal">
 
-        </Button>
-    </LinearLayout>
+                <Button
+                    android:id="@+id/createcloset_cancelbt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="  Cancel  "
+                    android:background="@color/colorBlack"
+                    android:fontFamily="@font/oswaldlight"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="true"
+                    android:layout_marginLeft="@dimen/default_margin_16dp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/createcloset_savebt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Add closet"
+                    android:padding="@dimen/margin_8dp"
+                    android:background="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true">
+
+                </Button>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
 </LinearLayout>

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBlack"
     android:id="@+id/parent_additemtocloset"
     tools:context=".activities.addItemtoCLoset.AddItemToCloset">
-
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -30,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:src="@drawable/ic_baseline_keyboard_backspace_24">
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
 
             </ImageButton>
 
@@ -39,7 +39,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Items"
+                android:text="Add Item"
+                android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp"
                 android:layout_centerInParent="true">

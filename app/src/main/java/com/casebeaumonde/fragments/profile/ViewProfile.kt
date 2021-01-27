@@ -9,10 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
@@ -43,7 +40,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,Controller.FollowUnFo
     private lateinit var viewprofile_followerscount : TextView
     private lateinit var viewprofile__followingcount : TextView
     private lateinit var viewprofile_tabLayout : TabLayout
-    private lateinit var viewprofile_profilePic : CircleImageView
+    private lateinit var viewprofile_profilePic : ImageView
     private lateinit var viewprofile__mygigs : Button
     private lateinit var viewprofile_followbt : Button
     private lateinit var role : String
@@ -118,7 +115,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,Controller.FollowUnFo
             role = userProfileResponse.body()?.data?.user?.role.toString()
 
                 viewprofile_tabLayout!!.addTab(viewprofile_tabLayout!!.newTab().setText("My Wall"))
-                viewprofile_tabLayout!!.addTab(viewprofile_tabLayout!!.newTab().setText("My gigs"))
+                viewprofile_tabLayout!!.addTab(viewprofile_tabLayout!!.newTab().setText("My services"))
                 viewprofile_tabLayout!!.addTab(viewprofile_tabLayout!!.newTab().setText("My Closets"))
                 viewprofile_tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
                 viewprofile_tabLayout!!.setOnTabSelectedListener(this)

@@ -3,207 +3,290 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorWhite"
+    android:background="#00FFFFFF"
     android:padding="@dimen/margin_8dp">
 
-    <ImageView
-        android:id="@+id/viewitem_image"
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
-
-    </ImageView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/viewitem_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:hint="Title: Sneakers"
-            android:textColorHint="@color/colorBlack"
-            android:textSize="@dimen/textsize_16sp"
-            android:textColor="@color/colorBlack"
-            android:layout_marginTop="@dimen/margin_8dp">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/viewitem_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:hint="Size"
-            android:text=""
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorBlack"
-            android:textSize="@dimen/textsize_16sp">
-
-        </TextView>
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
-        <TextView
-            android:id="@+id/viewitem_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:hint="Color"
-            android:textSize="@dimen/textsize_16sp"
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorBlack"
-            android:layout_marginTop="@dimen/margin_8dp">
 
-        </TextView>
-
-        <TextView
-            android:id="@+id/viewitem_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_alignParentRight="true"
-            android:hint="Price"
-            android:textSize="@dimen/textsize_16sp"
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorBlack"
-            android:layout_marginTop="@dimen/margin_8dp">
-
-        </TextView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/viewitem_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:hint="Category"
-            android:textSize="@dimen/textsize_16sp"
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorBlack"
-            android:layout_marginTop="@dimen/margin_8dp">
-
-        </TextView>
-
-        <CheckBox
-            android:id="@+id/viewitem_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/colorBlack"
-            android:clickable="false"
-            android:button="@drawable/fav_checkbox_border"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/margin_8dp">
-
-        </CheckBox>
-
-        <TextView
-            android:id="@+id/viewitem_favcount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/viewitem_checkbox"
-            android:layout_marginRight="@dimen/margin_8dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:layout_centerVertical="true"
-            android:text=""
-            android:textColorHint="@color/colorBlack"
-            android:textColor="@color/colorBlack">
-
-        </TextView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Spinner
-            android:id="@+id/itemview_spinner"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_40dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:layout_marginRight="@dimen/margin_8dp"
-            android:layout_toLeftOf="@id/itemview_addtoclosetbt"
-            android:background="@drawable/blackroundcorners">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:orientation="vertical"
+            android:padding="2dp"
+            android:background="@drawable/whiteborder">
 
-        </Spinner>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_8dp"
+                android:background="@color/colorBlack">
 
-        <TextView
-            android:id="@+id/itemview_pinnertitle"
+                <TextView
+                    android:id="@+id/viewitem_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:hint="Title: Sneakers"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="88dp"
+                    android:fontFamily="@font/oswaldlight"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorWhite">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/viewitem_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="88dp"
+                    android:hint="Size"
+                    android:fontFamily="@font/oswaldlight"
+                    android:text=""
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
+                android:paddingLeft="@dimen/margin_8dp"
+                android:paddingRight="@dimen/margin_8dp">
+
+                <TextView
+                    android:id="@+id/viewitem_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:hint="Category"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:layout_marginTop="@dimen/margin_8dp">
+
+                </TextView>
+
+
+                <TextView
+                    android:id="@+id/viewitem_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_alignParentRight="true"
+                    android:hint="Price"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:layout_marginTop="@dimen/margin_8dp">
+
+                </TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
+                android:paddingLeft="@dimen/margin_8dp"
+                android:paddingRight="@dimen/margin_8dp">
+
+                <TextView
+                    android:id="@+id/viewitem_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:hint="Color"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:layout_marginTop="@dimen/margin_8dp">
+
+                </TextView>
+
+
+                <CheckBox
+                    android:id="@+id/viewitem_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorWhite"
+                    android:clickable="false"
+                    android:button="@drawable/fav_checkbox_border"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/margin_8dp">
+
+                </CheckBox>
+
+                <TextView
+                    android:id="@+id/viewitem_favcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/viewitem_checkbox"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_centerVertical="true"
+                    android:text=""
+                    android:textColorHint="@color/colorWhite"
+                    android:textColor="@color/colorWhite">
+
+                </TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack">
+
+                <Spinner
+                    android:id="@+id/itemview_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:layout_toLeftOf="@id/itemview_addtoclosetbt"
+                    android:background="@drawable/blackroundcorners">
+
+                </Spinner>
+
+                <TextView
+                    android:id="@+id/itemview_pinnertitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/oswaldlight"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/textsize_16sp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_toLeftOf="@id/itemview_addtoclosetbt"
+                    android:layout_marginRight="@dimen/margin_8dp">
+
+                </TextView>
+
+                <Button
+                    android:id="@+id/itemview_addtoclosetbt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Add to Closet"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:textColor="@color/colorBlack"
+                    android:fontFamily="@font/oswaldlight"
+                    android:textAllCaps="true"
+                    android:padding="@dimen/margin_8dp"
+                    android:background="@color/colorWhite"
+                    android:layout_alignParentRight="true"
+                    >
+
+                </Button>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack">
+
+                <Button
+                    android:id="@+id/itemview_move"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:text="Move"
+                    android:textAllCaps="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="12sp"
+                    android:background="@color/colorBlack"
+                    android:textColor="@color/colorWhite">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/itemview_copy"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="12sp"
+                    android:text="Copy"
+                    android:layout_toRightOf="@id/itemview_move"
+                    android:textAllCaps="true"
+                    android:background="@color/colorBlack"
+                    android:textColor="@color/colorWhite">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/itemview_editbt"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="12sp"
+                    android:layout_toRightOf="@id/itemview_copy"
+                    android:text="Edit"
+                    android:textAllCaps="true"
+                    android:background="@color/colorBlack"
+                    android:textColor="@color/colorWhite">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/itemview_removebt"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="12sp"
+                    android:text="Remove"
+                    android:layout_toRightOf="@id/itemview_editbt"
+                    android:textAllCaps="true"
+                    android:background="@color/colorBlack"
+                    android:textColor="@color/colorWhite">
+
+                </Button>
+
+
+
+                <Button
+                    android:id="@+id/itemview_closebt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Close"
+                    android:background="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true"
+                    android:layout_margin="@dimen/margin_8dp"
+                    android:layout_alignParentRight="true">
+
+                </Button>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/viewitem_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_40dp"
-            android:textColor="@color/colorBlack"
-            android:text="FFF"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/textsize_16sp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:layout_toLeftOf="@id/itemview_addtoclosetbt"
-            android:layout_marginRight="@dimen/margin_8dp">
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:padding="2dp"
+            android:src="@drawable/login_banner"
+            android:background="@drawable/whiteborderblack1"
+            android:layout_height="150dp">
 
-        </TextView>
-
-        <Button
-            android:id="@+id/itemview_addtoclosetbt"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_40dp"
-            android:layout_marginTop="8dp"
-            android:text="Add to Closet"
-            android:textAllCaps="false"
-            android:padding="@dimen/margin_8dp"
-            android:background="@drawable/blackroundcorner"
-            android:layout_alignParentRight="true"
-            >
-
-        </Button>
+        </ImageView>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp">
 
-        <Button
-            android:id="@+id/itemview_removebt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remove"
-            android:textAllCaps="false"
-            android:background="@color/colorWhite"
-            android:textColor="@color/colorBlack">
 
-        </Button>
 
-        <Button
-            android:id="@+id/itemview_editbt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/itemview_removebt"
-            android:background="@color/colorWhite"
-            android:text="Edit"
-            android:textColor="@color/colorBlack"
-            android:textAllCaps="false">
-
-        </Button>
-
-        <Button
-            android:id="@+id/itemview_closebt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Close"
-            android:textAllCaps="false"
-            android:layout_alignParentRight="true">
-
-        </Button>
-    </RelativeLayout>
 
 
 </LinearLayout>

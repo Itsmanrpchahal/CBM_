@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
+import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.EventsInvitations.EventsInvitations
+import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
@@ -80,9 +82,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var profile_changetv: ImageView
     private lateinit var part: MultipartBody.Part
     private lateinit var bitMap: Bitmap
+     private lateinit var  editprofile_image : ImageView
     private lateinit var profile_changepassword: Button
     private lateinit var profile_edit_profile: Button
     private lateinit var profile_chooseyourplan: Button
+    private lateinit var profile_logout : Button
     private lateinit var profile_mypaymentmethods: Button
     private lateinit var followbt: Button
     private var path: String = ""
@@ -124,6 +128,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var cardcvc: String
     private lateinit var cardbilligcode: String
     private lateinit var mesgFrom : String
+    private lateinit var logoutDialog : Dialog
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
@@ -169,7 +174,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     private fun listeners() {
         profile_changetv.setOnClickListener {
-            pictureSelectionDialog()
+
         }
 
         profile_edit_profile.setOnClickListener {
@@ -216,8 +221,98 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
         }
 
+        profile_logout.setOnClickListener {
+            logoutDialog()
+        }
 
     }
+
+    fun logoutDialog()
+    {
+        logoutDialog = Dialog(context!!)
+        logoutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        logoutDialog.setCancelable(false)
+        logoutDialog.setContentView(R.layout.logout_dialog)
+        val window = logoutDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+
+        no = logoutDialog.findViewById(R.id.logout_no)
+        yes = logoutDialog.findViewById(R.id.logout_yes)
+
+        no.setOnClickListener {
+            logoutDialog.dismiss()
+        }
+
+        yes.setOnClickListener {
+            logout()
+        }
+
+        logoutDialog.show()
+    }
+
+    private fun logout() {
+        //hideKeyboard()
+        if (utility!!.isConnectingToInternet(context)) {
+            logoutDialog.dismiss()
+            pd.show()
+            pd.setContentView(R.layout.loading)
+
+            val logoutCall =
+                WebAPI.getInstance().api.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
+            logoutCall.enqueue(object : retrofit2.Callback<LogoutResponse> {
+                override fun onResponse(
+                    call: Call<LogoutResponse>,
+                    response: Response<LogoutResponse>
+                ) {
+                    pd.dismiss()
+                    if (response.isSuccessful) {
+                        val code = response.body()?.getCode()
+                        if (code == 200) {
+                            startActivity(
+                                Intent(
+                                    context,
+                                    MainActivity::class.java
+                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    .setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+
+                            )
+                            activity?.finish()
+                            //finish()
+                            activity?.overridePendingTransition(0, 0)
+                            activity?.overridePendingTransition(0, 0)
+
+                            clearStringVal(Constants.TOKEN)
+                            clearStringVal(Constants.USERID)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
+                    pd.dismiss()
+                    utility!!.relative_snackbar(
+                        parent_main!!,
+                        t.localizedMessage,
+                        getString(R.string.close_up)
+                    )
+                }
+
+            })
+        } else {
+            utility.relative_snackbar(
+                parent_main!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
+        }
+    }
+
 
     private fun ViewPlanDialog() {
         viewplanDialog = Dialog(context!!)
@@ -440,6 +535,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         val editprofile_about: EditText
         val changepassword_changebt: Button
         val changepassword_closebt: Button
+        val update_userimage : Button
 
         editprofile_firstname = dialog.findViewById(R.id.editprofile_firstname)
         editprofile_lastname = dialog.findViewById(R.id.editprofile_lastname)
@@ -448,8 +544,9 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         editprofile_about = dialog.findViewById(R.id.editprofile_about)
         changepassword_changebt = dialog.findViewById(R.id.changepassword_changebt)
         changepassword_closebt = dialog.findViewById(R.id.changepassword_closebt)
-        editptofile_paypaltext = dialog.findViewById(R.id.editptofile_paypaltext)
         editprofile_paypal_email = dialog.findViewById(R.id.editprofile_paypal_email)
+        editprofile_image = dialog.findViewById(R.id.editprofile_image)
+        update_userimage = dialog.findViewById(R.id.update_userimage)
         radio_noone = dialog.findViewById(R.id.radio_noone)
         radio_userifollow = dialog.findViewById(R.id.radio_userifollow)
         radio_alluser = dialog.findViewById(R.id.radio_alluser)
@@ -457,7 +554,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         if (!Constants.USER_ROLE.equals("customer"))
         {
             editprofile_paypal_email.visibility = View.VISIBLE
-            editptofile_paypaltext.visibility = View.VISIBLE
         }
 
         editprofile_firstname.setText(getStringVal(Constants.FIRSTNAME))
@@ -540,6 +636,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 }
             }
         }
+
+        update_userimage.setOnClickListener {
+            pictureSelectionDialog()
+        }
+
+
+
         dialog.show()
     }
 
@@ -563,6 +666,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_changepassword = view.findViewById(R.id.profile_changepassword)
         profile_mygigs = view.findViewById(R.id.profile_mygigs)
         profile_chooseyourplan = view.findViewById(R.id.profile_chooseyourplan)
+        profile_logout = view.findViewById(R.id.profile_logout)
         tabLayout = view.findViewById(R.id.tabLayout)
         pd.show()
         pd.setContentView(R.layout.loading)
@@ -910,7 +1014,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         pd.dismiss()
         if (updateAvatarResponse.isSuccessful) {
             if (updateAvatarResponse.body()?.code == 200) {
-                profile_profilePic.setImageBitmap(bitMap)
+                editprofile_image.setImageBitmap(bitMap)
             } else {
 
                 utility!!.relative_snackbar(

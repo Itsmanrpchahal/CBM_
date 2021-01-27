@@ -1147,6 +1147,7 @@ class ClosetsItems : BaseClass(),
         Viewdialog = Dialog(this!!)
         Viewdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         Viewdialog.setContentView(R.layout.viewclosetitem)
+        Viewdialog.getWindow()?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
         val window = Viewdialog.window
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,

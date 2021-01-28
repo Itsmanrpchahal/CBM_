@@ -71,7 +71,7 @@
                     android:background="@drawable/blackroundcorners"
                     android:text="Cancel plan"
                     android:layout_marginRight="@dimen/margin_8dp"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorWhite"
                     android:textAllCaps="false">
 
                 </Button>
@@ -84,7 +84,7 @@
                     android:background="@drawable/blackroundcorners"
                     android:text="View payments"
                     android:layout_marginRight="@dimen/margin_8dp"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorWhite"
                     android:textAllCaps="false">
 
                 </Button>
@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/blackroundcorners"
                     android:text="Change plan"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorWhite"
                     android:textAllCaps="false">
 
                 </Button>

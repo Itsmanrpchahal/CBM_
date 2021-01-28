@@ -28,7 +28,7 @@ class BussinessPricingAdapter (val context: Context, val pricing: ArrayList<Pric
         holder.itemView.levelplan.setText(pricing.get(position).name)
         holder.itemView.planrate.setText(pricing.get(position).monthlyPrice.toString())
         holder.itemView.subscribebt.setOnClickListener {
-            context.startActivity(Intent(context, CardDetailScreen::class.java).putExtra("planname",pricing.get(position).name).putExtra("planprice",pricing.get(position).monthlyPrice))
+            context.startActivity(Intent(context, CardDetailScreen::class.java).putExtra("planname",pricing.get(position).name).putExtra("planprice",pricing.get(position).monthlyPrice.toString()))
         }
         holder.itemView.planrate_yearly.setText(pricing.get(position).annualCharge.toString())
         holder.itemView.trail_text.setText(pricing.get(position).trialDays.toString()+" days trail")

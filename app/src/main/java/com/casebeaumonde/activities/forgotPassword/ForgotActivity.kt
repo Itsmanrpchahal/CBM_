@@ -21,7 +21,9 @@ import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.register.userRegister.RegisterTypeScreen
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.utilities.Utility
+import kotlinx.android.synthetic.main.activity_forgot.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.parent_register
 import kotlinx.android.synthetic.main.app_bar_main.*
 import retrofit2.Response
 import java.lang.Exception
@@ -103,15 +105,15 @@ class ForgotActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         pd.dismiss()
         if (forgotPassword.isSuccessful)
         {
-            dialog.dismiss()
             utility!!.relative_snackbar(
-                parent_register!!,
+                parent_forgot!!,
                 forgotPassword.body()?.message,
                 getString(R.string.close_up)
             )
+            finish()
         }else {
             utility!!.relative_snackbar(
-                parent_register!!,
+                parent_forgot!!,
                 forgotPassword.message(),
                 getString(R.string.close_up)
             )
@@ -121,7 +123,7 @@ class ForgotActivity : BaseClass(),Controller.FOrgotPasswordAPI {
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
-            parent_register!!,
+            parent_forgot!!,
             error,
             getString(R.string.close_up)
         )

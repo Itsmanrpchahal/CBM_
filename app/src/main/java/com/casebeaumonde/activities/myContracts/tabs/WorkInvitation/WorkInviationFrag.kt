@@ -55,7 +55,7 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
         if (utility.isConnectingToInternet(context)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.WorkInvitation(
+            controller.WorkInvitation (
                 "Bearer " + getStringVal(Constants.TOKEN),
                 getStringVal(Constants.USERID)
             )
@@ -116,11 +116,14 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
         pd.dismiss()
         if (workInvitation.isSuccessful)
         {
+            //ToDo: SendInvitations
             sendIvitations = ArrayList()
             sendIvitations =
                 workInvitation.body()?.data?.user?.sentInvitations as ArrayList<WorkInvitationResponse.Data.User.SentInvitation>
 
             setFullData(sendIvitations, "sent")
+
+            //ToDo: Recieve Invitations
             recieveIvitations = ArrayList()
             recieveIvitations =
                 workInvitation.body()?.data?.user?.receivedInvitations as ArrayList<WorkInvitationResponse.Data.User.ReceivedInvitation>

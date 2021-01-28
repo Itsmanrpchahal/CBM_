@@ -316,6 +316,7 @@ class ClosetsItems : BaseClass(),
         var moveitem: Button
         var cancelitem: Button
         var addnewclosetet: EditText
+        var spinnertitle : TextView
         var checkbox: CheckBox
         var addoutfit: CheckBox
         listview = moveItemDialog.findViewById(R.id.listview)
@@ -325,10 +326,14 @@ class ClosetsItems : BaseClass(),
         checkbox = moveItemDialog.findViewById(R.id.checkbox)
         addnewclosetet = moveItemDialog.findViewById(R.id.addnewclosetet)
         addoutfit = moveItemDialog.findViewById(R.id.addoutfit)
+        spinnertitle = moveItemDialog.findViewById(R.id.spinnertitle)
         list = ArrayList()
         listID = ArrayList()
         outFitTitle = ArrayList()
         outFitID = ArrayList()
+
+        spinnertitle.text = s
+        moveitem.text = s
 
         if (s.equals("move") || s.equals("duplicate")) {
             listview.visibility = View.VISIBLE

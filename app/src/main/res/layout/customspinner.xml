@@ -102,8 +102,8 @@
                     android:padding="@dimen/margin_8dp"
                     android:visibility="gone"
                     android:inputType="textPersonName"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorTextHint"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:hint="Enter New Closet Name">
 
                 </EditText>
@@ -161,7 +161,7 @@
                     android:background="@drawable/blackroundcorners"
                     android:text="Cancel"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorBlack">
+                    android:textColor="@color/colorWhite">
 
                 </Button>
 

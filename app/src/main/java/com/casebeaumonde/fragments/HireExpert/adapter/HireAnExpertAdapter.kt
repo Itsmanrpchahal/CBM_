@@ -37,6 +37,7 @@ class HireAnExpertAdapter(val context: Context,var list: MutableList<HireAnExper
         holder.itemView.hireanexpert_hours.text = "Hours :"+listData.hours
         holder.itemView.hireanexpert_rate.text = "Rate :"+listData.rate
         holder.itemView.hireanexpert_ratetype.text = "Rate type :"+listData.rateType
+        holder.itemView.username.text = listData.user.firstname+" "+listData.user.lastname
         holder.itemView.hireanexpert_sendInvitation.setOnClickListener {
             HireAnExpertFragment.hireExpertIF?.getID(position)
         }
@@ -57,6 +58,7 @@ class HireAnExpertAdapter(val context: Context,var list: MutableList<HireAnExper
             val hireanexpert_rate : TextView
             val hireanexpert_ratetype : TextView
             val hireanexpert_sendInvitation : Button
+            val username : TextView
         }
     }
 

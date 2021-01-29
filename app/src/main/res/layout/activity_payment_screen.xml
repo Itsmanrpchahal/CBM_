@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".fragments.cart.PaymentScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/oswald_regular"
+                android:text="CHECKOUT"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="@color/colorBlack"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
+            android:background="@color/colorBlack">
+
+            <ImageView
+                android:id="@+id/dot1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/whitecirclebackground">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dot1"
+                android:layout_marginLeft="10dp"
+                android:text="Delivery"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/dot1"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/dot2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/view1"
+                android:background="@drawable/whitecirclebackground">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dot2"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:text="Payment"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/dot2"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/dot3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/view2"
+                android:background="@drawable/whitebordercirlce">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dot3"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:text="Finish"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp">
+
+            </TextView>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout1"
+        android:nestedScrollingEnabled="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout1"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/standard_shippping"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:backgroundTint="@color/colorBlack"
+                        android:buttonTint="@color/colorBlack"
+                        android:text="Pay $ 56.95 with credit card"
+                        android:textColor="@color/colorBlack">
+
+                    </RadioButton>
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/standard_shippping"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:src="@drawable/visa">
+
+                    </ImageView>
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="@dimen/margin_8dp"
+                android:layout_marginTop="-10dp"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/payment_paypal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:backgroundTint="@color/colorBlack"
+                        android:buttonTint="@color/colorBlack"
+                        android:text="Pay $ 56.95 with PayPal"
+                        android:textColor="@color/colorBlack">
+
+                    </RadioButton>
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/payment_paypal"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:src="@drawable/visa">
+
+                    </ImageView>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card Details"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/oswald_regular">
+
+            </TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                android:layout_margin="-10dp"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Card Holdr's name"
+                    android:layout_margin="5dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                android:layout_margin="-10dp"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Card Holdr's name"
+                    android:layout_margin="5dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/info_tv"
+                android:weightSum="2">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Valid thru"
+                        android:layout_margin="5dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textColor="@color/colorBlack"
+                        >
+
+                    </EditText>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CVV/CVC"
+                        android:singleLine="true"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textColor="@color/colorBlack"
+                        >
+
+                    </EditText>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="PAY"
+                android:fontFamily="@font/oswaldlight"
+                >
+
+            </Button>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

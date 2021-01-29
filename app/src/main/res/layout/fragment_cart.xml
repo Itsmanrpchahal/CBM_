@@ -3,14 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_cart"
+    android:background="@color/colorWhite"
     tools:context=".fragments.cart.Cart">
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/cartitems_recycler"
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
+       android:layout_height="wrap_content">
 
    </androidx.recyclerview.widget.RecyclerView>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom"
+       android:orientation="vertical">
+
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardCornerRadius="5dp"
+          app:cardBackgroundColor="@color/colorWhite"
+          app:cardUseCompatPadding="true"
+          app:cardElevation="@dimen/margin_8dp">
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="55dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textColor="@color/colorBlack"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/default_margin_16dp">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:text="$ 206.00"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"
+                android:gravity="end">
+
+            </TextView>
+         </RelativeLayout>
+
+      </androidx.cardview.widget.CardView>
+
+      <Button
+          android:id="@+id/checkout_bt"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/buttonheight"
+          android:background="@color/colorBlack"
+          android:layout_marginLeft="@dimen/default_margin_16dp"
+          android:layout_marginRight="@dimen/default_margin_16dp"
+          android:layout_marginBottom="@dimen/default_margin_16dp"
+          android:text="CHECKOUT"
+          android:fontFamily="@font/oswald_regular">
+
+      </Button>
+
+   </LinearLayout>
 
 </FrameLayout>

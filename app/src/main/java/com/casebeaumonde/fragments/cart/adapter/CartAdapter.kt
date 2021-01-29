@@ -25,7 +25,7 @@ class CartAdapter(val context: Context, var cartsItems: ArrayList<CartItemsRespo
     override fun onBindViewHolder(holder: CartAdapter.ViewHolder, position: Int) {
         val cartlist = cartsItems.get(position)
         Glide.with(context).load(Constants.BASE_IMAGE_URL+cartlist.image).placeholder(R.drawable.login_banner).into(holder.itemView.cartimage)
-        holder.itemView.itemdata.setText("Name :"+cartlist.name+"\n"+"Brand :"+cartlist.brand+"\n"+"Size :"+cartlist.size+"\n"+"Color :"+cartlist.color)
+        holder.itemView.itemdata.setText("Name :"+cartlist.name)
         holder.itemView.pricetv.setText("$"+cartlist.price)
     }
 

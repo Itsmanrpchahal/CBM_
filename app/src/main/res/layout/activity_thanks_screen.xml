@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    tools:context=".fragments.cart.adapter.ThanksScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHECKOUT"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/textsize_16sp"
+                android:fontFamily="@font/oswald_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:gravity="center"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
+            android:background="@color/colorBlack">
+
+            <ImageView
+                android:id="@+id/dot1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/whitecirclebackground">
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:layout_below="@id/dot1"
+                android:layout_marginLeft="10dp">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/dot1">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/dot2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/whitecirclebackground"
+                android:layout_toRightOf="@id/view1">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:layout_below="@id/dot2"
+                android:layout_marginLeft="10dp">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/dot2">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/dot3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/whitecirclebackground"
+                android:layout_toRightOf="@id/view2">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finish"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:layout_marginRight="15dp"
+                android:layout_below="@id/dot3">
+
+            </TextView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/tick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_tick">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/thanks_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thank You!"
+            android:textSize="@dimen/textsize_24sp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/oswaldlight"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tick">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order complete and your payment \n has been processed. Thanks for \n shopping with us. "
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/oswaldlight"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/thanks_tv">
+
+        </TextView>
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/back_bt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonheight"
+        android:background="@color/colorWhite"
+        android:layout_alignParentBottom="true"
+        android:text="Back to store"
+        android:textColor="@color/colorBlack"
+        android:layout_margin="@dimen/default_margin_16dp"
+        android:layout_marginBottom="@dimen/default_margin_16dp">
+
+    </Button>
+</RelativeLayout>

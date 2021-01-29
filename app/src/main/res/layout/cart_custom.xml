@@ -1,139 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorWhite"
-    android:layout_margin="@dimen/margin_8dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true"
         app:cardElevation="@dimen/margin_8dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:background="@color/colorWhite">
-
-            </View>
-
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/layout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_below="@+id/view1"
-                android:id="@+id/layout1"
-                android:padding="@dimen/default_margin_16dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:padding="@dimen/margin_8dp"
                 android:weightSum="3">
 
                 <ImageView
                     android:id="@+id/cartimage"
-                    android:layout_width="100dp"
+                    android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:maxWidth="100dp"
-                    android:src="@drawable/login_banner"
-                    android:layout_marginLeft="@dimen/margin_8dp"
-                    >
+                    android:scaleType="fitXY"
+                    android:src="@drawable/login_banner">
 
                 </ImageView>
 
-                <TextView
-                    android:id="@+id/itemdata"
-                    android:layout_width="120dp"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/oswaldlight"
-                    android:textColor="@color/colorBlack"
-                    android:text="Name">
+                    android:layout_toRightOf="@id/cartimage"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/count_layout">
 
-                </TextView>
+                    <TextView
+                        android:id="@+id/itemdata"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:fontFamily="@font/oswaldlight"
+                        android:text="Name"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/pricetv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/itemdata"
+                        android:fontFamily="@font/oswaldlight"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:hint="Price"
+                        android:textColor="@color/colorLightWhite"
+                        android:textColorHint="@color/colorLightWhite">
+
+                    </TextView>
+
+                </RelativeLayout>
 
 
                 <LinearLayout
+                    android:id="@+id/count_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="start"
                     android:layout_marginLeft="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <ImageButton
+                        android:id="@+id/plus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:textColor="@color/colorBlack"
-                        android:text="Quantity">
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_add_24_grey">
+
+                    </ImageButton>
+
+
+                    <TextView
+                        android:id="@+id/count"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:text="1"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="@dimen/textsize_12sp"
+                        android:background="@drawable/blackcircle"
+                        android:textColor="@color/colorWhite">
 
                     </TextView>
 
-                    <TextView
-                        android:id="@+id/quantitytv"
+
+                    <ImageButton
+                        android:id="@+id/minus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorBlack"
-                        android:layout_marginTop="@dimen/margin_8dp">
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_horizontal_rule_24">
 
-                    </TextView>
+                    </ImageButton>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:textColor="@color/colorBlack"
-                            android:text="Price">
-
-                        </TextView>
-
-                        <TextView
-                            android:id="@+id/pricetv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_8dp"
-                            android:textColor="@color/colorBlack">
-
-                        </TextView>
-                    </LinearLayout>
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/layout1"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:layout_marginBottom="@dimen/margin_8dp"
-                android:background="@color/colorWhite">
-
-            </View>
-
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/cancel"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_8dp"
-                android:background="@android:color/transparent"
-                android:layout_alignParentRight="true">
-
-            </ImageButton>
-        </RelativeLayout>
+            </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

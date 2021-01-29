@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".fragments.cart.PersonalInfoScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHECKOUT"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/textsize_16sp"
+                android:fontFamily="@font/oswald_regular">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:gravity="center"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="260dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
+            android:background="@color/colorBlack">
+
+            <ImageView
+                android:id="@+id/dot1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/whitecirclebackground">
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:layout_below="@id/dot1"
+                android:layout_marginLeft="10dp">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/dot1">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/dot2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/whitebordercirlce"
+                android:layout_toRightOf="@id/view1">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:layout_below="@id/dot2"
+                android:layout_marginLeft="10dp">
+
+            </TextView>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="80dp"
+                android:layout_height="1dp"
+                android:background="@color/colorWhite"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/dot2">
+
+            </View>
+
+            <ImageView
+                android:id="@+id/dot3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/whitebordercirlce"
+                android:layout_toRightOf="@id/view2">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finish"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp"
+                android:textAllCaps="true"
+                android:layout_marginRight="15dp"
+                android:layout_below="@id/dot3">
+
+            </TextView>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout1"
+        android:nestedScrollingEnabled="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/default_margin_16dp">
+
+            <TextView
+                android:id="@+id/info_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Personal Information"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/oswald_regular">
+
+            </TextView>
+
+            <LinearLayout
+                android:id="@+id/namelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/info_tv"
+                android:weightSum="2">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="First Name"
+                        android:layout_margin="5dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textColor="@color/colorBlack"
+                        >
+
+                    </EditText>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Last Name"
+                        android:singleLine="true"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textColor="@color/colorBlack"
+                        >
+
+                    </EditText>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_below="@id/namelayout"
+                android:id="@+id/address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:layout_margin="5dp"
+                    android:singleLine="true"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/state_layout"
+                android:layout_below="@id/address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                android:layout_marginTop="-10dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="2dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="State"
+                    android:inputType="text"
+                    android:layout_margin="5dp"
+                    android:singleLine="true"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/city_layout"
+                android:layout_below="@id/state_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                android:layout_marginTop="-10dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="2dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City"
+                    android:layout_margin="5dp"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/zipcode_layout"
+                android:layout_below="@id/city_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true"
+                android:layout_marginTop="-10dp"
+                app:cardCornerRadius="2dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Zip Code"
+                    android:layout_margin="5dp"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/check_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/zipcode_layout"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true"
+                android:layout_marginTop="-10dp"
+                app:cardCornerRadius="2dp">
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/colorBlack"
+                    android:buttonTint="@color/colorBlack"
+                    android:text="My billing informatations is the same as my delivery  information"
+                    android:textColor="@color/colorBlack">
+
+                </CheckBox>
+
+            </androidx.cardview.widget.CardView>
+
+            <RadioGroup
+                android:id="@+id/group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_layout"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginTop="-10dp"
+                    app:cardCornerRadius="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/standard_shippping"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:backgroundTint="@color/colorBlack"
+                            android:buttonTint="@color/colorBlack"
+                            android:text="Standard shipping"
+                            android:textColor="@color/colorBlack">
+
+                        </RadioButton>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Free 5-7 business days"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginBottom="@dimen/margin_8dp"
+                            android:textSize="@dimen/textsize_12sp"
+                            android:textColor="@android:color/darker_gray"
+                            android:layout_below="@id/standard_shippping">
+
+                        </TextView>
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginTop="-10dp"
+                    app:cardCornerRadius="2dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/fast_shippping"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:backgroundTint="@color/colorBlack"
+                            android:buttonTint="@color/colorBlack"
+                            android:text="Fast shipping"
+                            android:textColor="@color/colorBlack">
+
+                        </RadioButton>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="S15 2-4 business days"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginBottom="@dimen/margin_8dp"
+                            android:textSize="@dimen/textsize_12sp"
+                            android:textColor="@android:color/darker_gray"
+                            android:layout_below="@id/fast_shippping">
+
+                        </TextView>
+
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </RadioGroup>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group"
+                android:layout_marginBottom="@dimen/default_margin_16dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true"
+                android:layout_marginTop="-10dp"
+                app:cardCornerRadius="2dp">
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorBlack"
+                    android:text="NEXT"
+                    android:fontFamily="@font/oswaldlight"
+                    >
+
+                </Button>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

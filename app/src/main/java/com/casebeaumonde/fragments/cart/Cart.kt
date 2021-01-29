@@ -1,6 +1,7 @@
 package com.casebeaumonde.fragments.cart
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
@@ -25,6 +27,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
     private lateinit var cartitems_recycler: RecyclerView
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
+    private lateinit var checkout_bt: Button
     private lateinit var controller: Controller
     private lateinit var response: ArrayList<CartItemsResponse.Data.CartItem>
 
@@ -55,7 +58,15 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
             )
         }
 
+        lisenters()
+
         return view
+    }
+
+    private fun lisenters() {
+        checkout_bt.setOnClickListener {
+              startActivity(Intent(context,PersonalInfoScreen::class.java))
+        }
     }
 
     private fun findIds(view: View) {
@@ -66,6 +77,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
         cartitems_recycler = view.findViewById(R.id.cartitems_recycler)
+        checkout_bt = view.findViewById(R.id.checkout_bt)
     }
 
     override fun onCartItemSuccess(cartitem: Response<CartItemsResponse>) {

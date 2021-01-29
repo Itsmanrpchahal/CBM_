@@ -19,15 +19,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.businessRegister.BusinessRegisterActivity
 import com.casebeaumonde.activities.forgotPassword.ForgotActivity
 import com.casebeaumonde.activities.login.LoginActivity
-import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.utilities.Utility
@@ -275,7 +272,7 @@ class RegisterActivity : BaseClass() {
             pd.setContentView(R.layout.loading)
 
 
-            val userRegisterCall = WebAPI().mInstance?.apiInterface?.userRegisterCall(
+            val userRegisterCall = WebAPI.apiInterface?.userRegisterCall(
                 firstname,
                 lastname,
                 email,

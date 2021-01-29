@@ -150,7 +150,7 @@ class ClosetsItems : BaseClass(),
     }
 
     private fun setViewAnalyticsAPI(closetID: String, s: String) {
-        val viewAnalytics = WebAPI().mInstance?.apiInterface?.viewAnalytics(
+        val viewAnalytics = WebAPI.apiInterface?.viewAnalytics(
             "Bearer " + getStringVal(Constants.TOKEN),
             closetID,
             s

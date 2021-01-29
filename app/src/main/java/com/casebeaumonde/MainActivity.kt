@@ -139,7 +139,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             pd.setContentView(R.layout.loading)
 
             val logoutCall =
-                WebAPI().mInstance?.apiInterface?.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
+                WebAPI.apiInterface?.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
             logoutCall?.enqueue(object : retrofit2.Callback<LogoutResponse> {
                 override fun onResponse(
                     call: Call<LogoutResponse>,

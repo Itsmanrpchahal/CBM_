@@ -48,7 +48,6 @@ import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
 import com.stripe.android.model.Card
 import com.stripe.android.model.Token
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_card_detail_screen.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -264,7 +263,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             pd.setContentView(R.layout.loading)
 
             val logoutCall =
-                WebAPI().mInstance?.apiInterface?.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
+                WebAPI.apiInterface?.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
             logoutCall?.enqueue(object : retrofit2.Callback<LogoutResponse> {
                 override fun onResponse(
                     call: Call<LogoutResponse>,
@@ -1145,7 +1144,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             pd.setContentView(R.layout.loading)
 
 
-            val changePassCall = WebAPI().mInstance?.apiInterface?.changePasswordCall(
+            val changePassCall = WebAPI.apiInterface?.changePasswordCall(
                 token, userId, old_password, new_pass, new_cpass
             )
             changePassCall?.enqueue(object : Callback<JsonObject> {

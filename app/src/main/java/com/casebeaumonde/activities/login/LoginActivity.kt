@@ -171,7 +171,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
             pd.show()
             pd.setContentView(R.layout.loading)
 
-            val loginCall = WebAPI().mInstance?.apiInterface?.loginCall(username, password)
+            val loginCall = WebAPI.apiInterface?.loginCall(username, password)
             loginCall?.enqueue(object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     pd.dismiss()

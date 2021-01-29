@@ -27,7 +27,6 @@ import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_event_detail_screen.*
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,7 +71,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
 
     private fun setViewAnalyticsAPI(id: String, s: String) {
 
-        val viewAnalytics = WebAPI().mInstance?.apiInterface?.viewAnalytics("Bearer "+getStringVal(Constants.TOKEN),id,s)
+        val viewAnalytics = WebAPI.apiInterface?.viewAnalytics("Bearer "+getStringVal(Constants.TOKEN),id,s)
         viewAnalytics?.enqueue(object : Callback<ResponseBody>
         {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

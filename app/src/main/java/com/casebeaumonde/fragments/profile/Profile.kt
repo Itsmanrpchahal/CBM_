@@ -1013,7 +1013,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onUpdateAvatarResponse(updateAvatarResponse: Response<UpdateProfilePicResponse>) {
         pd.dismiss()
         if (updateAvatarResponse.isSuccessful) {
-            if (updateAvatarResponse.body()?.code == 200) {
+            if (updateAvatarResponse.body()?.getCode() == 200) {
                 editprofile_image.setImageBitmap(bitMap)
             } else {
 

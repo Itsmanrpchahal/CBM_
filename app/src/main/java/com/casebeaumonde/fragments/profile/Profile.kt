@@ -264,8 +264,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             pd.setContentView(R.layout.loading)
 
             val logoutCall =
-                WebAPI.getInstance().api.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
-            logoutCall.enqueue(object : retrofit2.Callback<LogoutResponse> {
+                WebAPI().mInstance?.apiInterface?.logoutCall("Bearer " + getStringVal(Constants.TOKEN))
+            logoutCall?.enqueue(object : retrofit2.Callback<LogoutResponse> {
                 override fun onResponse(
                     call: Call<LogoutResponse>,
                     response: Response<LogoutResponse>
@@ -1145,10 +1145,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             pd.setContentView(R.layout.loading)
 
 
-            val changePassCall = WebAPI.getInstance().api.changePasswordCall(
+            val changePassCall = WebAPI().mInstance?.apiInterface?.changePasswordCall(
                 token, userId, old_password, new_pass, new_cpass
             )
-            changePassCall.enqueue(object : Callback<JsonObject> {
+            changePassCall?.enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
 
                     pd.dismiss()

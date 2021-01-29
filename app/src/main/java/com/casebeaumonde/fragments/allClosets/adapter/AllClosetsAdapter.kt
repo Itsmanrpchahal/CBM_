@@ -2,19 +2,16 @@ package com.casebeaumonde.fragments.allClosets.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
-import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.allClosets.AllClosets
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
@@ -39,7 +36,7 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
 
         Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.image).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = listData.title
-        holder.itemView.closetitem_uploadby.text = "Created by "+listData.user?.firstname+" at "+Utils.changeDateTimeToDateTime(listData.createdAt)
+        holder.itemView.closetitem_uploadby.text = "Created by "+listData.user?.firstname+" at "+ Utils.changeDateTimeToDateTime(listData.createdAt)
 
         if (listData?.hearts!!.size != 0)
         {

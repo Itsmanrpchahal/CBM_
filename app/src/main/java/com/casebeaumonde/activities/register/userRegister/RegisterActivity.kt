@@ -275,7 +275,7 @@ class RegisterActivity : BaseClass() {
             pd.setContentView(R.layout.loading)
 
 
-            val userRegisterCall = WebAPI.getInstance().api.userRegisterCall(
+            val userRegisterCall = WebAPI().mInstance?.apiInterface?.userRegisterCall(
                 firstname,
                 lastname,
                 email,
@@ -287,7 +287,7 @@ class RegisterActivity : BaseClass() {
                 part,
                 "customer"
             )
-            userRegisterCall.enqueue(object : Callback<UserRegisterResponse> {
+            userRegisterCall?.enqueue(object : Callback<UserRegisterResponse> {
 
                 override fun onResponse(
                     call: Call<UserRegisterResponse>,

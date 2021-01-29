@@ -72,8 +72,8 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
 
     private fun setViewAnalyticsAPI(id: String, s: String) {
 
-        val viewAnalytics = WebAPI.getInstance().api.viewAnalytics("Bearer "+getStringVal(Constants.TOKEN),id,s)
-        viewAnalytics.enqueue(object : Callback<ResponseBody>
+        val viewAnalytics = WebAPI().mInstance?.apiInterface?.viewAnalytics("Bearer "+getStringVal(Constants.TOKEN),id,s)
+        viewAnalytics?.enqueue(object : Callback<ResponseBody>
         {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 

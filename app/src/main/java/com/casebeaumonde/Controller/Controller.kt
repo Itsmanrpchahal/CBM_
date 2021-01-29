@@ -314,7 +314,7 @@ public class Controller {
     }
 
     fun setForgotPassword(email: String) {
-        webAPI?.api?.forgotPassword(email)?.enqueue(object : Callback<ForgotPassworResponse> {
+        webAPI?.apiInterface?.forgotPassword(email)?.enqueue(object : Callback<ForgotPassworResponse> {
             override fun onResponse(
                 call: Call<ForgotPassworResponse>,
                 response: Response<ForgotPassworResponse>
@@ -331,7 +331,7 @@ public class Controller {
     }
 
     fun setNotificationAPI(token: String?, userId: String?) {
-        webAPI?.api?.notificationCall(token, userId)
+        webAPI?.apiInterface?.notificationCall(token, userId)
             ?.enqueue(object : Callback<NotificationsResponse> {
 
                 override fun onFailure(call: Call<NotificationsResponse>, t: Throwable) {
@@ -350,7 +350,7 @@ public class Controller {
     }
 
     fun setUserProfileAPI(token: String?, userId: String?) {
-        webAPI?.api?.userProfileResponse(token, userId)
+        webAPI?.apiInterface?.userProfileResponse(token, userId)
             ?.enqueue(object : Callback<UserProfileResponse> {
                 override fun onResponse(
                     call: Call<UserProfileResponse>,
@@ -367,7 +367,7 @@ public class Controller {
     }
 
     fun setUpdateAvatar(part: MultipartBody.Part, token: String?, userId: String?) {
-        webAPI?.api?.updateAvatar(token, userId, part)
+        webAPI?.apiInterface?.updateAvatar(token, userId, part)
             ?.enqueue(object : Callback<UpdateProfilePicResponse> {
                 override fun onResponse(
                     call: Call<UpdateProfilePicResponse>,
@@ -385,7 +385,7 @@ public class Controller {
     }
 
     fun setMyWall(token: String?, userId: String?) {
-        webAPI?.api?.myWall(token, userId)?.enqueue(object : Callback<MyWallResponse> {
+        webAPI?.apiInterface?.myWall(token, userId)?.enqueue(object : Callback<MyWallResponse> {
             override fun onResponse(
                 call: Call<MyWallResponse>,
                 response: Response<MyWallResponse>
@@ -412,7 +412,7 @@ public class Controller {
         userID: String,
         chat_invitation:String
     ) {
-        webAPI?.api?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID,chat_invitation)
+        webAPI?.apiInterface?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID,chat_invitation)
             ?.enqueue(object : Callback<EditProfileResponse> {
                 override fun onResponse(
                     call: Call<EditProfileResponse>,
@@ -429,7 +429,7 @@ public class Controller {
     }
 
     fun RemoveNotification(token: String?, notID: String?) {
-        webAPI?.api?.removeNotification(token, notID)
+        webAPI?.apiInterface?.removeNotification(token, notID)
             ?.enqueue(object : Callback<RemoveNotificationResponse> {
                 override fun onResponse(
                     call: Call<RemoveNotificationResponse>,
@@ -447,7 +447,7 @@ public class Controller {
     }
 
     fun GetUserGigs(token: String?, userId: String?) {
-        webAPI?.api?.usergigs(token, userId)?.enqueue(object : Callback<MyGigsResponse> {
+        webAPI?.apiInterface?.usergigs(token, userId)?.enqueue(object : Callback<MyGigsResponse> {
             override fun onResponse(
                 call: Call<MyGigsResponse>,
                 response: Response<MyGigsResponse>
@@ -464,7 +464,7 @@ public class Controller {
     }
 
     fun GetUsers(token: String?) {
-        webAPI?.api?.users(token)?.enqueue(object : Callback<UsersResponse> {
+        webAPI?.apiInterface?.users(token)?.enqueue(object : Callback<UsersResponse> {
             override fun onResponse(call: Call<UsersResponse>, response: Response<UsersResponse>) {
                 val usersResponse = response
                 usersAPI?.onUsersSuccess(usersResponse)
@@ -478,7 +478,7 @@ public class Controller {
     }
 
     fun GetDesigners(token: String?) {
-        webAPI?.api?.designers(token)?.enqueue(object : Callback<DesignersResponse> {
+        webAPI?.apiInterface?.designers(token)?.enqueue(object : Callback<DesignersResponse> {
             override fun onResponse(
                 call: Call<DesignersResponse>,
                 response: Response<DesignersResponse>
@@ -496,7 +496,7 @@ public class Controller {
     }
 
     fun GetMyClosets(token: String?, userId: String?) {
-        webAPI?.api?.myClosets(token, userId)?.enqueue(object : Callback<MyClosetsResponse> {
+        webAPI?.apiInterface?.myClosets(token, userId)?.enqueue(object : Callback<MyClosetsResponse> {
             override fun onResponse(
                 call: Call<MyClosetsResponse>,
                 response: Response<MyClosetsResponse>
@@ -520,7 +520,7 @@ public class Controller {
         part: MultipartBody.Part,
         decs: String?
     ) {
-        webAPI?.api?.createCloset(token, title, visibility, part, decs)
+        webAPI?.apiInterface?.createCloset(token, title, visibility, part, decs)
             ?.enqueue(object : Callback<CreateClosetResponse> {
                 override fun onResponse(
                     call: Call<CreateClosetResponse>,
@@ -538,7 +538,7 @@ public class Controller {
     }
 
     fun ClosetItems(token: String?, closetID: String?) {
-        webAPI?.api?.closetsItems(token, closetID)
+        webAPI?.apiInterface?.closetsItems(token, closetID)
             ?.enqueue(object : Callback<ClosetsItemsResponse> {
                 override fun onResponse(
                     call: Call<ClosetsItemsResponse>,
@@ -556,7 +556,7 @@ public class Controller {
     }
 
     fun AddToFavClosetItem(token: String?, closetItemId: String?, type: String?) {
-        webAPI?.api?.addToFavClosetItem(token, closetItemId, type)
+        webAPI?.apiInterface?.addToFavClosetItem(token, closetItemId, type)
             ?.enqueue(object : Callback<AddToFavClosetItemResponse> {
                 override fun onResponse(
                     call: Call<AddToFavClosetItemResponse>,
@@ -581,7 +581,7 @@ public class Controller {
         image: MultipartBody.Part,
         description: String?
     ) {
-        webAPI?.api?.closetUpdate(token, id, title, visibility, image, description)
+        webAPI?.apiInterface?.closetUpdate(token, id, title, visibility, image, description)
             ?.enqueue(object : Callback<UpdateClosetsResponse> {
                 override fun onResponse(
                     call: Call<UpdateClosetsResponse>,
@@ -599,7 +599,7 @@ public class Controller {
     }
 
     fun DeleteCloset(token: String?, id: String?) {
-        webAPI?.api?.deleteCloset(token, id)?.enqueue(object : Callback<DeleteClosetResponse> {
+        webAPI?.apiInterface?.deleteCloset(token, id)?.enqueue(object : Callback<DeleteClosetResponse> {
             override fun onResponse(
                 call: Call<DeleteClosetResponse>,
                 response: Response<DeleteClosetResponse>
@@ -616,7 +616,7 @@ public class Controller {
     }
 
     fun DeleteClosetItem(token: String?, id: String?) {
-        webAPI?.api?.deleteClosetItem(token, id)
+        webAPI?.apiInterface?.deleteClosetItem(token, id)
             ?.enqueue(object : Callback<DeleteClosetItemResponse> {
                 override fun onResponse(
                     call: Call<DeleteClosetItemResponse>,
@@ -634,7 +634,7 @@ public class Controller {
     }
 
     fun HireAnExpert(token: String?) {
-        webAPI?.api?.hireanExpert(token)?.enqueue(object : Callback<HireAnExpertResponse> {
+        webAPI?.apiInterface?.hireanExpert(token)?.enqueue(object : Callback<HireAnExpertResponse> {
             override fun onResponse(
                 call: Call<HireAnExpertResponse>,
                 response: Response<HireAnExpertResponse>
@@ -657,7 +657,7 @@ public class Controller {
         gig_id: String?,
         budget: String?
     ) {
-        webAPI?.api?.sendInviation(token, desigenerID, decripition, gig_id, budget)
+        webAPI?.apiInterface?.sendInviation(token, desigenerID, decripition, gig_id, budget)
             ?.enqueue(object : Callback<SendInvitationResponse> {
                 override fun onResponse(
                     call: Call<SendInvitationResponse>,
@@ -675,7 +675,7 @@ public class Controller {
     }
 
     fun LiveEvents(token: String?) {
-        webAPI?.api?.liveEvents(token)?.enqueue(object : Callback<LiveEventsResponse> {
+        webAPI?.apiInterface?.liveEvents(token)?.enqueue(object : Callback<LiveEventsResponse> {
             override fun onResponse(
                 call: Call<LiveEventsResponse>,
                 response: Response<LiveEventsResponse>
@@ -691,7 +691,7 @@ public class Controller {
     }
 
     fun EventDetail(token: String?, id: String?) {
-        webAPI?.api?.eventDetail(token, id)?.enqueue(object : Callback<EventDetailResponse> {
+        webAPI?.apiInterface?.eventDetail(token, id)?.enqueue(object : Callback<EventDetailResponse> {
             override fun onResponse(
                 call: Call<EventDetailResponse>,
                 response: Response<EventDetailResponse>
@@ -709,7 +709,7 @@ public class Controller {
 
 
     fun AllClosets(token: String?) {
-        webAPI?.api?.allClosets(token)?.enqueue(object : Callback<AllClosetsResponse> {
+        webAPI?.apiInterface?.allClosets(token)?.enqueue(object : Callback<AllClosetsResponse> {
             override fun onResponse(
                 call: Call<AllClosetsResponse>,
                 response: Response<AllClosetsResponse>
@@ -725,7 +725,7 @@ public class Controller {
     }
 
     fun AddItemToAnotherCloset(token: String?, itemId: String?, closetId: String?, type: String?) {
-        webAPI?.api?.addItemToAnotherCloset(token, itemId, closetId, type)
+        webAPI?.apiInterface?.addItemToAnotherCloset(token, itemId, closetId, type)
             ?.enqueue(object : Callback<AddItemToAnotherCloset> {
                 override fun onResponse(
                     call: Call<AddItemToAnotherCloset>,
@@ -743,7 +743,7 @@ public class Controller {
     }
 
     fun favLiveEvent(token: String?, id: String?, type: String?) {
-        webAPI?.api?.favLiveEventResponse(token, id, type)
+        webAPI?.apiInterface?.favLiveEventResponse(token, id, type)
             ?.enqueue(object : Callback<FavLiveEventResponse> {
                 override fun onResponse(
                     call: Call<FavLiveEventResponse>,
@@ -761,7 +761,7 @@ public class Controller {
     }
 
     fun AddClosetItemList(token: String?) {
-        webAPI?.api?.addClosetItemLists(token)?.enqueue(object : Callback<AddClosetItemResponse> {
+        webAPI?.apiInterface?.addClosetItemLists(token)?.enqueue(object : Callback<AddClosetItemResponse> {
             override fun onResponse(
                 call: Call<AddClosetItemResponse>,
                 response: Response<AddClosetItemResponse>
@@ -788,7 +788,7 @@ public class Controller {
         brand: String,
         price: String
     ) {
-        webAPI?.api?.addClosetItem(
+        webAPI?.apiInterface?.addClosetItem(
             token,
             picture,
             title,
@@ -827,7 +827,7 @@ public class Controller {
         price: String,
         id: String?
     ) {
-        webAPI?.api?.editClosetItem(
+        webAPI?.apiInterface?.editClosetItem(
             token,
             picture,
             title,
@@ -856,7 +856,7 @@ public class Controller {
     }
 
     fun CartItems(token: String?) {
-        webAPI?.api?.cartItem(token)?.enqueue(object : Callback<CartItemsResponse> {
+        webAPI?.apiInterface?.cartItem(token)?.enqueue(object : Callback<CartItemsResponse> {
             override fun onResponse(
                 call: Call<CartItemsResponse>,
                 response: Response<CartItemsResponse>
@@ -873,7 +873,7 @@ public class Controller {
     }
 
     fun Pricing(token: String?) {
-        webAPI?.api?.pricing(token)?.enqueue(object : Callback<PricingResponse> {
+        webAPI?.apiInterface?.pricing(token)?.enqueue(object : Callback<PricingResponse> {
             override fun onResponse(
                 call: Call<PricingResponse>,
                 response: Response<PricingResponse>
@@ -890,7 +890,7 @@ public class Controller {
     }
 
     fun MoveItem(token: String?, items: String, closetId: String, name: String) {
-        webAPI?.api?.moveItem(token, items, closetId, name)
+        webAPI?.apiInterface?.moveItem(token, items, closetId, name)
             ?.enqueue(object : Callback<MoveClosetItems> {
                 override fun onResponse(
                     call: Call<MoveClosetItems>,
@@ -911,7 +911,7 @@ public class Controller {
     }
 
     fun DuplicateItem(token: String?, items: String, closetId: String, name: String) {
-        webAPI?.api?.duplicateItem(token, items, closetId, name)
+        webAPI?.apiInterface?.duplicateItem(token, items, closetId, name)
             ?.enqueue(object : Callback<DuplicateItemResponse> {
                 override fun onResponse(
                     call: Call<DuplicateItemResponse>,
@@ -929,7 +929,7 @@ public class Controller {
     }
 
     fun FollowUnFollow(token: String?, userId: String?) {
-        webAPI?.api?.followUnFollow(token, userId)
+        webAPI?.apiInterface?.followUnFollow(token, userId)
             ?.enqueue(object : Callback<FollowUnFollowResponse> {
                 override fun onResponse(
                     call: Call<FollowUnFollowResponse>,
@@ -946,7 +946,7 @@ public class Controller {
     }
 
     fun FetchList(token: String?) {
-        webAPI?.api?.fetchList(token)?.enqueue(object : Callback<FetchListResponse> {
+        webAPI?.apiInterface?.fetchList(token)?.enqueue(object : Callback<FetchListResponse> {
             override fun onResponse(
                 call: Call<FetchListResponse>,
                 response: Response<FetchListResponse>
@@ -963,7 +963,7 @@ public class Controller {
     }
 
     fun OutFIt(token: String?, items: String?, outfitid: String?, name: String?) {
-        webAPI?.api?.outfitItem(token, items, outfitid, name)
+        webAPI?.apiInterface?.outfitItem(token, items, outfitid, name)
             ?.enqueue(object : Callback<OutFitResponse> {
                 override fun onResponse(
                     call: Call<OutFitResponse>,
@@ -981,7 +981,7 @@ public class Controller {
     }
 
     fun PaymentProfile(token: String?) {
-        webAPI?.api?.paymentProfile(token)?.enqueue(object : Callback<PaymentProfileResponse> {
+        webAPI?.apiInterface?.paymentProfile(token)?.enqueue(object : Callback<PaymentProfileResponse> {
             override fun onResponse(
                 call: Call<PaymentProfileResponse>,
                 response: Response<PaymentProfileResponse>
@@ -998,7 +998,7 @@ public class Controller {
     }
 
     fun WorkInvitation(token: String?, id: String?) {
-        webAPI?.api?.workinvitations(token, id)?.enqueue(object : Callback<WorkInvitationResponse> {
+        webAPI?.apiInterface?.workinvitations(token, id)?.enqueue(object : Callback<WorkInvitationResponse> {
             override fun onResponse(
                 call: Call<WorkInvitationResponse>,
                 response: Response<WorkInvitationResponse>
@@ -1021,7 +1021,7 @@ public class Controller {
         comments: String?,
         rate: String
     ) {
-        webAPI?.api?.makeOffer(token, designerId, gig_id, rate_type, comments, rate)
+        webAPI?.apiInterface?.makeOffer(token, designerId, gig_id, rate_type, comments, rate)
             ?.enqueue(object : Callback<MakeOfferResponse> {
                 override fun onResponse(
                     call: Call<MakeOfferResponse>,
@@ -1042,7 +1042,7 @@ public class Controller {
     }
 
     fun OfferList(token: String?) {
-        webAPI?.api?.offerList(token)?.enqueue(object : Callback<OfferListResponse> {
+        webAPI?.apiInterface?.offerList(token)?.enqueue(object : Callback<OfferListResponse> {
             override fun onResponse(
                 call: Call<OfferListResponse>,
                 response: Response<OfferListResponse>
@@ -1059,7 +1059,7 @@ public class Controller {
     }
 
     fun ContractList(token: String?) {
-        webAPI?.api?.contractList(token)?.enqueue(object : Callback<ContractListResponse> {
+        webAPI?.apiInterface?.contractList(token)?.enqueue(object : Callback<ContractListResponse> {
             override fun onResponse(
                 call: Call<ContractListResponse>,
                 response: Response<ContractListResponse>
@@ -1076,7 +1076,7 @@ public class Controller {
     }
 
     fun OutFitFilter(token: String?, outfitid: String?, closetID: String?) {
-        webAPI?.api?.outfitfilter(token, outfitid, closetID)
+        webAPI?.apiInterface?.outfitfilter(token, outfitid, closetID)
             ?.enqueue(object : Callback<OutfitFilterResponse> {
                 override fun onResponse(
                     call: Call<OutfitFilterResponse>,
@@ -1094,7 +1094,7 @@ public class Controller {
     }
 
     fun SendClaim(token: String?, contract_id: String, description: String) {
-        webAPI?.api?.sendClaim(token, contract_id, description)
+        webAPI?.apiInterface?.sendClaim(token, contract_id, description)
             ?.enqueue(object : Callback<SendClaimResponse> {
                 override fun onResponse(
                     call: Call<SendClaimResponse>,
@@ -1115,7 +1115,7 @@ public class Controller {
     }
 
     fun SetOfferDecision(token: String?, id: String?, action: String) {
-        webAPI?.api?.setOfferdecision(token, id, action)
+        webAPI?.apiInterface?.setOfferdecision(token, id, action)
             ?.enqueue(object : Callback<SetOfferDecisionResponse> {
                 override fun onResponse(
                     call: Call<SetOfferDecisionResponse>,
@@ -1133,7 +1133,7 @@ public class Controller {
     }
 
     fun SetPaymentMethod(token: String?) {
-        webAPI?.api?.paymentMethod(token)?.enqueue(object : Callback<PaymentMethodResponse> {
+        webAPI?.apiInterface?.paymentMethod(token)?.enqueue(object : Callback<PaymentMethodResponse> {
             override fun onResponse(
                 call: Call<PaymentMethodResponse>,
                 response: Response<PaymentMethodResponse>
@@ -1154,7 +1154,7 @@ public class Controller {
 
 
     fun DeletePaymentCard(token: String?, cardID: String) {
-        webAPI?.api?.deleteCard(token, cardID)
+        webAPI?.apiInterface?.deleteCard(token, cardID)
             ?.enqueue(object : Callback<DeletePaymentMethodResponse> {
                 override fun onResponse(
                     call: Call<DeletePaymentMethodResponse>,
@@ -1172,7 +1172,7 @@ public class Controller {
     }
 
     fun UserInvitation(token: String?, userId: String?) {
-        webAPI?.api?.userInvitations(token, userId)
+        webAPI?.apiInterface?.userInvitations(token, userId)
             ?.enqueue(object : Callback<UserInvitationsResponse> {
                 override fun onResponse(
                     call: Call<UserInvitationsResponse>,
@@ -1190,7 +1190,7 @@ public class Controller {
     }
 
     fun ChangePlan(token: String?, id: String?, type: String?, plantype: String) {
-        webAPI?.api?.changePlan(token, id, type, plantype)
+        webAPI?.apiInterface?.changePlan(token, id, type, plantype)
             ?.enqueue(object : Callback<ChangePlanResponse> {
                 override fun onResponse(
                     call: Call<ChangePlanResponse>,
@@ -1219,7 +1219,7 @@ public class Controller {
         stripetoken: String,
         type: String
     ) {
-        webAPI?.api?.subscribePlan(
+        webAPI?.apiInterface?.subscribePlan(
             token,
             brand,
             charge_type,
@@ -1248,7 +1248,7 @@ public class Controller {
 
     fun CancelPlan (token: String?,id: String?,type: String?)
     {
-        webAPI?.api?.cancelPlan(token, id, type)?.enqueue(object : Callback<CancelPlanResponse>
+        webAPI?.apiInterface?.cancelPlan(token, id, type)?.enqueue(object : Callback<CancelPlanResponse>
         {
             override fun onResponse(
                 call: Call<CancelPlanResponse>,
@@ -1267,7 +1267,7 @@ public class Controller {
 
     fun AddPaymentMethod(token: String?,brand: String,payment_method_type: String,stripetoken: String)
     {
-        webAPI?.api?.addpaymentMethod(token, brand, payment_method_type, stripetoken)?.enqueue(object : Callback<CancelPlanResponse>
+        webAPI?.apiInterface?.addpaymentMethod(token, brand, payment_method_type, stripetoken)?.enqueue(object : Callback<CancelPlanResponse>
         {
             override fun onResponse(
                 call: Call<CancelPlanResponse>,
@@ -1286,7 +1286,7 @@ public class Controller {
 
     fun FilterCloseItems(token: String?,closet_id: String, hashMap: HashMap<String,String>)
     {
-        webAPI?.api?.filterCLosetItems(token,closet_id,hashMap)?.enqueue(object :Callback<List<FilterResponse>>
+        webAPI?.apiInterface?.filterCLosetItems(token,closet_id,hashMap)?.enqueue(object :Callback<List<FilterResponse>>
         {
             override fun onResponse(
                 call: Call<List<FilterResponse>>,
@@ -1305,7 +1305,7 @@ public class Controller {
 
     fun GetChatUsers(token: String?)
     {
-        webAPI?.api?.getChatUsers(token)?.enqueue(object : Callback<GetChatUsers>
+        webAPI?.apiInterface?.getChatUsers(token)?.enqueue(object : Callback<GetChatUsers>
         {
             override fun onResponse(call: Call<GetChatUsers>, response: Response<GetChatUsers>) {
                 val getchatusers = response
@@ -1321,7 +1321,7 @@ public class Controller {
 
     fun GetChat(token: String?,id: String?)
     {
-        webAPI?.api?.getCHat(token, id)?.enqueue(object :Callback<GetChatResponse>
+        webAPI?.apiInterface?.getCHat(token, id)?.enqueue(object :Callback<GetChatResponse>
         {
             override fun onResponse(
                 call: Call<GetChatResponse>,
@@ -1340,7 +1340,7 @@ public class Controller {
 
     fun SendChat(token: String?,id: String?,message:String)
     {
-        webAPI?.api?.sendChat(token,id,message)?.enqueue(object :Callback<SendChatResponse>
+        webAPI?.apiInterface?.sendChat(token,id,message)?.enqueue(object :Callback<SendChatResponse>
         {
             override fun onResponse(
                 call: Call<SendChatResponse>,
@@ -1359,7 +1359,7 @@ public class Controller {
 
     fun BlockUser(token: String?,id: String?)
     {
-        webAPI?.api?.blockUser(token, id)?.enqueue(object : Callback<BlockResponse>
+        webAPI?.apiInterface?.blockUser(token, id)?.enqueue(object : Callback<BlockResponse>
         {
             override fun onResponse(call: Call<BlockResponse>, response: Response<BlockResponse>) {
                 val blockUser = response

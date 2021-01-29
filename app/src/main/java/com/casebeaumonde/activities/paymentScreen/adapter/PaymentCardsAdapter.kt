@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myGigs.adapter.MyGigsAdapter
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.custom_payment.view.*
@@ -32,7 +31,7 @@ class PaymentCardsAdapter(
         holder.itemView.payment_type.setText("Type : "+cardProfile.cardBrand)
         holder.itemView.payment_Details.setText("Details : Visa ending in ****"+cardProfile.last4)
         holder.itemView.payment_amountpaid.setText("Amount paid : $")
-        holder.itemView.payment_patmentdate.setText("Payment date : "+Utils.changeDateTimeToDate(cardProfile.createdAt))
+        holder.itemView.payment_patmentdate.setText("Payment date : "+ Utils.changeDateTimeToDate(cardProfile.createdAt))
     }
 
     override fun getItemCount(): Int {

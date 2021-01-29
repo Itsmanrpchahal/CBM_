@@ -10,9 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.WorkInviationFrag
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkSendInvitationAdapter
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.OffersFrag
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
 import com.casebeaumonde.constants.Constants

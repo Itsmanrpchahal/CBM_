@@ -150,12 +150,12 @@ class ClosetsItems : BaseClass(),
     }
 
     private fun setViewAnalyticsAPI(closetID: String, s: String) {
-        val viewAnalytics = WebAPI.getInstance().api.viewAnalytics(
+        val viewAnalytics = WebAPI().mInstance?.apiInterface?.viewAnalytics(
             "Bearer " + getStringVal(Constants.TOKEN),
             closetID,
             s
         )
-        viewAnalytics.enqueue(object : Callback<ResponseBody> {
+        viewAnalytics?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
             }

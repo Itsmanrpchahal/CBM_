@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.custom_userevents.view.*
@@ -41,7 +40,7 @@ class UserInvitationsAdapter (val context: Context,val events : MutableList<User
 
         Glide.with(context).load(Constants.BASE_IMAGE_URL+events.get(position)?.event?.image.toString()!!).placeholder(R.drawable.login_banner).into(holder.itemView.event_imageView)
         holder.itemView.event_sentby.setText("Sent by: "+events.get(position).event?.creator?.company)
-        holder.itemView.event_sentat.setText("Sent at: "+Utils.changeDateTimeToDateTime(events.get(position).createdAt))
+        holder.itemView.event_sentat.setText("Sent at: "+ Utils.changeDateTimeToDateTime(events.get(position).createdAt))
         holder.itemView.event_name.setText(events.get(position).event?.title)
         holder.itemView.event_decs.setText(events.get(position).description)
         holder.itemView.event_startdate.setText("Start: "+Utils.changeDateTimeToDateTime(events.get(position).createdAt))

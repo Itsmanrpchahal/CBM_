@@ -24,7 +24,6 @@ import com.casebeaumonde.utilities.Utility
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_offers.*
-import org.jetbrains.annotations.Nullable
 import retrofit2.Response
 
 class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,

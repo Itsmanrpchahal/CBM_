@@ -108,7 +108,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
 
         if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             customerPricing =
-                pricing.body()?.data?.customerPlans as ArrayList<PricingResponse.Data.CustomerPlan>
+                pricing.body()?.getData()?.customerPlans as ArrayList<PricingResponse.Data.CustomerPlan>
 
             priciing_recyclerview.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -120,7 +120,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
 
         } else {
             bussinessPricing =
-                pricing.body()?.data?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>
+                pricing.body()?.getData()?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>
             priciing_recyclerview.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             val adapter = BussinessPricingAdapter(
@@ -133,9 +133,9 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
         if(userProfileResponse.isSuccessful) {
-            Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
+            Log.d("userprofilerespose", "" + userProfileResponse.body()?.getData())
             planname =
-                userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
+                userProfileResponse.body()?.getData()?.user?.customerSubscription?.plan?.name.toString()
             controller.Pricing("Bearer " + getStringVal(Constants.TOKEN))
         }else {
             utility!!.relative_snackbar(
@@ -217,7 +217,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
             }
             utility!!.relative_snackbar(
                 parent_pricing!!,
-                changePlan.body()?.data?.message,
+                changePlan.body()?.getData()?.message,
                 getString(R.string.close_up)
             )
         }else {

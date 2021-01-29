@@ -73,7 +73,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
 
         if (cartitem.isSuccessful) {
 
-            response = cartitem.body()?.data?.cartItems as ArrayList<CartItemsResponse.Data.CartItem>
+            response = cartitem.body()?.getData()?.cartItems as ArrayList<CartItemsResponse.Data.CartItem>
             setFullData(response)
         } else {
             utility!!.relative_snackbar(

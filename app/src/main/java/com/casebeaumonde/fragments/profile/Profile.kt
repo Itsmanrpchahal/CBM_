@@ -772,49 +772,49 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         pd.dismiss()
         if(userProfileResponse.isSuccessful)
         {
-            Log.d("userprofilerespose", "" + userProfileResponse.body()?.data)
-            plan = userProfileResponse.body()?.data?.user?.customerSubscription?.plan?.name.toString()
+            Log.d("userprofilerespose", "" + userProfileResponse.body()?.getData())
+            plan = userProfileResponse.body()?.getData()?.user?.customerSubscription?.plan?.name.toString()
             profile_username.text =
-                userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
+                userProfileResponse.body()?.getData()?.user?.firstname + " " + userProfileResponse.body()?.getData()?.user?.lastname
 
             Glide.with(context!!)
-                .load(userProfileResponse.body()?.data?.filePath + userProfileResponse.body()?.data?.user?.avatar?.toString())
+                .load(userProfileResponse.body()?.getData()?.filePath + userProfileResponse.body()?.getData()?.user?.avatar?.toString())
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)
             profile_followerscount.text =
-                userProfileResponse.body()?.data?.user?.followers?.size.toString()
+                userProfileResponse.body()?.getData()?.user?.followers?.size.toString()
             profile_followingcount.text =
-                userProfileResponse.body()?.data?.user?.following?.size.toString()
-            username = userProfileResponse.body()?.data?.user?.firstname!!
-            setStringVal(Constants.FIRSTNAME, userProfileResponse.body()?.data?.user?.firstname)
-            setStringVal(Constants.LASTNAME, userProfileResponse.body()?.data?.user?.lastname)
-            setStringVal(Constants.EMAIL, userProfileResponse.body()?.data?.user?.email)
-            setStringVal(Constants.PHONE, userProfileResponse.body()?.data?.user?.phone)
-            setStringVal(Constants.PAYPALID,userProfileResponse.body()?.data?.user?.paypal_email.toString())
+                userProfileResponse.body()?.getData()?.user?.following?.size.toString()
+            username = userProfileResponse.body()?.getData()?.user?.firstname!!
+            setStringVal(Constants.FIRSTNAME, userProfileResponse.body()?.getData()?.user?.firstname)
+            setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
+            setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)
+            setStringVal(Constants.PHONE, userProfileResponse.body()?.getData()?.user?.phone)
+            setStringVal(Constants.PAYPALID,userProfileResponse.body()?.getData()?.user?.paypal_email.toString())
             setStringVal(Constants.SUBSCRIPTION_ID,
-                userProfileResponse.body()?.data?.user?.customerSubscription?.id.toString()
+                userProfileResponse.body()?.getData()?.user?.customerSubscription?.id.toString()
             )
             setStringVal(
                 Constants.ABOUT,
-                userProfileResponse.body()?.data?.user?.profile?.aboutMe.toString()
+                userProfileResponse.body()?.getData()?.user?.profile?.aboutMe.toString()
             )
 
             followers =
-                userProfileResponse.body()?.data?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
+                userProfileResponse.body()?.getData()?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
             following =
-                userProfileResponse.body()?.data?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
+                userProfileResponse.body()?.getData()?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
 
-            role = userProfileResponse.body()?.data?.user?.role.toString()
-            setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.data?.user?.role.toString())
+            role = userProfileResponse.body()?.getData()?.user?.role.toString()
+            setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.getData()?.user?.role.toString())
 
 
-            if (userProfileResponse.body()?.data?.user?.customerSubscription != null) {
+            if (userProfileResponse.body()?.getData()?.user?.customerSubscription != null) {
                 setStringVal(Constants.CUSTOMERSUBSCRIPTION, "1")
             }
 
-            if (userProfileResponse.body()?.data?.user?.businessSubscription != null) {
+            if (userProfileResponse.body()?.getData()?.user?.businessSubscription != null) {
                 setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
             }
-            if (userProfileResponse.body()?.data?.user?.customerSubscription != null || userProfileResponse.body()?.data?.user?.businessSubscription != null) {
+            if (userProfileResponse.body()?.getData()?.user?.customerSubscription != null || userProfileResponse.body()?.getData()?.user?.businessSubscription != null) {
                 profile_mygigs.visibility = View.GONE
 
                 profile_chooseyourplan.setText("My Subscriptions")
@@ -1042,14 +1042,14 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             getStringVal(Constants.USERID)
         )
         if (updateProfileResponse.isSuccessful) {
-            setStringVal(Constants.FIRSTNAME, updateProfileResponse.body()?.data?.user?.firstname)
-            setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.data?.user?.lastname)
-            setStringVal(Constants.EMAIL, updateProfileResponse.body()?.data?.user?.email)
-            setStringVal(Constants.PHONE, updateProfileResponse.body()?.data?.user?.phone)
-            setStringVal(Constants.PAYPALID,updateProfileResponse.body()?.data?.user?.paypal_email.toString())
+            setStringVal(Constants.FIRSTNAME, updateProfileResponse.body()?.getData()?.user?.firstname)
+            setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.getData()?.user?.lastname)
+            setStringVal(Constants.EMAIL, updateProfileResponse.body()?.getData()?.user?.email)
+            setStringVal(Constants.PHONE, updateProfileResponse.body()?.getData()?.user?.phone)
+            setStringVal(Constants.PAYPALID,updateProfileResponse.body()?.getData()?.user?.paypal_email.toString())
             setStringVal(
                 Constants.ABOUT,
-                updateProfileResponse.body()?.data?.user?.profile?.aboutMe
+                updateProfileResponse.body()?.getData()?.user?.profile?.aboutMe
             )
 
 
@@ -1072,7 +1072,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         pd.dismiss()
         if (paymentMethod.isSuccessful)
         {
-            cards = paymentMethod.body()?.data?.paymentProfiles as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+            cards = paymentMethod.body()?.getData()?.paymentProfiles as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
             payment_method_recycler.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             val adapter = CardsAdapter(context!!, cards)

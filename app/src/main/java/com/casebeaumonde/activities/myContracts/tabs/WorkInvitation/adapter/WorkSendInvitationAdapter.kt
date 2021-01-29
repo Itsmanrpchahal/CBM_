@@ -38,7 +38,7 @@ class WorkSendInvitationAdapter(
         Glide.with(context).load(
             Constants.BASE_IMAGE_URL + data.get(
                 position
-            ).designer.avatar
+            ).designer?.avatar
         ).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
         holder.itemView.invitation_title.setText(data.get(position).description)
         holder.itemView.invitation_date.setText(Utils.changeDateTimeToDateTime(data.get(position).createdAt))

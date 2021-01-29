@@ -100,19 +100,19 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,Controller.FollowUnFo
         pd.dismiss()
         if (userProfileResponse.isSuccessful)
         {
-            if (userProfileResponse.body()?.data?.currentFollowing==true)
+            if (userProfileResponse.body()?.getData()?.currentFollowing==true)
             {
                 viewprofile_followbt.setText("UnFollow")
             }else{
                 viewprofile_followbt.setText("Follow")
             }
-            viewprofile__username.setText(userProfileResponse.body()?.data?.user?.firstname+"'s Profile")
-            viewprofile_usernamefull.setText(userProfileResponse.body()?.data?.user?.firstname+" "+userProfileResponse.body()?.data?.user?.lastname)
-            viewprofile_followerscount.text = userProfileResponse.body()?.data?.user?.followers?.size.toString()
-            viewprofile__followingcount.text = userProfileResponse.body()?.data?.user?.following?.size.toString()
-            Glide.with(this).load(Constants.BASE_IMAGE_URL+userProfileResponse.body()?.data?.user?.avatar).placeholder(R.drawable.login_banner).into(viewprofile_profilePic)
+            viewprofile__username.setText(userProfileResponse.body()?.getData()?.user?.firstname+"'s Profile")
+            viewprofile_usernamefull.setText(userProfileResponse.body()?.getData()?.user?.firstname+" "+userProfileResponse.body()?.getData()?.user?.lastname)
+            viewprofile_followerscount.text = userProfileResponse.body()?.getData()?.user?.followers?.size.toString()
+            viewprofile__followingcount.text = userProfileResponse.body()?.getData()?.user?.following?.size.toString()
+            Glide.with(this).load(Constants.BASE_IMAGE_URL+userProfileResponse.body()?.getData()?.user?.avatar).placeholder(R.drawable.login_banner).into(viewprofile_profilePic)
 
-            role = userProfileResponse.body()?.data?.user?.role.toString()
+            role = userProfileResponse.body()?.getData()?.user?.role.toString()
 
                 viewprofile_tabLayout!!.addTab(viewprofile_tabLayout!!.newTab().setText("My Wall"))
                 viewprofile_tabLayout!!.addTab(viewprofile_tabLayout!!.newTab().setText("My services"))
@@ -134,7 +134,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,Controller.FollowUnFo
         pd.dismiss()
         if (followUnfollow.isSuccessful)
         {
-            if (followUnfollow.body()?.message.equals("Now you are following Roberto"))
+            if (followUnfollow.body()?.getMessage().equals("Now you are following Roberto"))
             {
                 viewprofile_followbt.setText("Unfollow")
             }else{
@@ -148,13 +148,13 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI,Controller.FollowUnFo
 
             utility!!.relative_snackbar(
                 parent_viewProfile,
-                followUnfollow.body()?.message,
+                followUnfollow.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {
             utility!!.relative_snackbar(
                 parent_viewProfile,
-                followUnfollow.body()?.message,
+                followUnfollow.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         }

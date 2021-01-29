@@ -108,13 +108,13 @@ class MyGigs : BaseClass(), Controller.GetUserGigsAPI, Controller.SendInvitation
         pd.dismiss()
         if (myGigsResponse.isSuccessful) {
 
-            response = myGigsResponse.body()?.data?.user?.gigs as ArrayList<MyGigsResponse.Data.User.Gig>
-            username = myGigsResponse.body()?.data?.user?.firstname.toString()
+            response = myGigsResponse.body()?.getData()?.user?.gigs as ArrayList<MyGigsResponse.Data.User.Gig>
+            username = myGigsResponse.body()?.getData()?.user?.firstname.toString()
                 //add layout manager
             mygigigs_rv.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val adapter = MyGigsAdapter(
-                this, myGigsResponse.body()?.data?.user?.gigs!!, userID,
+                this, (myGigsResponse.body()?.getData()?.user?.gigs as ArrayList<MyGigsResponse.Data.User.Gig>)!!, userID,
                 getStringVal(Constants.USERID).toString()
             )
             mygigigs_rv.adapter = adapter

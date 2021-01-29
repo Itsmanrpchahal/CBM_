@@ -46,7 +46,7 @@ class MyClosetsAdapter(
         holder.itemView.closet_descripition.text = closets.description
         holder.itemView.closet_visibilty.text = "Visibility: " + closets.visibility
         holder.itemView.closet_customer.text =
-            "Customer: " + closets.creator.firstname + " " + closets.creator.lastname
+            "Customer: " + closets.creator?.firstname + " " + closets.creator?.lastname
         holder.itemView.closet_createdat.text =
             "Created at: " + Utils.changeDateTimeToDateTime(closets.createdAt)
 

@@ -119,7 +119,7 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
         pd!!.dismiss()
         if (designerResponse.isSuccessful)
         {
-            response = designerResponse.body()?.data?.users as ArrayList<DesignersResponse.Data.User>
+            response = designerResponse.body()?.getData()?.users as ArrayList<DesignersResponse.Data.User>
             setFullData(response)
         }else{
             utility!!.relative_snackbar(

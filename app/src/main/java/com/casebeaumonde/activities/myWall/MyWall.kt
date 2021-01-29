@@ -71,8 +71,8 @@ class MyWall : BaseClass(),Controller.MyWallAPI  {
             myWall_Recycler.layoutManager = LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,false)
             val  adapter = MyWallAdapter(this,
-                (myWall.body()?.data?.fashionables as ArrayList<MyWallResponse.Data.Fashionable>?)!!,
-                myWall.body()?.data?.filePath.toString()
+                (myWall.body()?.getData()?.fashionables as ArrayList<MyWallResponse.Data.Fashionable>?)!!,
+                myWall.body()?.getData()?.filePath.toString()
             )
             myWall_Recycler.adapter = adapter
         }else{

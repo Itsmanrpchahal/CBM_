@@ -107,7 +107,7 @@ class ForgotActivity : BaseClass(),Controller.FOrgotPasswordAPI {
         {
             utility!!.relative_snackbar(
                 parent_forgot!!,
-                forgotPassword.body()?.message,
+                forgotPassword.body()?.getMessage(),
                 getString(R.string.close_up)
             )
             finish()

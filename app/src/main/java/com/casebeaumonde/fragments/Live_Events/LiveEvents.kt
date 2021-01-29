@@ -204,7 +204,7 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI ,LiveEventIF,Controller.
         pd.dismiss()
         if (liveEventsResponse.isSuccessful) {
             response =
-                liveEventsResponse.body()?.data?.events as ArrayList<LiveEventsResponse.Event>
+                liveEventsResponse.body()?.getData()?.events as ArrayList<LiveEventsResponse.Event>
             if (!type.equals("All"))
             {
                 searchbyType(type)
@@ -243,7 +243,7 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI ,LiveEventIF,Controller.
         {
             utility!!.relative_snackbar(
             parent_liveevents!!,
-            favLiveEvent.body()?.message,
+            favLiveEvent.body()?.getMessage(),
             getString(R.string.close_up)
         )
 

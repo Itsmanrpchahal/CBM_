@@ -305,12 +305,12 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
         if (userProfileResponse.isSuccessful) {
-            if (userProfileResponse.body()?.code.equals("200")) {
+            if (userProfileResponse.body()?.getCode().equals("200")) {
                 toolbar_username.text =
-                    userProfileResponse.body()?.data?.user?.firstname + " " + userProfileResponse.body()?.data?.user?.lastname
+                    userProfileResponse.body()?.getData()?.user?.firstname + " " + userProfileResponse.body()?.getData()?.user?.lastname
                 try {
                     Glide.with(this@MainActivity)
-                        .load(userProfileResponse.body()!!.data!!.filePath + userProfileResponse.body()!!.data!!.user!!.avatar)
+                        .load(userProfileResponse.body()!!.getData()!!.filePath + userProfileResponse.body()!!.getData()!!.user!!.avatar)
                         .placeholder(R.drawable.login_banner).into(userImage)
                 } catch (e: Exception) {
 
@@ -323,7 +323,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
 
         if (notificationsResponseResponse.isSuccessful) {
-            toolbar_notifiction.setBadgeValue(notificationsResponseResponse.body()?.data?.notification?.size!!)
+            toolbar_notifiction.setBadgeValue(notificationsResponseResponse.body()?.getData()?.notification?.size!!)
             toolbar_notifiction.setBadgeTextColor(resources.getColor(R.color.colorBlue))
         }
     }

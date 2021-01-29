@@ -110,9 +110,9 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
 
     override fun onEventDetailSuccess(eventDetailResponse: Response<EventDetailResponse>) {
         pd.dismiss()
-        userClosets = eventDetailResponse.body()?.data?.closet as ArrayList<EventDetailResponse.Data.Closet>
+        userClosets = eventDetailResponse.body()?.getData()?.closet as ArrayList<EventDetailResponse.Data.Closet>
         response =
-            eventDetailResponse.body()?.data?.events?.items as ArrayList<EventDetailResponse.Data.Events.Item>
+            eventDetailResponse.body()?.getData()?.events?.items as ArrayList<EventDetailResponse.Data.Events.Item>
         setFullData(response)
     }
 
@@ -209,10 +209,10 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL+response.get(id!!).picture).placeholder(R.drawable.login_banner).into(viewitem_image)
         viewitem_title.text = "Title :"+response.get(id).title
-        viewitem_color.text = "Color :"+response.get(id).color.name
-        if (response.get(id).hearts.size>0)
+        viewitem_color.text = "Color :"+response.get(id).color?.name
+        if (response.get(id).hearts!!.size>0)
         {
-            viewitem_favcount.text = response.get(id).hearts.size.toString()
+            viewitem_favcount.text = response.get(id).hearts!!.size.toString()
         }
 
         itemview_closebt.setOnClickListener {
@@ -220,13 +220,14 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
         }
 
 
-        viewitem_size.text = "Size :"+response.get(id).size.name
+        viewitem_size.text = "Size :"+response.get(id).size?.name
         viewitem_price.text = "Price :"+response.get(id).price
-        viewitem_category.text = "Category :"+response.get(id).category.name
+        viewitem_category.text = "Category :"+response.get(id).category?.name
 
-        setSpinnerData(userClosets,itemview_spinner,itemview_pinnertitle,response.get(id).id,itemview_addtoclosetbt)
+        setSpinnerData(userClosets,itemview_spinner,itemview_pinnertitle,
+            response.get(id).id!!,itemview_addtoclosetbt)
 
-        searchUserHeart(response.get(id).hearts,viewitem_checkbox)
+        searchUserHeart(response.get(id).hearts as MutableList<EventDetailResponse.Data.Events.Heart>,viewitem_checkbox)
         Viewdialog.show()
     }
 
@@ -244,7 +245,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
         {
 
             val title = userClosets.get(i)
-            list.add(title.title)
+            list.add(title.title.toString())
             listID.add(title.id.toString())
         }
 
@@ -302,7 +303,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
         Viewdialog.dismiss()
         if (addItemToAnotherCloset.isSuccessful)
         {
-            utility.relative_snackbar(parent_eventdetail!!, addItemToAnotherCloset.body()?.messsage, getString(R.string.close_up))
+            utility.relative_snackbar(parent_eventdetail!!, addItemToAnotherCloset.body()?.getMesssage(), getString(R.string.close_up))
         }else {
             utility.relative_snackbar(parent_eventdetail!!, addItemToAnotherCloset.message(), getString(R.string.close_up))
         }

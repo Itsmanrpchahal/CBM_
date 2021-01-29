@@ -351,7 +351,7 @@ class ClosetsItems : BaseClass(),
         //ToDo : Get USer closets for move and duplicate
         for (i in 0 until userClosets.size) {
             val title = userClosets.get(i)
-            list.add(title.title)
+            list.add(title.title.toString())
             listID.add(title.id.toString())
         }
         val adapter = ArrayAdapter(
@@ -366,7 +366,7 @@ class ClosetsItems : BaseClass(),
         //ToDo: Get Outfits
         for (i in 0 until outFitRes.size) {
             val title = outFitRes.get(i)
-            outFitTitle.add(title.title)
+            outFitTitle.add(title.title.toString())
             outFitID.add(title.id.toString())
         }
 
@@ -539,13 +539,13 @@ class ClosetsItems : BaseClass(),
             //userClosets = closetItemsResponse.body()?.data?.closet as ArrayList<ClosetsItemsResponse.Data.Closet>
             userClosets = ArrayList()
             selectAll = 0
-            userClosets.addAll(closetItemsResponse.body()?.data?.allClosets!!)
-            setFullData(closetItemsResponse.body()?.data?.closet?.items, select, selectAll)
+            userClosets.addAll(closetItemsResponse.body()?.getData()?.allClosets!!)
+            setFullData(closetItemsResponse.body()?.getData()?.closet?.items, select, selectAll)
             listData = ArrayList()
             checkedClosetIDs = ArrayList()
             listData.clear()
             checkedClosetIDs.clear()
-            if (closetItemsResponse.body()?.data?.closet?.userId.toString()
+            if (closetItemsResponse.body()?.getData()?.closet?.userId.toString()
                     .equals(getStringVal(Constants.USERID))
             ) {
                 closetiems_add.visibility = View.VISIBLE
@@ -604,7 +604,7 @@ class ClosetsItems : BaseClass(),
             setClosetAPI()
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                deleteClosetItemResponse.body()?.message,
+                deleteClosetItemResponse.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {
@@ -624,7 +624,7 @@ class ClosetsItems : BaseClass(),
             controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                addItemToAnotherCloset.body()?.messsage,
+                addItemToAnotherCloset.body()?.getMesssage(),
                 getString(R.string.close_up)
             )
             setClosetAPI()
@@ -647,13 +647,13 @@ class ClosetsItems : BaseClass(),
             controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                moveItem.body()?.message,
+                moveItem.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                moveItem.body()?.message,
+                moveItem.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         }
@@ -668,7 +668,7 @@ class ClosetsItems : BaseClass(),
             controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                duplicateItem.body()?.message,
+                duplicateItem.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {
@@ -687,12 +687,12 @@ class ClosetsItems : BaseClass(),
             outFitTitle = ArrayList()
             outFitID = ArrayList()
             outFitRes = ArrayList()
-            outFitRes.addAll(fetchList.body()?.data?.outfits!!)
+            outFitRes.addAll(fetchList.body()?.getData()?.outfits!!)
 
             //ToDo: Get Outfits
             for (i in 0 until outFitRes.size) {
                 val title = outFitRes.get(i)
-                outFitTitle.add(title.title)
+                outFitTitle.add(title.title.toString())
                 outFitID.add(title.id.toString())
             }
 
@@ -740,8 +740,8 @@ class ClosetsItems : BaseClass(),
             categoryTitle.add("Select Category")
             categoryID.add("000")
             //ToDo: Get Categories
-            for (i in 0 until fetchList.body()?.data?.categories?.size!!) {
-                val title = fetchList.body()?.data?.categories?.get(i)
+            for (i in 0 until fetchList.body()?.getData()?.categories?.size!!) {
+                val title = fetchList.body()?.getData()?.categories?.get(i)
                 categoryTitle.add(title?.name!!)
                 categoryID.add(title?.id.toString())
             }
@@ -799,8 +799,8 @@ class ClosetsItems : BaseClass(),
             brandTitle.add("Select Brand")
             brandID.add("000")
             //ToDo: Get Categories
-            for (i in 0 until fetchList.body()?.data?.brands?.size!!) {
-                val title = fetchList.body()?.data?.brands?.get(i)
+            for (i in 0 until fetchList.body()?.getData()?.brands?.size!!) {
+                val title = fetchList.body()?.getData()?.brands?.get(i)
                 brandTitle.add(title?.name!!)
                 brandID.add(title?.id.toString())
             }
@@ -857,8 +857,8 @@ class ClosetsItems : BaseClass(),
             colorTitle.add("Select Color")
             colorID.add("000")
             //ToDo: Get Color
-            for (i in 0 until fetchList.body()?.data?.colors?.size!!) {
-                val title = fetchList.body()?.data?.colors?.get(i)
+            for (i in 0 until fetchList.body()?.getData()?.colors?.size!!) {
+                val title = fetchList.body()?.getData()?.colors?.get(i)
                 colorTitle.add(title?.name!!)
                 colorID.add(title?.id.toString())
             }
@@ -915,8 +915,8 @@ class ClosetsItems : BaseClass(),
             sizeTitle.add("Select Size")
             sizeID.add("000")
             //ToDo: Get Color
-            for (i in 0 until fetchList.body()?.data?.sizes?.size!!) {
-                val title = fetchList.body()?.data?.sizes?.get(i)
+            for (i in 0 until fetchList.body()?.getData()?.sizes?.size!!) {
+                val title = fetchList.body()?.getData()?.sizes?.get(i)
                 sizeTitle.add(title?.name!!)
                 sizeID.add(title?.id.toString())
             }
@@ -1052,7 +1052,7 @@ class ClosetsItems : BaseClass(),
         if (outfit.isSuccessful) {
             utility!!.relative_snackbar(
                 parent_closetsItems!!,
-                outfit.body()?.message,
+                outfit.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {
@@ -1072,12 +1072,12 @@ class ClosetsItems : BaseClass(),
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val adapter = getStringVal(Constants.USERID)?.let {
                 FilterOutFitItems(
-                    this, outfiFIlter.body()?.data?.closetItem!!,
+                    this, (outfiFIlter.body()?.getData()?.closetItem as MutableList<OutfitFilterResponse.Data.ClosetItem>?)!!,
                     it, select, selectAll
                 )
             }
             outfitResponse = ArrayList()
-            outfitResponse.addAll(outfiFIlter.body()?.data?.closetItem!!)
+            outfitResponse.addAll(outfiFIlter.body()?.getData()?.closetItem!!)
             closetsItems_recycler.adapter = adapter
         } else {
             utility!!.relative_snackbar(
@@ -1197,14 +1197,14 @@ class ClosetsItems : BaseClass(),
         Glide.with(this).load(Constants.BASE_IMAGE_URL + closetResponse.get(id!!).picture)
             .placeholder(R.drawable.login_banner).into(viewitem_image)
         viewitem_title.text = "Title :" + closetResponse.get(id).title
-        viewitem_color.text = "Color :" + closetResponse.get(id).color.name
-        if (closetResponse.get(id).hearts.size > 0) {
-            viewitem_favcount.text = closetResponse.get(id).hearts.size.toString()
+        viewitem_color.text = "Color :" + closetResponse.get(id).color?.name
+        if (closetResponse.get(id).hearts!!.size > 0) {
+            viewitem_favcount.text = closetResponse.get(id).hearts!!.size.toString()
         }
 
-        viewitem_size.text = "Size :" + closetResponse.get(id).size.name
+        viewitem_size.text = "Size :" + closetResponse.get(id).size?.name
         viewitem_price.text = "Price :" + closetResponse.get(id).price
-        viewitem_category.text = "Category :" + closetResponse.get(id).category.name
+        viewitem_category.text = "Category :" + closetResponse.get(id).category?.name
 
         itemview_removebt.setOnClickListener {
             if (utility.isConnectingToInternet(this)) {
@@ -1233,12 +1233,12 @@ class ClosetsItems : BaseClass(),
             Viewdialog.dismiss()
         }
 
-        searchUserHeart(closetResponse.get(id).hearts, viewitem_checkbox)
+        searchUserHeart(closetResponse.get(id).hearts as MutableList<ClosetsItemsResponse.Data.Closet.Item.Heart>, viewitem_checkbox)
 
         setSpinnerData(
             userClosets,
             itemview_spinner,
-            closetResponse.get(id).id,
+            closetResponse.get(id).id!!,
             itemview_addtoclosetbt,
             itemview_pinnertitle
         )
@@ -1258,7 +1258,7 @@ class ClosetsItems : BaseClass(),
         for (i in 0 until userClosets.size) {
 
             val title = userClosets.get(i)
-            list.add(title.title)
+            list.add(title.title!!)
             listID.add(title.id.toString())
         }
 

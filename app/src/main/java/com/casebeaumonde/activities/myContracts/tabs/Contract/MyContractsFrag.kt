@@ -118,11 +118,11 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
         pd.dismiss()
         customer = ArrayList()
         customer =
-            contractlist.body()?.data?.user?.contractsAsCustomer as ArrayList<ContractListResponse.Data.User.ContractsAsCustomer>
+            contractlist.body()?.getData()?.user?.contractsAsCustomer as ArrayList<ContractListResponse.Data.User.ContractsAsCustomer>
 
-        contract = contractlist.body()?.data?.user?.contractsAsContractor as ArrayList<ContractListResponse.Data.User.ContractsAsContractor>
+        contract = contractlist.body()?.getData()?.user?.contractsAsContractor as ArrayList<ContractListResponse.Data.User.ContractsAsContractor>
 
-        if (contractlist.body()?.data?.user?.role.equals("customer")) {
+        if (contractlist.body()?.getData()?.user?.role.equals("customer")) {
             type = "customer"
             //worksentinvitations_recycler.visibility = View.VISIBLE
             setFullData(customer, "customer")
@@ -224,20 +224,20 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
 
         contract_date.setText("Opened on: " + Utils.changeDateTimeToDateTime(customer.get(pos?.toInt()!!).openedAt))
         Glide.with(context!!)
-            .load(Constants.BASE_IMAGE_URL + customer.get(pos.toInt()).customer.avatar)
+            .load(Constants.BASE_IMAGE_URL + customer.get(pos.toInt()).customer?.avatar)
             .placeholder(R.drawable.login_banner).into(contractuser_image)
         Glide.with(context!!)
-            .load(Constants.BASE_IMAGE_URL + customer.get(pos.toInt()).contractor.avatar)
+            .load(Constants.BASE_IMAGE_URL + customer.get(pos.toInt()).contractor?.avatar)
             .placeholder(R.drawable.login_banner).into(contractparter_image)
         contractuser_name.setText(customer.get(pos.toInt()).customerFullname + "\n" + "Client")
         contractparter_name.setText(customer.get(pos.toInt()).contractorFullname + "\n" + "Designer")
         contract_number.setText("Contract number: " + customer.get(pos.toInt()).contractNumber)
-        gig_that_genrated_contract.setText("gig_that_genrated_contract: " + customer.get(pos.toInt()).gig.title)
+        gig_that_genrated_contract.setText("gig_that_genrated_contract: " + customer.get(pos.toInt()).gig?.title)
         rate_agreed.setText("Rate agreed: $" + customer.get(pos.toInt()).rate)
         type_rate.setText("Type of rate agreed: " + customer.get(pos.toInt()).rateType)
         quantity_hours.setText("Quantity of hours agreed: " + customer.get(pos.toInt()).hours)
         contract_totalamount.setText("Total amount agreed: $" + customer.get(pos.toInt()).totalAmount)
-        contract_status.setText("Status: " + customer.get(pos.toInt()).status.replace("_"," "))
+        contract_status.setText("Status: " + customer.get(pos.toInt()).status?.replace("_"," "))
 
         if (!customer.get(pos.toInt()).status.equals("claim")) {
             open_claim.visibility = View.VISIBLE
@@ -248,7 +248,7 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
             approvefund_claim.visibility = View.VISIBLE
             declienfund_claim.visibility = View.VISIBLE
 
-            approvefund_claim.setText(customer.get(pos.toInt()).status.replace("_"," "))
+            approvefund_claim.setText(customer.get(pos.toInt()).status?.replace("_"," "))
         }
 
         open_claim.setOnClickListener {
@@ -312,7 +312,7 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
 
             utility.relative_snackbar(
                 parent_contract!!,
-                sendclaim.body()?.message,
+                sendclaim.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {

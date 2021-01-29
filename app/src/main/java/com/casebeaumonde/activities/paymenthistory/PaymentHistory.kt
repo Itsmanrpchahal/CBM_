@@ -77,9 +77,9 @@ class PaymentHistory : BaseClass(), Controller.PaymentProfileAPI {
 
             successpayments_recycler.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            val adapter = paymentProfile.body()?.data?.let {
+            val adapter = paymentProfile.body()?.getData()?.let {
                 PaymentCardsAdapter(
-                    this, it
+                    this, it as MutableList<PaymentProfileResponse.Datum>
                 )
             }
             successpayments_recycler.adapter = adapter

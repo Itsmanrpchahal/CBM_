@@ -39,15 +39,15 @@ class SendOffersAdapter(
         Glide.with(context).load(
             Constants.BASE_IMAGE_URL + data.get(
                 position
-            ).designer.avatar
+            ).designer?.avatar
         ).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
-        holder.itemView.invitation_title.setText("Offer for gig : " + data.get(position).gig.title)
+        holder.itemView.invitation_title.setText("Offer for gig : " + data.get(position).gig?.title)
         holder.itemView.invitation_date.setText(Utils.changeDateTimeToDateTime(data.get(position).createdAt))
         holder.itemView.invitation_status.setText(data.get(position).status)
 
         holder.itemView.setOnClickListener {
             OffersFrag.getOfferID_IF?.getID(
-                data.get(position).gig.id.toString(),
+                data.get(position).gig?.id.toString(),
                 position.toString(), "send", data.get(position).id.toString()
             )
         }

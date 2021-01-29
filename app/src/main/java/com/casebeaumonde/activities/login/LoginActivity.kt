@@ -18,8 +18,8 @@ import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.forgotPassword.ForgotActivity
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
-import com.casebeaumonde.activities.register.userRegister.RegisterActivity
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse
+import com.casebeaumonde.activities.register.userRegister.RegisterActivity
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -190,15 +190,15 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
                     if (response.isSuccessful) {
                         val responsedata = response.body().toString()
                         Log.d("TEST", "" + responsedata)
-                        val data = response.body()?.getData()?.userId
-                        if (response.body()?.getData()?.token != null) {
+                        val data = response.body()?.data?.user_id
+                        if (response.body()?.data?.token != null) {
 
 
                             setStringVal(
                                 Constants.USERID,
-                                response.body()?.getData()?.userId.toString()
+                                response.body()?.data?.user_id.toString()
                             )
-                            setStringVal(Constants.TOKEN, response.body()?.getData()?.token)
+                            setStringVal(Constants.TOKEN, response.body()?.data?.token)
                             setStringVal(Constants.REMEMBERME,remember)
 
                             startActivity(
@@ -251,7 +251,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
             dialog.dismiss()
             utility!!.relative_snackbar(
                 parent_login!!,
-                forgotPassword.body()?.message,
+                forgotPassword.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {

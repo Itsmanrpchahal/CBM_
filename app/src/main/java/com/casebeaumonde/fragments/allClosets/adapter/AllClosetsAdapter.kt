@@ -39,11 +39,11 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
 
         Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.image).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = listData.title
-        holder.itemView.closetitem_uploadby.text = "Created by "+listData.user.firstname+" at "+Utils.changeDateTimeToDateTime(listData.createdAt)
+        holder.itemView.closetitem_uploadby.text = "Created by "+listData.user?.firstname+" at "+Utils.changeDateTimeToDateTime(listData.createdAt)
 
-        if (listData?.hearts.size != 0)
+        if (listData?.hearts!!.size != 0)
         {
-            holder.itemView.closetitem_favcount.text = listData?.hearts.size.toString()
+            holder.itemView.closetitem_favcount.text = listData?.hearts!!.size.toString()
         }
 
         holder.itemView.setOnClickListener {
@@ -67,7 +67,7 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
         closetitemFavorite: CheckBox
     )
     {
-        if (closetsItems.hearts.size>0)
+        if (closetsItems.hearts!!.size>0)
         {
             for (i in closetsItems.hearts!!.indices)
             {

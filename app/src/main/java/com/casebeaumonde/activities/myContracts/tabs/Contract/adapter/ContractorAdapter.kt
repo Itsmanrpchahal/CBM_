@@ -36,13 +36,13 @@ class ContractorAdapter(
     override fun onBindViewHolder(holder: ContractorAdapter.ViewHolder, position: Int) {
         val res = data
         Glide.with(context).load(
-            Constants.BASE_IMAGE_URL + data.get(position).contractor.avatar
+            Constants.BASE_IMAGE_URL + data.get(position).contractor?.avatar
         ).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
 
         holder.itemView.invitation_title.setText(
             "Contract "+ data.get(position).status +" for gig with title: '" + data.get(
                 position
-            ).gig.title + "' and " + data.get(position).customer.firstname + " " + data.get(position).customer.lastname
+            ).gig?.title + "' and " + data.get(position).customer?.firstname + " " + data.get(position).customer?.lastname
         )
 
         holder.itemView.invitation_date.setText(Utils.changeDateTimeToDate(data.get(position).createdAt))

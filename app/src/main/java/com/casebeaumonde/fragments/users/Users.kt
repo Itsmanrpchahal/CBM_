@@ -138,8 +138,8 @@ class Users : BaseFrag(),Controller.UsersAPI {
         pd.dismiss()
         if (usersResponse.isSuccessful)
         {
-            filePath =  usersResponse.body()?.data?.filePath.toString()
-            response = usersResponse.body()?.data?.users as ArrayList<UsersResponse.Data.User>
+            filePath =  usersResponse.body()?.getData()?.filePath.toString()
+            response = usersResponse.body()?.getData()?.users as ArrayList<UsersResponse.Data.User>
             setFullData(response,filePath)
         }else{
             utility!!.relative_snackbar(parent_users!!, usersResponse.message(), getString(R.string.close_up))

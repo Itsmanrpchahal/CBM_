@@ -34,11 +34,11 @@ class ContractCustomerAdapter (val context: Context,val data : MutableList<Contr
 
     override fun onBindViewHolder(holder: ContractCustomerAdapter.ViewHolder, position: Int) {
         Glide.with(context).load(
-            Constants.BASE_IMAGE_URL + data.get(position).customer.avatar
+            Constants.BASE_IMAGE_URL + data.get(position).customer?.avatar
         ).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
-         holder.itemView.invitation_title.setText("Contract opened for gig with title:"+data.get(position).customer.firstname+" between you and "+data.get(position).contractor.firstname)
+         holder.itemView.invitation_title.setText("Contract opened for gig with title:"+data.get(position).customer?.firstname+" between you and "+data.get(position).contractor?.firstname)
         holder.itemView.invitation_date.setText(Utils.changeDateTimeToDateTime(data.get(position).createdAt))
-        holder.itemView.invitation_status.setText("Status:"+data.get(position).status.replace("_"," "))
+        holder.itemView.invitation_status.setText("Status:"+data.get(position).status?.replace("_"," "))
 
         holder.itemView.setOnClickListener {
             MyContractsFrag.getcontractidIf?.getID(

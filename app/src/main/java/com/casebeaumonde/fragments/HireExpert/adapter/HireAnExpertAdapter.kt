@@ -31,13 +31,13 @@ class HireAnExpertAdapter(val context: Context,var list: MutableList<HireAnExper
     override fun onBindViewHolder(holder: HireAnExpertAdapter.ViewHolder, position: Int) {
         val listData = list.get(position)
 
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.user.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.hireanexpert_image)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.user?.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.hireanexpert_image)
         holder.itemView.hireanexpert_name.text = listData.title
         holder.itemView.hireanexpert_description.text = listData.description
         holder.itemView.hireanexpert_hours.text = "Hours :"+listData.hours
         holder.itemView.hireanexpert_rate.text = "Rate :"+listData.rate
         holder.itemView.hireanexpert_ratetype.text = "Rate type :"+listData.rateType
-        holder.itemView.username.text = listData.user.firstname+" "+listData.user.lastname
+        holder.itemView.username.text = listData.user?.firstname+" "+listData.user?.lastname
         holder.itemView.hireanexpert_sendInvitation.setOnClickListener {
             HireAnExpertFragment.hireExpertIF?.getID(position)
         }

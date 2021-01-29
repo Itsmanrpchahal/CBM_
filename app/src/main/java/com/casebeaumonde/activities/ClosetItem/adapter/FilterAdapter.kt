@@ -37,19 +37,19 @@ class FilterAdapter(
 
     override fun onBindViewHolder(holder: FilterAdapter.ViewHodler, position: Int) {
         var closetsItems = filterData.body()?.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner).into(
+        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.getPicture()).placeholder(R.drawable.login_banner).into(
             holder.itemView.closetItemImage
         )
-        holder.itemView.closetitem_name.text = closetsItems?.title
-        holder.itemView.closetitem_uploadby.text = closetsItems?.creator?.firstname
+        holder.itemView.closetitem_name.text = closetsItems?.getTitle()
+        holder.itemView.closetitem_uploadby.text = closetsItems?.getCreator()?.firstname
 
-        if (closetsItems?.hearts?.size != 0)
+        if (closetsItems?.getHearts()?.size != 0)
         {
-            holder.itemView.closetitem_favcount.text = closetsItems?.hearts?.size.toString()
+            holder.itemView.closetitem_favcount.text = closetsItems?.getHearts()?.size.toString()
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {
-            ClosetsItems.closetitemidIf!!.getClosetID(closetsItems?.id.toString())
+            ClosetsItems.closetitemidIf!!.getClosetID(closetsItems?.getId().toString())
         }
         // searchUserHeart(list, holder.itemView.closetitem_favorite)
 
@@ -74,9 +74,9 @@ class FilterAdapter(
         holder.itemView.select_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                ClosetsItems.selectedclosetId?.getID(closetsItems?.id.toString(), "1")
+                ClosetsItems.selectedclosetId?.getID(closetsItems?.getId().toString(), "1")
             }  else {
-                ClosetsItems.selectedclosetId?.getID(closetsItems?.id.toString(), "0")
+                ClosetsItems.selectedclosetId?.getID(closetsItems?.getId().toString(), "0")
             }
         }
     }

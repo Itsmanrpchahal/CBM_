@@ -249,7 +249,7 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
         {
             utility!!.relative_snackbar(
                 parent_cardscreen!!,
-                subscribe.body()?.message,
+                subscribe.body()?.getMessage(),
                 getString(R.string.close_up)
             )
             finish()
@@ -257,7 +257,7 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
         } else {
             utility!!.relative_snackbar(
                 parent_cardscreen!!,
-                subscribe.body()?.message,
+                subscribe.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         }

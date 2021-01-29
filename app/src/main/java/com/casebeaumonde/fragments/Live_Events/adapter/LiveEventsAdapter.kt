@@ -35,26 +35,26 @@ class LiveEventsAdapter(val context : Context,val data: MutableList<LiveEventsRe
         val  list = data.get(position)
         Glide.with(context).load(Constants.BASE_IMAGE_URL+list.image).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = list.title
-        holder.itemView.closetitem_uploadby.text = "Created by: "+data.get(position).creator.firstname +" at "+Utils.changeDateTimeToDateTime(list.createdAt)
+        holder.itemView.closetitem_uploadby.text = "Created by: "+data.get(position).creator?.firstname +" at "+Utils.changeDateTimeToDateTime(list.createdAt)
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context,EventDetailScreen::class.java).putExtra(Constants.EVENTID,list.id.toString()))
         }
 
-        if (list.hearts.size>0)
+        if (list.hearts!!.size>0)
         {
-            holder.itemView.closetitem_favcount.text = list.hearts.size.toString()
+            holder.itemView.closetitem_favcount.text = list.hearts!!.size.toString()
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {
-            LiveEvents.liveEventIF?.getID(list.id.toString(), list.hearts.size)
+            LiveEvents.liveEventIF?.getID(list.id.toString(), list.hearts!!.size)
         }
 
         searchUserHeart(list,holder.itemView.closetitem_favorite)
     }
 
     private fun searchUserHeart(list: LiveEventsResponse.Event, closetitem_favorite: CheckBox) {
-        if (list.hearts.size>0)
+        if (list.hearts!!.size>0)
         {
             for (i in list.hearts!!.indices)
             {

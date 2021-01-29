@@ -374,7 +374,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
         if (myClosetsResponse.isSuccessful) {
             closets =
-                myClosetsResponse.body()?.data?.closet as ArrayList<MyClosetsResponse.Data.Closet>
+                myClosetsResponse.body()?.getData()?.closet as ArrayList<MyClosetsResponse.Data.Closet>
             setFullData(closets)
         } else {
             utility!!.relative_snackbar(
@@ -534,7 +534,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         {
             utility!!.relative_snackbar(
                 parent_myclosets,
-                deleteClosetResponse.body()?.message,
+                deleteClosetResponse.body()?.getMessage(),
                 getString(R.string.close_up)
             )
             controller.GetMyClosets(

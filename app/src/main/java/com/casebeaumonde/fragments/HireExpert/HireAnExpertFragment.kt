@@ -147,7 +147,7 @@ class HireAnExpertFragment : BaseFrag(), Controller.HireAnExpertAPI, HireExpertI
     override fun onHireErxpertSuccess(hireAnExpertResponse: Response<HireAnExpertResponse>) {
         pd.dismiss()
         if (hireAnExpertResponse.isSuccessful) {
-            expert = hireAnExpertResponse.body()?.data?.gigs as ArrayList<HireAnExpertResponse.Data.Gig>
+            expert = hireAnExpertResponse.body()?.getData()?.gigs as ArrayList<HireAnExpertResponse.Data.Gig>
             setFullData(expert)
         }
     }
@@ -181,7 +181,7 @@ class HireAnExpertFragment : BaseFrag(), Controller.HireAnExpertAPI, HireExpertI
         sendinviation_budget = dialog.findViewById(R.id.sendinviation_budget)
         sendinviation_sendInvitation = dialog.findViewById(R.id.sendinviation_sendInvitation)
         sendinviation_cancel = dialog.findViewById(R.id.sendinviation_cancel)
-        sendinviationtv.text = "Send invitation to " + response.get(id).user.firstname
+        sendinviationtv.text = "Send invitation to " + response.get(id).user?.firstname
 
 
         sendinviation_cancel.setOnClickListener {
@@ -205,7 +205,7 @@ class HireAnExpertFragment : BaseFrag(), Controller.HireAnExpertAPI, HireExpertI
                     pd.show()
                     controller.SendInvitation(
                         "Bearer " + getStringVal(Constants.TOKEN),
-                        response.get(id).user.id.toString(),
+                        response.get(id).user?.id.toString(),
                         des,
                         response.get(id).id.toString(),
                         budget

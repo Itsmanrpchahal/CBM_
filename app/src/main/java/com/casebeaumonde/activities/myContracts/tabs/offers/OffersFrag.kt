@@ -115,16 +115,16 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
 
         sendOffer = ArrayList()
         sendOffer =
-            offerlist.body()?.data?.user?.sentOffers as ArrayList<OfferListResponse.Data.User.SentOffer>
+            offerlist.body()?.getData()?.user?.sentOffers as ArrayList<OfferListResponse.Data.User.SentOffer>
 
         //setFullData(sendOffer, "sent")
         recieveOffer = ArrayList()
         recieveOffer =
-            offerlist.body()?.data?.user?.receivedOffers as ArrayList<OfferListResponse.Data.User.ReceivedOffer>
+            offerlist.body()?.getData()?.user?.receivedOffers as ArrayList<OfferListResponse.Data.User.ReceivedOffer>
         setRecieveData(recieveOffer, "recieve")
 
 
-        if (offerlist.body()?.data?.user?.role.equals("customer")) {
+        if (offerlist.body()?.getData()?.user?.role.equals("customer")) {
             type = "sent"
             //worksentinvitations_recycler.visibility = View.VISIBLE
             setFullData(sendOffer, "sent")
@@ -243,9 +243,9 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
 
 
             offer_date.setText(Utils.changeDateTimeToDate(sendOffer.get(pos?.toInt()!!).createdAt))
-            offer_title.setText("Offer for gig with title: " + sendOffer.get(pos.toInt()).gig.title)
+            offer_title.setText("Offer for gig with title: " + sendOffer.get(pos.toInt()).gig?.title)
             Glide.with(context!!)
-                .load(Constants.BASE_IMAGE_URL + sendOffer.get(pos?.toInt()!!).designer.avatar)
+                .load(Constants.BASE_IMAGE_URL + sendOffer.get(pos?.toInt()!!).designer?.avatar)
                 .placeholder(R.drawable.login_banner).into(offer_image)
             offer_offer_rate.setText("Proposed rate: $" + sendOffer.get(pos.toInt()).rate)
             offer_ratetype.setText("Proposed rate type:" + sendOffer.get(pos.toInt()).rateType)
@@ -264,9 +264,9 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
 
 
             offer_date.setText(Utils.changeDateTimeToDate(recieveOffer.get(pos?.toInt()!!).createdAt))
-            offer_title.setText("Offer for gig with title: " + recieveOffer.get(pos.toInt()).gig.title)
+            offer_title.setText("Offer for gig with title: " + recieveOffer.get(pos.toInt()).gig?.title)
             Glide.with(context!!)
-                .load(Constants.BASE_IMAGE_URL + recieveOffer.get(pos?.toInt()!!).designer.avatar)
+                .load(Constants.BASE_IMAGE_URL + recieveOffer.get(pos?.toInt()!!).designer?.avatar)
                 .placeholder(R.drawable.login_banner).into(offer_image)
             offer_offer_rate.setText("Proposed rate: $" + recieveOffer.get(pos.toInt()).rate)
             offer_ratetype.setText("Proposed rate type:" + recieveOffer.get(pos.toInt()).rateType)
@@ -300,7 +300,7 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
 
             utility!!.relative_snackbar(
                 parent_offers!!,
-                setOffer.body()?.message,
+                setOffer.body()?.getMessage(),
                 getString(R.string.close_up)
             )
         } else {

@@ -112,7 +112,8 @@ class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Co
         //add layout manager
         notification_recyler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = NotificationAdapter(this ,notificationsResponseResponse.body()?.data?.notification!!)
+        val adapter = NotificationAdapter(this ,
+            (notificationsResponseResponse.body()?.getData()?.notification as MutableList<NotificationsResponse.Data.Notification>?)!!)
         notification_recyler.adapter = adapter
     }
 

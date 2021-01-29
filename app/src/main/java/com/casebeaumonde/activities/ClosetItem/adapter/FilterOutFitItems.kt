@@ -45,9 +45,9 @@ class FilterOutFitItems(
         holder.itemView.closetitem_name.text = closetsItems?.title
         holder.itemView.closetitem_uploadby.text = closetsItems?.creator?.firstname
 
-        if (closetsItems?.hearts.size != 0)
+        if (closetsItems?.hearts?.size != 0)
         {
-            holder.itemView.closetitem_favcount.text = closetsItems?.hearts.size.toString()
+            holder.itemView.closetitem_favcount.text = closetsItems?.hearts?.size.toString()
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {

@@ -37,13 +37,13 @@ class EventDetailAdapter(
 
         Glide.with(context).load(Constants.BASE_IMAGE_URL+listdata.picture).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = listdata.title
-        holder.itemView.closetitem_uploadby.text = "Uploaded by :"+listdata.creator.firstname
-        if (listdata.hearts.size>0)
+        holder.itemView.closetitem_uploadby.text = "Uploaded by :"+listdata.creator?.firstname
+        if (listdata.hearts!!.size>0)
         {
-            holder.itemView.closetitem_favcount.text = listdata.hearts.size.toString()
+            holder.itemView.closetitem_favcount.text = listdata.hearts!!.size.toString()
         }
 
-        if (listdata.hearts.size>0)
+        if (listdata.hearts!!.size>0)
         {
             for (i in listdata.hearts!!.indices)
             {

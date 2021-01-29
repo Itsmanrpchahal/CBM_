@@ -271,7 +271,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             categorties = ArrayList()
             cateName = ArrayList()
             categorties =
-                addClosetItemList.body()?.data?.categories as ArrayList<AddClosetItemResponse.Data.Category>
+                addClosetItemList.body()?.getData()?.categories as ArrayList<AddClosetItemResponse.Data.Category>
 
             for (i in 0 until categorties.size) {
                 val cat = categorties.get(i)
@@ -280,7 +280,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
             brandName = ArrayList()
             brands =
-                addClosetItemList.body()?.data?.brands as ArrayList<AddClosetItemResponse.Data.Brand>
+                addClosetItemList.body()?.getData()?.brands as ArrayList<AddClosetItemResponse.Data.Brand>
 
             for (i in 0 until brands.size) {
                 val brand = brands.get(i)
@@ -289,7 +289,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
             Colors = ArrayList()
             color =
-                addClosetItemList.body()?.data?.colors as ArrayList<AddClosetItemResponse.Data.Color>
+                addClosetItemList.body()?.getData()?.colors as ArrayList<AddClosetItemResponse.Data.Color>
             for (i in 0 until color.size) {
                 val colors = color.get(i)
                 Colors.add(colors.name.toString())
@@ -298,7 +298,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
             Size = ArrayList()
             size =
-                addClosetItemList.body()?.data?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
+                addClosetItemList.body()?.getData()?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
 
             for (i in 0 until size.size) {
                 val SIZE = size.get(i)
@@ -337,32 +337,32 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         pd.dismiss()
         if (closetItemsResponse.isSuccessful) {
             if (edit.equals("1")) {
-                closetItemID = closetItemsResponse.body()?.data?.closet?.items?.get(
+                closetItemID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID").toInt()
                 )?.id.toString()
                 aditemtocloset_title.setText(
-                    closetItemsResponse.body()?.data?.closet?.items?.get(
+                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
                     )?.title
                 )
                 aditemtocloset_decs.setText(
-                    closetItemsResponse.body()?.data?.closet?.items?.get(
+                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
                     )?.description
                 )
                 aditemtocloset_price.setText(
-                    closetItemsResponse.body()?.data?.closet?.items?.get(
+                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
                     )?.price.toString()
                 )
-                cateID = closetItemsResponse.body()?.data?.closet?.items?.get(
+                cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID").toInt()
                 )?.category?.id.toString()!!
-                categoryName = closetItemsResponse.body()?.data?.closet?.items?.get(
+                categoryName = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID").toInt()
                 )?.category?.name!!
                 Glide.with(this).asBitmap().load(
-                    Constants.BASE_IMAGE_URL + closetItemsResponse.body()?.data?.closet?.items?.get(
+                    Constants.BASE_IMAGE_URL + closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
                     )?.picture
                 )
@@ -384,12 +384,12 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
 
                 additemclosets_categoryspinner.setSelection(
-                    closetItemsResponse.body()?.data?.closet?.items?.get(
+                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
                     )?.categoryId?.toInt()!!
                 )
                 additemclosets_category.setText(
-                    closetItemsResponse.body()?.data?.closet?.items?.get(
+                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
                     )?.category?.name.toString()
                 )

@@ -119,14 +119,14 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
             //ToDo: SendInvitations
             sendIvitations = ArrayList()
             sendIvitations =
-                workInvitation.body()?.data?.user?.sentInvitations as ArrayList<WorkInvitationResponse.Data.User.SentInvitation>
+                workInvitation.body()?.getData()?.user?.sentInvitations as ArrayList<WorkInvitationResponse.Data.User.SentInvitation>
 
             setFullData(sendIvitations, "sent")
 
             //ToDo: Recieve Invitations
             recieveIvitations = ArrayList()
             recieveIvitations =
-                workInvitation.body()?.data?.user?.receivedInvitations as ArrayList<WorkInvitationResponse.Data.User.ReceivedInvitation>
+                workInvitation.body()?.getData()?.user?.receivedInvitations as ArrayList<WorkInvitationResponse.Data.User.ReceivedInvitation>
             setRecieveData(recieveIvitations, "recieve")
 
 
@@ -243,12 +243,12 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
         Glide.with(context!!).load(
             Constants.BASE_IMAGE_URL + sendIvitations.get(
                 position
-            ).designer.avatar
+            ).designer?.avatar
         ).placeholder(R.drawable.login_banner).into(offer_image)
         gigtitletv1.setText(sendIvitations.get(position).description)
-        gigdecstv1.setText(sendIvitations.get(position).gig.description)
-        rateet.setText(sendIvitations.get(position).gig.rate.toString())
-        currentoffer.setText("Currently offering: $"+ sendIvitations.get(position).gig.rate.toString() +  " per hour")
+        gigdecstv1.setText(sendIvitations.get(position).gig?.description)
+        rateet.setText(sendIvitations.get(position).gig?.rate.toString())
+        currentoffer.setText("Currently offering: $"+ sendIvitations.get(position).gig?.rate.toString() +  " per hour")
 
 
 
@@ -338,7 +338,7 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
         makeofferDialog.dismiss()
         utility!!.relative_snackbar(
             parent_workinvitation!!,
-            makeOffer.body()?.message,
+            makeOffer.body()?.getMessage(),
             getString(R.string.close_up)
         )
     }

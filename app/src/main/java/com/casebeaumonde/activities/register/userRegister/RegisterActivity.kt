@@ -85,7 +85,6 @@ class RegisterActivity : BaseClass() {
         pd!!.setCancelable(false)
         register_forbusiness = findViewById(R.id.register_forbusiness)
         register_firstname = findViewById(R.id.register_firstname)
-        register_lastname = findViewById(R.id.register_lastname)
         register_email = findViewById(R.id.register_email)
         register_password = findViewById(R.id.register_password)
         register_cpassword = findViewById(R.id.register_cpassword)
@@ -94,22 +93,22 @@ class RegisterActivity : BaseClass() {
         register_upload = findViewById(R.id.register_upload)
         agreecheck = findViewById(R.id.agreecheck)
         register_regiter_bt = findViewById(R.id.register_regiter_bt)
-        register_login = findViewById(R.id.register_login)
+        //register_login = findViewById(R.id.register_login)
         back = findViewById(R.id.back)
         donthaveaccount = findViewById(R.id.donthaveaccount)
         forgotpassword = findViewById(R.id.forgotpassword)
     }
 
     private fun listerners() {
-        register_login.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    LoginActivity::class.java
-                )
-            )
-            finish()
-        }
+//        register_login.setOnClickListener {
+//            startActivity(
+//                Intent(
+//                    this,
+//                    LoginActivity::class.java
+//                )
+//            )
+//            finish()
+//        }
 
         register_upload.setOnClickListener {
 
@@ -171,10 +170,10 @@ class RegisterActivity : BaseClass() {
                 register_firstname.error = getString(R.string.enterfirstname)
             }
 
-            register_lastname.text.isEmpty() -> {
-                register_lastname.requestFocus()
-                register_lastname.error = getString(R.string.enterlastname)
-            }
+//            register_lastname.text.isEmpty() -> {
+//                register_lastname.requestFocus()
+//                register_lastname.error = getString(R.string.enterlastname)
+//            }
 
             register_email.text.isEmpty() -> {
                 register_email.requestFocus()
@@ -240,17 +239,36 @@ class RegisterActivity : BaseClass() {
                 {
                     c = "terms"
                 }
-                userRegister(
-                    register_firstname.text.toString(),
-                    register_lastname.text.toString(),
-                    register_email.text.toString(),
-                    register_password.text.toString(),
-                    register_cpassword.text.toString(),
-                    register_phone.text.toString(),
-                    register_aboutme.text.toString(),
-                    part,
-                    c
-                )
+                val strg = register_firstname.text.split(" ").toTypedArray()
+                if (strg.size==1)
+                {
+                    userRegister(
+                        register_firstname.text.toString(),
+                       "",
+                        register_email.text.toString(),
+                        register_password.text.toString(),
+                        register_cpassword.text.toString(),
+                        register_phone.text.toString(),
+                        register_aboutme.text.toString(),
+                        part,
+                        c
+                    )
+                } else if (strg.size >=2)
+                {
+                    userRegister(
+                        strg.get(0).toString(),
+                        strg.get(1).toString(),
+                        register_email.text.toString(),
+                        register_password.text.toString(),
+                        register_cpassword.text.toString(),
+                        register_phone.text.toString(),
+                        register_aboutme.text.toString(),
+                        part,
+                        c
+                    )
+                }
+
+
             }
         }
     }
@@ -294,7 +312,6 @@ class RegisterActivity : BaseClass() {
                     Log.d("registerresponse", "" + response.body())
 
                     register_firstname.setText("")
-                    register_lastname.setText("")
                     register_email.setText("")
                     register_password.setText("")
                     register_cpassword.setText("")

@@ -77,6 +77,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
     private lateinit var additemclosets_brands: TextView
     private lateinit var additemclosets_size: TextView
     private lateinit var additemclosets_color: TextView
+    private lateinit var texttitle : TextView
     private lateinit var backon_additemstocloset: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,6 +112,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         }
 
         if (edit.equals("1")) {
+            texttitle.setText("Update")
             aditemtocloset_add.setText("Update")
         }
         aditemtocloset_add.setOnClickListener {
@@ -131,6 +133,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
 
+        texttitle = findViewById(R.id.texttitle)
         aditemtocloset_title = findViewById(R.id.aditemtocloset_title)
         aditemtocloset_decs = findViewById(R.id.aditemtocloset_decs)
         additemclosets_categoryspinner = findViewById(R.id.additemclosets_categoryspinner)
@@ -456,7 +459,8 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 ) {
                     additemclosets_brands.setText(brands.get(position).name)
 
-                    brandID = brands.get(position).name.toString()
+                    brandID = brands.get(position).id.toString()
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

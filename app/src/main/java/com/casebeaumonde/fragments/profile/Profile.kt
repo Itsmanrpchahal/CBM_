@@ -50,6 +50,7 @@ import com.stripe.android.model.Card
 import com.stripe.android.model.Token
 import kotlinx.android.synthetic.main.activity_card_detail_screen.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.editprofilelayout.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MultipartBody
 import org.json.JSONObject
@@ -532,16 +533,19 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         val editprofile_email: EditText
         val editprofile_phone: EditText
         val editprofile_about: EditText
-        val changepassword_changebt: Button
+        val update_profile: Button
         val changepassword_closebt: Button
         val update_userimage : Button
+        val editprofile_fburl : EditText
+        val editprofile_instaurl : EditText
+        val editprofile_twitterurl : EditText
 
         editprofile_firstname = dialog.findViewById(R.id.editprofile_firstname)
         editprofile_lastname = dialog.findViewById(R.id.editprofile_lastname)
         editprofile_email = dialog.findViewById(R.id.editprofile_email)
         editprofile_phone = dialog.findViewById(R.id.editprofile_phone)
         editprofile_about = dialog.findViewById(R.id.editprofile_about)
-        changepassword_changebt = dialog.findViewById(R.id.changepassword_changebt)
+        update_profile = dialog.findViewById(R.id.update_profile)
         changepassword_closebt = dialog.findViewById(R.id.changepassword_closebt)
         editprofile_paypal_email = dialog.findViewById(R.id.editprofile_paypal_email)
         editprofile_image = dialog.findViewById(R.id.editprofile_image)
@@ -550,9 +554,19 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         radio_userifollow = dialog.findViewById(R.id.radio_userifollow)
         radio_alluser = dialog.findViewById(R.id.radio_alluser)
         radiogroup = dialog.findViewById(R.id.radiogroup)
-        if (!Constants.USER_ROLE.equals("customer"))
+        editprofile_fburl = dialog.findViewById(R.id.editprofile_fburl)
+        editprofile_instaurl = dialog.findViewById(R.id.editprofile_instaurl)
+        editprofile_twitterurl = dialog.findViewById(R.id.editprofile_twitterurl)
+
+
+        if (!getStringVal(Constants.USER_ROLE).equals("customer"))
         {
             editprofile_paypal_email.visibility = View.VISIBLE
+            editprofile_fburl.visibility = View.VISIBLE
+            editprofile_instaurl.visibility = View.VISIBLE
+            editprofile_twitterurl.visibility = View.VISIBLE
+        } else {
+            radiogroup.visibility = View.VISIBLE
         }
 
         editprofile_firstname.setText(getStringVal(Constants.FIRSTNAME))
@@ -560,12 +574,19 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         editprofile_email.setText(getStringVal(Constants.EMAIL))
         editprofile_phone.setText(getStringVal(Constants.PHONE))
         editprofile_about.setText(getStringVal(Constants.ABOUT))
-        editprofile_paypal_email.setText(getStringVal(Constants.PAYPALID))
+        if (getStringVal(Constants.USER_ROLE).equals("customer"))
+        {
+            editprofile_paypal_email.setText("")
+        } else {
+            editprofile_paypal_email.setText(getStringVal(Constants.PAYPALID))
+        }
 
 
         changepassword_closebt.setOnClickListener {
             dialog.dismiss()
         }
+        radio_alluser.isChecked = true
+        mesgFrom = "1"
 
         radiogroup.setOnCheckedChangeListener { group, checkedId ->
 
@@ -584,7 +605,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
         }
 
-        changepassword_changebt.setOnClickListener {
+        update_profile.setOnClickListener {
             when {
                 editprofile_firstname.text.isEmpty() -> {
                     editprofile_firstname.requestFocus()
@@ -1014,6 +1035,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         if (updateAvatarResponse.isSuccessful) {
             if (updateAvatarResponse.body()?.getCode() == 200) {
                 editprofile_image.setImageBitmap(bitMap)
+
             } else {
 
                 utility!!.relative_snackbar(
@@ -1041,22 +1063,33 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             getStringVal(Constants.USERID)
         )
         if (updateProfileResponse.isSuccessful) {
-            setStringVal(Constants.FIRSTNAME, updateProfileResponse.body()?.getData()?.user?.firstname)
-            setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.getData()?.user?.lastname)
-            setStringVal(Constants.EMAIL, updateProfileResponse.body()?.getData()?.user?.email)
-            setStringVal(Constants.PHONE, updateProfileResponse.body()?.getData()?.user?.phone)
-            setStringVal(Constants.PAYPALID,updateProfileResponse.body()?.getData()?.user?.paypal_email.toString())
-            setStringVal(
-                Constants.ABOUT,
-                updateProfileResponse.body()?.getData()?.user?.profile?.aboutMe
-            )
+            if (updateProfileResponse.body()?.getCode().equals("200"))
+            {
+                setStringVal(Constants.FIRSTNAME, updateProfileResponse.body()?.getData()?.user?.firstname)
+                setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.getData()?.user?.lastname)
+                setStringVal(Constants.EMAIL, updateProfileResponse.body()?.getData()?.user?.email)
+                setStringVal(Constants.PHONE, updateProfileResponse.body()?.getData()?.user?.phone)
+                setStringVal(Constants.PAYPALID,updateProfileResponse.body()?.getData()?.user?.paypal_email.toString())
+                setStringVal(
+                    Constants.ABOUT,
+                    updateProfileResponse.body()?.getData()?.user?.profile?.aboutMe
+                )
+                utility!!.relative_snackbar(
+                    parent_profile,
+                    "Profile Updated",
+                    getString(R.string.close_up)
+                )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_profile,
+                    updateProfileResponse.message(),
+                    getString(R.string.close_up)
+                )
+            }
 
 
-            utility!!.relative_snackbar(
-                parent_profile,
-                "Profile Updated",
-                getString(R.string.close_up)
-            )
+
+
         } else {
             utility!!.relative_snackbar(
                 parent_profile,

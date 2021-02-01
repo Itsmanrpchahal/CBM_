@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
-    android:gravity="center"
-    android:id="@+id/parent_register"
     android:background="@color/colorBackground"
+    android:gravity="center"
     tools:context=".activities.register.userRegister.RegisterActivity">
 
     <ScrollView
@@ -34,20 +34,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_arrow_back_ios_24"
-                        android:background="@android:color/transparent">
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_24">
 
                     </ImageButton>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign Up"
+                        android:layout_centerInParent="true"
                         android:fontFamily="@font/oswaldlight"
+                        android:text="Sign Up"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/toolbartv"
                         android:textColor="@color/colorWhite"
-                        android:layout_centerInParent="true">
+                        android:textSize="@dimen/toolbartv">
 
                     </TextView>
                 </RelativeLayout>
@@ -65,11 +65,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SIGN UP"
-                android:textColor="@color/colorWhite"
                 android:layout_gravity="center"
                 android:fontFamily="@font/oswaldlight"
                 android:gravity="center"
+                android:text="SIGN UP"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_40sp">
 
             </TextView>
@@ -79,9 +79,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/oswaldlight"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/margin_32dp"
+                android:fontFamily="@font/oswaldlight"
                 android:text="@string/wanttobusiness"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp"
@@ -89,19 +89,46 @@
 
             </TextView>
 
+
+            <EditText
+                android:id="@+id/register_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="Name"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+
             <EditText
                 android:id="@+id/register_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
                 android:hint="EMAIL"
                 android:inputType="textEmailAddress"
-                android:textColorHint="@color/colorWhite"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:layout_marginLeft="@dimen/default_margin_16dp"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:backgroundTint="@android:color/transparent">
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
             </EditText>
 
@@ -118,15 +145,40 @@
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
                 android:hint="PASSWORD"
                 android:inputType="textPassword"
-                android:textColorHint="@color/colorWhite"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
                 android:layout_marginLeft="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/register_cpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
                 android:layout_marginTop="@dimen/default_margin_16dp"
-                android:backgroundTint="@android:color/transparent">
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/confirmpassword"
+                android:inputType="textPassword"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
             </EditText>
 
@@ -143,15 +195,15 @@
                 android:id="@+id/register_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
                 android:hint="PHONE NUMBER"
                 android:inputType="number"
-                android:textColorHint="@color/colorWhite"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:layout_marginLeft="@dimen/default_margin_16dp"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:backgroundTint="@android:color/transparent">
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
             </EditText>
 
@@ -168,18 +220,18 @@
                 android:id="@+id/register_aboutme"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:hint="ABOUT ME"
-                android:textColorHint="@color/colorWhite"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
                 android:gravity="start"
+                android:hint="ABOUT ME"
                 android:inputType="text"
                 android:padding="@dimen/margin_8dp"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:layout_marginLeft="@dimen/default_margin_16dp"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:backgroundTint="@android:color/transparent">
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
             </EditText>
 
@@ -208,29 +260,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="bottom"
-                android:gravity="bottom"
                 android:layout_margin="@dimen/default_margin_16dp"
+                android:gravity="bottom"
+                android:orientation="horizontal"
                 android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_gravity="bottom"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/uploadfilename"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/colorWhite"
+                        android:backgroundTint="@android:color/transparent"
                         android:gravity="start"
                         android:textAlignment="textStart"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:backgroundTint="@android:color/transparent">
+                        android:textColorHint="@color/colorWhite"
+                        android:textSize="@dimen/textsize_16sp">
 
                     </TextView>
 
@@ -246,11 +298,11 @@
                     android:id="@+id/register_upload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="UPLOAD PHOTO"
-                    android:fontFamily="@font/oswaldlight"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="2"
                     android:background="@drawable/whiteborderblack"
+                    android:fontFamily="@font/oswaldlight"
+                    android:text="UPLOAD PHOTO"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite">
 
@@ -263,11 +315,11 @@
                 android:id="@+id/agreecheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorWhite"
-                android:text="@string/agreetext"
-                android:fontFamily="@font/oswaldlight"
                 android:layout_marginLeft="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/default_margin_16dp"
+                android:buttonTint="@color/colorWhite"
+                android:fontFamily="@font/oswaldlight"
+                android:text="@string/agreetext"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">
 
@@ -278,11 +330,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/buttonheight"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/default_margin_16dp"
-                android:fontFamily="@font/oswaldlight"
                 android:background="@drawable/roundcorners"
+                android:fontFamily="@font/oswaldlight"
                 android:text="SIGN UP"
                 android:textAllCaps="true"
                 android:textColor="@color/colorBlack"
@@ -294,11 +346,12 @@
                 android:id="@+id/forgotpassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FORGOT YOUR PASSWORD?"
-                android:fontFamily="@font/oswaldlight"
-                android:textColor="@color/colorWhite"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/default_margin_16dp"
+                android:visibility="gone"
+                android:fontFamily="@font/oswaldlight"
+                android:text="FORGOT YOUR PASSWORD?"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">
 
             </TextView>
@@ -308,232 +361,16 @@
                 android:id="@+id/donthaveaccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/donthaveaccount"
-                android:fontFamily="@font/oswaldlight"
-                android:textColor="@color/colorWhite"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/default_margin_16dp"
+                android:fontFamily="@font/oswaldlight"
+                android:text="@string/donthaveaccount"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">
 
             </TextView>
 
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/default_margin_16dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/whiteborder"
-            android:orientation="vertical">
 
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_32dp"
-                android:text="@string/firstname"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/register_firstname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:hint="First Name"
-                android:inputType="textPersonName"
-                android:padding="@dimen/margin_8dp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
-
-            </EditText>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/lastname"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/register_lastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:hint="Last Name"
-                android:inputType="textPersonName"
-                android:padding="@dimen/margin_8dp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
-
-            </EditText>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/email"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <EditText
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:hint="E-mail"
-                android:inputType="textEmailAddress"
-                android:padding="@dimen/margin_8dp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
-
-            </EditText>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/password"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/confirmpassword"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/register_cpassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:padding="@dimen/margin_8dp"
-                android:textColor="@color/colorTextHint"
-                android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/textsize_16sp">
-
-            </EditText>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/phone"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:text="@string/profile"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
-
-            </TextView>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/roundcorners"
-                android:orientation="horizontal"
-                android:padding="@dimen/margin_8dp">
-
-
-
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </TextView>
-            </LinearLayout>
-
-
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_32dp"
-                android:layout_marginBottom="@dimen/margin_32dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Allready have account?"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/register_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Login"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/textsize_16sp">
-
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

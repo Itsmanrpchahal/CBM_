@@ -28,7 +28,6 @@ class CustomerPricingAdapter(
     val token: String?
 ) : RecyclerView.Adapter<CustomerPricingAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.customprice, parent, false)
         return ViewHolder(v)

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Closet Name"
+        android:fontFamily="@font/oswaldlight"
         android:textSize="@dimen/textsize_16sp"
         android:textColor="@color/colorWhite">
 
@@ -40,6 +41,7 @@
                 android:id="@+id/myWall_morenext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/oswaldlight"
                 android:text="Decs"
                 android:textSize="@dimen/textsize_14sp"
                 android:textColor="@color/colorWhite">
@@ -51,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Last Update:"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_alignParentRight="true"
                 android:textSize="@dimen/textsize_14sp">
 
@@ -65,6 +68,7 @@
             <TextView
                 android:id="@+id/myWall_Decs"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/oswaldlight"
                 android:layout_height="wrap_content"
                 android:text="Decs"
                 android:textSize="@dimen/textsize_14sp"
@@ -77,6 +81,7 @@
                 android:id="@+id/myWall_lastupdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/oswaldlight"
                 android:text="Last Update: Time"
                 android:layout_alignParentRight="true"
                 android:textSize="@dimen/textsize_14sp">

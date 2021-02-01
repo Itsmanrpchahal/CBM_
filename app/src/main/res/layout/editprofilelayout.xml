@@ -170,6 +170,7 @@
                     android:fontFamily="@font/oswaldlight"
                     android:hint="Facebook url"
                     android:inputType="textUri"
+                    android:visibility="gone"
                     android:textColorHint="@color/colorWhite"
                     android:padding="@dimen/margin_8dp"
                     android:backgroundTint="@color/colorWhite">
@@ -184,6 +185,7 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/oswaldlight"
                     android:hint="Instagram url"
+                    android:visibility="gone"
                     android:inputType="textUri"
                     android:textColorHint="@color/colorWhite"
                     android:padding="@dimen/margin_8dp"
@@ -199,6 +201,7 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/oswaldlight"
                     android:hint="Twitter url"
+                    android:visibility="gone"
                     android:inputType="textUri"
                     android:textColorHint="@color/colorWhite"
                     android:padding="@dimen/margin_8dp"
@@ -219,9 +222,10 @@
                         android:id="@+id/radio_alluser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
                         android:text="User I follow"
-                        android:textColor="@color/colorBlack"
-                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:buttonTint="@color/colorWhite"
                         android:textStyle="bold">
 
                     </RadioButton>
@@ -232,8 +236,8 @@
                         android:layout_height="wrap_content"
                         android:text="All Users"
                         android:layout_marginLeft="@dimen/margin_8dp"
-                        android:textColor="@color/colorBlack"
-                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:buttonTint="@color/colorWhite"
                         android:textStyle="bold">
 
                     </RadioButton>
@@ -245,8 +249,8 @@
                         android:text="No One"
                         android:layout_marginLeft="@dimen/margin_8dp"
                         android:fontFamily="@font/oswaldlight"
-                        android:textColor="@color/colorBlack"
-                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorWhite"
+                        android:buttonTint="@color/colorWhite"
                         android:textStyle="bold">
 
                     </RadioButton>
@@ -289,7 +293,7 @@
                     </Button>
 
                     <Button
-                        android:id="@+id/changepassword_changebt"
+                        android:id="@+id/update_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/margin_40dp"
                         android:layout_marginLeft="@dimen/default_margin_16dp"

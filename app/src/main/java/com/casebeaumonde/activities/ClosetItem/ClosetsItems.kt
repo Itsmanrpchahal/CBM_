@@ -545,6 +545,7 @@ class ClosetsItems : BaseClass(),
             checkedClosetIDs = ArrayList()
             listData.clear()
             checkedClosetIDs.clear()
+
             if (closetItemsResponse.body()?.getData()?.closet?.userId.toString()
                     .equals(getStringVal(Constants.USERID))
             ) {

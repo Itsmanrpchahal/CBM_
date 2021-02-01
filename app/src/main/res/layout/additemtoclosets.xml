@@ -308,9 +308,9 @@
                 <TextView
                     android:id="@+id/additemclosets_brands"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:text="Select Brand"
+                    android:visibility="gone"
                     android:textColor="@color/colorWhite"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"

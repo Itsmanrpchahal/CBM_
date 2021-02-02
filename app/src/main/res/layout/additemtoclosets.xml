@@ -102,20 +102,7 @@
 
                 </Spinner>
 
-                <TextView
-                    android:id="@+id/additemclosets_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:fontFamily="@font/oswaldlight"
-                    android:text="Select Category"
-                    android:textSize="@dimen/textsize_16sp"
-                    android:textColor="@color/colorWhite"
-                    android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/margin_8dp">
 
-                </TextView>
             </RelativeLayout>
 
             <View

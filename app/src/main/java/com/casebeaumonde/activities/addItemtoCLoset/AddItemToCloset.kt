@@ -28,7 +28,6 @@ import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_add_item_to_closet.*
 import kotlinx.android.synthetic.main.activity_closets_items.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
@@ -36,6 +35,7 @@ import java.io.File
 class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller.AddClosetItemAPI,
     Controller.ClosetItemsAPI, Controller.EditClosetItemAPI {
 
+    //ToDo: Edit at 370 Line
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var controller: Controller
@@ -77,7 +77,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
     private lateinit var additemclosets_brands: TextView
     private lateinit var additemclosets_size: TextView
     private lateinit var additemclosets_color: TextView
-    private lateinit var texttitle : TextView
+    private lateinit var texttitle: TextView
     private lateinit var backon_additemstocloset: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,12 +116,23 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             aditemtocloset_add.setText("Update")
         }
         aditemtocloset_add.setOnClickListener {
-//            if (edit.equals("1")) {
-//                UpdateItem(intent.getStringExtra("closetID"), intent.getStringExtra("closetItemID"))
-//            } else {
-
             addItems(intent.getStringExtra("closetID"), edit)
-//            }
+        }
+
+        additemclosets_categoryspinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                // additemclosets_category.setText(parent.selectedItem.toString())
+                cateID = categorties.get(closetItemID.toInt()).id.toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+
         }
     }
 
@@ -145,7 +156,6 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         aditemtocloset_price = findViewById(R.id.aditemtocloset_price)
         aditemtocloset_cancel = findViewById(R.id.aditemtocloset_cancel)
         aditemtocloset_add = findViewById(R.id.aditemtocloset_add)
-        additemclosets_category = findViewById(R.id.additemclosets_category)
         additemclosets_brands = findViewById(R.id.additemclosets_brands)
         additemclosets_size = findViewById(R.id.additemclosets_size)
         additemclosets_color = findViewById(R.id.additemclosets_color)
@@ -274,16 +284,22 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             categorties = ArrayList()
             cateName = ArrayList()
             categorties =
-                addClosetItemList.body()?.getData()?.categories as ArrayList<AddClosetItemResponse.Data.Category>
+                addClosetItemList.body()
+                    ?.getData()?.categories as ArrayList<AddClosetItemResponse.Data.Category>
 
             for (i in 0 until categorties.size) {
                 val cat = categorties.get(i)
                 cateName.add(cat.name.toString())
             }
 
+
+            // catePos = categorties.get(intent.getStringExtra("closetItemID").toInt()).id.toString()
+
+
             brandName = ArrayList()
             brands =
-                addClosetItemList.body()?.getData()?.brands as ArrayList<AddClosetItemResponse.Data.Brand>
+                addClosetItemList.body()
+                    ?.getData()?.brands as ArrayList<AddClosetItemResponse.Data.Brand>
 
             for (i in 0 until brands.size) {
                 val brand = brands.get(i)
@@ -291,8 +307,10 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             }
 
             Colors = ArrayList()
+
             color =
-                addClosetItemList.body()?.getData()?.colors as ArrayList<AddClosetItemResponse.Data.Color>
+                addClosetItemList.body()
+                    ?.getData()?.colors as ArrayList<AddClosetItemResponse.Data.Color>
             for (i in 0 until color.size) {
                 val colors = color.get(i)
                 Colors.add(colors.name.toString())
@@ -301,7 +319,8 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
             Size = ArrayList()
             size =
-                addClosetItemList.body()?.getData()?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
+                addClosetItemList.body()
+                    ?.getData()?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
 
             for (i in 0 until size.size) {
                 val SIZE = size.get(i)
@@ -340,9 +359,18 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         pd.dismiss()
         if (closetItemsResponse.isSuccessful) {
             if (edit.equals("1")) {
+
+
                 closetItemID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID").toInt()
-                )?.id.toString()
+                )?.categoryId.toString()
+
+
+                val arr = categorties
+                val item = closetItemID;
+
+
+
                 aditemtocloset_title.setText(
                     closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()
@@ -358,16 +386,20 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                         intent.getStringExtra("closetItemID").toInt()
                     )?.price.toString()
                 )
+
                 cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID").toInt()
                 )?.category?.id.toString()!!
+
                 categoryName = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID").toInt()
                 )?.category?.name!!
+
                 Glide.with(this).asBitmap().load(
-                    Constants.BASE_IMAGE_URL + closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                        intent.getStringExtra("closetItemID").toInt()
-                    )?.picture
+                    Constants.BASE_IMAGE_URL + closetItemsResponse.body()
+                        ?.getData()?.closet?.items?.get(
+                            intent.getStringExtra("closetItemID").toInt()
+                        )?.picture
                 )
                     .into(object : CustomTarget<Bitmap?>() {
                         override fun onResourceReady(
@@ -384,18 +416,6 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                             Log.d("loadcleared", "" + placeholder)
                         }
                     })
-
-
-                additemclosets_categoryspinner.setSelection(
-                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                        intent.getStringExtra("closetItemID").toInt()
-                    )?.categoryId?.toInt()!!
-                )
-                additemclosets_category.setText(
-                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                        intent.getStringExtra("closetItemID").toInt()
-                    )?.category?.name.toString()
-                )
             }
 
         } else {
@@ -406,6 +426,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             )
         }
     }
+
 
     override fun onEditClosetItemSuccess(editClosetItem: Response<EditClosetItemResponse>) {
         pd.dismiss()
@@ -428,22 +449,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             android.R.layout.simple_spinner_dropdown_item, cateName
         )
         additemclosets_categoryspinner.adapter = adapter
-
-        additemclosets_categoryspinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                additemclosets_category.setText(parent.selectedItem.toString())
-                cateID = categorties.get(position).id.toString()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-
-        }
+        additemclosets_categoryspinner.setSelection(cateID.toInt())
 
 
         //ToDo: Set Brands in Spinner
@@ -480,9 +486,10 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     position: Int,
                     id: Long
                 ) {
+
+                    sizeID = size.get(position).id.toString()
                     additemclosets_size.setText(size.get(position).name)
 
-                    sizeID = size.get(position).name.toString()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -47,13 +47,14 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var cartbadge: ImageBadgeView
     private lateinit var utility: Utility
+    private lateinit var toolbar : Toolbar
     private lateinit var pd: ProgressDialog
     lateinit var manager: FragmentManager
     private lateinit var logoutDialog: Dialog
     private lateinit var toolbar_username: TextView
     var status: Int = 0
     private lateinit var toolbar_notifiction: ImageBadgeView
-    private lateinit var userImage: CircleImageView
+    private lateinit var userImage: ImageView
     lateinit var controller: Controller
     lateinit var toolbarrelative: RelativeLayout
     lateinit var appbarmain: AppBarLayout

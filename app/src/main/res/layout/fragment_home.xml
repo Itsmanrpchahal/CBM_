@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/margin_8dp"
+    android:background="@color/colorBlack"
     tools:context=".fragments.home.HomeFragment">
 
     <RelativeLayout
@@ -65,12 +66,15 @@
         <Button
             android:id="@+id/onboard_registerBt"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_40dp"
+            android:layout_height="30dp"
             android:text="Register"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/textsize_16sp"
-            android:background="@drawable/whiteborder"
+            android:background="@color/colorWhite"
             android:visibility="visible"
-            android:layout_toRightOf="@id/onboard_contact">
+            android:layout_toRightOf="@id/view1"
+            android:layout_below="@id/onboard_contact">
 
         </Button>
 
@@ -78,12 +82,13 @@
         <Button
             android:id="@+id/onboard_loginBt"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_40dp"
+            android:layout_height="30dp"
             android:text="Login"
             android:visibility="visible"
             android:layout_marginLeft="@dimen/margin_8dp"
             android:textSize="@dimen/textsize_16sp"
             android:background="@drawable/whiteborder"
+            android:layout_below="@id/onboard_contact"
             android:layout_toRightOf="@id/onboard_registerBt">
 
         </Button>

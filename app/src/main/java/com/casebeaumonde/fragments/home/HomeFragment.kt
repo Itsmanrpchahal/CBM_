@@ -75,8 +75,8 @@ class HomeFragment : BaseFrag() {
 
         if (!getStringVal(Constants.TOKEN).equals(""))
         {
-            onboard_loginBt.visibility = View.GONE
-            onboard_registerBt.visibility = View.GONE
+            onboard_loginBt.visibility = View.INVISIBLE
+            onboard_registerBt.visibility = View.INVISIBLE
             onboard_pricing.visibility = View.GONE
             onboard_contact.visibility = View.GONE
         }

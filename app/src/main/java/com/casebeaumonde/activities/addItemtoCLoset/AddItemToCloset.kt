@@ -366,16 +366,6 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 )?.categoryId.toString()
 
 
-                val arr = categorties
-                val item = closetItemID;
-
-
-
-                aditemtocloset_title.setText(
-                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                        intent.getStringExtra("closetItemID").toInt()
-                    )?.title
-                )
                 aditemtocloset_decs.setText(
                     closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID").toInt()

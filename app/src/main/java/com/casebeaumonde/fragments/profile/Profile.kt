@@ -872,6 +872,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 profile_mycontracts.visibility = View.VISIBLE
                 profile_myevents.visibility = View.VISIBLE
                 profile_eventInvitation.visibility = View.VISIBLE
+                profile_myclosets.visibility = View.VISIBLE
             } else {
                 profile_mygigs.visibility = View.GONE
                 profile_mywall.visibility = View.VISIBLE

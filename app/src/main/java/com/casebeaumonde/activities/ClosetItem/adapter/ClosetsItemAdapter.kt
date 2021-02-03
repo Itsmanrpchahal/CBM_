@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -67,7 +68,7 @@ class ClosetsItemAdapter(
         if (select==0)
         {
             holder.itemView.select_checkbox.visibility = View.GONE
-        }else{
+        } else{
             holder.itemView.select_checkbox.visibility = View.VISIBLE
         }
 
@@ -77,6 +78,7 @@ class ClosetsItemAdapter(
         }else{
             holder.itemView.select_checkbox.isChecked = false
         }
+
 
         holder.itemView.select_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
@@ -120,6 +122,7 @@ class ClosetsItemAdapter(
             var closetitem_favorite : CheckBox
             var select_checkbox : CheckBox
             var closetitem_favcount : TextView
+            var hainger : ImageButton
 
             closetItemImage = itemView.findViewById(R.id.closetItemImage)
             closetitem_name = itemView.findViewById(R.id.closetitem_name)
@@ -127,6 +130,7 @@ class ClosetsItemAdapter(
             closetitem_favorite = itemView.findViewById(R.id.closetitem_favorite)
             closetitem_favcount = itemView.findViewById(R.id.closetitem_favcount)
             select_checkbox = itemView.findViewById(R.id.select_checkbox)
+            hainger = itemView.findViewById(R.id.hainger)
         }
     }
 }

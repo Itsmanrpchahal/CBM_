@@ -94,7 +94,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/default_margin_16dp">
 
-            <CheckBox
+            <ImageButton
                 android:id="@+id/hainger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 android:layout_marginRight="@dimen/margin_8dp"
                 android:button="@drawable/ic_hanger">
 
-            </CheckBox>
+            </ImageButton>
 
             <CheckBox
                 android:id="@+id/closetitem_favorite"

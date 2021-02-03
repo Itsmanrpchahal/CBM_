@@ -239,32 +239,62 @@
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:background="@color/colorWhite"></View>
 
-
-            <Button
-                android:id="@+id/viewprofile__mygigs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="@dimen/margin_40dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:layout_marginRight="@dimen/margin_40dp"
-                android:visibility="gone"
-                android:text="My Gigs"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_14sp">
-
-            </Button>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/viewprofile_tabLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBlack"
-                app:tabIndicatorColor="@color/colorWhite"
-                app:tabMode="scrollable"
-                app:tabTextColor="@color/colorWhite">
+                android:orientation="vertical">
 
-            </com.google.android.material.tabs.TabLayout>
+                <Button
+                    android:id="@+id/viewprofile__mywall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:visibility="visible"
+                    android:text="My Wall"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_14sp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/viewprofile__mygigs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:visibility="visible"
+                    android:text="My Gigs"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_14sp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/viewprofile__mycloset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:visibility="visible"
+                    android:text="My Closets"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_14sp">
+
+                </Button>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

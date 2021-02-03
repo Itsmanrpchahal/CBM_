@@ -228,6 +228,22 @@
                 </Button>
 
                 <Button
+                    android:id="@+id/profile_mywall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="My Wall"
+                    android:background="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_14sp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/margin_40dp"
+                    android:layout_marginRight="@dimen/margin_40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_8dp">
+
+                </Button>
+
+                <Button
                     android:id="@+id/profile_chooseyourplan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

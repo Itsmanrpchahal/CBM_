@@ -129,6 +129,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var cardbilligcode: String
     private lateinit var mesgFrom : String
     private lateinit var logoutDialog : Dialog
+    private lateinit var profile_mywall : Button
+    private lateinit var profile_mycontracts : Button
+    private lateinit var profile_myclosets : Button
+    private lateinit var profile_myevents : Button
+    private lateinit var profile_eventInvitation : Button
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
@@ -223,6 +228,26 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         profile_logout.setOnClickListener {
             logoutDialog()
+        }
+
+        profile_mywall.setOnClickListener {
+            startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))
+        }
+
+        profile_mycontracts.setOnClickListener {
+            startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
+        }
+
+        profile_myclosets.setOnClickListener {
+            startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
+        }
+
+        profile_myevents.setOnClickListener {
+
+        }
+
+        profile_eventInvitation.setOnClickListener {
+            startActivity(Intent(context,EventsInvitations::class.java).putExtra("userID",userID))
         }
 
     }
@@ -688,6 +713,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_chooseyourplan = view.findViewById(R.id.profile_chooseyourplan)
         profile_logout = view.findViewById(R.id.profile_logout)
         tabLayout = view.findViewById(R.id.tabLayout)
+        profile_mywall = view.findViewById(R.id.profile_mywall)
+        profile_mycontracts = view.findViewById(R.id.profile_mycontracts)
+        profile_myclosets = view.findViewById(R.id.profile_myclosets)
+        profile_myevents = view.findViewById(R.id.profile_myevents)
+        profile_eventInvitation = view.findViewById(R.id.profile_eventInvitation)
         pd.show()
         pd.setContentView(R.layout.loading)
 
@@ -840,23 +870,17 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 profile_chooseyourplan.setText("My Subscriptions")
                 profile_mypaymentmethods.visibility = View.VISIBLE
 
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
-               // tabLayout!!.addTab(tabLayout!!.newTab().setText("My gigs"))
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Work Invitations"))
-//            tabLayout!!.addTab(tabLayout!!.newTab().setText("Offers"))
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Contracts"))
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Events"))
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("Events Invitations"))
+                profile_mywall.visibility = View.VISIBLE
+                profile_mycontracts.visibility = View.VISIBLE
+                profile_myevents.visibility = View.VISIBLE
+                profile_eventInvitation.visibility = View.VISIBLE
                 tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
                 tabLayout!!.setOnTabSelectedListener(this)
             } else {
                 profile_mygigs.visibility = View.GONE
-
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Wall"))
+                profile_mywall.visibility = View.VISIBLE
+                profile_myclosets.visibility = View.VISIBLE
                 tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("My Closets"))
                 tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
                 tabLayout!!.setOnTabSelectedListener(this)
             }
@@ -1238,7 +1262,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onTabSelected(p0: TabLayout.Tab?) {
         when {
             p0?.text?.equals("My Closets")!! -> {
-                startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
+
             }
 
 //            p0?.text?.equals("My gigs")!! -> {
@@ -1249,7 +1273,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 //            }
 
             p0?.text?.equals("My Wall")!! -> {
-                startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))
+
             }
 
             p0?.text?.equals("Notifications")!! -> {
@@ -1257,7 +1281,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
             p0?.text?.equals("My Contracts")!! -> {
-                startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
+
             }
 
             p0?.text?.equals("Events Invitations")!! -> {
@@ -1273,7 +1297,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onTabReselected(p0: TabLayout.Tab?) {
         when {
             p0?.text?.equals("My Closets")!! -> {
-                startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
+
             }
 
 //            p0?.text?.equals("My gigs")!! -> {
@@ -1296,7 +1320,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
             p0?.text?.equals("Events Invitations")!! -> {
-                startActivity(Intent(context,EventsInvitations::class.java).putExtra("userID",userID))
+
             }
         }
     }

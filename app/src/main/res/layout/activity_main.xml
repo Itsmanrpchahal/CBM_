@@ -25,7 +25,6 @@
         android:theme="@style/Widget.NavigationView.RippleEffect"
         app:insetForeground="@android:color/transparent"
         app:itemIconTint="@color/navigation_item_tint"
-        app:headerLayout="@layout/nav_header_main"
         app:itemStyle="rounded_right"
         app:itemTextColor="@color/navigation_item_tint" >
 

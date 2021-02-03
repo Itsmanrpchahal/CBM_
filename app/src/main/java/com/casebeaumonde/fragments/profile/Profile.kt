@@ -63,7 +63,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI, TabLayout.OnTabSelectedListener, GetUserID ,Controller.PaymentMethodAPI, GetCardID,Controller.DeleteCardAPI
+    Controller.UpdateProfileAPI, GetUserID ,Controller.PaymentMethodAPI, GetCardID,Controller.DeleteCardAPI
 ,Controller.CancelPlanAPI,Controller.AddPaymentMethodAPI{
 
     private lateinit var controller: Controller
@@ -96,7 +96,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var mypaymentdialog: Dialog
     private lateinit var addPaymentMethod: Dialog
     private lateinit var role: String
-    private var tabLayout: TabLayout? = null
     private lateinit var username: String
     private lateinit var userID: String
     private lateinit var followfollowingDialog: Dialog
@@ -712,7 +711,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_mygigs = view.findViewById(R.id.profile_mygigs)
         profile_chooseyourplan = view.findViewById(R.id.profile_chooseyourplan)
         profile_logout = view.findViewById(R.id.profile_logout)
-        tabLayout = view.findViewById(R.id.tabLayout)
         profile_mywall = view.findViewById(R.id.profile_mywall)
         profile_mycontracts = view.findViewById(R.id.profile_mycontracts)
         profile_myclosets = view.findViewById(R.id.profile_myclosets)
@@ -874,15 +872,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 profile_mycontracts.visibility = View.VISIBLE
                 profile_myevents.visibility = View.VISIBLE
                 profile_eventInvitation.visibility = View.VISIBLE
-                tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-                tabLayout!!.setOnTabSelectedListener(this)
             } else {
                 profile_mygigs.visibility = View.GONE
                 profile_mywall.visibility = View.VISIBLE
                 profile_myclosets.visibility = View.VISIBLE
-                tabLayout!!.addTab(tabLayout!!.newTab().setText("Notifications"))
-                tabLayout!!.tabGravity = TabLayout.GRAVITY_FILL
-                tabLayout!!.setOnTabSelectedListener(this)
             }
 
             profile_mypaymentmethods.setOnClickListener {
@@ -1259,71 +1252,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
     }
 
-    override fun onTabSelected(p0: TabLayout.Tab?) {
-        when {
-            p0?.text?.equals("My Closets")!! -> {
 
-            }
-
-//            p0?.text?.equals("My gigs")!! -> {
-//                startActivity(
-//                    Intent(context, MyGigs::class.java).putExtra("role", role)
-//                        .putExtra("userID", userID)
-//                )
-//            }
-
-            p0?.text?.equals("My Wall")!! -> {
-
-            }
-
-            p0?.text?.equals("Notifications")!! -> {
-                startActivity(Intent(context, Notifications::class.java).putExtra("userID", userID))
-            }
-
-            p0?.text?.equals("My Contracts")!! -> {
-
-            }
-
-            p0?.text?.equals("Events Invitations")!! -> {
-                startActivity(Intent(context,EventsInvitations::class.java).putExtra("userID",userID))
-            }
-        }
-    }
-
-    override fun onTabUnselected(p0: TabLayout.Tab?) {
-        // Toast.makeText(context,"HERE "+p0,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onTabReselected(p0: TabLayout.Tab?) {
-        when {
-            p0?.text?.equals("My Closets")!! -> {
-
-            }
-
-//            p0?.text?.equals("My gigs")!! -> {
-//                startActivity(
-//                    Intent(context, MyGigs::class.java).putExtra("role", role)
-//                        .putExtra("userID", userID)
-//                )
-//            }
-
-            p0?.text?.equals("My Wall")!! -> {
-                startActivity(Intent(context, MyWall::class.java).putExtra("userID", userID))
-            }
-
-            p0?.text?.equals("Notifications")!! -> {
-                startActivity(Intent(context, Notifications::class.java).putExtra("userID", userID))
-            }
-
-            p0?.text?.equals("My Contracts")!! -> {
-                startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
-            }
-
-            p0?.text?.equals("Events Invitations")!! -> {
-
-            }
-        }
-    }
 
     override fun getCardID(id: String?) {
         pd.show()

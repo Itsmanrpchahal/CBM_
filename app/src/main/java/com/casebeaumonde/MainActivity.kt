@@ -310,7 +310,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 toolbar_username.text =
                     userProfileResponse.body()?.getData()?.user?.firstname + " " + userProfileResponse.body()?.getData()?.user?.lastname
                 try {
-                    Glide.with(this@MainActivity)
+                    Glide.with(this@MainActivity).asBitmap()
+                        .skipMemoryCache(true)
                         .load(userProfileResponse.body()!!.getData()!!.filePath + userProfileResponse.body()!!.getData()!!.user!!.avatar)
                         .placeholder(R.drawable.login_banner).into(userImage)
                 } catch (e: Exception) {

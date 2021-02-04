@@ -758,7 +758,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         gallery.setOnClickListener {
             ImagePicker.with(this)
-                .galleryOnly()
+                .galleryOnly().compress(60)
                 .crop()     //User can only select image from Gallery
                 .start()    //Default Request Code is ImagePicker.REQUEST_CODE
             dialog.dismiss()
@@ -788,10 +788,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             )
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             utility!!.relative_snackbar(
-                parent_main!!,
+                parent_profile!!,
                 ImagePicker.getError(data),
                 getString(R.string.close_up)
             )
+
         } else {
             utility!!.relative_snackbar(
                 parent_profile,

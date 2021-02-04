@@ -44,7 +44,7 @@ class MyGigs : BaseClass(), Controller.GetUserGigsAPI, Controller.SendInvitation
         setContentView(R.layout.activity_my_gigs)
         controller = Controller()
         controller.Controller(this, this)
-        userID = intent.getStringExtra("userID")
+        userID = intent.getStringExtra("userID")!!
         getGigId = this
         findIds()
         MygigsCall()
@@ -98,7 +98,7 @@ class MyGigs : BaseClass(), Controller.GetUserGigsAPI, Controller.SendInvitation
         mygigis_back = findViewById(R.id.mygigis_back)
         mygigigs_rv = findViewById(R.id.mygigigs_rv)
         add_gig = findViewById(R.id.add_gig)
-        role = intent.getStringExtra("role")
+        role = intent.getStringExtra("role")!!
         if (userID != getStringVal(Constants.USERID)) {
             add_gig.visibility = View.GONE
         }

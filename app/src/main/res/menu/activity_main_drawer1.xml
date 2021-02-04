@@ -7,27 +7,32 @@
 
 
         <item android:id="@+id/nav_home"
-            android:title="Home">
+            android:title="Home"
+            android:icon="@drawable/ic_home">
 
         </item>
 
         <item
             android:id="@+id/nav_pricing"
-            android:title="Pricing"/>
+            android:title="Pricing"
+            android:icon="@drawable/ic_price"/>
 
 
         <item
             android:id="@+id/nav_shop"
-            android:title="Shop"/>
+            android:title="Shop"
+            android:icon="@drawable/ic_shop"/>
 
 
         <item
             android:id="@+id/nav_about"
-            android:title="About"/>
+            android:title="About"
+            android:icon="@drawable/ic_about"/>
 
         <item
             android:id="@+id/nav_contactUs"
-            android:title="Contact Us"/>
+            android:title="Contact Us"
+            android:icon="@drawable/ic_contactus"/>
 
     </group>
 

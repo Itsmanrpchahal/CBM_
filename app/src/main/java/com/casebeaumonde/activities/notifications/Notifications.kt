@@ -139,7 +139,7 @@ class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Co
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            Log.d("notifyID",id)
+            Log.d("notifyID", id!!)
             controller.RemoveNotification("Bearer "+getStringVal(Constants.TOKEN),id)
         }else{
             utility!!.relative_snackbar(parent_notifications!!, getString(R.string.nointernet), getString(R.string.close_up))

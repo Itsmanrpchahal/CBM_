@@ -145,7 +145,7 @@ class ClosetsItems : BaseClass(),
         closetitemidIf = this
         viewclosetidIf = this
         selectedclosetId = this
-        userID = intent.getStringExtra("userID")
+        userID = intent.getStringExtra("userID")!!
         listeners()
     }
 
@@ -972,6 +972,7 @@ class ClosetsItems : BaseClass(),
             //ToDo:---------------------------- Get Price------------------------------------
             priceTitle = ArrayList()
             priceTitle.add("Select Price")
+
             //ToDo: Get Color
 
             val prices = resources.getStringArray(R.array.Price)

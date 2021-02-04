@@ -362,33 +362,33 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
 
                 closetItemID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                    intent.getStringExtra("closetItemID").toInt()
+                    intent.getStringExtra("closetItemID")!!.toInt()
                 )?.categoryId.toString()
 
 
                 aditemtocloset_decs.setText(
                     closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                        intent.getStringExtra("closetItemID").toInt()
+                        intent.getStringExtra("closetItemID")!!.toInt()
                     )?.description
                 )
                 aditemtocloset_price.setText(
                     closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                        intent.getStringExtra("closetItemID").toInt()
+                        intent.getStringExtra("closetItemID")!!.toInt()
                     )?.price.toString()
                 )
 
                 cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                    intent.getStringExtra("closetItemID").toInt()
+                    intent.getStringExtra("closetItemID")!!.toInt()
                 )?.category?.id.toString()!!
 
                 categoryName = closetItemsResponse.body()?.getData()?.closet?.items?.get(
-                    intent.getStringExtra("closetItemID").toInt()
+                    intent.getStringExtra("closetItemID")!!.toInt()
                 )?.category?.name!!
 
                 Glide.with(this).asBitmap().load(
                     Constants.BASE_IMAGE_URL + closetItemsResponse.body()
                         ?.getData()?.closet?.items?.get(
-                            intent.getStringExtra("closetItemID").toInt()
+                            intent.getStringExtra("closetItemID")!!.toInt()
                         )?.picture
                 )
                     .into(object : CustomTarget<Bitmap?>() {

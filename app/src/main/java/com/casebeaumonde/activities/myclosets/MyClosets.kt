@@ -88,7 +88,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         controller.Controller(this, this, this,this)
         closetitemidIf = this
         deleteClosetID = this
-        userID = intent.getStringExtra("userID")
+        userID = intent.getStringExtra("userID")!!
         if (userID != getStringVal(Constants.USERID))
         {
             create_closets.visibility = View.GONE

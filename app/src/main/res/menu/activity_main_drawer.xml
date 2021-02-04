@@ -5,41 +5,55 @@
 
     <group android:checkableBehavior="single">
 
+        <item android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@drawable/ic_home">
+        </item>
+
         <item
             android:id="@+id/nav_profile"
-            android:title="Profile"/>
+            android:title="Profile"
+            android:icon="@drawable/ic_user"/>
 
         <item
             android:id="@+id/nav_users"
-            android:title="Users" />
+            android:title="Users"
+            android:icon="@drawable/ic_users"/>
 
         <item
             android:id="@+id/nav_pricing"
-            android:title="Pricing"/>
+            android:title="Pricing"
+            android:icon="@drawable/ic_price"/>
 
         <item
             android:id="@+id/nav_designers"
-            android:title="Designers"/>
+            android:title="Designers"
+            android:icon="@drawable/ic_designers"/>
 
         <item
             android:id="@+id/nav_hireanexpert"
-            android:title="Hire An Expert"/>
+            android:title="Hire An Expert"
+            android:icon="@drawable/ic_hireanexpert"/>
 
         <item
             android:id="@+id/nav_shop"
-            android:title="Shop"/>
+            android:title="Shop"
+            android:icon="@drawable/ic_shop"/>
 
         <item
             android:id="@+id/nav_cart"
-            android:title="Cart"/>
+            android:title="Cart"
+            android:icon="@drawable/ic_mycart"/>
 
         <item
             android:id="@+id/nav_closets"
-            android:title="Closets"/>
+            android:title="Closets"
+            android:icon="@drawable/ic_hangers"/>
 
         <item
             android:id="@+id/nav_liveevents"
-            android:title="Live Events"/>
+            android:title="Live Events"
+            android:icon="@drawable/ic_liveevents"/>
 
     </group>
 
@@ -56,23 +70,24 @@
 
         <item
             android:id="@+id/nav_chat"
-            android:title="Chat"/>
-
-        <item android:id="@+id/nav_home"
-            android:title="Home"></item>
+            android:title="Chat"
+            android:icon="@drawable/ic_chat"/>
 
         <item
             android:id="@+id/nav_about"
-            android:title="About"/>
+            android:title="About"
+            android:icon="@drawable/ic_about"/>
 
         <item
             android:id="@+id/nav_contactUs"
-            android:title="Contact Us"/>
+            android:title="Contact Us"
+            android:icon="@drawable/ic_contactus"/>
 
 
         <item
             android:id="@+id/nav_logout"
-            android:title="Logout"/>
+            android:title="Logout"
+            android:icon="@drawable/ic_logout"/>
 
     </group>
 </menu>

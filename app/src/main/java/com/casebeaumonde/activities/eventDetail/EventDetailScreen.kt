@@ -103,7 +103,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
         controller = Controller()
-        id = intent.getStringExtra(Constants.EVENTID)
+        id = intent.getStringExtra(Constants.EVENTID)!!
 
     }
 

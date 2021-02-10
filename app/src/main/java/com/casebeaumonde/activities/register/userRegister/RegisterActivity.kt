@@ -319,9 +319,11 @@ class RegisterActivity : BaseClass() {
                     register_aboutme.setText("")
                     uploadfilename.setText("")
                     bitMap.recycle()
+                    startActivity(Intent(this@RegisterActivity,LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                    finish()
                     utility!!.relative_snackbar(
                         parent_register!!,
-                        response.body()?.message,
+                        response.body()?.getMessage(),
                         getString(R.string.close_up)
                     )
                 }

@@ -1,9 +1,13 @@
 package com.casebeaumonde.activities.questionaries.selectbrands
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
 import com.casebeaumonde.activities.questionaries.selectbrands.IF.SelectedBrand_IF
@@ -14,11 +18,13 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SelectBrands : AppCompatActivity(),SelectedBrand_IF{
+class SelectBrands : AppCompatActivity(), SelectedBrand_IF {
 
-    private lateinit var dataList : ArrayList<Data>
-    private lateinit var recyclerView : AlphabetIndexFastScrollRecyclerView
-    private lateinit var selectedBrands : ArrayList<String>
+    private lateinit var dataList: ArrayList<Data>
+    private lateinit var recyclerView: AlphabetIndexFastScrollRecyclerView
+    private lateinit var selectedBrands: ArrayList<String>
+    private lateinit var continue_bt: LinearLayout
+    private lateinit var back: ImageButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +35,7 @@ class SelectBrands : AppCompatActivity(),SelectedBrand_IF{
         findIds()
         initData()
         Collections.sort(dataList, Data.titleNameComparator)
-        recyclerView.layoutManager = GridLayoutManager(this,2)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         val adapter =
             DataAdapter(
                 dataList,
@@ -45,10 +51,31 @@ class SelectBrands : AppCompatActivity(),SelectedBrand_IF{
         adapter.notifyDataSetChanged()
 
         selectedbrandIf = this
+
+        listeners()
+    }
+
+    private fun listeners() {
+        continue_bt.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    MainActivity::class.java
+                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            )
+            finish()
+        }
+
+        back.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun findIds() {
         recyclerView = findViewById(R.id.recyclerView)
+        continue_bt = findViewById(R.id.continue_bt)
+        back = findViewById(R.id.back)
     }
 
     private fun initData() {
@@ -118,7 +145,7 @@ class SelectBrands : AppCompatActivity(),SelectedBrand_IF{
         dataList.add(Data("lDnt"))
     }
 
-    companion object{
+    companion object {
         lateinit var selectedbrandIf: SelectedBrand_IF
 
     }
@@ -130,7 +157,7 @@ class SelectBrands : AppCompatActivity(),SelectedBrand_IF{
             }
         } else {
             selectedBrands.add(id.toString())
-            Log.d("selectBrands",""+selectedBrands)
+            Log.d("selectBrands", "" + selectedBrands)
         }
     }
 

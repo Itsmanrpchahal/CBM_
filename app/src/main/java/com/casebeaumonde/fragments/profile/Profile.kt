@@ -136,6 +136,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

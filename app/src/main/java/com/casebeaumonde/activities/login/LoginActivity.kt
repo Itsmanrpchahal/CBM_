@@ -19,6 +19,7 @@ import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.forgotPassword.ForgotActivity
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse
+import com.casebeaumonde.activities.questionaries.GetStartedActivity
 import com.casebeaumonde.activities.register.userRegister.RegisterActivity
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
@@ -201,13 +202,16 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
                             setStringVal(Constants.TOKEN, response.body()?.data?.token)
                             setStringVal(Constants.REMEMBERME,remember)
 
-                            startActivity(
-                                Intent(
-                                    this@LoginActivity,
-                                    MainActivity::class.java
-                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            )
+//                            startActivity(
+//                                Intent(
+//                                    this@LoginActivity,
+//                                    MainActivity::class.java
+//                                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                            )
+
+                            startActivity(Intent(this@LoginActivity,GetStartedActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                             finish()
                         } else {
                             utility!!.relative_snackbar(

@@ -28,6 +28,7 @@ import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.cart.Cart
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import com.google.android.material.appbar.AppBarLayout
@@ -45,7 +46,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     private lateinit var opennavigation: ImageView
     private lateinit var frameLayout: NavController
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var cartbadge: ImageBadgeView
+    private lateinit var toolbar_cart: ImageBadgeView
     private lateinit var utility: Utility
     private lateinit var toolbar : Toolbar
     private lateinit var pd: ProgressDialog
@@ -130,6 +131,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         toolbar_notifiction.setOnClickListener {
             startActivity(Intent(this, Notifications::class.java))
         }
+
+        toolbar_cart.setOnClickListener {
+            manager.popBackStack()
+            manager.beginTransaction().replace(R.id.nav_host_fragment,Cart()).addToBackStack(null).commit()
+        }
     }
 
     private fun logout() {
@@ -212,6 +218,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         userImage = findViewById(R.id.userImage)
         toolbarrelative = findViewById(R.id.toolbarrelative)
         appbarmain = findViewById(R.id.appbarmain)
+        toolbar_cart = findViewById(R.id.toolbar_cart)
 
         val ha = Handler()
         ha.postDelayed(object : Runnable {

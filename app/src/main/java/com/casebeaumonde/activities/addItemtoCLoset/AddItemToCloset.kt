@@ -58,6 +58,10 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
     private var colorID = ""
     private var sizeID = ""
     private var closetItemID = ""
+    private var closetId: Int = 0
+    private var brandPos: Int = 0
+    private var colorPos: Int = 0
+    private var sizePos: Int = 0
     private var path: String = ""
     private var edit: String = ""
     private lateinit var part: MultipartBody.Part
@@ -87,6 +91,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         controller = Controller()
         controller.Controller(this, this, this, this)
         controller.AddClosetItemList("Bearer " + getStringVal(Constants.TOKEN))
+        closetId = intent.getStringExtra("closetID")?.toInt()!!
 
         edit = intent.getStringExtra("edit").toString()
         pd.show()
@@ -119,6 +124,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             addItems(intent.getStringExtra("closetID"), edit)
         }
 
+
         additemclosets_categoryspinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -126,14 +132,16 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 view: View, position: Int, id: Long
             ) {
                 // additemclosets_category.setText(parent.selectedItem.toString())
-                cateID = categorties.get(closetItemID.toInt()).id.toString()
+                cateID = categorties.get(position).id.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
 
             }
 
+
         }
+
     }
 
     private fun findIds() {
@@ -238,10 +246,10 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 additemclosets__uploadfilename.requestFocus()
             }
 
-            aditemtocloset_price.text.isEmpty() -> {
-                aditemtocloset_price.setError("Enter Price")
-                aditemtocloset_price.requestFocus()
-            }
+//            aditemtocloset_price.text.isEmpty() -> {
+//                aditemtocloset_price.setError("Enter Price")
+//                aditemtocloset_price.requestFocus()
+//            }
             else -> {
                 // if (aditemtocloset_add.equals("Add")) {
                 pd.show()
@@ -290,11 +298,11 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             for (i in 0 until categorties.size) {
                 val cat = categorties.get(i)
                 cateName.add(cat.name.toString())
+
             }
 
 
             // catePos = categorties.get(intent.getStringExtra("closetItemID").toInt()).id.toString()
-
 
             brandName = ArrayList()
             brands =
@@ -306,6 +314,17 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 brandName.add(brand.name.toString())
             }
 
+            if (brands.size > 0) {
+
+                for (i in brands.indices) {
+                    val catpos = brands[i]
+
+                    if (catpos.id.toString().equals(brandID)) {
+                        brandPos = i
+                    }
+                }
+            }
+
             Colors = ArrayList()
 
             color =
@@ -315,6 +334,18 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 val colors = color.get(i)
                 Colors.add(colors.name.toString())
             }
+            if (color.size > 0) {
+
+                for (i in color.indices) {
+                    val catpos = color[i]
+
+                    if (catpos.id.toString().equals(colorID)) {
+                        colorPos = i
+
+                    }
+                }
+            }
+
 
 
             Size = ArrayList()
@@ -325,6 +356,19 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             for (i in 0 until size.size) {
                 val SIZE = size.get(i)
                 Size.add(SIZE.name.toString())
+            }
+
+
+            if (size.size > 0) {
+
+                for (i in size.indices) {
+                    val catpos = size[i]
+                   // Toast.makeText(this,""+sizePos+" =>   "+sizeID,Toast.LENGTH_LONG).show()
+                    if (catpos.id.toString().equals(sizeID)) {
+                        sizePos = i
+
+                    }
+                }
             }
 
             setFetchList()
@@ -360,12 +404,27 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         if (closetItemsResponse.isSuccessful) {
             if (edit.equals("1")) {
 
-
                 closetItemID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                    intent.getStringExtra("closetItemID")!!.toInt()
+                )?.id.toString()
+
+                brandID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                    intent.getStringExtra("closetItemID")!!.toInt()
+                )?.brand?.id.toString()
+
+                colorID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                    intent.getStringExtra("closetItemID")!!.toInt()
+                )?.color?.id.toString()
+
+                cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.categoryId.toString()
 
-
+                aditemtocloset_title.setText(
+                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                        intent.getStringExtra("closetItemID")!!.toInt()
+                    )?.title
+                )
                 aditemtocloset_decs.setText(
                     closetItemsResponse.body()?.getData()?.closet?.items?.get(
                         intent.getStringExtra("closetItemID")!!.toInt()
@@ -380,6 +439,8 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.category?.id.toString()!!
+
+
 
                 categoryName = closetItemsResponse.body()?.getData()?.closet?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
@@ -439,8 +500,9 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             android.R.layout.simple_spinner_dropdown_item, cateName
         )
         additemclosets_categoryspinner.adapter = adapter
-        additemclosets_categoryspinner.setSelection(cateID.toInt())
-
+        if (!cateID.equals("")) {
+            additemclosets_categoryspinner.setSelection(cateID.toInt())
+        }
 
         //ToDo: Set Brands in Spinner
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, brandName)
@@ -457,6 +519,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
                     brandID = brands.get(position).id.toString()
 
+                    additemclosets_Brandpinner.setSelection(brandPos)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -480,6 +543,8 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     sizeID = size.get(position).id.toString()
                     additemclosets_size.setText(size.get(position).name)
 
+                    additemclosets_Sizespinner.setSelection(sizePos)
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -500,7 +565,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     id: Long
                 ) {
                     additemclosets_color.setText(color.get(position).name)
-
+                    additemclosets_Colorpinner.setSelection(colorPos)
                     colorID = color.get(position).name.toString()
                 }
 

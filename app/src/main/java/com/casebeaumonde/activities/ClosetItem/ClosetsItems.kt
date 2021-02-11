@@ -1226,8 +1226,7 @@ class ClosetsItems : BaseClass(),
             Viewdialog.dismiss()
             startActivity(
                 Intent(this, AddItemToCloset::class.java).putExtra("closetID", closetID)
-                    .putExtra("edit", "1").putExtra("closetItemID", id.toString())
-            )
+                    .putExtra("edit", "1").putExtra("closetItemID", id.toString()))
             //addItemToCloset(closetItemID)
         }
 

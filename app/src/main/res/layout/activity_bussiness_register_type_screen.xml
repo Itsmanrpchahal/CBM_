@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.register.userRegister.BussinessRegisterTypeScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8dp">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:background="@android:color/transparent">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:fontFamily="@font/oswaldlight"
+                android:textAllCaps="true"
+                android:textSize="@dimen/toolbartv"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true">
+
+            </TextView>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cbmlogo"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/textsize_16sp">
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How Do You Want Use CBM?"
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/oswaldlight"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:layout_marginTop="@dimen/textsize_24sp">
+
+    </TextView>
+
+    <View
+        android:layout_width="@dimen/margin_40dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/textsize_16sp"
+        android:background="@color/colorWhite">
+
+    </View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/margin_32dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/personalcard"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="@dimen/textsize_24sp"
+            android:layout_alignParentLeft="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/textRetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Retail/Boutique"
+                    android:fontFamily="@font/oswaldlight"
+                    android:drawableTop="@drawable/storebb"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite">
+
+                </TextView>
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/busissnesscard"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/textsize_24sp"
+            android:layout_height="170dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/textInfluencer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ladyw"
+                    android:fontFamily="@font/oswaldlight"
+                    android:textAlignment="center"
+                    android:text="INFLUENCER/STYLIST/PERSONAL SHOPPER"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite">
+
+                </TextView>
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/continue_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="@dimen/textsize_24sp"
+        android:layout_marginRight="@dimen/textsize_24sp"
+        android:layout_marginTop="@dimen/textsize_24sp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/buttonheight"
+            android:fontFamily="@font/oswaldlight"
+            android:text="Continue"
+            android:gravity="center"
+            android:textSize="@dimen/textsize_24sp"
+            android:textColor="@color/colorBlack">
+
+
+        </TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin_16dp"
+            android:src="@drawable/ic_baseline_arrow_forward_24">
+
+        </ImageView>
+
+    </LinearLayout>
+</LinearLayout>

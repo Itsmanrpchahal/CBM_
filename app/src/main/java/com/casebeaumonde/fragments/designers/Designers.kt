@@ -121,7 +121,7 @@ class Designers : BaseFrag(), Controller.DesignersAPI {
         {
             response = designerResponse.body()?.getData()?.users as ArrayList<DesignersResponse.Data.User>
             setFullData(response)
-        }else{
+        }   else   {
             utility!!.relative_snackbar(
                 parent_designer!!,
                 designerResponse.message(),

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:backgroundTint="@android:color/transparent">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subscriptions"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/toolbartv"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight">
+
+            </TextView>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <TextView
+        android:id="@+id/plantype_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/oswaldlight"
+        android:text="PERSONAL PLANS">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Choose Your Level"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:fontFamily="@font/oswaldlight"
+        android:textSize="@dimen/textsize_24sp">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/default_margin_16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bill annually"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_marginRight="@dimen/margin_8dp"
+            android:backgroundTint="@color/colorWhite"
+            android:buttonTint="@color/colorWhite"
+            android:thumbTint="@color/colorWhite"
+            android:trackTint="@color/colorWhite">
+
+        </Switch>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bill monthly"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/default_margin_16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SWITCH PLAN : "
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+
+           <Spinner
+               android:layout_width="100dp"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/margin_8dp"
+               android:layout_marginRight="@dimen/margin_8dp"
+               android:backgroundTint="@color/colorWhite">
+
+           </Spinner>
+
+           <View
+               android:layout_width="100dp"
+               android:layout_height="1dp"
+               android:background="@color/colorWhite">
+
+           </View>
+       </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="View"
+            android:fontFamily="@font/oswaldlight"
+            android:background="@color/colorWhite"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/textsize_16sp">
+
+        </Button>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_16dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_star_border_24">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_star_border_24">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_star_border_24">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_star_border_24">
+
+            </ImageView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/level_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Level One"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/layout1"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="@dimen/default_margin_16dp"
+            android:fontFamily="@font/oswaldlight"
+            android:textSize="@dimen/textsize_24sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/freepaid_tv"
+            android:layout_below="@+id/level_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/oswaldlight"
+            android:text="FREE">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/plantext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_below="@+id/freepaid_tv"
+            android:fontFamily="@font/oswaldlight"
+            android:layout_centerHorizontal="true"
+            android:text="A fun, new connected way to do all your favorite tasks in the fashion world."
+            android:textColor="@color/colorWhite">
+
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/plantext"
+            android:layout_marginTop="@dimen/margin_8dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

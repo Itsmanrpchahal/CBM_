@@ -5,69 +5,115 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/bregister_parent"
+    android:background="@color/colorBackground"
     tools:context=".activities.businessRegister.BusinessRegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/login_banner">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8dp">
+
+                        <ImageButton
+                            android:id="@+id/back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+                        </ImageButton>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/oswaldlight"
+                            android:text="Sign Up"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/toolbartv">
+
+                        </TextView>
+                    </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:src="@drawable/cbmlogo">
+
+                </ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/oswaldlight"
+                    android:gravity="center"
+                    android:text="SIGN UP"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_40sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/register_forbusiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_32dp"
+                    android:fontFamily="@font/oswaldlight"
+                    android:text="@string/wanttobusiness"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/default_margin_16dp"
-                    android:background="@drawable/whiteborder"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/register_forbusiness"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_32dp"
-                        android:text="@string/wanttocustomer"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
-
-                    </TextView>
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_32dp"
-                        android:text="@string/team"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
-
-                    </TextView>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_8dp"
-                        android:background="@drawable/roundcorners">
+                        android:layout_margin="@dimen/margin_8dp">
 
 
                         <Spinner
                             android:id="@+id/business_team_spinner"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/roundcorners">
+                            android:background="@color/colorWhite"
+                            android:layout_height="40dp">
 
                         </Spinner>
 
@@ -87,79 +133,58 @@
 
                     </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_8dp"
-                        android:text="@string/companyname"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
-
-                    </TextView>
 
                     <EditText
                         android:id="@+id/bregister_companyname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_8dp"
-                        android:background="@drawable/roundcorners"
+                        android:backgroundTint="@android:color/transparent"
                         android:hint="Company Name"
                         android:inputType="text"
                         android:padding="@dimen/margin_8dp"
-                        android:textColor="@color/colorTextHint"
-                        android:textColorHint="@color/colorTextHint"
+                        android:textColor="@color/colorWhite"
+                        android:textColorHint="@color/colorWhite"
                         android:textSize="@dimen/textsize_16sp">
 
                     </EditText>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_8dp"
-                        android:text="@string/firstname"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorWhite">
 
-                    </TextView>
+                    </View>
+
 
                     <EditText
                         android:id="@+id/bregister_firstname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_8dp"
-                        android:background="@drawable/roundcorners"
+                        android:backgroundTint="@android:color/transparent"
                         android:hint="First Name"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:inputType="text"
                         android:padding="@dimen/margin_8dp"
-                        android:textColor="@color/colorTextHint"
-                        android:textColorHint="@color/colorTextHint"
+                        android:textColor="@color/colorWhite"
+                        android:textColorHint="@color/colorWhite"
                         android:textSize="@dimen/textsize_16sp">
 
                     </EditText>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorWhite">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_8dp"
-                        android:text="@string/lastname"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
+                    </View>
 
-                    </TextView>
 
                     <EditText
                         android:id="@+id/bregister_lastname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_8dp"
-                        android:background="@drawable/roundcorners"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:backgroundTint="@color/colorWhite"
                         android:hint="Last Name"
                         android:inputType="text"
                         android:padding="@dimen/margin_8dp"
@@ -169,24 +194,20 @@
 
                     </EditText>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_8dp"
-                        android:text="@string/email"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorWhite">
 
-                    </TextView>
+                    </View>
+
 
                     <EditText
                         android:id="@+id/bregister_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_8dp"
-                        android:background="@drawable/roundcorners"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:backgroundTint="@color/colorWhite"
                         android:hint="Email"
                         android:inputType="text"
                         android:padding="@dimen/margin_8dp"
@@ -196,17 +217,12 @@
 
                     </EditText>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_8dp"
-                        android:layout_marginTop="@dimen/margin_8dp"
-                        android:text="@string/password"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_16sp"
-                        android:textStyle="bold">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/colorWhite">
 
-                    </TextView>
+                    </View>
 
                     <EditText
                         android:id="@+id/bregister_password"

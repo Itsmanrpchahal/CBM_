@@ -23,11 +23,13 @@
         android:id="@+id/priciing_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         android:layout_marginTop="55dp">
 
 
     </androidx.recyclerview.widget.RecyclerView>
 
 
+<!--    <include layout="@layout/price_layout"></include>-->
 
 </RelativeLayout>

@@ -79,7 +79,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
             )
         } else {
             utility!!.relative_snackbar(
-                parent_liveevents!!,
+                parent_pricing!!,
                 getString(R.string.nointernet),
                 getString(R.string.close_up)
             )
@@ -102,32 +102,42 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
 
     override fun onPricingSuccess(pricing: Response<PricingResponse>) {
         pd.dismiss()
-        if (getStringVal(Constants.USER_ROLE).equals("1")) {
+        if (pricing.isSuccessful)
+        {
+            if (getStringVal(Constants.USER_ROLE).equals("1")) {
 
-        }
+            }
 
-        if (getStringVal(Constants.USER_ROLE).equals("customer")) {
-            customerPricing =
-                pricing.body()?.getData()?.customerPlans as ArrayList<PricingResponse.Data.CustomerPlan>
+            if (getStringVal(Constants.USER_ROLE).equals("customer")) {
+                customerPricing =
+                    pricing.body()?.getData()?.customerPlans as ArrayList<PricingResponse.Data.CustomerPlan>
 
-            priciing_recyclerview.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            val adapter = CustomerPricingAdapter (
-                context!!, customerPricing, from.toString(), planname.toString(),getStringVal(Constants.TOKEN)
-            )
-            priciing_recyclerview.adapter = adapter
-            adapter.notifyDataSetChanged()
+                priciing_recyclerview.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                val adapter = CustomerPricingAdapter (
+                    context!!, customerPricing, from.toString(), planname.toString(),getStringVal(Constants.TOKEN)
+                )
+                priciing_recyclerview.adapter = adapter
+                adapter.notifyDataSetChanged()
 
+            } else {
+                bussinessPricing =
+                    pricing.body()?.getData()?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>
+                priciing_recyclerview.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                val adapter = BussinessPricingAdapter(
+                    context!!, bussinessPricing
+                )
+                priciing_recyclerview.adapter = adapter
+            }
         } else {
-            bussinessPricing =
-                pricing.body()?.getData()?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>
-            priciing_recyclerview.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            val adapter = BussinessPricingAdapter(
-                context!!, bussinessPricing
-            )
-            priciing_recyclerview.adapter = adapter
+                utility!!.relative_snackbar(
+                    parent_pricing!!,
+                    pricing.message(),
+                    getString(R.string.close_up)
+                )
         }
+
     }
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
@@ -139,7 +149,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
             controller.Pricing("Bearer " + getStringVal(Constants.TOKEN))
         }else {
             utility!!.relative_snackbar(
-                parent_liveevents!!,
+                parent_pricing!!,
                 userProfileResponse.message(),
                 getString(R.string.close_up)
             )
@@ -185,7 +195,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
                 controller.ChangePlan("Bearer "+getStringVal(Constants.TOKEN),id,s,"monthly")
             } else {
                 utility!!.relative_snackbar(
-                    parent_liveevents!!,
+                    parent_pricing!!,
                     getString(R.string.nointernet),
                     getString(R.string.close_up)
                 )
@@ -210,7 +220,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
                 )
             } else {
                 utility!!.relative_snackbar(
-                    parent_liveevents!!,
+                    parent_pricing!!,
                     getString(R.string.nointernet),
                     getString(R.string.close_up)
                 )
@@ -220,7 +230,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI ,GetPriceID_IF,Controller.Chan
                 changePlan.body()?.getData()?.message,
                 getString(R.string.close_up)
             )
-        }else {
+        }  else {
             utility!!.relative_snackbar(
                 parent_pricing!!,
                 changePlan.message(),

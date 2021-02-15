@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fragments.cart.adapter.ThanksScreen"></activity>
+        <activity android:name=".activities.register.userRegister.BussinessRegisterTypeScreen"></activity>
+        <activity android:name=".fragments.cart.adapter.ThanksScreen" />
         <activity android:name=".fragments.cart.PaymentScreen" />
         <activity android:name=".fragments.cart.PersonalInfoScreen" />
         <activity

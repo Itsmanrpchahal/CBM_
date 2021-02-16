@@ -1175,6 +1175,8 @@ class ClosetsItems : BaseClass(),
         var itemview_closebt: Button
         var itemview_addtoclosetbt: Button
         var itemview_pinnertitle: TextView
+        var itemview_move : Button
+        var itemview_copy : Button
 
         viewitem_image = Viewdialog.findViewById(R.id.viewitem_image)
         viewitem_title = Viewdialog.findViewById(R.id.viewitem_title)
@@ -1190,6 +1192,8 @@ class ClosetsItems : BaseClass(),
         itemview_closebt = Viewdialog.findViewById(R.id.itemview_closebt)
         itemview_addtoclosetbt = Viewdialog.findViewById(R.id.itemview_addtoclosetbt)
         itemview_pinnertitle = Viewdialog.findViewById(R.id.itemview_pinnertitle)
+        itemview_move = Viewdialog.findViewById(R.id.itemview_move)
+        itemview_copy = Viewdialog.findViewById(R.id.itemview_copy)
 
         if (userID != getStringVal(Constants.USERID)) {
             itemview_removebt.visibility = View.GONE
@@ -1232,6 +1236,20 @@ class ClosetsItems : BaseClass(),
 
         itemview_closebt.setOnClickListener {
             Viewdialog.dismiss()
+        }
+
+
+        checkedClosetIDs.clear()
+        listData.clear()
+        checkedClosetIDs.add(closetResponse.get(id).id.toString())
+        listData.add(closetID)
+
+        itemview_move.setOnClickListener {
+           showMoveDialog("move")
+        }
+
+        itemview_copy.setOnClickListener {
+            showMoveDialog("duplicate")
         }
 
         searchUserHeart(closetResponse.get(id).hearts as MutableList<ClosetsItemsResponse.Data.Closet.Item.Heart>, viewitem_checkbox)

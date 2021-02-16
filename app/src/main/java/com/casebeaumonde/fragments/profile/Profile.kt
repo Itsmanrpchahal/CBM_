@@ -31,6 +31,7 @@ import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.paymenthistory.PaymentHistory
+import com.casebeaumonde.activities.paymentscreen_b.PaymentScreenBussiness
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.Pricing
@@ -882,31 +883,34 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
             profile_mypaymentmethods.setOnClickListener {
-                mypaymentdialog = Dialog(context!!)
-                mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-                mypaymentdialog.setContentView(R.layout.managepaymentmethid)
-                val window = mypaymentdialog.window
-                window?.setLayout(
-                    WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT
-                )
-
-                pd.show()
-                controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
-                val addpaymentmethod : Button
-                payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
-                close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
-                addpaymentmethod = mypaymentdialog.findViewById(R.id.addpaymentmethod)
-
-                close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
-
-                addpaymentmethod.setOnClickListener {
-                    addPaymentMethodDialog()
-                }
-
-                mypaymentdialog.show()
+                startActivity(Intent(context,PaymentScreenBussiness::class.java))
             }
+//            profile_mypaymentmethods.setOnClickListener {
+//                mypaymentdialog = Dialog(context!!)
+//                mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//
+//                mypaymentdialog.setContentView(R.layout.managepaymentmethid)
+//                val window = mypaymentdialog.window
+//                window?.setLayout(
+//                    WindowManager.LayoutParams.MATCH_PARENT,
+//                    WindowManager.LayoutParams.WRAP_CONTENT
+//                )
+//
+//                pd.show()
+//                controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
+//                val addpaymentmethod : Button
+//                payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
+//                close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
+//                addpaymentmethod = mypaymentdialog.findViewById(R.id.addpaymentmethod)
+//
+//                close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
+//
+//                addpaymentmethod.setOnClickListener {
+//                    addPaymentMethodDialog()
+//                }
+//
+//                mypaymentdialog.show()
+//            }
         } else {
             utility!!.relative_snackbar(
                 parent_profile,

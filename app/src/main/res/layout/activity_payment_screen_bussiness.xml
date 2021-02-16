@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.paymentscreen_b.PaymentScreenBussiness">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/oswaldlight"
+                android:text="PAYMENT METHODS"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/toolbartv">
+
+            </TextView>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:background="@color/colorWhite">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_8dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/payment_method_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add New Card Details"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/oswald_regular">
+
+            </TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                android:layout_margin="-10dp"
+                app:cardElevation="@dimen/margin_8dp"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Card Holdr's name"
+                    android:layout_margin="5dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/margin_8dp"
+                android:layout_margin="-10dp"
+                app:cardUseCompatPadding="true">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Card Holdr's name"
+                    android:layout_margin="5dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textColor="@color/colorBlack"
+                    >
+
+                </EditText>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/info_tv"
+                android:weightSum="2">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Valid thru"
+                        android:layout_margin="5dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textColor="@color/colorBlack"
+                        >
+
+                    </EditText>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="@dimen/margin_8dp"
+                    app:cardUseCompatPadding="true">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CVV/CVC"
+                        android:singleLine="true"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:textColor="@color/colorBlack"
+                        >
+
+                    </EditText>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addpaymentmethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="Add payment method"
+                android:fontFamily="@font/oswaldlight"
+                >
+
+            </Button>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Or"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/oswald_regular">
+
+            </TextView>
+
+            <Button
+                android:id="@+id/addpaypalmethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlack"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="Add paypal method"
+                android:fontFamily="@font/oswaldlight"
+                >
+
+            </Button>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

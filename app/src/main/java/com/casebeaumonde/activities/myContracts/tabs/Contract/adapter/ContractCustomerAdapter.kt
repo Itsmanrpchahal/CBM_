@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
@@ -41,6 +42,7 @@ class ContractCustomerAdapter (val context: Context,val data : MutableList<Contr
         holder.itemView.invitation_status.setText("Status:"+data.get(position).status?.replace("_"," "))
 
         holder.itemView.setOnClickListener {
+           // Toast.makeText(context,"HERE",Toast.LENGTH_SHORT).show()
             MyContractsFrag.getcontractidIf?.getID(
                 data.get(position).customerId.toString(),
                 position.toString()

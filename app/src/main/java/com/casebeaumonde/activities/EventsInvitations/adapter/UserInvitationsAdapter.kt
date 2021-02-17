@@ -56,11 +56,11 @@ class UserInvitationsAdapter (val context: Context,val events : MutableList<User
 
         if (todaymilliseconds > timeInMillisecondsExpire.toString())
         {
-            holder.itemView.visibility = View.GONE
+          //  holder.itemView.visibility = View.GONE
         }
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(context,""+events.get(position).event?.title,Toast.LENGTH_SHORT).show()
+           // Toast.makeText(context,""+events.get(position).event?.title,Toast.LENGTH_SHORT).show()
         }
     }
 

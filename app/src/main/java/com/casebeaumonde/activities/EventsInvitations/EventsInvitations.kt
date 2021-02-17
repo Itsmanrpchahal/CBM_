@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.EventsInvitations.adapter.UserInvitationsAdapter
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
+import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractCustomerAdapter
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -76,23 +78,32 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onUserInvitationSuccess(userInvitations: Response<UserInvitationsResponse>) {
        pd.dismiss()
-       
-        events = userInvitations.body()?.getData()?.events!! as ArrayList<UserInvitationsResponse.Data.Event>
 
-        val c = Calendar.getInstance()
+        if (userInvitations.isSuccessful)
+        {
+            events = userInvitations.body()?.getData()?.events!! as ArrayList<UserInvitationsResponse.Data.Event>
 
-        val formatter1: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        var date1: Date? = null
-        try {
-            date1 = formatter1.parse(formatter1.format(c.time))
-            Log.d("TodayDate", java.lang.String.valueOf(date1.time))
-            val  formattedDate = java.lang.String.valueOf(date1.time)
-        } catch (e: ParseException) {
-            e.printStackTrace()
+            val c = Calendar.getInstance()
+
+
+            val formatter1: DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+            var date1: Date? = null
+            try {
+                date1 = formatter1.parse(formatter1.format(c.time))
+                Log.d("TodayDate", java.lang.String.valueOf(date1.time))
+                val  formattedDate = java.lang.String.valueOf(date1.time)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            setFullData(events,java.lang.String.valueOf(date1?.time))
+
+        } else {
+            utility.relative_snackbar(
+                parent_events!!,
+                userInvitations.message(),
+                getString(R.string.close_up)
+            )
         }
-        setFullData(events,java.lang.String.valueOf(date1?.time))
-
-
 
     }
 
@@ -105,6 +116,7 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
             this, events,valueOf
         )
         events_recyler.adapter = adapter
+
 
     }
 

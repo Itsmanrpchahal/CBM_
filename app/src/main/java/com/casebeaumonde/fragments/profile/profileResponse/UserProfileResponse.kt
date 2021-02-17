@@ -239,6 +239,10 @@ class UserProfileResponse {
             @Expose
             var allowHire: Int? = null
 
+            @SerializedName("chat_invitation")
+            @Expose
+            var chat_invitation: Int? = null
+
             @SerializedName("avatar")
             @Expose
             var avatar: String? = null

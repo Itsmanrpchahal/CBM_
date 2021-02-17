@@ -313,6 +313,12 @@ public class Controller {
         webAPI = WebAPI()
     }
 
+    fun Controller(userProfile: UserProfileAPI)
+    {
+        userProfileAPI = userProfile
+        webAPI = WebAPI()
+    }
+
     fun setForgotPassword(email: String) {
         webAPI?.api?.forgotPassword(email)?.enqueue(object : Callback<ForgotPassworResponse> {
             override fun onResponse(

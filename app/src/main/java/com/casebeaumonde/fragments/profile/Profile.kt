@@ -64,30 +64,30 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI, GetUserID ,Controller.PaymentMethodAPI, GetCardID,Controller.DeleteCardAPI
-,Controller.CancelPlanAPI,Controller.AddPaymentMethodAPI{
+    Controller.UpdateProfileAPI, GetUserID, Controller.PaymentMethodAPI, GetCardID,
+    Controller.DeleteCardAPI, Controller.CancelPlanAPI, Controller.AddPaymentMethodAPI {
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var profile_username: TextView
-    private lateinit var user_decs : TextView
+    private lateinit var user_decs: TextView
     private lateinit var profile_mygigs: Button
     private lateinit var profile_profilePic: ImageView
     private lateinit var profile_followerscount: TextView
     private lateinit var profile_followingcount: TextView
-    private lateinit var editptofile_paypaltext : TextView
-    private lateinit var editprofile_paypal_email : EditText
+    private lateinit var editptofile_paypaltext: TextView
+    private lateinit var editprofile_paypal_email: EditText
     private lateinit var profile_followerslayout: LinearLayout
     private lateinit var profile_followinglayout: LinearLayout
     private lateinit var profile_changetv: ImageView
     private lateinit var part: MultipartBody.Part
     private lateinit var bitMap: Bitmap
-     private lateinit var  editprofile_image : ImageView
+    private lateinit var editprofile_image: ImageView
     private lateinit var profile_changepassword: Button
     private lateinit var profile_edit_profile: Button
     private lateinit var profile_chooseyourplan: Button
-    private lateinit var profile_logout : Button
+    private lateinit var profile_logout: Button
     private lateinit var profile_mypaymentmethods: Button
     private lateinit var followbt: Button
     private var path: String = ""
@@ -104,12 +104,12 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var businessSubscription: String
     private lateinit var customerSubscription: String
-    lateinit var payment_method_recycler : RecyclerView
-    lateinit var close_paymentdialog : Button
+    lateinit var payment_method_recycler: RecyclerView
+    lateinit var close_paymentdialog: Button
     private lateinit var followers: ArrayList<UserProfileResponse.Data.User.Follower>
     private lateinit var following: ArrayList<UserProfileResponse.Data.User.Following>
-    private lateinit var cards : ArrayList<PaymentMethodResponse.Data.PaymentProfile>
-    private  lateinit var plan : String
+    private lateinit var cards: ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+    private lateinit var plan: String
     lateinit var manager: FragmentManager
     lateinit var plan_cardholdername: EditText
     lateinit var plan_cardnumber: EditText
@@ -118,22 +118,22 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     lateinit var plan_carddate: EditText
     lateinit var plan_verfybt: Button
     lateinit var plan_cancel: Button
-    lateinit var radio_alluser : RadioButton
-    lateinit var radio_userifollow : RadioButton
-    lateinit var radio_noone : RadioButton
-    lateinit var radiogroup : RadioGroup
+    lateinit var radio_alluser: RadioButton
+    lateinit var radio_userifollow: RadioButton
+    lateinit var radio_noone: RadioButton
+    lateinit var radiogroup: RadioGroup
     private lateinit var cardholdername: String
     private lateinit var cardnumber: String
     private lateinit var cardexpDateyear: String
     private lateinit var cardcvc: String
     private lateinit var cardbilligcode: String
-    private lateinit var mesgFrom : String
-    private lateinit var logoutDialog : Dialog
-    private lateinit var profile_mywall : Button
-    private lateinit var profile_mycontracts : Button
-    private lateinit var profile_myclosets : Button
-    private lateinit var profile_myevents : Button
-    private lateinit var profile_eventInvitation : Button
+    private lateinit var mesgFrom: String
+    private lateinit var logoutDialog: Dialog
+    private lateinit var profile_mywall: Button
+    private lateinit var profile_mycontracts: Button
+    private lateinit var profile_myclosets: Button
+    private lateinit var profile_myevents: Button
+    private lateinit var profile_eventInvitation: Button
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
@@ -153,7 +153,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         findIds(view)
         manager = fragmentManager!!
         controller = Controller()
-        controller.Controller(this, this, this,this,this,this,this)
+        controller.Controller(this, this, this, this, this, this, this)
         getUserID = this
         getCardID = this
 
@@ -168,8 +168,12 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 getStringVal(Constants.USERID)
             )
 
-        }else {
-            utility.relative_snackbar(parent_profile!!, "No Internet Connectivity", getString(R.string.close_up))
+        } else {
+            utility.relative_snackbar(
+                parent_profile!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
         }
 
 
@@ -209,13 +213,12 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         profile_chooseyourplan.setOnClickListener {
 
-            if (profile_chooseyourplan.text.toString().equals("My Subscriptions"))
-            {
+            if (profile_chooseyourplan.text.toString().equals("My Subscriptions")) {
                 ViewPlanDialog()
-            } else  {
+            } else {
 
                 val bundle = Bundle()
-                bundle.putString(Constants.FROM,"pricing")
+                bundle.putString(Constants.FROM, "pricing")
 
 
                 val transaction = manager.beginTransaction()
@@ -248,13 +251,12 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         }
 
         profile_eventInvitation.setOnClickListener {
-            startActivity(Intent(context,EventsInvitations::class.java).putExtra("userID",userID))
+            startActivity(Intent(context, EventsInvitations::class.java).putExtra("userID", userID))
         }
 
     }
 
-    fun logoutDialog()
-    {
+    fun logoutDialog() {
         logoutDialog = Dialog(context!!)
         logoutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         logoutDialog.setCancelable(false)
@@ -305,7 +307,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                                     context,
                                     MainActivity::class.java
                                 ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                    .setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 
                             )
@@ -351,11 +353,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             WindowManager.LayoutParams.WRAP_CONTENT
         )
 
-        val planname : TextView
-        val cancelplan : Button
-        val viewpayments : Button
-        val changeplan : Button
-        val close : Button
+        val planname: TextView
+        val cancelplan: Button
+        val viewpayments: Button
+        val changeplan: Button
+        val close: Button
         planname = viewplanDialog.findViewById(R.id.planname)
         cancelplan = viewplanDialog.findViewById(R.id.cancelplan)
         viewpayments = viewplanDialog.findViewById(R.id.viewpayments)
@@ -363,13 +365,20 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         close = viewplanDialog.findViewById(R.id.close)
 
         planname.setText(plan)
-        viewpayments.setOnClickListener { startActivity(Intent(context,PaymentHistory::class.java)) }
+        viewpayments.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    PaymentHistory::class.java
+                )
+            )
+        }
         close.setOnClickListener { viewplanDialog.dismiss() }
         changeplan.setOnClickListener {
             viewplanDialog.dismiss()
             val bundle = Bundle()
-            bundle.putString(Constants.FROM,"changeplan")
-            bundle.putString(Constants.PLANNAME,plan)
+            bundle.putString(Constants.FROM, "changeplan")
+            bundle.putString(Constants.PLANNAME, plan)
 
 
             val transaction = manager.beginTransaction()
@@ -391,8 +400,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
 
-            var keepsubscrition : Button
-            var cancelsubscrition : Button
+            var keepsubscrition: Button
+            var cancelsubscrition: Button
 
             keepsubscrition = cancelPlanDialog.findViewById(R.id.keepsubscrition)
             cancelsubscrition = cancelPlanDialog.findViewById(R.id.cancelsubscrition)
@@ -561,10 +570,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         val editprofile_about: EditText
         val update_profile: Button
         val changepassword_closebt: Button
-        val update_userimage : Button
-        val editprofile_fburl : EditText
-        val editprofile_instaurl : EditText
-        val editprofile_twitterurl : EditText
+        val update_userimage: Button
+        val editprofile_fburl: EditText
+        val editprofile_instaurl: EditText
+        val editprofile_twitterurl: EditText
 
         editprofile_firstname = dialog.findViewById(R.id.editprofile_firstname)
         editprofile_lastname = dialog.findViewById(R.id.editprofile_lastname)
@@ -585,14 +594,24 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         editprofile_twitterurl = dialog.findViewById(R.id.editprofile_twitterurl)
 
 
-        if (!getStringVal(Constants.USER_ROLE).equals("customer"))
-        {
+        if (!getStringVal(Constants.USER_ROLE).equals("customer")) {
             editprofile_paypal_email.visibility = View.VISIBLE
             editprofile_fburl.visibility = View.VISIBLE
             editprofile_instaurl.visibility = View.VISIBLE
             editprofile_twitterurl.visibility = View.VISIBLE
+
         } else {
             radiogroup.visibility = View.VISIBLE
+            if (getStringVal(Constants.CHAT).equals("1")) {
+                radio_alluser.isChecked = true
+                mesgFrom = "1"
+            } else if (getStringVal(Constants.CHAT).equals("2")) {
+                radio_userifollow.isChecked = true
+                mesgFrom = "2"
+            } else if (getStringVal(Constants.CHAT).equals("3")) {
+                radio_noone.isChecked = true
+                mesgFrom = "3"
+            }
         }
 
         editprofile_firstname.setText(getStringVal(Constants.FIRSTNAME))
@@ -600,8 +619,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         editprofile_email.setText(getStringVal(Constants.EMAIL))
         editprofile_phone.setText(getStringVal(Constants.PHONE))
         editprofile_about.setText(getStringVal(Constants.ABOUT))
-        if (getStringVal(Constants.USER_ROLE).equals("customer"))
-        {
+        if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             editprofile_paypal_email.setText("")
         } else {
             editprofile_paypal_email.setText(getStringVal(Constants.PAYPALID))
@@ -611,18 +629,17 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         changepassword_closebt.setOnClickListener {
             dialog.dismiss()
         }
-        radio_alluser.isChecked = true
-        mesgFrom = "1"
+
 
         radiogroup.setOnCheckedChangeListener { group, checkedId ->
 
             when {
                 radio_alluser.isChecked -> {
-                   mesgFrom = "1"
+                    mesgFrom = "1"
                 }
 
                 radio_userifollow.isChecked -> {
-                   mesgFrom = "2"
+                    mesgFrom = "2"
                 }
 
                 radio_noone.isChecked -> {
@@ -670,7 +687,8 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                             editprofile_paypal_email.text.toString(),
                             editprofile_phone.text.toString(),
                             editprofile_about.text.toString(),
-                            getStringVal(Constants.USERID).toString(),mesgFrom
+                            getStringVal(Constants.USERID).toString(),
+                            mesgFrom
                         )
                     } else {
                         utility!!.relative_snackbar(
@@ -731,7 +749,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     companion object {
         var getUserID: GetUserID? = null
-        var getCardID : GetCardID? = null
+        var getCardID: GetCardID? = null
     }
 
     override fun getUserID(id: String?) {
@@ -821,28 +839,46 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
         pd.dismiss()
-        if(userProfileResponse.isSuccessful)
-        {
+        if (userProfileResponse.isSuccessful) {
             Log.d("userprofilerespose", "" + userProfileResponse.body()?.getData())
-            plan = userProfileResponse.body()?.getData()?.user?.customerSubscription?.plan?.name.toString()
+            plan = userProfileResponse.body()
+                ?.getData()?.user?.customerSubscription?.plan?.name.toString()
             profile_username.text =
-                userProfileResponse.body()?.getData()?.user?.firstname + " " + userProfileResponse.body()?.getData()?.user?.lastname
+                userProfileResponse.body()
+                    ?.getData()?.user?.firstname + " " + userProfileResponse.body()
+                    ?.getData()?.user?.lastname
 
             Glide.with(context!!)
-                .load(userProfileResponse.body()?.getData()?.filePath + userProfileResponse.body()?.getData()?.user?.avatar?.toString())
+                .load(
+                    userProfileResponse.body()?.getData()?.filePath + userProfileResponse.body()
+                        ?.getData()?.user?.avatar?.toString()
+                )
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)
             profile_followerscount.text =
                 userProfileResponse.body()?.getData()?.user?.followers?.size.toString()
             profile_followingcount.text =
                 userProfileResponse.body()?.getData()?.user?.following?.size.toString()
             username = userProfileResponse.body()?.getData()?.user?.firstname!!
-            setStringVal(Constants.FIRSTNAME, userProfileResponse.body()?.getData()?.user?.firstname)
+            setStringVal(
+                Constants.FIRSTNAME,
+                userProfileResponse.body()?.getData()?.user?.firstname
+            )
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.getData()?.user?.phone)
-            setStringVal(Constants.PAYPALID,userProfileResponse.body()?.getData()?.user?.paypal_email.toString())
-            setStringVal(Constants.SUBSCRIPTION_ID,
+            setStringVal(
+                Constants.PAYPALID,
+                userProfileResponse.body()?.getData()?.user?.paypal_email.toString()
+            )
+            setStringVal(
+                Constants.SUBSCRIPTION_ID,
                 userProfileResponse.body()?.getData()?.user?.customerSubscription?.id.toString()
+            )
+            setStringVal(
+                Constants.CHAT,
+
+                userProfileResponse.body()?.getData()?.user?.chat_invitation.toString()
+
             )
             setStringVal(
                 Constants.ABOUT,
@@ -850,12 +886,17 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             )
 
             followers =
-                userProfileResponse.body()?.getData()?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
+                userProfileResponse.body()
+                    ?.getData()?.user?.followers as ArrayList<UserProfileResponse.Data.User.Follower>
             following =
-                userProfileResponse.body()?.getData()?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
+                userProfileResponse.body()
+                    ?.getData()?.user?.following as ArrayList<UserProfileResponse.Data.User.Following>
 
             role = userProfileResponse.body()?.getData()?.user?.role.toString()
-            setStringVal(Constants.USER_ROLE, userProfileResponse.body()?.getData()?.user?.role.toString())
+            setStringVal(
+                Constants.USER_ROLE,
+                userProfileResponse.body()?.getData()?.user?.role.toString()
+            )
 
 
             if (userProfileResponse.body()?.getData()?.user?.customerSubscription != null) {
@@ -865,7 +906,10 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             if (userProfileResponse.body()?.getData()?.user?.businessSubscription != null) {
                 setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
             }
-            if (userProfileResponse.body()?.getData()?.user?.customerSubscription != null || userProfileResponse.body()?.getData()?.user?.businessSubscription != null) {
+            if (userProfileResponse.body()
+                    ?.getData()?.user?.customerSubscription != null || userProfileResponse.body()
+                    ?.getData()?.user?.businessSubscription != null
+            ) {
                 profile_mygigs.visibility = View.GONE
 
                 profile_chooseyourplan.setText("My Subscriptions")
@@ -883,7 +927,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
             profile_mypaymentmethods.setOnClickListener {
-                startActivity(Intent(context,PaymentScreenBussiness::class.java))
+                startActivity(Intent(context, PaymentScreenBussiness::class.java))
             }
 //            profile_mypaymentmethods.setOnClickListener {
 //                mypaymentdialog = Dialog(context!!)
@@ -1028,12 +1072,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 stripe1.createToken(card2, object : TokenCallback {
                     override fun onSuccess(token: Token?) {
                         pd.show()
-                        controller.AddPaymentMethod("Bearer "+getStringVal(Constants.TOKEN)
-                            ,card2.brand
-                            ,"customer"
-                            , token?.id!!
+                        controller.AddPaymentMethod(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            card2.brand,
+                            "customer",
+                            token?.id!!
                         )
-                        Log.d("testCard",""+token)
+                        Log.d("testCard", "" + token)
                     }
 
                     override fun onError(error: Exception?) {
@@ -1087,13 +1132,21 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             getStringVal(Constants.USERID)
         )
         if (updateProfileResponse.isSuccessful) {
-            if (updateProfileResponse.body()?.getCode().equals("200"))
-            {
-                setStringVal(Constants.FIRSTNAME, updateProfileResponse.body()?.getData()?.user?.firstname)
-                setStringVal(Constants.LASTNAME, updateProfileResponse.body()?.getData()?.user?.lastname)
+            if (updateProfileResponse.body()?.getCode().equals("200")) {
+                setStringVal(
+                    Constants.FIRSTNAME,
+                    updateProfileResponse.body()?.getData()?.user?.firstname
+                )
+                setStringVal(
+                    Constants.LASTNAME,
+                    updateProfileResponse.body()?.getData()?.user?.lastname
+                )
                 setStringVal(Constants.EMAIL, updateProfileResponse.body()?.getData()?.user?.email)
                 setStringVal(Constants.PHONE, updateProfileResponse.body()?.getData()?.user?.phone)
-                setStringVal(Constants.PAYPALID,updateProfileResponse.body()?.getData()?.user?.paypal_email.toString())
+                setStringVal(
+                    Constants.PAYPALID,
+                    updateProfileResponse.body()?.getData()?.user?.paypal_email.toString()
+                )
                 setStringVal(
                     Constants.ABOUT,
                     updateProfileResponse.body()?.getData()?.user?.profile?.aboutMe
@@ -1112,8 +1165,6 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             }
 
 
-
-
         } else {
             utility!!.relative_snackbar(
                 parent_profile,
@@ -1126,14 +1177,14 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     override fun onPaymentSuccess(paymentMethod: Response<PaymentMethodResponse>) {
         pd.dismiss()
-        if (paymentMethod.isSuccessful)
-        {
-            cards = paymentMethod.body()?.getData()?.paymentProfiles as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+        if (paymentMethod.isSuccessful) {
+            cards = paymentMethod.body()
+                ?.getData()?.paymentProfiles as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
             payment_method_recycler.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             val adapter = CardsAdapter(context!!, cards)
             payment_method_recycler.adapter = adapter
-        }else{
+        } else {
             utility!!.relative_snackbar(
                 parent_profile,
                 paymentMethod.message(),
@@ -1144,8 +1195,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
     override fun onCancelPlan(cancelPlan: Response<CancelPlanResponse>) {
 
-        if (cancelPlan.isSuccessful)
-        {
+        if (cancelPlan.isSuccessful) {
             pd.dismiss()
             cancelPlanDialog.dismiss()
             viewplanDialog.dismiss()
@@ -1153,7 +1203,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             transaction.replace(R.id.nav_host_fragment, Profile())
             transaction.addToBackStack(null)
             transaction.commit()
-        }else {
+        } else {
             pd.dismiss()
             utility!!.relative_snackbar(
                 parent_profile,
@@ -1260,18 +1310,16 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     }
 
 
-
     override fun getCardID(id: String?) {
         pd.show()
-        controller.DeletePaymentCard("Bearer "+getStringVal(Constants.TOKEN), id.toString())
+        controller.DeletePaymentCard("Bearer " + getStringVal(Constants.TOKEN), id.toString())
     }
 
     override fun onDeleteCardSuccess(deleteCard: Response<DeletePaymentMethodResponse>) {
         pd.dismiss()
-        if (deleteCard.isSuccessful)
-        {
-            controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
-        }else {
+        if (deleteCard.isSuccessful) {
+            controller.SetPaymentMethod("Bearer " + getStringVal(Constants.TOKEN))
+        } else {
             utility.relative_snackbar(
                 parent_profile!!,
                 deleteCard.message(),

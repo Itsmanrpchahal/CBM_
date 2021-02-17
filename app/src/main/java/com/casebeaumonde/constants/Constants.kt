@@ -23,4 +23,6 @@ object Constants
     val SUBSCRIPTION_ID ="subsciptionid"
     val PAYPALID = "paypalid"
     val REMEMBERME = "rememberme"
+    val CLOSE  = "close"
+    val CHAT = "chat"
 }

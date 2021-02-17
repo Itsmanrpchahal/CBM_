@@ -9,33 +9,42 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
+import com.casebeaumonde.utilities.Utility
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
-import pl.droidsonroids.gif.GifDrawable
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 import pl.droidsonroids.gif.GifImageView
+import retrofit2.Response
 
 
-class SplashScreen : BaseClass() {
+class SplashScreen : BaseClass(), Controller.UserProfileAPI {
     private lateinit var gif: GifImageView
+    private lateinit var controller: Controller
+    private lateinit var utility : Utility
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         gif = findViewById(R.id.gif)
+        utility = Utility()
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window: Window = window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(Color.BLACK)
         }
-        methodRequiresPermission()
+        controller = Controller()
+        controller.Controller(this)
+
+            methodRequiresPermission()
+
     }
 
     private fun methodRequiresPermission() = runWithPermissions(
@@ -68,15 +77,14 @@ class SplashScreen : BaseClass() {
                         MainActivity::class.java
                     )
                 )
-            }
-else{
+            } else {
                 startActivity(
                     Intent(
                         this,
                         MainActivity::class.java
                     )
                 )
-}
+            }
 
             finish()
 
@@ -97,5 +105,28 @@ else{
             .setNegativeButton("Cancel") { _, _ -> request.cancel() }
             .setCancelable(false)
             .show()
+    }
+
+    override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
+
+        if (userProfileResponse.isSuccessful)
+        {
+            methodRequiresPermission()
+            setStringVal(Constants.USER_ROLE,userProfileResponse.body()?.getData()?.user?.role)
+        } else {
+            utility!!.relative_snackbar(
+                splash!!,
+                userProfileResponse.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun error(error: String?) {
+        utility!!.relative_snackbar(
+            splash!!,
+            error,
+            getString(R.string.close_up)
+        )
     }
 }

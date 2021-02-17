@@ -26,6 +26,7 @@ import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.questionaries.GetStartedActivity
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.cart.Cart
@@ -48,7 +49,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar_cart: ImageBadgeView
     private lateinit var utility: Utility
-    private lateinit var toolbar : Toolbar
+    private lateinit var toolbar: Toolbar
     private lateinit var pd: ProgressDialog
     lateinit var manager: FragmentManager
     private lateinit var logoutDialog: Dialog
@@ -60,7 +61,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     lateinit var toolbarrelative: RelativeLayout
     lateinit var appbarmain: AppBarLayout
 
-//test
+    //test
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -110,6 +111,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 logoutDialog()
                 true
             })
+
+            Toast.makeText(this,""+getStringVal(Constants.USER_ROLE),Toast.LENGTH_SHORT).show()
+            if (getStringVal(Constants.USER_ROLE).equals("customer")) {
+                startActivity(Intent(this, GetStartedActivity::class.java))
+            }
         }
 
         setupActionBarWithNavController(frameLayout, appBarConfiguration)
@@ -119,11 +125,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         //navView.setNavigationItemSelectedListener(this)
         // Show ItemStyle
         println("ItemStyle=${navView.checkedItem}")
+
     }
 
     override fun onResume() {
         super.onResume()
-
     }
 
 
@@ -134,7 +140,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 
         toolbar_cart.setOnClickListener {
             manager.popBackStack()
-            manager.beginTransaction().replace(R.id.nav_host_fragment,Cart()).addToBackStack(null).commit()
+            manager.beginTransaction().replace(R.id.nav_host_fragment, Cart()).addToBackStack(null)
+                .commit()
         }
     }
 
@@ -161,11 +168,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                                     this@MainActivity,
                                     MainActivity::class.java
                                 ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                    .setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 
                             )
-                             finish()
+                            finish()
                             //finish()
                             overridePendingTransition(0, 0)
                             overridePendingTransition(0, 0)
@@ -236,6 +243,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             "Bearer " + getStringVal(Constants.TOKEN),
             getStringVal(Constants.USERID)
         )
+        pd.show()
+        pd.setContentView(R.layout.loading)
 
         controller.setUserProfileAPI(
             "Bearer " + getStringVal(Constants.TOKEN),
@@ -265,8 +274,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
 //        return false
 //    }
 
-    fun logoutDialog()
-    {
+    fun logoutDialog() {
         logoutDialog = Dialog(this)
         logoutDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         logoutDialog.setCancelable(false)
@@ -314,12 +322,20 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
         pd.dismiss()
         if (userProfileResponse.isSuccessful) {
             if (userProfileResponse.body()?.getCode().equals("200")) {
+
+
                 toolbar_username.text =
-                    userProfileResponse.body()?.getData()?.user?.firstname + " " + userProfileResponse.body()?.getData()?.user?.lastname
+                    userProfileResponse.body()
+                        ?.getData()?.user?.firstname + " " + userProfileResponse.body()
+                        ?.getData()?.user?.lastname
                 try {
                     Glide.with(this@MainActivity).asBitmap()
                         .skipMemoryCache(true)
-                        .load(userProfileResponse.body()!!.getData()!!.filePath + userProfileResponse.body()!!.getData()!!.user!!.avatar)
+                        .load(
+                            userProfileResponse.body()!!
+                                .getData()!!.filePath + userProfileResponse.body()!!
+                                .getData()!!.user!!.avatar
+                        )
                         .placeholder(R.drawable.login_banner).into(userImage)
                 } catch (e: Exception) {
 
@@ -332,7 +348,9 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
 
         if (notificationsResponseResponse.isSuccessful) {
-            toolbar_notifiction.setBadgeValue(notificationsResponseResponse.body()?.getData()?.notification?.size!!)
+            toolbar_notifiction.setBadgeValue(
+                notificationsResponseResponse.body()?.getData()?.notification?.size!!
+            )
             toolbar_notifiction.setBadgeTextColor(resources.getColor(R.color.colorBlue))
         }
     }

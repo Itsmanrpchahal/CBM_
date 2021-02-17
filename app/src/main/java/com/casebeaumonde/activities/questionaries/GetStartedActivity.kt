@@ -1,14 +1,15 @@
 package com.casebeaumonde.activities.questionaries
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
+import com.casebeaumonde.constants.BaseClass
+import com.casebeaumonde.constants.Constants
 
-class GetStartedActivity : AppCompatActivity() {
+class GetStartedActivity : BaseClass() {
 
     private lateinit var getstarted: Button
     private lateinit var close: ImageButton
@@ -26,13 +27,14 @@ class GetStartedActivity : AppCompatActivity() {
         }
 
         close.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    MainActivity::class.java
-                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            )
+//            startActivity(
+//                Intent(
+//                    this,
+//                    MainActivity::class.java
+//                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            )
+            setStringVal(Constants.CLOSE, "1")
             finish()
         }
     }

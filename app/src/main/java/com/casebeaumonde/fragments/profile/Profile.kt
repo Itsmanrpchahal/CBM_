@@ -134,6 +134,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var profile_myclosets: Button
     private lateinit var profile_myevents: Button
     private lateinit var profile_eventInvitation: Button
+    private lateinit var social_accounts : LinearLayout
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
@@ -736,6 +737,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_myclosets = view.findViewById(R.id.profile_myclosets)
         profile_myevents = view.findViewById(R.id.profile_myevents)
         profile_eventInvitation = view.findViewById(R.id.profile_eventInvitation)
+        social_accounts = view.findViewById(R.id.social_accounts)
         pd.show()
         pd.setContentView(R.layout.loading)
 
@@ -850,7 +852,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
             Glide.with(context!!)
                 .load(
-                    userProfileResponse.body()?.getData()?.filePath + userProfileResponse.body()
+                    "http://"+userProfileResponse.body()?.getData()?.filePath + userProfileResponse.body()
                         ?.getData()?.user?.avatar?.toString()
                 )
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)
@@ -906,6 +908,13 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
             if (userProfileResponse.body()?.getData()?.user?.businessSubscription != null) {
                 setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
             }
+
+            if (!userProfileResponse.body()?.getData()?.user!!.role.equals("customer"))
+            {
+                profile_mycontracts.visibility = View.VISIBLE
+                social_accounts.visibility = View.VISIBLE
+
+            }
             if (userProfileResponse.body()
                     ?.getData()?.user?.customerSubscription != null || userProfileResponse.body()
                     ?.getData()?.user?.businessSubscription != null
@@ -916,7 +925,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 profile_mypaymentmethods.visibility = View.VISIBLE
 
                 profile_mywall.visibility = View.VISIBLE
-                profile_mycontracts.visibility = View.VISIBLE
+                //profile_mycontracts.visibility = View.VISIBLE
                 profile_myevents.visibility = View.VISIBLE
                 profile_eventInvitation.visibility = View.VISIBLE
                 profile_myclosets.visibility = View.VISIBLE
@@ -924,37 +933,40 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                 profile_mygigs.visibility = View.GONE
                 profile_mywall.visibility = View.VISIBLE
                 profile_myclosets.visibility = View.VISIBLE
+                profile_mypaymentmethods.visibility = View.VISIBLE
             }
 
-            profile_mypaymentmethods.setOnClickListener {
-                startActivity(Intent(context, PaymentScreenBussiness::class.java))
-            }
+            //ToDo: New Changes
 //            profile_mypaymentmethods.setOnClickListener {
-//                mypaymentdialog = Dialog(context!!)
-//                mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//
-//                mypaymentdialog.setContentView(R.layout.managepaymentmethid)
-//                val window = mypaymentdialog.window
-//                window?.setLayout(
-//                    WindowManager.LayoutParams.MATCH_PARENT,
-//                    WindowManager.LayoutParams.WRAP_CONTENT
-//                )
-//
-//                pd.show()
-//                controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
-//                val addpaymentmethod : Button
-//                payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler)
-//                close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
-//                addpaymentmethod = mypaymentdialog.findViewById(R.id.addpaymentmethod)
-//
-//                close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
-//
-//                addpaymentmethod.setOnClickListener {
-//                    addPaymentMethodDialog()
-//                }
-//
-//                mypaymentdialog.show()
+//                startActivity(Intent(context, PaymentScreenBussiness::class.java))
 //            }
+
+            profile_mypaymentmethods.setOnClickListener {
+                mypaymentdialog = Dialog(context!!)
+                mypaymentdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+                mypaymentdialog.setContentView(R.layout.managepaymentmethid)
+                val window = mypaymentdialog.window
+                window?.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                )
+
+                pd.show()
+                controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
+                val addpaymentmethod : Button
+                payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler1)
+                close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
+                addpaymentmethod = mypaymentdialog.findViewById(R.id.addpaymentmethod)
+
+                close_paymentdialog.setOnClickListener { mypaymentdialog.dismiss() }
+
+                addpaymentmethod.setOnClickListener {
+                    addPaymentMethodDialog()
+                }
+
+                mypaymentdialog.show()
+            }
         } else {
             utility!!.relative_snackbar(
                 parent_profile,
@@ -1082,8 +1094,9 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
                     }
 
                     override fun onError(error: Exception?) {
+                        pd.dismiss()
                         utility!!.relative_snackbar(
-                            parent_cardscreen!!,
+                            parent_profile!!,
                             error?.message,
                             getString(R.string.close_up)
                         )
@@ -1178,12 +1191,27 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     override fun onPaymentSuccess(paymentMethod: Response<PaymentMethodResponse>) {
         pd.dismiss()
         if (paymentMethod.isSuccessful) {
-            cards = paymentMethod.body()
-                ?.getData()?.paymentProfiles as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
-            payment_method_recycler.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            val adapter = CardsAdapter(context!!, cards)
-            payment_method_recycler.adapter = adapter
+            if(paymentMethod.body()?.getData()!=null)
+            {
+                cards = ArrayList()
+
+                    cards = paymentMethod.body()
+                        ?.getData()?.paymentProfiles !!as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+                    payment_method_recycler.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    val adapter = CardsAdapter(context!!, cards)
+                    payment_method_recycler.adapter = adapter
+
+            } else {
+                mypaymentdialog.dismiss()
+                utility!!.relative_snackbar(
+                    parent_profile,
+                    "No Cards found",
+                    getString(R.string.close_up)
+                )
+            }
+
+
         } else {
             utility!!.relative_snackbar(
                 parent_profile,

@@ -61,7 +61,7 @@ class ClosetsItemAdapter(
         }
         searchUserHeart(closetsItems, holder.itemView.closetitem_favorite)
 
-        holder.itemView.setOnClickListener {
+        holder.itemView.hainger.setOnClickListener {
             ClosetsItems.viewclosetidIf!!.getID(position)
         }
 

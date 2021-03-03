@@ -1,15 +1,22 @@
 package com.casebeaumonde.activities.questionaries
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.utilities.Utility
+import kotlinx.android.synthetic.main.activity_closets_items.*
+import kotlinx.android.synthetic.main.activity_get_started.*
+import retrofit2.Response
 
-class GetStartedActivity : BaseClass() {
+class GetStartedActivity : BaseClass(){
 
     private lateinit var getstarted: Button
     private lateinit var close: ImageButton
@@ -18,6 +25,7 @@ class GetStartedActivity : BaseClass() {
         setContentView(R.layout.activity_get_started)
 
         findIDs()
+
         listeners()
     }
 
@@ -43,4 +51,6 @@ class GetStartedActivity : BaseClass() {
         getstarted = findViewById(R.id.getstarted)
         close = findViewById(R.id.close)
     }
+
+
 }

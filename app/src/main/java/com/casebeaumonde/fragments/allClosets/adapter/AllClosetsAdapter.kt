@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,8 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
             AllClosets.closetitemidIf!!.getClosetID(listData.id.toString())
         }
 
+        holder.itemView.hainger.visibility = View.GONE
+
         searchUserHeart(listData,holder.itemView.closetitem_favorite)
     }
 
@@ -83,10 +86,13 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
             val closetItemImage : ImageView
             val closetitem_name : TextView
             val closetitem_uploadby : TextView
+            val hainger : ImageButton
 
             closetItemImage = itemView.findViewById(R.id.closetItemImage)
             closetitem_name = itemView.findViewById(R.id.closetitem_name)
             closetitem_uploadby = itemView.findViewById(R.id.closetitem_uploadby)
+            hainger = itemView.findViewById(R.id.hainger)
+
         }
     }
 }

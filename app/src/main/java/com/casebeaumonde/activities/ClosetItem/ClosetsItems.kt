@@ -59,6 +59,7 @@ class ClosetsItems : BaseClass(),
     Controller.OutfitFilterAPI,
     Controller.FilterClosetItemsAPI {
 
+
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var controller: Controller
@@ -232,7 +233,6 @@ class ClosetsItems : BaseClass(),
             if (checkedClosetIDs.size > 0) {
                 showMoveDialog("move")
             }
-
         }
 
         closet_duplicateitembt.setOnClickListener {

@@ -30,6 +30,7 @@ import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
+import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.chat.GetChatUsers
@@ -100,6 +101,7 @@ public class Controller {
     var getCHatAPI : GetChatAPI? = null
     var senduserchatAPI : SendUserChatAPI? = null
     var blockUserAPI : BlockUserAPI? = null
+    var questionariesAPI : QuestionariesAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -316,6 +318,12 @@ public class Controller {
     fun Controller(userProfile: UserProfileAPI)
     {
         userProfileAPI = userProfile
+        webAPI = WebAPI()
+    }
+
+    fun Controller(questionaries: QuestionariesAPI)
+    {
+        questionariesAPI = questionaries
         webAPI = WebAPI()
     }
 
@@ -1139,6 +1147,7 @@ public class Controller {
     }
 
     fun SetPaymentMethod(token: String?) {
+
         webAPI?.api?.paymentMethod(token)?.enqueue(object : Callback<PaymentMethodResponse> {
             override fun onResponse(
                 call: Call<PaymentMethodResponse>,
@@ -1378,6 +1387,24 @@ public class Controller {
 
         })
 
+    }
+
+    fun Questionaries(token: String?)
+    {
+        webAPI?.api?.questionaries(token)?.enqueue(object :Callback<QuestionariesDataResponse>
+        {
+            override fun onResponse(
+                call: Call<QuestionariesDataResponse>,
+                response: Response<QuestionariesDataResponse>
+            ) {
+                questionariesAPI?.onQuestionariesSuccess(response)
+            }
+
+            override fun onFailure(call: Call<QuestionariesDataResponse>, t: Throwable) {
+                questionariesAPI?.error(t.message)
+            }
+
+        })
     }
 
     interface NotificationAPI {
@@ -1648,6 +1675,11 @@ public class Controller {
 
     interface BlockUserAPI {
         fun onBlockUserSuccess(blockUser : Response<BlockResponse>)
+        fun error(error: String?)
+    }
+
+    interface QuestionariesAPI{
+        fun onQuestionariesSuccess(questionaries : Response<QuestionariesDataResponse>)
         fun error(error: String?)
     }
 }

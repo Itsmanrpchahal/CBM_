@@ -255,17 +255,11 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
 
             state = ArrayList()
             stateName = ArrayList()
-            for (i in 0 until questionaries.body()?.data?.customer?.country?.size!!) {
-                val title = questionaries.body()?.data?.customer?.country?.get(i)
-                title?.name?.let { countries.add(it) }
-                for (j in 0 until countries.size) {
-                    val title = questionaries.body()?.data?.customer?.country?.get(i)?.state?.get(j)?.name
-                    stateName.add(title.toString())
-
-                    setStateSpinner(stateName)
-                }
-
+            for (i in 0 until questionaries.body()?.data?.customer!!.country?.get(0)?.state?.size!!) {
+                val statename = questionaries.body()?.data?.customer!!.country?.get(0)?.state?.get(i)?.name
+                stateName.add(statename.toString())
             }
+            setStateSpinner(stateName)
 
         } else {
             utility.relative_snackbar(

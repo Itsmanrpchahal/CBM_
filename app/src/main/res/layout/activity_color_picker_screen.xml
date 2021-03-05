@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.questionaries.ColorPickerScreen"
+    tools:context=".activities.questionaries.colorScreen.ColorPickerScreen"
     android:background="@color/colorBlack">
 
 
@@ -90,13 +90,15 @@
 
             </View>
 
-            <ImageView
-                android:layout_width="330dp"
-                android:layout_height="350dp"
-                android:layout_gravity="center"
-                android:src="@drawable/colorimage">
+          <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/colorsRecycler"
+              android:layout_width="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layout_height="350dp"
+              android:layout_marginLeft="@dimen/default_margin_16dp"
+              android:layout_marginRight="@dimen/default_margin_16dp">
 
-            </ImageView>
+          </androidx.recyclerview.widget.RecyclerView>
 
 
             <LinearLayout

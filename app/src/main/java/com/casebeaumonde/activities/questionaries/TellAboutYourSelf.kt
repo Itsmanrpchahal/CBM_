@@ -5,18 +5,22 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.widget.AppCompatSpinner
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.questionaries.colorScreen.ColorPickerScreen
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_tell_about_your_self.*
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
 
@@ -34,7 +38,9 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
     private lateinit var countries : ArrayList<String>
     private lateinit var astrologicalsign : ArrayList<String>
     private lateinit var state : ArrayList<QuestionariesDataResponse.Customer.Country.State>
+    private lateinit var years : ArrayList<String>
     private lateinit var stateName : ArrayList<String>
+    private var currentYear : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,13 +66,24 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
                 getString(R.string.close_up)
             )
         }
+
+        currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        years = ArrayList()
+
+        for (i in 1960 until currentYear+1!!) {
+            years.add(i.toString())
+        }
+        years.add("-Select year-")
+        years.reverse()
+        Log.d("years", years.toString())
+
         findIds()
         listeners()
     }
 
     private fun listeners() {
         back.setOnClickListener { onBackPressed() }
-        continue_bt.setOnClickListener{ startActivity(Intent(this,ColorPickerScreen::class.java))}
+        continue_bt.setOnClickListener{ startActivity(Intent(this, ColorPickerScreen::class.java))}
 
         setMonthSpinner()
         setDaySpinner()
@@ -103,7 +120,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
         val languages = resources.getStringArray(R.array.Year)
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_dropdown_item, languages
+            android.R.layout.simple_spinner_dropdown_item, years
         )
         year_spinner.adapter = adapter
         year_spinner.onItemSelectedListener = object :
@@ -240,6 +257,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
         if (questionaries.isSuccessful)
         {
             countries = ArrayList()
+            countries.add("-Select Country-")
             for (i in 0 until questionaries.body()?.data?.customer?.country?.size!!) {
                 val title = questionaries.body()?.data?.customer?.country?.get(i)
                 title?.name?.let { countries.add(it) }
@@ -247,6 +265,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
             setCountrySpinner(countries)
 
             astrologicalsign = ArrayList()
+            astrologicalsign.add("-Select Astrological Sign-")
             for (i in 0 until questionaries.body()?.data?.customer!!.astrologicalSign?.size!!) {
                 val title = questionaries.body()?.data?.customer?.astrologicalSign?.get(i)
                 astrologicalsign.add(title.toString())
@@ -255,6 +274,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
 
             state = ArrayList()
             stateName = ArrayList()
+            stateName.add("-Select State-")
             for (i in 0 until questionaries.body()?.data?.customer!!.country?.get(0)?.state?.size!!) {
                 val statename = questionaries.body()?.data?.customer!!.country?.get(0)?.state?.get(i)?.name
                 stateName.add(statename.toString())

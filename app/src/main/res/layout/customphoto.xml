@@ -22,6 +22,6 @@
         android:layout_width="@dimen/textsize_14sp"
         android:layout_height="@dimen/textsize_14sp"
         android:background="@color/colorWhite"
-        android:src="@drawable/ic_baseline_close_24"
+        android:src="@drawable/ic_baseline_closeb_24"
         android:layout_alignParentRight="true"/>
 </RelativeLayout>

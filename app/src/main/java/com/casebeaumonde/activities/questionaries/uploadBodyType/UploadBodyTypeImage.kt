@@ -2,26 +2,37 @@ package com.casebeaumonde.activities.questionaries.uploadBodyType
 
 import android.app.Activity
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
 import com.casebeaumonde.activities.questionaries.selectbrands.SelectBrands
 import com.casebeaumonde.activities.questionaries.uploadBodyType.adapter.AddImagesAdapter
+import com.casebeaumonde.constants.BaseClass
+import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.constants.Data
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
+import kotlinx.android.synthetic.main.activity_tell_about_your_self.*
 import kotlinx.android.synthetic.main.activity_upload_body_type_image.*
+import retrofit2.Response
 import java.io.File
 
 
-class UploadBodyTypeImage : AppCompatActivity() {
+class UploadBodyTypeImage : BaseClass() , Controller.QuestionariesAPI {
 
     private lateinit var eye_color_spinner: AppCompatSpinner
     private lateinit var hair_spinner: AppCompatSpinner
@@ -31,10 +42,18 @@ class UploadBodyTypeImage : AppCompatActivity() {
     private lateinit var utility: Utility
     private lateinit var images_recyclers: RecyclerView
     lateinit var dialog: Dialog
+    private lateinit var pd : ProgressDialog
+    private lateinit var controller: Controller
 
     //store uris of picked images
     private lateinit var images: ArrayList<String?>
     private lateinit var adapter: AddImagesAdapter
+    private lateinit var eyeColor : ArrayList<String>
+    private lateinit var hairColor : ArrayList<String>
+    private lateinit var brands : ArrayList<String>
+    private lateinit var brandsID : ArrayList<String>
+    private lateinit var data : ArrayList<Data>
+    public  lateinit var brand : ArrayList<QuestionariesDataResponse.Brand>
 
     //current position/index of selected images
     private var position = 0
@@ -50,8 +69,6 @@ class UploadBodyTypeImage : AppCompatActivity() {
         images = ArrayList()
 
         findIds()
-        setEyecolorSpinner()
-        setHairColorSpinner()
         listeners()
 
 
@@ -92,15 +109,17 @@ class UploadBodyTypeImage : AppCompatActivity() {
 
     private fun listeners() {
         back.setOnClickListener { onBackPressed() }
-        continue_bt.setOnClickListener { startActivity(Intent(this, SelectBrands::class.java)) }
+        continue_bt.setOnClickListener {
+
+            startActivity( Intent(this, SelectBrands::class.java)) }
         upload_bt.setOnClickListener { pictureSelectionDialog() }
     }
 
-    private fun setHairColorSpinner() {
+    private fun setHairColorSpinner(hairColor : ArrayList<String>) {
         val languages = resources.getStringArray(R.array.EyeColor)
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_dropdown_item, languages
+            android.R.layout.simple_spinner_dropdown_item, hairColor
         )
         hair_spinner.adapter = adapter
         /*hair_spinner.onItemSelectedListener = object :
@@ -121,11 +140,11 @@ class UploadBodyTypeImage : AppCompatActivity() {
         }*/
     }
 
-    private fun setEyecolorSpinner() {
+    private fun setEyecolorSpinner(eyeColor : ArrayList<String>) {
         val languages = resources.getStringArray(R.array.EyeColor)
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_dropdown_item, languages
+            android.R.layout.simple_spinner_dropdown_item, eyeColor
         )
         eye_color_spinner.adapter = adapter
 //        eye_color_spinner.onItemSelectedListener = object :
@@ -154,6 +173,25 @@ class UploadBodyTypeImage : AppCompatActivity() {
         upload_bt = findViewById(R.id.upload_bt)
         images_recyclers = findViewById(R.id.images_recyclers)
         utility = Utility()
+        controller = Controller()
+        controller.Controller(this)
+        pd = ProgressDialog(this)
+        pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        pd!!.isIndeterminate = true
+        pd!!.setCancelable(false)
+        if (utility.isConnectingToInternet(this))
+        {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.Questionaries("Bearer "+getStringVal(Constants.TOKEN))
+        } else {
+            utility.relative_snackbar(
+                parent_uploadbody!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
+        }
     }
 
     private fun pickImagesIntent() {
@@ -256,5 +294,58 @@ class UploadBodyTypeImage : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         adapter = AddImagesAdapter(this, images)
         images_recyclers.adapter = adapter
+    }
+
+    override fun onQuestionariesSuccess(questionaries: Response<QuestionariesDataResponse>) {
+        pd.dismiss()
+        if (questionaries.isSuccessful)
+        {
+            eyeColor = ArrayList()
+            eyeColor.add("-Select Eye Colour-")
+            for (i in 0 until questionaries.body()?.data?.customer?.eyeColor?.size!!) {
+                val title = questionaries.body()?.data?.customer?.eyeColor?.get(i)
+                eyeColor.add(title.toString())
+            }
+            setEyecolorSpinner(eyeColor)
+
+            hairColor = ArrayList()
+            hairColor.add("-Select Hair Colour-")
+            for (i in 0 until questionaries.body()?.data?.customer?.hairColor?.size!!) {
+                val title = questionaries.body()?.data?.customer?.hairColor?.get(i)
+                hairColor.add(title.toString())
+            }
+            setHairColorSpinner(hairColor)
+
+
+            brands = ArrayList()
+            brandsID = ArrayList()
+            brand = ArrayList()
+            data = ArrayList()
+            for (i in 0 until questionaries.body()?.data?.customer!!.brand?.size!!) {
+                val title =  questionaries.body()?.data?.customer!!.brand?.get(i)
+                brands.add(title!!.name.toString())
+                brandsID.add(title!!.id.toString())
+                val brand = Data()
+                brand.title = brands.get(i)
+                brand.id = brandsID.get(i)
+                data.add(brand)
+            }
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_uploadbody,
+                questionaries.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun error(error: String?) {
+        pd.dismiss()
+        utility!!.relative_snackbar(
+            parent_uploadbody,
+            error,
+            getString(R.string.close_up)
+        )
     }
 }

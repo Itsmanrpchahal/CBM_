@@ -48,6 +48,7 @@ class ClosetsItemAdapter(
         Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner).into(
             holder.itemView.closetItemImage
         )
+
         holder.itemView.closetitem_name.text = closetsItems?.title
         holder.itemView.closetitem_uploadby.text = closetsItems?.creator?.firstname
 

@@ -135,7 +135,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     }
 
     fun searchByTitle(s: String) {
-
         response = ArrayList()
         if (closets.size > 0) {
             for (i in closets!!.indices) {

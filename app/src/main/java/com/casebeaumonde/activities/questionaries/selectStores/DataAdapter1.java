@@ -1,38 +1,32 @@
-package com.casebeaumonde.activities.questionaries.selectbrands.adapter;
+package com.casebeaumonde.activities.questionaries.selectStores;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.casebeaumonde.R;
 import com.casebeaumonde.activities.questionaries.describeyourself.DescribeYourself;
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse;
-import com.casebeaumonde.activities.questionaries.selectbrands.IF.SelectedBrand_IF;
 import com.casebeaumonde.activities.questionaries.selectbrands.SelectBrands;
-import com.casebeaumonde.constants.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyHolder> implements SectionIndexer,Comparable{
-    ArrayList<QuestionariesDataResponse.Brand> brands;
+public class DataAdapter1 extends RecyclerView.Adapter<DataAdapter1.MyHolder> implements SectionIndexer,Comparable{
+    ArrayList<String> stores;
     private ArrayList<Integer> mSectionPositions;
     Context context;
 
-    public DataAdapter(ArrayList<QuestionariesDataResponse.Brand> brandArrayList, Context context) {
-        this.brands = brandArrayList;
+    public DataAdapter1(ArrayList<String> stores, Context context) {
+        this.stores = stores;
         this.context = context;
     }
 
@@ -44,50 +38,28 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyHolder> impl
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        String data = brands.get(position).getName();
+        String data = stores.get(position);
         holder.title.setText(data);
 
 
         holder.star.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
             {
-                SelectBrands.selectedbrandIf.getID(String.valueOf(brands.get(position).getId()),"1");
+                SelectStores.selectedstoresIf.getID(stores.get(position),"1");
             }  else {
-                SelectBrands.selectedbrandIf.getID(String.valueOf(brands.get(position).getId()),"0");
+                SelectStores.selectedstoresIf.getID(stores.get(position),"0");
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,DescribeYourself.class);
-                context.startActivity(intent);
-//                context.startActivity(new Intent(context, DescribeYourself.class));
-            }
-        });
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return brands.size();
-    }
-
-    @Override
-    public Object[] getSections() {
-        List<String> sections = new ArrayList<>();
-        mSectionPositions = new ArrayList<>();
-        for (int i = 0, size = brands.size(); i < size; i++) {
-
-//            String section = String.valueOf(dataList.get(i).charAt(0));
-//            Log.d("section",""+section);
-//            if (!sections.contains(section)) {
-//                sections.add(section);
-//                mSectionPositions.add(i);
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,DescribeYourself.class);
+//                context.startActivity(intent);
+////                context.startActivity(new Intent(context, DescribeYourself.class));
 //            }
-        }
+//        });
 
-        return sections.toArray(new String[0]);
     }
 
     @Override
@@ -98,6 +70,28 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyHolder> impl
     @Override
     public int getItemViewType(int position) {
         return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return stores.size();
+    }
+
+    @Override
+    public Object[] getSections() {
+        List<String> sections = new ArrayList<>();
+        mSectionPositions = new ArrayList<>();
+        for (int i = 0, size = stores.size(); i < size; i++) {
+
+//            String section = String.valueOf(dataList.get(i).charAt(0));
+//            Log.d("section",""+section);
+//            if (!sections.contains(section)) {
+//                sections.add(section);
+//                mSectionPositions.add(i);
+//            }
+        }
+
+        return sections.toArray(new String[0]);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.casebeaumonde.activities.questionaries.reponse
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 class QuestionariesDataResponse {
     @SerializedName("code")
@@ -135,7 +136,35 @@ class QuestionariesDataResponse {
 
         @SerializedName("name")
         @Expose
-        var name: String? = null
+       public var name: String? = null
+
+        operator fun compareTo(data: QuestionariesDataResponse.Brand): Int {
+            val compareQuantity = data.name
+
+            //ascending order
+            return data.name?.let { name?.compareTo(it) }!!
+        }
+
+        var titleNameComparator: Comparator<Brand> =
+            object : Comparator<QuestionariesDataResponse.Brand> {
+                fun compare(
+                    data1: com.casebeaumonde.constants.Data,
+                    data2: com.casebeaumonde.constants.Data
+                ): Int {
+                    val d1 = data1.title.toUpperCase()
+                    val d2 = data2.title.toUpperCase()
+
+                    //ascending order
+                    return d1.compareTo(d2)
+
+                    //descending order
+                    //return fruitName2.compareTo(fruitName1);
+                }
+
+                override fun compare(o1: Brand?, o2: Brand?): Int {
+                    return o2?.name?.let { name?.compareTo(it) }!!
+                }
+            }
     }
 
 

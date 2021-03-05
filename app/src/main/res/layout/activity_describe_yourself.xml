@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBlack"
+    android:id="@+id/parent_describeyourself"
     tools:context=".activities.questionaries.describeyourself.DescribeYourself">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="75dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,6 +88,43 @@
                 android:layout_height="match_parent">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/continue_bt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonheight"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/buttonheight"
+            android:layout_gravity="center"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:text="Continue"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp">
+
+        </TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:src="@drawable/ic_arrow">
+
+        </ImageView>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.Comparator;
 
 public class Data implements  Comparable<Data>{
-    int id;
+    String id;
     String title;
 
     public Data() {
@@ -15,11 +15,11 @@ public class Data implements  Comparable<Data>{
         this.title = title;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

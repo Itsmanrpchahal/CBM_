@@ -141,46 +141,142 @@
                 android:layout_margin="@dimen/margin_8dp">
 
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/body1"
                     android:layout_weight="1">
 
-                </ImageView>
+                    <ImageView
+                        android:id="@+id/body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/body1">
 
-                <ImageView
+                    </ImageView>
+
+                    <CheckBox
+                        android:id="@+id/check1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:checked="true"
+                        android:clickable="false"
+                        android:visibility="gone"
+                        android:buttonTint="@color/colorBlack">
+
+                    </CheckBox>
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/body2">
+                    android:layout_weight="1">
 
-                </ImageView>
+                    <ImageView
+                        android:id="@+id/body2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/body2">
 
-                <ImageView
+                    </ImageView>
+
+                    <CheckBox
+                        android:id="@+id/check2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:clickable="false"
+                        android:checked="true"
+                        android:visibility="gone"
+                        android:buttonTint="@color/colorBlack">
+
+                    </CheckBox>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/body3">
+                    android:layout_weight="1">
 
-                </ImageView>
+                    <ImageView
+                        android:id="@+id/body3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/body3">
 
-                <ImageView
+                    </ImageView>
+
+                    <CheckBox
+                        android:id="@+id/check3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:clickable="false"
+                        android:checked="true"
+                        android:visibility="gone"
+                        android:buttonTint="@color/colorBlack">
+
+                    </CheckBox>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/body4">
+                    android:layout_weight="1">
 
-                </ImageView>
+                    <ImageView
+                        android:id="@+id/body4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/body4">
 
-                <ImageView
+                    </ImageView>
+
+                    <CheckBox
+                        android:id="@+id/check4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:checked="true"
+                        android:clickable="false"
+                        android:visibility="gone"
+                        android:buttonTint="@color/colorBlack">
+
+                    </CheckBox>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/body5">
+                    android:layout_weight="1">
 
-                </ImageView>
+                    <ImageView
+                        android:id="@+id/body5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/body5">
 
+                    </ImageView>
+
+                    <CheckBox
+                        android:id="@+id/check5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:clickable="false"
+                        android:checked="true"
+                        android:visibility="gone"
+                        android:buttonTint="@color/colorBlack">
+
+                    </CheckBox>
+                </RelativeLayout>
             </LinearLayout>
 
 

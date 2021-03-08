@@ -9,6 +9,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.activities.notifications.IF.NotificationIF
 import com.casebeaumonde.activities.notifications.adpater.NotificationAdapter
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
+import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_notifications.*
@@ -27,7 +29,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Controller.RemoveNotificationAPI{
+class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Controller.RemoveNotificationAPI,Controller.RemoveAllNotificationsAPI{
 
     private lateinit var notification_recyler: RecyclerView
     private lateinit var notification_back: ImageButton
@@ -36,13 +38,14 @@ class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Co
     private lateinit var pd: ProgressDialog
     lateinit var controller: Controller
     private var timer: Timer? = null
+    private lateinit var clear_notifications : Button
     private var notifications: List<NotificationsResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
         controller = Controller()
-        controller.Controller(this,this)
+        controller.Controller(this,this,this)
         notificationIF = this
         findIds()
         listeners()
@@ -94,6 +97,18 @@ class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Co
         notification_back.setOnClickListener {
             onBackPressed()
         }
+
+        clear_notifications.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                controller.RemoveAllNotifications(
+                    "Bearer " + getStringVal(Constants.TOKEN)
+                )
+            }else{
+                utility!!.relative_snackbar(parent_notifications!!, getString(R.string.nointernet), getString(R.string.close_up))
+            }
+        }
     }
 
     private fun findIds() {
@@ -105,6 +120,7 @@ class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Co
         pd!!.setCancelable(false)
         notification_recyler = findViewById(R.id.notification_recyler)
         notification_back = findViewById(R.id.notification_back)
+        clear_notifications = findViewById(R.id.clear_notifications)
     }
 
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
@@ -119,6 +135,13 @@ class Notifications : BaseClass(), Controller.NotificationAPI,NotificationIF ,Co
 
     override fun onRemoveNotification(removeNotification: Response<RemoveNotificationResponse>) {
         if (removeNotification.isSuccessful)
+        {
+            notificationCall()
+        }
+    }
+
+    override fun onRemoveALlNotificationsAPI(removeAllNotification: Response<RemoveAllNotificationResponse>) {
+        if (removeAllNotification.isSuccessful)
         {
             notificationCall()
         }

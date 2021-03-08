@@ -29,6 +29,7 @@ import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
+import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
 import com.casebeaumonde.activities.openchat.response.BlockResponse;
 import com.casebeaumonde.activities.openchat.response.GetChatResponse;
@@ -565,4 +566,8 @@ public interface ApiInterface {
             @Query("user_id") String user_id
             );
 
+    @DELETE("api/v1/removeAllNotification")
+    Call<RemoveAllNotificationResponse> removeAllNotifications(
+            @Header("Authorization") String token
+    );
 }

@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
@@ -134,7 +135,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
 
                     if(blockbt.text.equals("UnBlock"))
                     {
-                        blockDialogs()
+                        blockDialogs("block")
                     } else {
                         controller.SendChat(
                             "Bearer " + getStringVal(Constants.TOKEN),
@@ -169,7 +170,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         }
     }
 
-    fun blockDialogs() {
+    fun blockDialogs(s:String) {
         blockDialog = Dialog(this)
         blockDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         blockDialog.setCancelable(false)
@@ -182,9 +183,20 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
 
         val go: Button
         val cancel: Button
+        val title : TextView
+        val subtitle : TextView
 
         go = blockDialog.findViewById(R.id.go)
         cancel = blockDialog.findViewById(R.id.cancel)
+        title = blockDialog.findViewById(R.id.title)
+        subtitle = blockDialog.findViewById(R.id.subtitle)
+
+        if (s.equals("unblock"))
+        {
+            title.visibility = View.GONE
+            subtitle.setText("You are not allowed to message him. That user blocked you.")
+            go.visibility = View.GONE
+        }
 
         cancel.setOnClickListener {
             blockDialog.dismiss()
@@ -205,7 +217,6 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 )
             }
         }
-
         blockDialog.show()
     }
 
@@ -228,7 +239,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         pd.dismiss()
         if (getCHat.isSuccessful)
         {
-            if (!getCHat.body()?.code.equals("401"))
+           if (!getCHat.body()?.code.equals("401"))
             {
                 chatdata = getCHat.body()?.data?.messages as ArrayList<GetChatResponse.Data.Message>
                 setFullData(chatdata)
@@ -244,7 +255,6 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
     }
 
     private fun setFullData(chatdata: ArrayList<GetChatResponse.Data.Message>) {
-
         var layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         chat_recycler.layoutManager = layoutManager
 
@@ -257,11 +267,24 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
 
     override fun onGetUserChatSuccess(senduserchat: Response<SendChatResponse>) {
         pd.dismiss()
-        sendmesg_et.setText("")
+        if (senduserchat.isSuccessful)
+        {
+            if (senduserchat.body()?.code.equals("200"))
+            {
+                sendmesg_et.setText("")
 
-        controller.GetChat("Bearer " + getStringVal(Constants.TOKEN), id)
+                controller.GetChat("Bearer " + getStringVal(Constants.TOKEN), id)
+            } else if (senduserchat.body()?.code.equals("401")){
+                blockDialogs("unblock")
+            }
+
+
+        }
+
 
     }
+
+
 
     override fun onBlockUserSuccess(blockUser: Response<BlockResponse>) {
         pd.dismiss()

@@ -25,6 +25,7 @@ import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListRe
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
+import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
 import com.casebeaumonde.activities.openchat.response.BlockResponse
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.openchat.response.SendChatResponse
@@ -104,6 +105,7 @@ public class Controller {
     var blockUserAPI : BlockUserAPI? = null
     var questionariesAPI : QuestionariesAPI? = null
     var basicQuestionariesAPI : SendBasicQuestionariesAPI? = null
+    var removeAllNotificationAPI : RemoveAllNotificationsAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -117,9 +119,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(notification: NotificationAPI, removeNotification: RemoveNotificationAPI) {
+    fun Controller(notification: NotificationAPI, removeNotification: RemoveNotificationAPI,removeAllNotifications: RemoveAllNotificationsAPI) {
         notificationAPI = notification
         removeNotificationAPI = removeNotification
+        removeAllNotificationAPI = removeAllNotifications
         webAPI = WebAPI()
     }
 
@@ -1436,6 +1439,24 @@ public class Controller {
         })
     }
 
+    fun RemoveAllNotifications(token: String?)
+    {
+        webAPI?.api?.removeAllNotifications(token)?.enqueue(object :Callback<RemoveAllNotificationResponse>
+        {
+            override fun onResponse(
+                call: Call<RemoveAllNotificationResponse>,
+                response: Response<RemoveAllNotificationResponse>
+            ) {
+                removeAllNotificationAPI?.onRemoveALlNotificationsAPI(response)
+            }
+
+            override fun onFailure(call: Call<RemoveAllNotificationResponse>, t: Throwable) {
+               removeAllNotificationAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1714,6 +1735,11 @@ public class Controller {
 
     interface SendBasicQuestionariesAPI {
         fun onBasicQuestionariesAPI(basicQuestionaries : Response<BasicQuestionariesResponse>)
+        fun error(error: String?)
+    }
+
+    interface RemoveAllNotificationsAPI {
+        fun onRemoveALlNotificationsAPI(removeAllNotification:Response<RemoveAllNotificationResponse>)
         fun error(error: String?)
     }
 }

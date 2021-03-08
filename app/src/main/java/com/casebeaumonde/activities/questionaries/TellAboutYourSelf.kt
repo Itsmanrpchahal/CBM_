@@ -24,6 +24,10 @@ import kotlin.collections.ArrayList
 
 class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
 
+    private lateinit var name_et : EditText
+    private lateinit var city_et : EditText
+    private lateinit var mobilenumber_et : EditText
+    private lateinit var age_et : EditText
     private lateinit var continue_bt : LinearLayout
     private lateinit var back : ImageButton
     private lateinit var state_spinner : AppCompatSpinner
@@ -41,6 +45,12 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
     private lateinit var years : ArrayList<String>
     private lateinit var stateName : ArrayList<String>
     private var currentYear : Int = 0
+    private  var selected_state = "-Select State-"
+    private var selected_country ="-Select Country-"
+    private var selected_month = "- Select Month -"
+    private var selected_day = "- Select Day -"
+    private var selected_year ="-Select year-"
+    private var selected_Astrological = "-Select Astrological Sign-"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +93,67 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
 
     private fun listeners() {
         back.setOnClickListener { onBackPressed() }
-        continue_bt.setOnClickListener{ startActivity(Intent(this, ColorPickerScreen::class.java))}
+        continue_bt.setOnClickListener{
+            when {
+                name_et.text.isEmpty() -> {
+                    name_et.requestFocus()
+                    name_et.error = "Enter Username"
+                }
+
+                city_et.text.isEmpty() -> {
+                    city_et.requestFocus()
+                    city_et.error = "Enter City"
+                }
+
+                mobilenumber_et.text.isEmpty() -> {
+                    mobilenumber_et.requestFocus()
+                    mobilenumber_et.error = "Enter Mobile number"
+                }
+
+                age_et.text.isEmpty() -> {
+                    age_et.requestFocus()
+                    age_et.error = "Enter Age"
+                }
+
+                selected_state.equals("-Select State-") -> {
+                    Toast.makeText(this,"Select State",Toast.LENGTH_SHORT).show()
+                }
+
+                selected_country.equals("-Select Country-") -> {
+                    Toast.makeText(this,"Select Country",Toast.LENGTH_SHORT).show()
+                }
+
+                selected_month.equals("- Select Month -") -> {
+                    Toast.makeText(this,"Select Month",Toast.LENGTH_SHORT).show()
+                }
+
+                selected_day.equals("- Select Day -") -> {
+                    Toast.makeText(this,"Select Day",Toast.LENGTH_SHORT).show()
+                }
+
+                selected_year.equals("-Select year-") -> {
+                    Toast.makeText(this,"Select year",Toast.LENGTH_SHORT).show()
+                }
+
+                selected_Astrological.equals("-Select Astrological Sign-") -> {
+                    Toast.makeText(this,"Select Astrological Sign",Toast.LENGTH_SHORT).show()
+                } else -> {
+
+                startActivity(Intent(this, ColorPickerScreen::class.java).
+                putExtra("name",name_et.text.toString()).
+                putExtra("city",city_et.text.toString()).
+                putExtra("state",selected_state).
+                putExtra("country",selected_country).
+                putExtra("mobile",mobilenumber_et.text.toString()).
+                putExtra("age",age_et.text.toString()).
+                putExtra("month",selected_month).
+                putExtra("date",selected_day).
+                putExtra("year",selected_year).
+                putExtra("astrologicalSign",selected_Astrological))
+                }
+            }
+
+        }
 
         setMonthSpinner()
         setDaySpinner()
@@ -106,6 +176,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
             ) {
                 if (position != 0) {
                     // spinnertitle.setText(languages[position])
+                    selected_Astrological = parent.selectedItem.toString()
                 }
                 //  userType = languages[position]
             }
@@ -130,6 +201,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
                 view: View, position: Int, id: Long
             ) {
                 if (position != 0) {
+                    selected_year = parent.selectedItem.toString()
                     // spinnertitle.setText(languages[position])
                 }
                 //  userType = languages[position]
@@ -156,8 +228,8 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
             ) {
                 if (position != 0) {
                     // spinnertitle.setText(languages[position])
+                    selected_day = parent.selectedItem.toString()
                 }
-                //  userType = languages[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -180,6 +252,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
                 view: View, position: Int, id: Long
             ) {
                 if (position != 0) {
+                    selected_month = parent.selectedItem.toString()
                     // spinnertitle.setText(languages[position])
                 }
                 //  userType = languages[position]
@@ -205,6 +278,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
             ) {
                 if (position != 0) {
                     // spinnertitle.setText(languages[position])
+                    selected_country = parent.selectedItem.toString()
                 }
                 //  userType = languages[position]
             }
@@ -229,7 +303,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
                 view: View, position: Int, id: Long
             ) {
                 if (position != 0) {
-                   // spinnertitle.setText(languages[position])
+                    selected_state = parent.selectedItem.toString()
                 }
               //  userType = languages[position]
             }
@@ -249,7 +323,10 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
         day_spinner = findViewById(R.id.day_spinner)
         year_spinner = findViewById(R.id.year_spinner)
         astrological_spinner = findViewById(R.id.astrological_spinner)
-
+        name_et = findViewById(R.id.name_et)
+        city_et = findViewById(R.id.city_et)
+        mobilenumber_et = findViewById(R.id.mobilenumber_et)
+        age_et = findViewById(R.id.age_et)
     }
 
     override fun onQuestionariesSuccess(questionaries: Response<QuestionariesDataResponse>) {

@@ -31,6 +31,7 @@ import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.constants.Data
 import com.casebeaumonde.utilities.Utility
+import com.stripe.okhttp3.MultipartBody
 import fastscroll.app.fastscrollalphabetindex.AlphabetIndexFastScrollRecyclerView
 import kotlinx.android.synthetic.main.activity_select_brands.*
 import kotlinx.android.synthetic.main.activity_upload_body_type_image.*
@@ -56,6 +57,26 @@ class SelectBrands : BaseClass(), SelectedBrand_IF , Controller.QuestionariesAPI
     private lateinit var utility: Utility
     private lateinit var brandsResponse : ArrayList<QuestionariesDataResponse.Brand>
     private lateinit var filterBrand : ArrayList<QuestionariesDataResponse.Brand>
+    private lateinit var height_et : EditText
+    private var name: String = ""
+    private var city: String = ""
+    private var state: String = ""
+    private var country: String = ""
+    private var mobile: String = ""
+    private var age: String = ""
+    private var month: String = ""
+    private var date: String = ""
+    private var year: String = ""
+    private var astrologicalSign: String = ""
+    private var bodyType : String = ""
+    private lateinit var colorscode : ArrayList<String>
+    private var bodyType_text : String = ""
+    private var height : String =""
+    private var eycolor : String =""
+    private var haircolor : String =""
+    private lateinit var images : ArrayList<String>
+    private lateinit var imageData : ArrayList<String>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,13 +101,34 @@ class SelectBrands : BaseClass(), SelectedBrand_IF , Controller.QuestionariesAPI
 
     private fun listeners() {
         continue_bt.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    DescribeYourself::class.java
+
+            if (selectedBrands.size==0)
+            {
+                Toast.makeText(this,"Select atleast one brand",Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(
+                    Intent(
+                        this,
+                        DescribeYourself::class.java
+                    ).
+                    putExtra("name", name)
+                        .putExtra("city", city).putExtra("state", state)
+                        .putExtra("country", country).putExtra("mobile", mobile)
+                        .putExtra("age", age).putExtra("month", month).putExtra("date", date)
+                        .putExtra("year", year).putExtra("astrologicalSign", astrologicalSign)
+                        .putStringArrayListExtra("colorscode", colorscode)
+                        .putExtra("bodyType",bodyType)
+                        .putExtra("bodyType_text",bodyType_text)
+                        .putStringArrayListExtra("images",images).
+                        putExtra("height",height).
+                        putExtra("eycolor",eycolor).
+                        putExtra("haircolor",haircolor).
+                        putStringArrayListExtra("brandsID",selectedBrands).
+                            putExtra("imageData",imageData)
                 )
-            )
-            finish()
+                finish()
+            }
+
         }
 
         back.setOnClickListener {
@@ -188,6 +230,28 @@ class SelectBrands : BaseClass(), SelectedBrand_IF , Controller.QuestionariesAPI
                 getString(R.string.close_up)
             )
         }
+        images = intent.getStringArrayListExtra("images")!!
+        eycolor = intent.getStringExtra("eycolor").toString()
+        haircolor = intent.getStringExtra("haircolor").toString()
+
+        name = intent.getStringExtra("name").toString()
+        city = intent.getStringExtra("city").toString()
+        state = intent.getStringExtra("state").toString()
+        country = intent.getStringExtra("country").toString()
+        mobile = intent.getStringExtra("mobile").toString()
+        age = intent.getStringExtra("age").toString()
+        month = intent.getStringExtra("month").toString()
+        date = intent.getStringExtra("date").toString()
+        year = intent.getStringExtra("year").toString()
+        astrologicalSign = intent.getStringExtra("astrologicalSign").toString()
+        colorscode = intent.getStringArrayListExtra("colorscode")!!
+        bodyType = intent.getStringExtra("bodyType").toString()
+        bodyType_text = intent.getStringExtra("bodyType_text").toString()
+        height = intent.getStringExtra("height").toString()
+        eycolor = intent.getStringExtra("eycolor").toString()
+        haircolor = intent.getStringExtra("haircolor").toString()
+        imageData = intent.getStringArrayListExtra("imageData")!!
+        Log.d("partsize",""+imageData)
     }
 
 

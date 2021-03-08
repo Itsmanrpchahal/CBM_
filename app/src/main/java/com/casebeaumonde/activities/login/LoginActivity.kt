@@ -203,6 +203,9 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
                             setStringVal(Constants.USER_ROLE,
                                 response.body()?.data?.user?.role?.toString()
                             )
+                            setStringVal(Constants.QUESTIONARIES_STATUS,
+                                response.body()?.data?.questionnaire.toString()
+                            )
 
                             startActivity(
                                 Intent(

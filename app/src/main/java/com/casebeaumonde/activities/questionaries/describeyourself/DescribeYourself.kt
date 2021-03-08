@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,25 @@ class DescribeYourself : BaseClass(), SelectYourself_IF , Controller.Questionari
     private lateinit var controller: Controller
     private lateinit var utility: Utility
     private lateinit var characterstic : ArrayList<String>
+    private var name: String = ""
+    private var city: String = ""
+    private var state: String = ""
+    private var country: String = ""
+    private var mobile: String = ""
+    private var age: String = ""
+    private var month: String = ""
+    private var date: String = ""
+    private var year: String = ""
+    private var astrologicalSign: String = ""
+    private var bodyType : String = ""
+    private lateinit var colorscode : ArrayList<String>
+    private var bodyType_text : String = ""
+    private var height : String =""
+    private var eycolor : String =""
+    private var haircolor : String =""
+    private lateinit var brandsID : ArrayList<String>
+    private lateinit var images : ArrayList<String>
+    private lateinit var imageData : ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +74,33 @@ class DescribeYourself : BaseClass(), SelectYourself_IF , Controller.Questionari
 
     private fun listeners() {
         continue_bt.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    SelectStores::class.java
+            if (selectIds.size==0)
+            {
+                Toast.makeText(this,"Select atleast on characterstics",Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(
+                    Intent(
+                        this,
+                        SelectStores::class.java
+                    ).
+                    putExtra("name", name)
+                        .putExtra("city", city).putExtra("state", state)
+                        .putExtra("country", country).putExtra("mobile", mobile)
+                        .putExtra("age", age).putExtra("month", month).putExtra("date", date)
+                        .putExtra("year", year).putExtra("astrologicalSign", astrologicalSign)
+                        .putStringArrayListExtra("colorscode", colorscode)
+                        .putExtra("bodyType",bodyType)
+                        .putExtra("bodyType_text",bodyType_text)
+                        .putStringArrayListExtra("images",images).
+                        putExtra("height",height).
+                        putExtra("eycolor",eycolor).
+                        putExtra("haircolor",haircolor).
+                        putStringArrayListExtra("brandsID",brandsID).
+                        putStringArrayListExtra("yourself",selectIds).
+                            putStringArrayListExtra("imageData",imageData)
                 )
-            )
-            finish()
+            }
+
         }
         back.setOnClickListener {
             onBackPressed()
@@ -92,6 +132,23 @@ class DescribeYourself : BaseClass(), SelectYourself_IF , Controller.Questionari
                 getString(R.string.close_up)
             )
         }
+brandsID = ArrayList()
+        name = intent.getStringExtra("name").toString()
+        city = intent.getStringExtra("city").toString()
+        state = intent.getStringExtra("state").toString()
+        country = intent.getStringExtra("country").toString()
+        mobile = intent.getStringExtra("mobile").toString()
+        age = intent.getStringExtra("age").toString()
+        month = intent.getStringExtra("month").toString()
+        date = intent.getStringExtra("date").toString()
+        year = intent.getStringExtra("year").toString()
+        astrologicalSign = intent.getStringExtra("astrologicalSign").toString()
+        colorscode = intent.getStringArrayListExtra("colorscode")!!
+        bodyType = intent.getStringExtra("bodyType").toString()
+        bodyType_text = intent.getStringExtra("bodyType_text").toString()
+        brandsID = intent.getStringArrayListExtra("brandsID")!!
+        images = intent.getStringArrayListExtra("images")!!
+        imageData = intent.getStringArrayListExtra("imageData")!!
     }
 
     private fun setFullData(characterStic : ArrayList<String>) {

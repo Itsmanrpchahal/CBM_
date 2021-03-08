@@ -112,8 +112,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 true
             })
 
-            Toast.makeText(this,""+getStringVal(Constants.USER_ROLE),Toast.LENGTH_SHORT).show()
-            if (getStringVal(Constants.USER_ROLE).equals("customer")) {
+           // Toast.makeText(this,""+getStringVal(Constants.USER_ROLE),Toast.LENGTH_SHORT).show()
+            if (getStringVal(Constants.USER_ROLE).equals("customer") && getStringVal(Constants.QUESTIONARIES_STATUS).equals("0")) {
                 startActivity(Intent(this, GetStartedActivity::class.java))
             }
         }

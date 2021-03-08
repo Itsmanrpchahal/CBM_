@@ -104,6 +104,7 @@
 
 
             <EditText
+                android:id="@+id/bodytype_et"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_margin="@dimen/margin_8dp"
@@ -151,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/body1">
+                        android:src="@drawable/body2">
 
                     </ImageView>
 
@@ -180,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/body2">
+                        android:src="@drawable/body3">
 
                     </ImageView>
 
@@ -207,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/body3">
+                        android:src="@drawable/body1">
 
                     </ImageView>
 

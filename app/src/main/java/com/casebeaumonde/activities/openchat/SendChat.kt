@@ -1,11 +1,13 @@
 package com.casebeaumonde.activities.openchat
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +49,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
     private lateinit var pusher: Pusher
     private lateinit var blockbt: Button
     private lateinit var channel : Channel
+    private lateinit var blockDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,11 +131,18 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         sendmesg_bt.setOnClickListener {
             if (!sendmesg_et.text.toString().equals("")) {
                 if (utility.isConnectingToInternet(this)) {
-                    controller.SendChat(
-                        "Bearer " + getStringVal(Constants.TOKEN),
-                        id,
-                        sendmesg_et.text.toString()
-                    )
+
+                    if(blockbt.text.equals("UnBlock"))
+                    {
+                        blockDialogs()
+                    } else {
+                        controller.SendChat(
+                            "Bearer " + getStringVal(Constants.TOKEN),
+                            id,
+                            sendmesg_et.text.toString()
+                        )
+                    }
+
                 } else {
                     utility!!.relative_snackbar(
                         parent_sendchat!!,
@@ -159,6 +169,46 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         }
     }
 
+    fun blockDialogs() {
+        blockDialog = Dialog(this)
+        blockDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        blockDialog.setCancelable(false)
+        blockDialog.setContentView(R.layout.unblockuser_popup)
+        val window = blockDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val go: Button
+        val cancel: Button
+
+        go = blockDialog.findViewById(R.id.go)
+        cancel = blockDialog.findViewById(R.id.cancel)
+
+        cancel.setOnClickListener {
+            blockDialog.dismiss()
+        }
+
+        go.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+                controller.BlockUser(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    id
+                )
+                blockDialog.dismiss()
+            } else {
+                utility!!.relative_snackbar(
+                    parent_sendchat!!,
+                    getString(R.string.nointernet),
+                    getString(R.string.close_up)
+                )
+            }
+        }
+
+        blockDialog.show()
+    }
+
     private fun findIds() {
         utility = Utility()
         pd = ProgressDialog(this)
@@ -176,12 +226,20 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
 
     override fun onGetChatSuccess(getCHat: Response<GetChatResponse>) {
         pd.dismiss()
-        chatdata = getCHat.body()?.data?.messages as ArrayList<GetChatResponse.Data.Message>
-        setFullData(chatdata)
-        if (getCHat.body()?.data?.blocked == 0) {
-            blockbt.setText("Block")
-        } else {
-            blockbt.setText("UnBlock")
+        if (getCHat.isSuccessful)
+        {
+            if (!getCHat.body()?.code.equals("401"))
+            {
+                chatdata = getCHat.body()?.data?.messages as ArrayList<GetChatResponse.Data.Message>
+                setFullData(chatdata)
+                if (getCHat.body()?.data?.blocked == 0) {
+                    blockbt.setText("Block")
+                } else {
+                    blockbt.setText("UnBlock")
+                }
+            } else {
+                Toast.makeText(this,""+getCHat.body()?.code,Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -212,6 +270,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 blockbt.setText("UnBlock")
             } else {
                 blockbt.setText("Block")
+                //blockDialog.dismiss()
             }
             utility!!.relative_snackbar(
                 parent_sendchat!!,

@@ -4,10 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.*
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.questionaries.uploadBodyType.UploadBodyTypeImage
 
@@ -25,6 +22,20 @@ class SelectBodyTalk : AppCompatActivity() {
     private lateinit var body3 : ImageView
     private lateinit var body4 : ImageView
     private lateinit var body5 : ImageView
+    private lateinit var bodytype_et : EditText
+
+    private var name: String = ""
+    private var city: String = ""
+    private var state: String = ""
+    private var country: String = ""
+    private var mobile: String = ""
+    private var age: String = ""
+    private var month: String = ""
+    private var date: String = ""
+    private var year: String = ""
+    private var astrologicalSign: String = ""
+    private var bodyType : String = ""
+    private lateinit var colorscode : ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_body_talk)
@@ -35,7 +46,28 @@ class SelectBodyTalk : AppCompatActivity() {
 
     private fun listeners() {
         back.setOnClickListener { onBackPressed() }
-        continue_bt.setOnClickListener {startActivity( Intent(this, UploadBodyTypeImage::class.java) )}
+        continue_bt.setOnClickListener {
+            when {
+                bodytype_et.text.isEmpty() -> {
+                    bodytype_et.requestFocus()
+                    bodytype_et.error = "Enter Body type"
+                }
+
+                bodyType.equals("") -> {
+                    Toast.makeText(this,"Select body type",Toast.LENGTH_SHORT).show()
+                } else -> {
+                startActivity( Intent(this, UploadBodyTypeImage::class.java).
+                putExtra("name", name)
+                    .putExtra("city", city).putExtra("state", state)
+                    .putExtra("country", country).putExtra("mobile", mobile)
+                    .putExtra("age", age).putExtra("month", month).putExtra("date", date)
+                    .putExtra("year", year).putExtra("astrologicalSign", astrologicalSign)
+                    .putStringArrayListExtra("colorscode", colorscode)
+                    .putExtra("bodyType",bodyType)
+                    .putExtra("bodyType_text",bodytype_et.text.toString()))
+                }
+            }
+        }
 
         body1.setOnClickListener {
             check1.visibility = View.VISIBLE
@@ -43,6 +75,7 @@ class SelectBodyTalk : AppCompatActivity() {
             check3.visibility = View.GONE
             check4.visibility = View.GONE
             check5.visibility = View.GONE
+            bodyType = "Triangle"
         }
 
         body2.setOnClickListener {
@@ -51,6 +84,7 @@ class SelectBodyTalk : AppCompatActivity() {
             check3.visibility = View.GONE
             check4.visibility = View.GONE
             check5.visibility = View.GONE
+            bodyType = "Inverted Triangle"
         }
 
         body3.setOnClickListener {
@@ -59,6 +93,7 @@ class SelectBodyTalk : AppCompatActivity() {
             check3.visibility = View.VISIBLE
             check4.visibility = View.GONE
             check5.visibility = View.GONE
+            bodyType = "Circle"
         }
 
         body4.setOnClickListener {
@@ -67,6 +102,8 @@ class SelectBodyTalk : AppCompatActivity() {
             check3.visibility = View.GONE
             check4.visibility = View.VISIBLE
             check5.visibility = View.GONE
+
+            bodyType = "Rectangle"
         }
 
         body5.setOnClickListener {
@@ -75,12 +112,15 @@ class SelectBodyTalk : AppCompatActivity() {
             check3.visibility = View.GONE
             check4.visibility = View.GONE
             check5.visibility = View.VISIBLE
+
+            bodyType ="Two Triangle"
         }
     }
 
     private fun findIds() {
         back = findViewById(R.id.back)
         continue_bt = findViewById(R.id.continue_bt)
+        bodytype_et = findViewById(R.id.bodytype_et)
 
         check1 = findViewById(R.id.check1)
         check2 = findViewById(R.id.check2)
@@ -93,5 +133,18 @@ class SelectBodyTalk : AppCompatActivity() {
         body3 = findViewById(R.id.body3)
         body4 = findViewById(R.id.body4)
         body5 = findViewById(R.id.body5)
+
+
+        name = intent.getStringExtra("name").toString()
+        city = intent.getStringExtra("city").toString()
+        state = intent.getStringExtra("state").toString()
+        country = intent.getStringExtra("country").toString()
+        mobile = intent.getStringExtra("mobile").toString()
+        age = intent.getStringExtra("age").toString()
+        month = intent.getStringExtra("month").toString()
+        date = intent.getStringExtra("date").toString()
+        year = intent.getStringExtra("year").toString()
+        astrologicalSign = intent.getStringExtra("astrologicalSign").toString()
+        colorscode = intent.getStringArrayListExtra("colorscode")!!
     }
 }

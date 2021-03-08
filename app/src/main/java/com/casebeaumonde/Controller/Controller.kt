@@ -30,6 +30,7 @@ import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.openchat.response.SendChatResponse
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
+import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
@@ -102,6 +103,7 @@ public class Controller {
     var senduserchatAPI : SendUserChatAPI? = null
     var blockUserAPI : BlockUserAPI? = null
     var questionariesAPI : QuestionariesAPI? = null
+    var basicQuestionariesAPI : SendBasicQuestionariesAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -324,6 +326,13 @@ public class Controller {
     fun Controller(questionaries: QuestionariesAPI)
     {
         questionariesAPI = questionaries
+        webAPI = WebAPI()
+    }
+
+    fun Controller(questionaries: QuestionariesAPI,basicQuestionaries: SendBasicQuestionariesAPI)
+    {
+        questionariesAPI = questionaries
+        basicQuestionariesAPI = basicQuestionaries
         webAPI = WebAPI()
     }
 
@@ -1368,7 +1377,6 @@ public class Controller {
             override fun onFailure(call: Call<SendChatResponse>, t: Throwable) {
                senduserchatAPI?.error(t.message)
             }
-
         })
     }
 
@@ -1402,6 +1410,27 @@ public class Controller {
 
             override fun onFailure(call: Call<QuestionariesDataResponse>, t: Throwable) {
                 questionariesAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun BasicQuestions(token: String?,name:String, basic_city:String,basic_state:String,basic_country:String,mobile:String,age:String,month:String,day:String,year:String,astrological_sign:String,
+                       builder_color:ArrayList<String>,descriptors:ArrayList<String>,body_type_detail:String,body_type:String,photo:ArrayList<MultipartBody.Part>,height:String,eye_color:String,hair_color:String,
+                       brands:ArrayList<String>,basic_profile_builder:String,user_id:String)
+    {
+        webAPI?.api?.basicQuestionaries(token,name,basic_city,basic_state,basic_country,mobile,age,month,day,year,astrological_sign,
+        builder_color,descriptors,body_type_detail,body_type,photo,height,eye_color,hair_color,brands,basic_profile_builder,user_id)?.enqueue(object :Callback<BasicQuestionariesResponse>
+        {
+            override fun onResponse(
+                call: Call<BasicQuestionariesResponse>,
+                response: Response<BasicQuestionariesResponse>
+            ) {
+               basicQuestionariesAPI?.onBasicQuestionariesAPI(response)
+            }
+
+            override fun onFailure(call: Call<BasicQuestionariesResponse>, t: Throwable) {
+               basicQuestionariesAPI?.error(t.message)
             }
 
         })
@@ -1680,6 +1709,11 @@ public class Controller {
 
     interface QuestionariesAPI{
         fun onQuestionariesSuccess(questionaries : Response<QuestionariesDataResponse>)
+        fun error(error: String?)
+    }
+
+    interface SendBasicQuestionariesAPI {
+        fun onBasicQuestionariesAPI(basicQuestionaries : Response<BasicQuestionariesResponse>)
         fun error(error: String?)
     }
 }

@@ -1,5 +1,7 @@
 package com.casebeaumonde.constants
 
+import com.casebeaumonde.Controller.Controller
+
 object Constants
 {
     val STRIPEKEY: String? = "pk_test_OTNta0F2CKTUpYDDM7igKdml"
@@ -25,4 +27,5 @@ object Constants
     val REMEMBERME = "rememberme"
     val CLOSE  = "close"
     val CHAT = "chat"
+    val QUESTIONARIES_STATUS = "questionariesstatus"
 }

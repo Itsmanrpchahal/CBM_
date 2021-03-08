@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.questionaries.SelectBodyTalk
 import com.casebeaumonde.constants.BaseClass
 
-class ColorPickerScreen : BaseClass() ,SelectColor_IF{
+class ColorPickerScreen : BaseClass(), SelectColor_IF {
     var mColors = arrayOf(
         "FFEBEE", "FFCDD2", "EF9A9A", "E57373", "EF5350", "F44336", "E53935",  //reds
         "D32F2F", "C62828", "B71C1C", "FF8A80", "FF5252", "FF1744", "D50000",
@@ -52,10 +53,20 @@ class ColorPickerScreen : BaseClass() ,SelectColor_IF{
         "ECEFF1", "CFD8DC", "B0BBC5", "90A4AE", "78909C", "607D8B", "546E7A",  //blue grey
         "455A64", "37474F", "263238"
     )
-    private lateinit var continue_bt : LinearLayout
-    private lateinit var back : ImageButton
-    private lateinit var colorsRecycler : RecyclerView
-    private lateinit var colorscode :ArrayList<String>
+    private lateinit var continue_bt: LinearLayout
+    private lateinit var back: ImageButton
+    private lateinit var colorsRecycler: RecyclerView
+    private lateinit var colorscode: ArrayList<String>
+    private var name: String = ""
+    private var city: String = ""
+    private var state: String = ""
+    private var country: String = ""
+    private var mobile: String = ""
+    private var age: String = ""
+    private var month: String = ""
+    private var date: String = ""
+    private var year: String = ""
+    private var astrologicalSign: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +82,33 @@ class ColorPickerScreen : BaseClass() ,SelectColor_IF{
     }
 
     private fun listeners() {
-        continue_bt.setOnClickListener { startActivity(Intent(this, SelectBodyTalk::class.java))}
-        back.setOnClickListener{onBackPressed()}
+
+        name = intent.getStringExtra("name").toString()
+        city = intent.getStringExtra("city").toString()
+        state = intent.getStringExtra("state").toString()
+        country = intent.getStringExtra("country").toString()
+        mobile = intent.getStringExtra("mobile").toString()
+        age = intent.getStringExtra("age").toString()
+        month = intent.getStringExtra("month").toString()
+        date = intent.getStringExtra("date").toString()
+        year = intent.getStringExtra("year").toString()
+        astrologicalSign = intent.getStringExtra("astrologicalSign").toString()
+        continue_bt.setOnClickListener {
+            if (colorscode.size == 0) {
+                Toast.makeText(this, "Select atleast one color", Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(
+                    Intent(this, SelectBodyTalk::class.java).putExtra("name", name)
+                        .putExtra("city", city).putExtra("state", state)
+                        .putExtra("country", country).putExtra("mobile", mobile)
+                        .putExtra("age", age).putExtra("month", month).putExtra("date", date)
+                        .putExtra("year", year).putExtra("astrologicalSign", astrologicalSign)
+                        .putStringArrayListExtra("colorscode", colorscode)
+                )
+            }
+        }
+
+        back.setOnClickListener { onBackPressed() }
     }
 
     private fun findIDs() {
@@ -81,7 +117,7 @@ class ColorPickerScreen : BaseClass() ,SelectColor_IF{
         colorsRecycler = findViewById(R.id.colorsRecycler)
 
         colorsRecycler.layoutManager = GridLayoutManager(this, 5)
-        val adapter = ColorAdapter(this,mColors)
+        val adapter = ColorAdapter(this, mColors)
         colorsRecycler.adapter = adapter
     }
 
@@ -92,7 +128,7 @@ class ColorPickerScreen : BaseClass() ,SelectColor_IF{
             }
         } else {
             colorscode.add(id.toString())
-            Log.d("yourcolors",""+colorscode)
+            Log.d("yourcolors", "" + colorscode)
         }
     }
 }

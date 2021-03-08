@@ -35,6 +35,7 @@ import com.casebeaumonde.activities.openchat.response.GetChatResponse;
 import com.casebeaumonde.activities.openchat.response.SendChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
+import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse;
 import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
@@ -58,6 +59,7 @@ import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
 import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -534,4 +536,33 @@ public interface ApiInterface {
     Call<QuestionariesDataResponse> questionaries(
             @Header("Authorization") String token
             );
+
+
+    @Multipart
+    @POST("api/v1/basicQuestionnaire")
+    Call<BasicQuestionariesResponse> basicQuestionaries(
+            @Header("Authorization") String token,
+            @Query("name") String name,
+            @Query("basic_city") String basic_city,
+            @Query("basic_state") String basic_state,
+            @Query("basic_country") String basic_country,
+            @Query("mobile") String mobile,
+            @Query("age") String age,
+            @Query("month") String month,
+            @Query("day") String day,
+            @Query("year") String year,
+            @Query("astrological_sign") String astrological_sign,
+            @Query("builder_color") ArrayList<String> builder_color,
+            @Query("descriptors") ArrayList<String> descriptors,
+            @Query("body_type_detail") String body_type_detail,
+            @Query("body_type") String body_type,
+            @Part ArrayList<MultipartBody.Part> photo,
+            @Query("height") String height,
+            @Query("eye_color") String eye_color,
+            @Query("hair_color") String hair_color,
+            @Query("brands") ArrayList<String> brands,
+            @Query("basic_profile_builder") String basic_profile_builder,
+            @Query("user_id") String user_id
+            );
+
 }

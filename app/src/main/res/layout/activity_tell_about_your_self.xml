@@ -55,7 +55,9 @@
                         android:text="TELL US ABOUT YOURSELF"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/toolbartv"></TextView>
+                        android:textSize="@dimen/toolbartv">
+
+                    </TextView>
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
 
@@ -99,9 +101,12 @@
                 android:text="Tell us a little about yourself!  Helping us understand what your preferences are makes building your beautiful world with CASA BEAU MONDE limitless!  This will create your foundation for successful creation and collaboration."
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_14sp"></TextView>
+                android:textSize="@dimen/textsize_14sp">
+
+            </TextView>
 
             <EditText
+                android:id="@+id/name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -112,7 +117,9 @@
                 android:inputType="textShortMessage"
                 android:padding="2dp"
                 android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"></EditText>
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
 
             <View
                 android:layout_width="match_parent"
@@ -142,6 +149,7 @@
 
 
                     <EditText
+                        android:id="@+id/city_et"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_16dp"
@@ -224,6 +232,7 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/mobilenumber_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -251,15 +260,19 @@
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/margin_8dp"
+                android:visibility="gone"
                 android:background="@android:color/transparent"
                 android:hint="ENTER YOUR EMAIL"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"></EditText>
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginRight="@dimen/margin_8dp"
@@ -284,6 +297,7 @@
 
 
                     <EditText
+                        android:id="@+id/age_et"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_16dp"

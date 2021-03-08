@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="@dimen/margin_8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_error_outline_24"
+                android:layout_marginTop="@dimen/margin_32dp">
+
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User blocked"
+                android:textAllCaps="true"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/textsize_24sp"
+                android:layout_marginTop="@dimen/default_margin_16dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unblock user to send message"
+                android:textColor="@color/colorBlack"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_marginTop="@dimen/default_margin_16dp">
+
+            </TextView>
+
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:weightSum="2">
+
+               <Button
+                   android:id="@+id/cancel"
+                   android:layout_weight="1"
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/buttonheight"
+                   android:background="@color/colorOrange"
+                   android:text="CANCEL"
+                   android:layout_marginLeft="@dimen/default_margin_16dp"
+                   android:layout_marginRight="@dimen/default_margin_16dp"
+                   android:layout_marginTop="@dimen/default_margin_16dp"
+                   android:layout_marginBottom="@dimen/margin_32dp">
+
+               </Button>
+               <Button
+                   android:layout_weight="1"
+                   android:id="@+id/go"
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/buttonheight"
+                   android:background="#337AB7"
+                   android:text="GO"
+                   android:layout_marginLeft="@dimen/default_margin_16dp"
+                   android:layout_marginRight="@dimen/default_margin_16dp"
+                   android:layout_marginTop="@dimen/default_margin_16dp"
+                   android:layout_marginBottom="@dimen/margin_32dp">
+
+               </Button>
+           </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

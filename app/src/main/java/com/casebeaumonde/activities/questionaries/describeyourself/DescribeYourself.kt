@@ -149,6 +149,9 @@ brandsID = ArrayList()
         brandsID = intent.getStringArrayListExtra("brandsID")!!
         images = intent.getStringArrayListExtra("images")!!
         imageData = intent.getStringArrayListExtra("imageData")!!
+        height = intent.getStringExtra("height")!!
+        eycolor = intent.getStringExtra("eycolor")!!
+        haircolor = intent.getStringExtra("haircolor")!!
     }
 
     private fun setFullData(characterStic : ArrayList<String>) {

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".activities.b_questionaries.b_basicInfo.B_BasicInfoActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="105dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/default_margin_16dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+                    </ImageButton>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/default_margin_16dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:text="TELL US ABOUT YOURSELF"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/toolbartv">
+
+                    </TextView>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/cbmlogo"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BASIC INFORMATION"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp"
+                android:textAlignment="center">
+            </TextView>
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/default_margin_16dp">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tell us a little about yourself!  Helping us understand what your preferences are makes building your beautiful world with CASA BEAU MONDE limitless!  This will create your foundation for successful creation and collaboration."
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textAlignment="center">
+            </TextView>
+
+            <EditText
+                android:id="@+id/basic_et1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="FAVORITE OCCASIONS TO GET DRESSED FOR"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/basic_et2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="WHAT IS YOUR BEST FEATURE?"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/basic_et3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="FEATURE YOU DOWNPLAY OR HIDE?"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+
+            <EditText
+                android:id="@+id/basic_et4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="WHAT IS YOUR FAVORITE THING ABOUT FASHION?"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/basic_et5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="WHAT DO YOU HOPE TO ACCOMPLISH WITH CASA BEAU MONDE?"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/basic_et6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="BIGGEST FRUSTRATION WITH SHOPPING "
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/basic_et7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="WHAT ARE YOU ALWAYS ON THE HUNT FOR?"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/basic_et8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:hint="WHAT CAN YOU NEVER SEEM TO GET ENOUGH OF?"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/continue_bt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonheight"
+        android:layout_gravity="center"
+        android:layout_above="@+id/dots"
+        android:layout_margin="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/buttonheight"
+            android:layout_gravity="center"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:text="Continue"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp">
+
+        </TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:src="@drawable/ic_arrow">
+
+        </ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/default_margin_16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot_gray">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot_gray">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot_gray">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot_gray">
+
+        </ImageView>
+
+    </LinearLayout>
+</RelativeLayout>

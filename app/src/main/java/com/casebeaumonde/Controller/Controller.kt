@@ -1,5 +1,6 @@
 package com.casebeaumonde.Controller
 
+import android.service.controls.Control
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
@@ -25,6 +26,13 @@ import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListRe
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
+import com.casebeaumonde.activities.myoutfits.MyOutfits
+import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
+import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse
+import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
+import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
 import com.casebeaumonde.activities.openchat.response.BlockResponse
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
@@ -106,7 +114,12 @@ public class Controller {
     var questionariesAPI : QuestionariesAPI? = null
     var basicQuestionariesAPI : SendBasicQuestionariesAPI? = null
     var removeAllNotificationAPI : RemoveAllNotificationsAPI? = null
-
+    var myOutfitsAPI : MyOutfitsAPI? = null
+    var myOutfitsDetailAPI : MyOutfitsItemsAPI? = null
+    var newOutfitAPI : CreateOutfitAPI? = null
+    var editOutfitAPI : EditOutFitAPI? = null
+    var deleteOutFitAPI : DeleteOutFitAPI? = null
+    var deleteOutfitsItemsAPI : DeleteOutfitItemAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -338,6 +351,29 @@ public class Controller {
         basicQuestionariesAPI = basicQuestionaries
         webAPI = WebAPI()
     }
+
+    fun Controller(myOutfits: MyOutfitsAPI,newoutfit:CreateOutfitAPI,editOutFit: EditOutFitAPI,deleteOutfit:DeleteOutFitAPI)
+    {
+        myOutfitsAPI = myOutfits
+        newOutfitAPI = newoutfit
+        editOutfitAPI = editOutFit
+        deleteOutFitAPI = deleteOutfit
+        webAPI = WebAPI()
+    }
+
+    fun Controller(myOutfitsItems: MyOutfitsItemsAPI,deleteOutfitItem: DeleteOutfitItemAPI)
+    {
+        myOutfitsDetailAPI = myOutfitsItems
+        deleteOutfitsItemsAPI = deleteOutfitItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(addClosetItemList: AddClosetItemListAPI)
+    {
+        addClosetItemListAPI = addClosetItemList
+        webAPI = WebAPI()
+    }
+
 
     fun setForgotPassword(email: String) {
         webAPI?.api?.forgotPassword(email)?.enqueue(object : Callback<ForgotPassworResponse> {
@@ -1457,6 +1493,115 @@ public class Controller {
         })
     }
 
+
+    fun MyOutfits(token: String?)
+    {
+        webAPI?.api?.myOutfits(token)?.enqueue(object :Callback<MyOutfitsResponse>
+        {
+            override fun onResponse(
+                call: Call<MyOutfitsResponse>,
+                response: Response<MyOutfitsResponse>
+            ) {
+                myOutfitsAPI?.onMyOutfitsSuccess(response)
+            }
+
+            override fun onFailure(call: Call<MyOutfitsResponse>, t: Throwable) {
+               myOutfitsAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun MyOutfitsItems(token: String?,id: String?)
+    {
+        webAPI?.api?.myOutfitsItems(token, id)?.enqueue(object :Callback<MyOutfitsDetailResponse>
+        {
+            override fun onResponse(
+                call: Call<MyOutfitsDetailResponse>,
+                response: Response<MyOutfitsDetailResponse>
+            ) {
+                myOutfitsDetailAPI?.onMyOutfitItemSuccess(response)
+            }
+
+            override fun onFailure(call: Call<MyOutfitsDetailResponse>, t: Throwable) {
+                myOutfitsDetailAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun CreateNewOutfit(token: String?,title: String?,decripition: String?)
+    {
+        webAPI?.api?.newOutfit(token,title,decripition)?.enqueue(object :Callback<NewOutfitResponse>
+        {
+            override fun onResponse(
+                call: Call<NewOutfitResponse>,
+                response: Response<NewOutfitResponse>
+            ) {
+                newOutfitAPI?.onCreateOutfitSuccess(response)
+            }
+
+            override fun onFailure(call: Call<NewOutfitResponse>, t: Throwable) {
+                newOutfitAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun EditOutFit(token: String?,id: String?,title: String?,decripition: String?)
+    {
+        webAPI?.api?.editOutfit(token,id,title,decripition)?.enqueue(object :Callback<EditOutfitResponse>
+        {
+            override fun onResponse(
+                call: Call<EditOutfitResponse>,
+                response: Response<EditOutfitResponse>
+            ) {
+                editOutfitAPI?.onEditOutfitSuccess(response)
+            }
+
+            override fun onFailure(call: Call<EditOutfitResponse>, t: Throwable) {
+                editOutfitAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun DeleteOutfit(token: String?,id: String?)
+    {
+        webAPI?.api?.deleteOutfit(token,id)?.enqueue(object :Callback<DeleteOutfitResponse>
+        {
+            override fun onResponse(
+                call: Call<DeleteOutfitResponse>,
+                response: Response<DeleteOutfitResponse>
+            ) {
+                deleteOutFitAPI?.onDeleteOutfitSuccess(response)
+            }
+
+            override fun onFailure(call: Call<DeleteOutfitResponse>, t: Throwable) {
+               deleteOutFitAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun DeleteOutfitItem(token: String?,id: String?)
+    {
+        webAPI?.api?.deleteOutfitItem(token,id)?.enqueue(object :Callback<DeleteOutfitItemResponse>
+        {
+            override fun onResponse(
+                call: Call<DeleteOutfitItemResponse>,
+                response: Response<DeleteOutfitItemResponse>
+            ) {
+                deleteOutfitsItemsAPI?.onDeleteOnfitItemSuccess(response)
+            }
+
+            override fun onFailure(call: Call<DeleteOutfitItemResponse>, t: Throwable) {
+               deleteOutfitsItemsAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1740,6 +1885,37 @@ public class Controller {
 
     interface RemoveAllNotificationsAPI {
         fun onRemoveALlNotificationsAPI(removeAllNotification:Response<RemoveAllNotificationResponse>)
+        fun error(error: String?)
+    }
+
+    interface MyOutfitsAPI {
+        fun onMyOutfitsSuccess(success : Response<MyOutfitsResponse>)
+        fun error(error: String?)
+    }
+
+    interface MyOutfitsItemsAPI {
+        fun onMyOutfitItemSuccess(success: Response<MyOutfitsDetailResponse>)
+        fun error(error: String?)
+    }
+
+
+    interface CreateOutfitAPI {
+        fun onCreateOutfitSuccess(success:Response<NewOutfitResponse>)
+        fun error(error: String?)
+    }
+
+    interface EditOutFitAPI {
+        fun onEditOutfitSuccess(success : Response<EditOutfitResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteOutFitAPI {
+        fun onDeleteOutfitSuccess(success:Response<DeleteOutfitResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteOutfitItemAPI {
+        fun onDeleteOnfitItemSuccess(success: Response<DeleteOutfitItemResponse>)
         fun error(error: String?)
     }
 }

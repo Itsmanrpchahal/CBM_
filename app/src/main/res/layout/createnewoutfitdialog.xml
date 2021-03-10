@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/whiteborderblack1"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add New Outfit"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_24sp">
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/outfitname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Outfit Name"
+        android:inputType="text"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:textColor="@color/colorWhite">
+
+    </EditText>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorWhite">
+
+    </View>
+
+
+    <EditText
+        android:id="@+id/outfit_decs"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:backgroundTint="@android:color/transparent"
+        android:background="@drawable/whiteborderblack1"
+        android:hint="Enter Outfit Description"
+        android:inputType="textMultiLine"
+        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorWhite"
+        android:gravity="start"
+        android:padding="@dimen/margin_8dp">
+
+    </EditText>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="@dimen/margin_8dp">
+
+
+        <Button
+            android:id="@+id/cancel_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack"
+            android:fontFamily="@font/oswaldlight"
+            android:text="CANCEL">
+
+        </Button>
+
+        <Button
+            android:id="@+id/create_bt"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/oswaldlight"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:text="  CREATE NEW OUTFIT  "
+            android:textColor="@color/colorBlack">
+
+        </Button>
+    </LinearLayout>
+</LinearLayout>

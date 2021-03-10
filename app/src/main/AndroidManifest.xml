@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.b_questionaries.fashionevents.B_FashionEventsActivity"></activity>
+        <activity android:name=".activities.myoutfitsdetail.AddNewOutfitItem"></activity>
+        <activity android:name=".activities.myoutfitsdetail.MyOutfitsItems" />
+        <activity android:name=".activities.myoutfits.MyOutfits" />
+        <activity android:name=".activities.b_questionaries.fashionevents.B_FashionEventsActivity" />
         <activity android:name=".activities.b_questionaries.b_basicInfo1.B_BasicInfoActivity1" />
         <activity android:name=".activities.b_questionaries.b_basicInfo.B_BasicInfoActivity" />
         <activity android:name=".activities.b_questionaries.tellusmore.B_Tell_US_MORE" />

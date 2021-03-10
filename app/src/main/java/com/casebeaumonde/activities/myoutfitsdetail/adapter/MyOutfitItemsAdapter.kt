@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.myclosets.adapter
+package com.casebeaumonde.activities.myoutfitsdetail.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,83 +10,57 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
-import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
-import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myoutfitsdetail.MyOutfitsItems
+import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closet_layout.view.*
 import java.lang.Exception
+import java.util.ArrayList
 
-class MyClosetsAdapter(
-    var context: Context,
-    var closetsList: MutableList<MyClosetsResponse.Data.Closet>,
-    var userID : String,
-    var loginuserID : String
-) :
-    RecyclerView.Adapter<MyClosetsAdapter.ViewHolder>() {
+class MyOutfitItemsAdapter(
+    var context: Context, var outfitItems: ArrayList<MyOutfitsDetailResponse.Data.Outfit.Item>,
+    var userid: String) :
+    RecyclerView.Adapter<MyOutfitItemsAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyClosetsAdapter.ViewHolder {
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var v = LayoutInflater.from(parent.context).inflate(R.layout.closet_layout, parent, false)
+
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: MyClosetsAdapter.ViewHolder, position: Int) {
-        val closets = closetsList.get(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val myOutfits = outfitItems.get(position)
         try {
-            Glide.with(context).load(Constants.BASE_IMAGE_URL + closets.image)
+            Glide.with(context).load(Constants.BASE_IMAGE_URL + myOutfits.picture)
                 .placeholder(R.drawable.login_banner)
                 .into(holder.itemView.closet_banner)
         } catch (e: Exception) {
 
         }
 
-        holder.itemView.closet_username.text = closets.title
-        holder.itemView.closet_descripition.text = closets.description
-        holder.itemView.closet_visibilty.text = "Visibility: " + closets.visibility
+        holder.itemView.closet_username.text = myOutfits.title
+        holder.itemView.closet_descripition.text = myOutfits.description.toString()
+        //holder.itemView.closet_visibilty.text = "Visibility: " + myOutfits.visibility
         holder.itemView.closet_customer.text =
-            "Customer: " + closets.creator?.firstname + " " + closets.creator?.lastname
+            "Customer: " + myOutfits.creator?.firstname + " " + myOutfits.creator?.lastname
         holder.itemView.closet_createdat.text =
-            "Created at: " + Utils.changeDateTimeToDateTime(closets.createdAt)
+            "Created at: " + Utils.changeDateTimeToDateTime(myOutfits.createdAt)
 
-        holder.itemView.closet_go_to_closets.setOnClickListener {
-            context.startActivity(
-                Intent(
-                    context,
-                    MyOutfitsItems::class.java
-                ).putExtra(Constants.CLOSETID, "" + closets.id).putExtra("userID",userID)
-            )
-        }
-
-        if (userID != loginuserID)
-        {
-            holder.itemView.closets_edititem.visibility = View.GONE
-            holder.itemView.closets_additem.visibility = View.GONE
-            holder.itemView.closets_delete.visibility = View.GONE
-            holder.itemView.closets_duplicate.visibility = View.GONE
-        }
-
-        holder.itemView.closets_edititem.setOnClickListener {
-            MyClosets.closetitemidIf!!.getClosetID(position.toString())
-        }
+        holder.itemView.closet_go_to_closets.visibility = View.GONE
 
         holder.itemView.closets_delete.setOnClickListener {
-            MyClosets.deleteClosetID!!.deleteClosetID(closets.id.toString())
+            MyOutfitsItems.outfitidIf?.getClosetID(myOutfits.id.toString(), position.toString())
         }
-
-        holder.itemView.closets_additem.setOnClickListener {
-            context.startActivity(Intent(context,AddItemToCloset::class.java).putExtra("closetID",closets.id.toString()).putExtra("edit","0").putExtra("closetItemID",""))
-        }
-
     }
 
     override fun getItemCount(): Int {
-        return closetsList.size
+       return outfitItems.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         fun bindItems(myClosets: MyClosetsResponse) {
             var closet_banner: ImageView
             var closet_username: TextView
@@ -113,4 +87,5 @@ class MyClosetsAdapter(
             closets_delete = itemView.findViewById(R.id.closets_delete)
         }
     }
+
 }

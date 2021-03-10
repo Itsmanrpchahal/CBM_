@@ -28,4 +28,5 @@ object Constants
     val CLOSE  = "close"
     val CHAT = "chat"
     val QUESTIONARIES_STATUS = "questionariesstatus"
+    val OUTFITID ="outfitid"
 }

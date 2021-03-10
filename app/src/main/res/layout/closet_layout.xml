@@ -167,12 +167,12 @@
 
                 <Button
                     android:id="@+id/closets_duplicate"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="71dp"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/oswaldlight"
                     android:text="Duplicate"
-                    android:textAllCaps="true"
-                    android:fontFamily="@font/oswaldlight">
+                    android:textAllCaps="true">
 
                 </Button>
 

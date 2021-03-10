@@ -29,6 +29,7 @@ import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
+import com.casebeaumonde.activities.myoutfits.MyOutfits
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.paymenthistory.PaymentHistory
 import com.casebeaumonde.activities.paymentscreen_b.PaymentScreenBussiness
@@ -63,9 +64,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAPI,
-    Controller.UpdateProfileAPI, GetUserID, Controller.PaymentMethodAPI, GetCardID,
-    Controller.DeleteCardAPI, Controller.CancelPlanAPI, Controller.AddPaymentMethodAPI {
+class Profile : BaseFrag(),
+    Controller.UserProfileAPI,
+    Controller.UpdateAvatarAPI,
+    Controller.UpdateProfileAPI,
+    GetUserID,
+    Controller.PaymentMethodAPI,
+    GetCardID,
+    Controller.DeleteCardAPI,
+    Controller.CancelPlanAPI,
+    Controller.AddPaymentMethodAPI {
 
     private lateinit var controller: Controller
     private lateinit var utility: Utility
@@ -133,6 +141,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
     private lateinit var profile_mycontracts: Button
     private lateinit var profile_myclosets: Button
     private lateinit var profile_myevents: Button
+    private lateinit var profile_myoutfits : Button
     private lateinit var profile_eventInvitation: Button
     private lateinit var social_accounts : LinearLayout
     val c = Calendar.getInstance()
@@ -253,6 +262,11 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
 
         profile_eventInvitation.setOnClickListener {
             startActivity(Intent(context, EventsInvitations::class.java).putExtra("userID", userID))
+        }
+
+
+        profile_myoutfits.setOnClickListener {
+            startActivity(Intent(context, MyOutfits::class.java).putExtra("userID",userID))
         }
 
     }
@@ -738,6 +752,7 @@ class Profile : BaseFrag(), Controller.UserProfileAPI, Controller.UpdateAvatarAP
         profile_myevents = view.findViewById(R.id.profile_myevents)
         profile_eventInvitation = view.findViewById(R.id.profile_eventInvitation)
         social_accounts = view.findViewById(R.id.social_accounts)
+        profile_myoutfits = view.findViewById(R.id.profile_myoutfits)
         pd.show()
         pd.setContentView(R.layout.loading)
 

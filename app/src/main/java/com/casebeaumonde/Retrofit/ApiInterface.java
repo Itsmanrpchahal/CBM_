@@ -28,6 +28,12 @@ import com.casebeaumonde.activities.myclosets.response.MoveClosetItems;
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse;
+import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse;
+import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse;
+import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse;
+import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse;
@@ -569,5 +575,46 @@ public interface ApiInterface {
     @DELETE("api/v1/removeAllNotification")
     Call<RemoveAllNotificationResponse> removeAllNotifications(
             @Header("Authorization") String token
+    );
+
+    @GET("api/v1/outfitList")
+    Call<MyOutfitsResponse> myOutfits(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/v1/outfitDetail/{input}")
+    Call<MyOutfitsDetailResponse> myOutfitsItems(
+      @Header("Authorization") String token,
+      @Path("input") String id
+    );
+
+
+    @FormUrlEncoded
+    @POST("api/v1/createOutfit")
+    Call<NewOutfitResponse> newOutfit(
+            @Header("Authorization") String token,
+            @Field("title") String title,
+            @Field("description") String description
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/updateOutfit")
+    Call<EditOutfitResponse> editOutfit(
+            @Header("Authorization") String token,
+            @Field("id") String id,
+            @Field("title") String title,
+            @Field("description") String description
+    );
+
+    @DELETE("api/v1/removeOutfit/{input}")
+    Call<DeleteOutfitResponse> deleteOutfit (
+      @Header("Authorization") String token,
+      @Path("input") String id
+    );
+
+    @DELETE("api/v1/removeOutfitItem/{input}")
+    Call<DeleteOutfitItemResponse> deleteOutfitItem (
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 }

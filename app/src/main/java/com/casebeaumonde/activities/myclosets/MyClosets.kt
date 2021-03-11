@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.app.Notification
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,6 +34,8 @@ import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse
+import com.casebeaumonde.activities.myoutfits.MyOutfits
+import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
@@ -42,6 +45,7 @@ import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_my_closets.*
 import okhttp3.MultipartBody
 import retrofit2.Response
+import ru.nikartm.support.ImageBadgeView
 import java.io.File
 
 class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetAPI,
@@ -63,8 +67,10 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var createcloset_upload: Button
     private lateinit var createcloset_uploadfilename: TextView
     private lateinit var createcloset_imagerperview: ImageView
+    private lateinit var outfits : ImageButton
     private lateinit var createcloset_savebt: Button
     private lateinit var createcloset_cancelbt: Button
+    private lateinit var toolbar_notifiction : ImageBadgeView
     private lateinit var search_ET: EditText
     private lateinit var dialog: Dialog
     private var checked: String = "0"
@@ -131,6 +137,13 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
         })
 
+        outfits.setOnClickListener {
+            startActivity(Intent(this, MyOutfits::class.java).putExtra("userID",getStringVal(Constants.USERID)))
+        }
+
+        toolbar_notifiction.setOnClickListener {
+            startActivity(Intent(this,Notifications::class.java))
+        }
 
     }
 
@@ -366,6 +379,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         create_closets = findViewById(R.id.create_closets)
         closets_recyler = findViewById(R.id.closets_recyler)
         search_ET = findViewById(R.id.search_ET)
+        outfits = findViewById(R.id.outfits)
+        toolbar_notifiction = findViewById(R.id.toolbar_notifiction)
     }
 
     override fun onMyClosetsSuccess(myClosetsResponse: Response<MyClosetsResponse>) {

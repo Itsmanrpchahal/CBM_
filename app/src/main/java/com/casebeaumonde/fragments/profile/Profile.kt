@@ -265,9 +265,6 @@ class Profile : BaseFrag(),
         }
 
 
-        profile_myoutfits.setOnClickListener {
-            startActivity(Intent(context, MyOutfits::class.java).putExtra("userID",userID))
-        }
 
     }
 

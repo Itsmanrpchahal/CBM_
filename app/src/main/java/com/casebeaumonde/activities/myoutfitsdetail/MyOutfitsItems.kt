@@ -49,10 +49,9 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
     private fun listeners() {
         outfitsitems_back.setOnClickListener { onBackPressed() }
         closetiems_add.setOnClickListener {
-            startActivity(Intent(this,AddNewOutfitItem::class.java))
+            startActivity(Intent(this,AddNewOutfitItem::class.java).putExtra("outfitID",outfitID))
         }
     }
-
 
     private fun findIds() {
         outfitidIf = this

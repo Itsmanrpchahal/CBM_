@@ -32,6 +32,7 @@ import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse;
 import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse;
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse;
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.AddOutfitItemResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
@@ -616,5 +617,20 @@ public interface ApiInterface {
     Call<DeleteOutfitItemResponse> deleteOutfitItem (
             @Header("Authorization") String token,
             @Path("input") String id
+    );
+
+    @Multipart
+    @POST("api/v1/addOutfitNewItem")
+    Call<AddOutfitItemResponse> addOutfitItem(
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part picture,
+            @Query("title") String title,
+            @Query("description") String description,
+            @Query("outfit_id") String outfit_id,
+            @Query("category_id") String category_id,
+            @Query("size") String size,
+            @Query("color") String color,
+            @Query("brand") String brand,
+            @Query("price") Double price
     );
 }

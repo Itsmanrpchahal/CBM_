@@ -142,17 +142,17 @@
                 android:gravity="right"
                 android:orientation="horizontal">
 
+
                 <Button
                     android:id="@+id/closets_additem"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:fontFamily="@font/oswaldlight"
                     android:background="@android:color/transparent"
-                    android:text="Add Items">
+                    android:fontFamily="@font/oswaldlight"
+                    android:text="Add Items"
+                    android:textAllCaps="true">
 
                 </Button>
-
 
                 <Button
                     android:id="@+id/closets_edititem"

@@ -55,7 +55,7 @@ class MyClosetsAdapter(
             context.startActivity(
                 Intent(
                     context,
-                    MyOutfitsItems::class.java
+                    ClosetsItems::class.java
                 ).putExtra(Constants.CLOSETID, "" + closets.id).putExtra("userID",userID)
             )
         }

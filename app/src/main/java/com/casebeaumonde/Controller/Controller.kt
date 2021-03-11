@@ -31,6 +31,7 @@ import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.AddOutfitItemResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
@@ -120,6 +121,7 @@ public class Controller {
     var editOutfitAPI : EditOutFitAPI? = null
     var deleteOutFitAPI : DeleteOutFitAPI? = null
     var deleteOutfitsItemsAPI : DeleteOutfitItemAPI? = null
+    var addOutfitItemAPI : AddOutfitItemAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -368,9 +370,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(addClosetItemList: AddClosetItemListAPI)
+    fun Controller(addClosetItemList: AddClosetItemListAPI,outfitItem: AddOutfitItemAPI)
     {
         addClosetItemListAPI = addClosetItemList
+        addOutfitItemAPI = outfitItem
         webAPI = WebAPI()
     }
 
@@ -1602,6 +1605,33 @@ public class Controller {
         })
     }
 
+    fun AddOutfitItem(token: String?,
+                      picture: MultipartBody.Part,
+                      title: String?,
+                      decripition: String?,
+                      outfit_id: String,
+                      category_id: String,
+                      size: String,
+                      color: String,
+                      brand: String,
+                      price: String){
+
+        webAPI?.api?.addOutfitItem(token,picture,title,decripition,outfit_id,category_id,size,color,brand,price.toDouble())?.enqueue(object :Callback<AddOutfitItemResponse>
+        {
+            override fun onResponse(
+                call: Call<AddOutfitItemResponse>,
+                response: Response<AddOutfitItemResponse>
+            ) {
+                addOutfitItemAPI?.onaddOutfitItemSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AddOutfitItemResponse>, t: Throwable) {
+               addOutfitItemAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1916,6 +1946,11 @@ public class Controller {
 
     interface DeleteOutfitItemAPI {
         fun onDeleteOnfitItemSuccess(success: Response<DeleteOutfitItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddOutfitItemAPI {
+        fun onaddOutfitItemSuccess(success: Response<AddOutfitItemResponse>)
         fun error(error: String?)
     }
 }

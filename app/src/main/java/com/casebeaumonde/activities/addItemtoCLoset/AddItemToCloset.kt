@@ -324,7 +324,28 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     }
                 }
             }
+            Size = ArrayList()
+            size =
+                addClosetItemList.body()
+                    ?.getData()?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
 
+            for (i in 0 until size.size) {
+                val SIZE = size.get(i)
+                Size.add(SIZE.name.toString())
+            }
+
+
+            if (size.size > 0) {
+
+                for (i in size.indices) {
+                    val catpos = size[i]
+                    // Toast.makeText(this,""+sizePos+" =>   "+sizeID,Toast.LENGTH_LONG).show()
+                    if (catpos.id.toString().equals(sizeID)) {
+                        sizePos = i
+
+                    }
+                }
+            }
             Colors = ArrayList()
 
             color =
@@ -348,28 +369,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
 
 
-            Size = ArrayList()
-            size =
-                addClosetItemList.body()
-                    ?.getData()?.sizes as ArrayList<AddClosetItemResponse.Data.Size>
 
-            for (i in 0 until size.size) {
-                val SIZE = size.get(i)
-                Size.add(SIZE.name.toString())
-            }
-
-
-            if (size.size > 0) {
-
-                for (i in size.indices) {
-                    val catpos = size[i]
-                   // Toast.makeText(this,""+sizePos+" =>   "+sizeID,Toast.LENGTH_LONG).show()
-                    if (catpos.id.toString().equals(sizeID)) {
-                        sizePos = i
-
-                    }
-                }
-            }
 
             setFetchList()
         } else {

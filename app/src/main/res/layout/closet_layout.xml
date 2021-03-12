@@ -72,6 +72,7 @@
             </TextView>
 
             <View
+                android:id="@+id/view"
                 android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
@@ -80,12 +81,62 @@
 
             </View>
 
+            <RelativeLayout
+                android:id="@+id/haingerllayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/closet_descripition">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/default_margin_16dp">
+
+                    <ImageButton
+                        android:id="@+id/hainger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_hanger"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:button="@drawable/ic_hanger">
+
+                    </ImageButton>
+
+                    <CheckBox
+                        android:id="@+id/closetitem_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_baseline_favorite_24"
+                        android:button="@drawable/favoritecheckbox">
+
+                    </CheckBox>
+
+                    <TextView
+                        android:id="@+id/closetitem_favcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_below="@id/closetitem_favorite"
+                        android:textColor="@color/colorWhite">
+
+                    </TextView>
+                </LinearLayout>
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/closet_visibilty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/closet_descripition"
-                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_below="@id/view"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:textAllCaps="true"
                 android:fontFamily="@font/oswaldlight"
                 android:singleLine="true"

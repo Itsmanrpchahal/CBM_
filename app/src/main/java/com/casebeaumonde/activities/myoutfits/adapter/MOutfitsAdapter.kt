@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -47,11 +48,13 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
         holder.itemView.closet_go_to_closets.text = "GO TO OUTFIT"
         holder.itemView.closet_username.text = myOutfits.title
         holder.itemView.closet_descripition.text = myOutfits.description.toString()
-        //holder.itemView.closet_visibilty.text = "Visibility: " + myOutfits.visibility
+        holder.itemView.closet_visibilty.visibility  = View.GONE
+        holder.itemView.closet_status.text = myOutfits.status
         holder.itemView.closet_customer.text =
             "Customer: " + myOutfits.creator?.firstname + " " + myOutfits.creator?.lastname
         holder.itemView.closet_createdat.text =
             "Created at: " + Utils.changeDateTimeToDateTime(myOutfits.createdAt)
+        holder.itemView.haingerllayout.visibility = View.GONE
 
         holder.itemView.closet_go_to_closets.setOnClickListener {
             context.startActivity(
@@ -100,6 +103,7 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
             var closets_additem: Button
             var closets_edititem: Button
             var closets_delete: Button
+            var haingerllayout : RelativeLayout
 
             closet_banner = itemView.findViewById(R.id.closet_banner)
             closet_username = itemView.findViewById(R.id.closet_username)
@@ -112,6 +116,7 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
             closets_additem = itemView.findViewById(R.id.closets_additem)
             closets_edititem = itemView.findViewById(R.id.closets_edititem)
             closets_delete = itemView.findViewById(R.id.closets_delete)
+            haingerllayout = itemView.findViewById(R.id.haingerllayout)
         }
     }
 }

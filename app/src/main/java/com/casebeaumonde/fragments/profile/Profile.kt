@@ -623,7 +623,7 @@ class Profile : BaseFrag(),
             } else if (getStringVal(Constants.CHAT).equals("3")) {
                 radio_noone.isChecked = true
                 mesgFrom = "3"
-            }
+            } else {}
         }
 
         editprofile_firstname.setText(getStringVal(Constants.FIRSTNAME))
@@ -925,6 +925,7 @@ class Profile : BaseFrag(),
             {
                 profile_mycontracts.visibility = View.VISIBLE
                 social_accounts.visibility = View.VISIBLE
+                profile_mycontracts.visibility = View.GONE
 
             }
             if (userProfileResponse.body()

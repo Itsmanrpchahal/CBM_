@@ -925,7 +925,7 @@ class Profile : BaseFrag(),
             {
                 profile_mycontracts.visibility = View.VISIBLE
                 social_accounts.visibility = View.VISIBLE
-                profile_mycontracts.visibility = View.GONE
+                profile_mycontracts.visibility = View.VISIBLE
 
             }
             if (userProfileResponse.body()

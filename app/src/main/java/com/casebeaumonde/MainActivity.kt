@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.b_questionaries.B_GetStartedActivity
+import com.casebeaumonde.activities.biz_questionaries.Biz_Questionaries1
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
@@ -117,7 +118,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             if (getStringVal(Constants.USER_ROLE).equals("customer") && getStringVal(Constants.QUESTIONARIES_STATUS).equals("0")) {
                 startActivity(Intent(this, GetStartedActivity::class.java))
             } else {
-                startActivity(Intent(this, B_GetStartedActivity::class.java))
+                startActivity(Intent(this, Biz_Questionaries1::class.java))
             }
         }
 

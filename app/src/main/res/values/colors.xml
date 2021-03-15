@@ -12,5 +12,6 @@
     <color name="colorOrange">#FFAF3A</color>
     <color name="colorBackground">#222222</color>
     <color name="colorShadow">#8A707070</color>
+    <color name="colorgray">#696969</color>
     <color name="aaa">#aaa</color>
 </resources>

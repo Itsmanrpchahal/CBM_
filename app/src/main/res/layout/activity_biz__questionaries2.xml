@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".activities.b_questionaries.fashionevents.B_FashionEventsActivity">
+    android:background="@color/colorBlack"
+    tools:context=".activities.biz_questionaries.Biz_Questionaries2">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                         android:layout_marginLeft="@dimen/margin_8dp"
                         android:layout_marginTop="@dimen/default_margin_16dp"
                         android:layout_marginRight="@dimen/margin_8dp"
-                        android:text="TELL US ABOUT YOURSELF"
+                        android:text="TELL US ABOUT YOUR BUSINESS"
                         android:textAlignment="center"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/toolbartv">
@@ -64,58 +64,143 @@
             <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/cbmlogo"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/default_margin_16dp">
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:src="@drawable/cbmlogo">
 
             </ImageView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="WHAT TYPE OF FASHION EVENTS
-ARE YOU INTERESTED IN? "
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:layout_marginLeft="@dimen/margin_8dp"
-                android:layout_marginRight="@dimen/margin_8dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="22sp"
-                android:textAlignment="center">
-            </TextView>
-
-            <TextView
+            <EditText
+                android:id="@+id/basic1_et1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="(SELECT ALL THAT APPLY)"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:textSize="@dimen/textsize_14sp"
+                android:hint="AVERAGE SALES PER MONTH"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/margin_8dp">
+                android:textColorHint="@color/colorWhite">
 
-            </TextView>
+            </EditText>
+
 
             <View
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:background="@color/colorWhite"
-                android:layout_marginTop="@dimen/default_margin_16dp">
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
 
             </View>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylerview"
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:textSize="@dimen/textsize_14sp"
+                android:hint="AVERAGE SPH"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
 
 
-            </androidx.recyclerview.widget.RecyclerView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@android:color/transparent"
+                android:textSize="@dimen/textsize_14sp"
+                android:hint="AVERAGE SELL THRU %"
+                android:inputType="textShortMessage"
+                android:padding="2dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite">
+
+            </EditText>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/margin_8dp"
+                android:background="@drawable/whiteborder"
+                android:hint="ARE YOU ON ANY OTHER PLATFORMS? IF YES, WHAT?"
+                android:textSize="@dimen/textsize_12sp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:padding="@dimen/margin_8dp">
+
+            </EditText>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/margin_8dp"
+                android:background="@drawable/whiteborder"
+                android:hint="DESCRIBE YOUR DREAM BRAND AMBASSADOR"
+                android:textSize="@dimen/textsize_12sp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textAlignment="textStart"
+                android:gravity="start"
+                android:padding="@dimen/margin_8dp">
+
+            </EditText>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/margin_8dp"
+                android:background="@drawable/whiteborder"
+                android:gravity="start"
+                android:hint="WHAT DO YOU HOPE TO ACCOMPLISH YOUR MEMBERSHIP?"
+                android:padding="@dimen/margin_8dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_12sp">
+
+            </EditText>
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/continue1_bt"
+        android:id="@+id/biz2_continue_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/buttonheight"
         android:layout_gravity="center"
@@ -130,9 +215,9 @@ ARE YOU INTERESTED IN? "
             android:layout_height="@dimen/buttonheight"
             android:layout_gravity="center"
             android:background="@color/colorWhite"
-            android:textAllCaps="true"
             android:gravity="center"
             android:text="Continue"
+            android:textAllCaps="true"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textSize="18sp">
@@ -143,6 +228,7 @@ ARE YOU INTERESTED IN? "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:visibility="visible"
             android:layout_marginLeft="@dimen/margin_8dp"
             android:src="@drawable/ic_arrow">
 
@@ -160,13 +246,6 @@ ARE YOU INTERESTED IN? "
         android:layout_marginBottom="@dimen/default_margin_16dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
-
-        </ImageView>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -176,15 +255,6 @@ ARE YOU INTERESTED IN? "
 
         </ImageView>
 
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
-
-        </ImageView>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -202,6 +272,26 @@ ARE YOU INTERESTED IN? "
 
         </ImageView>
 
-    </LinearLayout>
 
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot_gray">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:src="@drawable/ic_dot_gray">
+
+        </ImageView>
+
+
+
+
+    </LinearLayout>
 </RelativeLayout>

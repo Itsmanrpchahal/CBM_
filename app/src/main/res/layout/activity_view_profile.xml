@@ -271,7 +271,7 @@
                     android:layout_marginRight="@dimen/margin_40dp"
                     android:background="@color/colorWhite"
                     android:visibility="visible"
-                    android:text="My Gigs"
+                    android:text="My Services"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/textsize_14sp">
 

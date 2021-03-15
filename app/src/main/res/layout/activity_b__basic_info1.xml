@@ -409,6 +409,7 @@
             android:layout_gravity="center"
             android:background="@color/colorWhite"
             android:gravity="center"
+            android:textAllCaps="true"
             android:text="Continue"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"

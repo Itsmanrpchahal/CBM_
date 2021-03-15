@@ -18,7 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.myoutfitsdetail.AddNewOutfitItem"></activity>
+        <activity android:name=".activities.influencer_questionaries.InfluencerQuestionaries2"></activity>
+        <activity android:name=".activities.influencer_questionaries.InfluencerQuestionaries1" />
+        <activity android:name=".activities.biz_questionaries.Biz_Questionaries4" />
+        <activity android:name=".activities.biz_questionaries.Biz_Questionaries3" />
+        <activity android:name=".activities.biz_questionaries.Biz_Questionaries2" />
+        <activity android:name=".activities.biz_questionaries.Biz_Questionaries1" />
+        <activity android:name=".activities.b_questionaries.like_CBM.Like_CBM" />
+        <activity android:name=".activities.myoutfitsdetail.AddNewOutfitItem" />
         <activity android:name=".activities.myoutfitsdetail.MyOutfitsItems" />
         <activity android:name=".activities.myoutfits.MyOutfits" />
         <activity android:name=".activities.b_questionaries.fashionevents.B_FashionEventsActivity" />

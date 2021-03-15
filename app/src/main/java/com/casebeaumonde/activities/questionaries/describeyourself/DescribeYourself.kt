@@ -82,8 +82,8 @@ class DescribeYourself : BaseClass(), SelectYourself_IF , Controller.Questionari
                     Intent(
                         this,
                         SelectStores::class.java
-                    ).
-                    putExtra("name", name)
+                    )
+                        .putExtra("name", name)
                         .putExtra("city", city).putExtra("state", state)
                         .putExtra("country", country).putExtra("mobile", mobile)
                         .putExtra("age", age).putExtra("month", month).putExtra("date", date)
@@ -91,13 +91,13 @@ class DescribeYourself : BaseClass(), SelectYourself_IF , Controller.Questionari
                         .putStringArrayListExtra("colorscode", colorscode)
                         .putExtra("bodyType",bodyType)
                         .putExtra("bodyType_text",bodyType_text)
-                        .putStringArrayListExtra("images",images).
-                        putExtra("height",height).
-                        putExtra("eycolor",eycolor).
-                        putExtra("haircolor",haircolor).
-                        putStringArrayListExtra("brandsID",brandsID).
-                        putStringArrayListExtra("yourself",selectIds).
-                            putStringArrayListExtra("imageData",imageData)
+                        .putStringArrayListExtra("images",images)
+                        .putExtra("height",height)
+                        .putExtra("eycolor",eycolor)
+                        .putExtra("haircolor",haircolor)
+                        .putStringArrayListExtra("brandsID",brandsID)
+                        .putStringArrayListExtra("yourself",selectIds)
+                        .putStringArrayListExtra("imageData",imageData)
                 )
             }
 

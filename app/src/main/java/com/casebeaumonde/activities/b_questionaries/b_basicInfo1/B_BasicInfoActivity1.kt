@@ -6,8 +6,9 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.b_questionaries.fashionevents.B_FashionEventsActivity
+import com.casebeaumonde.constants.BaseClass
 
-class B_BasicInfoActivity1 : AppCompatActivity() {
+class B_BasicInfoActivity1 : BaseClass() {
     private lateinit var continue_bt : LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +22,11 @@ class B_BasicInfoActivity1 : AppCompatActivity() {
         continue_bt.setOnClickListener {
             startActivity(Intent(this, B_FashionEventsActivity::class.java))
         }
+
     }
 
     private fun findIds() {
         continue_bt = findViewById(R.id.continue_bt)
+
     }
 }

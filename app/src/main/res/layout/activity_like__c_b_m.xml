@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    tools:context=".activities.b_questionaries.fashionevents.B_FashionEventsActivity">
+    android:background="@color/colorBlack"
+    tools:context=".activities.b_questionaries.like_CBM.Like_CBM">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -73,8 +74,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WHAT TYPE OF FASHION EVENTS
-ARE YOU INTERESTED IN? "
+                android:text="I WOULD LIKE
+CASA BEAU MONDE TO… "
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -115,7 +116,7 @@ ARE YOU INTERESTED IN? "
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/continue1_bt"
+        android:id="@+id/cbmcontinue_bt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/buttonheight"
         android:layout_gravity="center"
@@ -130,9 +131,9 @@ ARE YOU INTERESTED IN? "
             android:layout_height="@dimen/buttonheight"
             android:layout_gravity="center"
             android:background="@color/colorWhite"
-            android:textAllCaps="true"
             android:gravity="center"
-            android:text="Continue"
+            android:text="Finish"
+            android:textAllCaps="true"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textSize="18sp">
@@ -143,6 +144,7 @@ ARE YOU INTERESTED IN? "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_marginLeft="@dimen/margin_8dp"
             android:src="@drawable/ic_arrow">
 
@@ -190,7 +192,7 @@ ARE YOU INTERESTED IN? "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:src="@drawable/ic_dot">
+            android:src="@drawable/ic_dot_gray">
 
         </ImageView>
 
@@ -198,10 +200,10 @@ ARE YOU INTERESTED IN? "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
+            android:src="@drawable/ic_dot">
 
         </ImageView>
 
-    </LinearLayout>
 
+    </LinearLayout>
 </RelativeLayout>

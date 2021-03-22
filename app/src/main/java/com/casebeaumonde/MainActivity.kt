@@ -102,6 +102,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     R.id.nav_cart,
                     R.id.nav_closets,
                     R.id.nav_liveevents,
+                    R.id.nav_contractor,
                     R.id.nav_chat,
                     R.id.nav_home,
                     R.id.nav_about,

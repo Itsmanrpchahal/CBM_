@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    tools:context=".fragments.contracts.ContractsFB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="80dp"
+        android:weightSum="2">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="42dp"
+                android:fontFamily="@font/opensans_regular"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ACTIVE"
+                android:layout_gravity="center"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="42dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COMPLETED"
+                android:layout_gravity="center"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/colorWhite">
+
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/margin_8dp"
+        android:layout_marginRight="@dimen/margin_8dp"
+        android:layout_marginTop="80dp">
+
+
+
+        <LinearLayout
+            android:id="@+id/view_gigs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:background="@color/colorBlack"
+                android:text="5"
+                android:textColor="@color/colorWhite"
+                android:gravity="center">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VIEW GIGS"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/opensans_regular"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_14sp">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/work_invitations"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:background="@color/colorBlack"
+                android:text="1"
+                android:textColor="@color/colorWhite"
+                android:gravity="center">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WORK INVITATIONS"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/opensans_regular"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_14sp">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/newofferstoreview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:background="@color/colorBlack"
+                android:text="5"
+                android:textColor="@color/colorWhite"
+                android:gravity="center">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEW OFFERS TO REVIEW"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/opensans_regular"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_14sp">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/invite_collaborate"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_height="@dimen/margin_40dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:background="@color/colorBlack"
+                android:text="5"
+                android:textColor="@color/colorWhite"
+                android:gravity="center">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="INVITE COLLABORATE"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/opensans_regular"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_14sp">
+
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

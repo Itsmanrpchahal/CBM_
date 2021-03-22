@@ -18,32 +18,74 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.influencer_questionaries.InfluencerQuestionaries2"></activity>
-        <activity android:name=".activities.influencer_questionaries.InfluencerQuestionaries1" />
-        <activity android:name=".activities.biz_questionaries.Biz_Questionaries4" />
-        <activity android:name=".activities.biz_questionaries.Biz_Questionaries3" />
-        <activity android:name=".activities.biz_questionaries.Biz_Questionaries2" />
-        <activity android:name=".activities.biz_questionaries.Biz_Questionaries1" />
-        <activity android:name=".activities.b_questionaries.like_CBM.Like_CBM" />
-        <activity android:name=".activities.myoutfitsdetail.AddNewOutfitItem" />
-        <activity android:name=".activities.myoutfitsdetail.MyOutfitsItems" />
-        <activity android:name=".activities.myoutfits.MyOutfits" />
-        <activity android:name=".activities.b_questionaries.fashionevents.B_FashionEventsActivity" />
-        <activity android:name=".activities.b_questionaries.b_basicInfo1.B_BasicInfoActivity1" />
-        <activity android:name=".activities.b_questionaries.b_basicInfo.B_BasicInfoActivity" />
-        <activity android:name=".activities.b_questionaries.tellusmore.B_Tell_US_MORE" />
-        <activity android:name=".activities.b_questionaries.selectbrands.B_SelectBrands" />
-        <activity android:name=".activities.b_questionaries.B_GetStartedActivity" />
+        <activity
+            android:name=".activities.influencer_questionaries.InfluencerQuestionaries2"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.influencer_questionaries.InfluencerQuestionaries1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.biz_questionaries.Biz_Questionaries4"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.biz_questionaries.Biz_Questionaries3"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.biz_questionaries.Biz_Questionaries2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.biz_questionaries.Biz_Questionaries1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.like_CBM.Like_CBM"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myoutfitsdetail.AddNewOutfitItem"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myoutfitsdetail.MyOutfitsItems"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myoutfits.MyOutfits"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.fashionevents.B_FashionEventsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.b_basicInfo1.B_BasicInfoActivity1"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.b_basicInfo.B_BasicInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.tellusmore.B_Tell_US_MORE"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.selectbrands.B_SelectBrands"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.b_questionaries.B_GetStartedActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.paymentscreen_b.PaymentScreenBussiness"
             android:label="@string/title_activity_payment_screen_bussiness"
+            android:screenOrientation="portrait"
             android:theme="@style/Translucent.NoActionBar" />
-        <activity android:name=".activities.register.userRegister.BussinessRegisterTypeScreen" />
-        <activity android:name=".fragments.cart.adapter.ThanksScreen" />
-        <activity android:name=".fragments.cart.PaymentScreen" />
-        <activity android:name=".fragments.cart.PersonalInfoScreen" />
+        <activity
+            android:name=".activities.register.userRegister.BussinessRegisterTypeScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.cart.adapter.ThanksScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.cart.PaymentScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.cart.PersonalInfoScreen"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.questionaries.selectStores.SelectStores"
+            android:colorMode="default"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -79,6 +121,7 @@
         <activity
             android:name=".activities.openchat.SendChat"
             android:label="@string/title_activity_send_chat"
+            android:screenOrientation="portrait"
             android:theme="@style/Translucent.NoActionBar" />
         <activity
             android:name=".activities.EventsInvitations.EventsInvitations"
@@ -153,7 +196,9 @@
 
         <activity
             android:name=".activities.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity
             android:name=".activities.SplashScreen"
             android:screenOrientation="portrait">

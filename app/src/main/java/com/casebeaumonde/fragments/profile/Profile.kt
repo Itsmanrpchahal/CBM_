@@ -1216,7 +1216,7 @@ class Profile : BaseFrag(),
                     payment_method_recycler.adapter = adapter
 
             } else {
-                mypaymentdialog.dismiss()
+                //mypaymentdialog.dismiss()
                 utility!!.relative_snackbar(
                     parent_profile,
                     "No Cards found",

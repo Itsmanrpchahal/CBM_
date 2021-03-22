@@ -55,6 +55,10 @@
             android:title="Live Events"
             android:icon="@drawable/ic_liveevents"/>
 
+        <item
+            android:id="@+id/nav_contractor"
+            android:title="Contracts"
+            android:icon="@drawable/ic_logout"/>
     </group>
 
     <group android:checkableBehavior="none">
@@ -88,6 +92,8 @@
             android:id="@+id/nav_logout"
             android:title="Logout"
             android:icon="@drawable/ic_logout"/>
+
+
 
     </group>
 </menu>

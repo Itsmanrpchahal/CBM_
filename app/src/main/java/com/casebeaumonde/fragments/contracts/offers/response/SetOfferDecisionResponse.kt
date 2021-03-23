@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.myContracts.tabs.offers.response
+package com.casebeaumonde.fragments.contracts.offers.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

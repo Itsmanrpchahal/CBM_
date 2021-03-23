@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/parent_myWall"
     android:orientation="vertical"
+    android:background="@color/colorBlack"
     tools:context=".activities.myWall.MyWall">
 
     <androidx.appcompat.widget.Toolbar

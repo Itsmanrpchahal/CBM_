@@ -1,11 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/parent_offers"
-    tools:context=".fragments.contracts.offers.OffersFrag">
+    android:layout_height="match_parent"
+    android:id="@+id/parent_workinvitation"
+    android:background="@color/colorBackground"
+    tools:context=".fragments.contracts.WorkInvitation_Activity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/colorBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WORK INVITATIONS"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_centerInParent="true"
+                android:textStyle="bold">
+
+            </TextView>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +49,7 @@
         android:weightSum="2">
 
         <Button
-            android:id="@+id/offer_recieved"
+            android:id="@+id/workinvitation_recieved"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlack"
@@ -28,7 +63,7 @@
         </Button>
 
         <Button
-            android:id="@+id/offer_sent"
+            android:id="@+id/workinvitation_sent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBlack"
@@ -44,7 +79,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/offer_recycler"
+        android:id="@+id/workinvitations_recycler"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_height="wrap_content">
@@ -52,13 +87,11 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/offersentinvitations_recycler"
+        android:id="@+id/worksentinvitations_recycler"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-
 </LinearLayout>

@@ -1,12 +1,15 @@
 package com.casebeaumonde.fragments.contracts
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.constants.BaseFrag
+import com.casebeaumonde.constants.Constants
 
 
 class ContractsFB : BaseFrag() {
@@ -30,7 +33,17 @@ class ContractsFB : BaseFrag() {
     }
 
     private fun listeners() {
+        work_invitations.setOnClickListener {
+            startActivity(Intent(context,WorkInvitation_Activity::class.java))
+        }
 
+        view_gigs.setOnClickListener {
+            startActivity(Intent(context,MyGigs::class.java).putExtra("userID",getStringVal(Constants.USERID)).putExtra("role",getStringVal(Constants.USER_ROLE)))
+        }
+
+        newofferstoreview.setOnClickListener {
+            startActivity(Intent(context,Offers_Activity::class.java))
+        }
     }
 
     private fun findIds(view: View) {

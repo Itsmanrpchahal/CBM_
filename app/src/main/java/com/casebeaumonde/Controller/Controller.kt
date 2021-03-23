@@ -1,6 +1,5 @@
 package com.casebeaumonde.Controller
 
-import android.service.controls.Control
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
@@ -22,11 +21,10 @@ import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
-import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
+import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
-import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
+import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.activities.myclosets.response.*
-import com.casebeaumonde.activities.myoutfits.MyOutfits
 import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse

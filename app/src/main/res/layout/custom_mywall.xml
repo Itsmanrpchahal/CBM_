@@ -3,26 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/whiteborderblack"
-    android:layout_margin="8dp"
-    android:padding="@dimen/margin_8dp">
+    android:layout_margin="5dp"
+    android:background="@color/colorBackground">
 
-    <TextView
-        android:id="@+id/myWall_closetname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Closet Name"
-        android:fontFamily="@font/oswaldlight"
-        android:textSize="@dimen/textsize_16sp"
-        android:textColor="@color/colorWhite">
 
-    </TextView>
 
     <ImageView
         android:id="@+id/myWall_image"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:padding="5dp"
+        android:background="@color/colorWhite"
         android:src="@drawable/login_banner">
 
     </ImageView>
@@ -30,65 +22,63 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/myWall_morenext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/oswaldlight"
+            android:text=""
+            android:textSize="@dimen/textsize_14sp"
+            android:textColor="@color/colorWhite">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/myWall_closetname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="Closet Name"
+            android:fontFamily="@font/oswaldlight"
+            android:textSize="@dimen/textsize_16sp"
+            android:textColor="@color/colorWhite">
 
-            <TextView
-                android:id="@+id/myWall_morenext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/oswaldlight"
-                android:text="Decs"
-                android:textSize="@dimen/textsize_14sp"
-                android:textColor="@color/colorWhite">
+        </TextView>
+        <View
+            android:layout_width="150dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorWhite">
 
-            </TextView>
+        </View>
 
+        <TextView
+            android:id="@+id/myWall_Decs"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/oswaldlight"
+            android:layout_height="wrap_content"
+            android:text="Decs"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/textsize_14sp"
+            android:textColor="@color/colorWhite">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Last Update:"
-                android:fontFamily="@font/oswaldlight"
-                android:layout_alignParentRight="true"
-                android:textSize="@dimen/textsize_14sp">
+        </TextView>
 
-            </TextView>
+        <TextView
+            android:id="@+id/myWall_lastupdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/oswaldlight"
+            android:layout_marginTop="2dp"
+            android:text="Last Update: Time"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/textsize_12sp">
 
-        </RelativeLayout>
+        </TextView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/myWall_Decs"
-                android:layout_width="wrap_content"
-                android:fontFamily="@font/oswaldlight"
-                android:layout_height="wrap_content"
-                android:text="Decs"
-                android:textSize="@dimen/textsize_14sp"
-                android:textColor="@color/colorWhite">
-
-            </TextView>
-
-
-            <TextView
-                android:id="@+id/myWall_lastupdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/oswaldlight"
-                android:text="Last Update: Time"
-                android:layout_alignParentRight="true"
-                android:textSize="@dimen/textsize_14sp">
-
-            </TextView>
-
-        </RelativeLayout>
     </LinearLayout>
 
 

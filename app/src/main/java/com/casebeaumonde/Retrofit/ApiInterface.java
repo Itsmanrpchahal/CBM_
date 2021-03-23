@@ -18,8 +18,8 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
-import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse;
-import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse;
+import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
+import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse;

@@ -35,9 +35,9 @@ class MyWallAdapter(
         Glide.with(context).load(Constants.BASE_IMAGE_URL + fashionable.image)
             .placeholder(R.drawable.login_banner).into(holder.itemView.myWall_image)
         holder.itemView.myWall_closetname.text = fashionable.title
-        holder.itemView.myWall_Decs.text = fashionable.type
-        holder.itemView.myWall_morenext.text = fashionable.description
-        holder.itemView.myWall_lastupdate.text = Utils.changeDateTimeToDateTime(fashionable.updatedAt)
+        holder.itemView.myWall_Decs.text = fashionable.description
+        holder.itemView.myWall_morenext.text = fashionable.creator?.firstname+" "+fashionable.creator?.lastname
+        holder.itemView.myWall_lastupdate.text = "Last update at: " +Utils.changeDateTimeToDateTime(fashionable.updatedAt)
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context, ClosetsItems::class.java).putExtra(Constants.CLOSETID,""+fashionable.id))

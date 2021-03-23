@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.IF.GetInviID_IF
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkRecieveInvitationAdapter
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.adapter.WorkSendInvitationAdapter
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.contracts.WorkInvitation.IF.GetInviID_IF
 import com.casebeaumonde.utilities.Utility
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_work_inviation.*

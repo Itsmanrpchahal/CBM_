@@ -58,7 +58,7 @@
         <item
             android:id="@+id/nav_contractor"
             android:title="Contracts"
-            android:icon="@drawable/ic_logout"/>
+            android:icon="@drawable/ic_contract"/>
     </group>
 
     <group android:checkableBehavior="none">

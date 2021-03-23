@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.myContracts.tabs.offers
+package com.casebeaumonde.fragments.contracts.offers
 
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myContracts.tabs.offers.response.OfferListResponse
-import com.casebeaumonde.activities.myContracts.tabs.offers.IF.getOfferID_IF
-import com.casebeaumonde.activities.myContracts.tabs.offers.adapter.RecieveOffersAdapter
-import com.casebeaumonde.activities.myContracts.tabs.offers.adapter.SendOffersAdapter
-import com.casebeaumonde.activities.myContracts.tabs.offers.response.SetOfferDecisionResponse
+import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse
+import com.casebeaumonde.fragments.contracts.offers.IF.getOfferID_IF
+import com.casebeaumonde.fragments.contracts.offers.adapter.RecieveOffersAdapter
+import com.casebeaumonde.fragments.contracts.offers.adapter.SendOffersAdapter
+import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility

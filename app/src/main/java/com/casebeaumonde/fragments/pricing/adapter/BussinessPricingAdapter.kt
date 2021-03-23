@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.paymentScreen.CardDetailScreen
+import com.casebeaumonde.fragments.pricing.Pricing
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import kotlinx.android.synthetic.main.customprice.view.*
 import org.w3c.dom.Text
@@ -33,6 +34,31 @@ class BussinessPricingAdapter (val context: Context, val pricing: ArrayList<Pric
         holder.itemView.planrate_yearly.setText(pricing.get(position).annualCharge.toString())
         holder.itemView.trail_text.setText(pricing.get(position).trialDays.toString()+" days trail")
         holder.itemView.save_percent.setText(" (save"+pricing.get(position).yearlySavingPercent.toString()+"%)")
+
+        if (holder.itemView.subscribebt.text.equals("Subscribed")) {
+            holder.itemView.subscribebt.isEnabled = false
+
+        }
+
+        holder.itemView.subscribebt.setOnClickListener {
+
+            if (holder.itemView.subscribebt.text.equals("Change Plan")) {
+
+                Pricing.getpriceidIf?.getID(pricing.get(position).id.toString(), "customer")
+            }
+            else  {
+                context.startActivity(
+
+                    Intent(context, CardDetailScreen::class.java).putExtra(
+                        "planname", pricing.get(
+                            position
+                        ).name
+                    ).putExtra("planprice", pricing.get(position).monthlyPrice.toString())
+                        .putExtra("planID",pricing.get(position).id.toString())
+                        .putExtra("plantype","customer")
+                )
+            }
+        }
     }
 
     override fun getItemCount(): Int {

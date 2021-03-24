@@ -55,8 +55,8 @@ class SelectBrands : BaseClass(), SelectedBrand_IF , Controller.QuestionariesAPI
     private lateinit var controller: Controller
     private lateinit var search_ET: EditText
     private lateinit var utility: Utility
-    private lateinit var brandsResponse : ArrayList<QuestionariesDataResponse.Brand>
-    private lateinit var filterBrand : ArrayList<QuestionariesDataResponse.Brand>
+    private lateinit var brandsResponse : ArrayList<QuestionariesDataResponse.Data.Customer.Brand>
+    private lateinit var filterBrand : ArrayList<QuestionariesDataResponse.Data.Customer.Brand>
     private lateinit var height_et : EditText
     private var name: String = ""
     private var city: String = ""
@@ -161,7 +161,7 @@ class SelectBrands : BaseClass(), SelectedBrand_IF , Controller.QuestionariesAPI
         })
     }
 
-    private fun setFullData(closets: ArrayList<QuestionariesDataResponse.Brand>) {
+    private fun setFullData(closets: ArrayList<QuestionariesDataResponse.Data.Customer.Brand>) {
         brandsResponse =
             closets
         recyclerView.layoutManager =
@@ -274,7 +274,7 @@ class SelectBrands : BaseClass(), SelectedBrand_IF , Controller.QuestionariesAPI
        pd.dismiss()
         if (questionaries.isSuccessful)
         {
-            brandsResponse = questionaries.body()?.data?.customer?.brand as ArrayList<QuestionariesDataResponse.Brand>
+            brandsResponse = questionaries.body()?.data?.customer?.brand as ArrayList<QuestionariesDataResponse.Data.Customer.Brand>
            setFullData(brandsResponse)
         } else {
             utility.relative_snackbar(

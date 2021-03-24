@@ -41,7 +41,7 @@ class TellAboutYourSelf : BaseClass() , Controller.QuestionariesAPI {
     private lateinit var controller: Controller
     private lateinit var countries : ArrayList<String>
     private lateinit var astrologicalsign : ArrayList<String>
-    private lateinit var state : ArrayList<QuestionariesDataResponse.Customer.Country.State>
+    private lateinit var state : ArrayList<QuestionariesDataResponse.Data.Customer.Country.State>
     private lateinit var years : ArrayList<String>
     private lateinit var stateName : ArrayList<String>
     private var currentYear : Int = 0

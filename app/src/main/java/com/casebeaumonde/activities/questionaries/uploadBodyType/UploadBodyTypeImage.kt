@@ -63,7 +63,7 @@ class UploadBodyTypeImage : BaseClass()  , Controller.QuestionariesAPI {
     private lateinit var brands : ArrayList<String>
     private lateinit var brandsID : ArrayList<String>
     private lateinit var data : ArrayList<Data>
-    public  lateinit var brand : ArrayList<QuestionariesDataResponse.Brand>
+    public  lateinit var brand : ArrayList<QuestionariesDataResponse.Data.Customer.Brand>
 
     private var name: String = ""
     private var city: String = ""

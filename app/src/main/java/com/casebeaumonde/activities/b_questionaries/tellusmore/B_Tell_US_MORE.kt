@@ -38,7 +38,7 @@ class B_Tell_US_MORE :  BaseClass() , Controller.QuestionariesAPI {
     private lateinit var pd : ProgressDialog
     private lateinit var utility: Utility
     private lateinit var controller: Controller
-    private lateinit var state : ArrayList<QuestionariesDataResponse.Customer.Country.State>
+    private lateinit var state : ArrayList<QuestionariesDataResponse.Data.Customer.Country.State>
     private lateinit var stateName : ArrayList<String>
     private var currentYear : Int = 0
     private lateinit var back : ImageButton

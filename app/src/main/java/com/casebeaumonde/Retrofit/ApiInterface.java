@@ -18,6 +18,7 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
+import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
@@ -43,7 +44,6 @@ import com.casebeaumonde.activities.openchat.response.GetChatResponse;
 import com.casebeaumonde.activities.openchat.response.SendChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
-import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse;
 import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
@@ -64,6 +64,7 @@ import com.casebeaumonde.fragments.profile.profileResponse.FollowUnFollowRespons
 import com.casebeaumonde.fragments.profile.profileResponse.MyWallResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.PaymentMethodResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse;
+import com.casebeaumonde.fragments.shop.response.ShopResponse;
 import com.casebeaumonde.fragments.users.Response.UsersResponse;
 import com.google.gson.JsonObject;
 
@@ -632,5 +633,10 @@ public interface ApiInterface {
             @Query("color") String color,
             @Query("brand") String brand,
             @Query("price") Double price
+    );
+
+    @GET("api/v1/retailer")
+    Call<ShopResponse> shop(
+      @Header("Authorization") String token
     );
 }

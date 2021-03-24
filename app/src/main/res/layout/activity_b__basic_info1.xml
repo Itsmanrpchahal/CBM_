@@ -9,8 +9,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="105dp">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -99,6 +98,7 @@
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_12sp"
                 android:background="@android:color/transparent"
                 android:hint="THE ELUSIVE FASHION ITEM YOU’RE TRYING TO OBTAIN"
                 android:inputType="textShortMessage"
@@ -127,6 +127,7 @@
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/margin_8dp"
                 android:background="@android:color/transparent"
+                android:textSize="@dimen/textsize_12sp"
                 android:hint="HOW WOULD YOU DESCRIBE YOUR FASHION SENSE?"
                 android:inputType="textShortMessage"
                 android:padding="2dp"
@@ -155,7 +156,7 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
+                android:textSize="@dimen/textsize_12sp"
                 android:text="HOW WOULD YOU DESCRIBE YOUR FASHION SENSE?">
 
             </TextView>
@@ -169,6 +170,7 @@
                 <CheckBox
                     android:id="@+id/yes_checkbox"
                     android:layout_width="wrap_content"
+                    android:textSize="@dimen/textsize_12sp"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorWhite"
                     android:text="YES">
@@ -179,6 +181,7 @@
                     android:id="@+id/no_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/textsize_12sp"
                     android:layout_marginLeft="@dimen/default_margin_16dp"
                     android:buttonTint="@color/colorWhite"
                     android:text="NO">
@@ -195,6 +198,7 @@
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/margin_8dp"
                 android:background="@android:color/transparent"
+                android:textSize="@dimen/textsize_12sp"
                 android:hint="IF YES, HOW WAS YOUR EXPERIENCE?"
                 android:inputType="textShortMessage"
                 android:padding="2dp"
@@ -223,6 +227,7 @@
                 android:layout_marginRight="@dimen/margin_8dp"
                 android:background="@android:color/transparent"
                 android:hint="WHAT COULD HAVE MADE THE EXPERIENCE MORE MEANINGFUL?"
+                android:textSize="@dimen/textsize_12sp"
                 android:inputType="textShortMessage"
                 android:padding="2dp"
                 android:textColor="@color/colorWhite"
@@ -251,13 +256,14 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
+                android:textSize="@dimen/textsize_12sp"
                 android:text="HOW MUCH DO YOU SPEND ON CLOTHING A MONTH?">
 
             </TextView>
 
 
             <Spinner
+                android:id="@+id/spendclothing_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -285,7 +291,7 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
+                android:textSize="@dimen/textsize_12sp"
                 android:text="ARE YOU AN IMPULSE SHOPPER?">
 
             </TextView>
@@ -299,6 +305,7 @@
                 <CheckBox
                     android:id="@+id/yes1_checkbox"
                     android:layout_width="wrap_content"
+                    android:textSize="@dimen/textsize_12sp"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorWhite"
                     android:text="YES">
@@ -309,6 +316,7 @@
                     android:id="@+id/no1_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/textsize_12sp"
                     android:layout_marginLeft="@dimen/default_margin_16dp"
                     android:buttonTint="@color/colorWhite"
                     android:text="NO">
@@ -326,7 +334,7 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
+                android:textSize="@dimen/textsize_12sp"
                 android:text="DO YOU LOVE TO SHOP?">
 
             </TextView>
@@ -341,6 +349,7 @@
                     android:id="@+id/yes2_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/textsize_12sp"
                     android:buttonTint="@color/colorWhite"
                     android:text="YES">
 
@@ -350,6 +359,7 @@
                     android:id="@+id/no2_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/textsize_12sp"
                     android:layout_marginLeft="@dimen/default_margin_16dp"
                     android:buttonTint="@color/colorWhite"
                     android:text="NO">
@@ -367,12 +377,13 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
+                android:textSize="@dimen/textsize_12sp"
                 android:text="WHAT DRIVES YOU TO SHOP?">
 
             </TextView>
 
             <Spinner
+                android:id="@+id/driveyou_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_8dp"
@@ -389,94 +400,96 @@
                 android:background="@color/colorWhite">
 
             </View>
+
+            <LinearLayout
+                android:id="@+id/continue_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buttonheight"
+                android:layout_gravity="center"
+                android:layout_above="@+id/dots"
+                android:layout_margin="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonheight"
+                    android:layout_gravity="center"
+                    android:background="@color/colorWhite"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Continue"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp">
+
+                </TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:src="@drawable/ic_arrow">
+
+                </ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/default_margin_16dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_dot_gray">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_dot_gray">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_dot">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_dot_gray">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/ic_dot_gray">
+
+                </ImageView>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/continue_bt"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/buttonheight"
-        android:layout_gravity="center"
-        android:layout_above="@+id/dots"
-        android:layout_margin="@dimen/default_margin_16dp"
-        android:background="@color/colorWhite"
-        android:gravity="center"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/buttonheight"
-            android:layout_gravity="center"
-            android:background="@color/colorWhite"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:text="Continue"
-            android:textAlignment="center"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp">
-
-        </TextView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_8dp"
-            android:src="@drawable/ic_arrow">
-
-        </ImageView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dots"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/default_margin_16dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
-
-        </ImageView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
-
-        </ImageView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot">
-
-        </ImageView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
-
-        </ImageView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_dot_gray">
-
-        </ImageView>
-
-    </LinearLayout>
 </RelativeLayout>

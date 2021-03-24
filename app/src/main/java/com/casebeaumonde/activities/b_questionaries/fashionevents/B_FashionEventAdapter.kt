@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.b_fashionevents.view.*
 import kotlinx.android.synthetic.main.describeyourself_layout.view.*
 import kotlinx.android.synthetic.main.describeyourself_layout.view.selectbt
 
-class B_FashionEventAdapter(var context: Context) :
+class B_FashionEventAdapter(var context: Context,var fashionEvents : ArrayList<String>) :
     RecyclerView.Adapter<B_FashionEventAdapter.ViewHolder>() {
 
 
@@ -27,7 +27,9 @@ class B_FashionEventAdapter(var context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.fashioneventtecb.setText(fashionEvents.get(position).toString())
         holder.itemView.fashioneventtecb.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+
             if (isChecked) {
               //  DescribeYourself.selectyourselfIf?.getID(characterstic.get(position), "1");
                 holder.itemView.fashioneventtecb.setTextColor(Color.BLACK)
@@ -41,7 +43,7 @@ class B_FashionEventAdapter(var context: Context) :
     }
 
     override fun getItemCount(): Int {
-       return 10
+       return fashionEvents.size
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {

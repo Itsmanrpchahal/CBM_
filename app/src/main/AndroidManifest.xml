@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".fragments.contracts.Offers_Activity"></activity>
+        <activity android:name=".activities.b_questionaries.b_colorPicker.B_ColorPicker"></activity>
+        <activity android:name=".activities.b_questionaries.b_colorPicker1.B_ColorPicker1"></activity>
+        <activity android:name=".fragments.contracts.Offers_Activity" />
         <activity android:name=".fragments.contracts.WorkInvitation_Activity" />
         <activity
             android:name=".activities.influencer_questionaries.InfluencerQuestionaries2"

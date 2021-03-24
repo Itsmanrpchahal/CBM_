@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class B_DataAdapter extends RecyclerView.Adapter<B_DataAdapter.MyHolder> implements SectionIndexer,Comparable{
-    ArrayList<QuestionariesDataResponse.Brand> brands;
+    ArrayList<QuestionariesDataResponse.Data.Customer.Brand> brands;
     private ArrayList<Integer> mSectionPositions;
     Context context;
 
-    public B_DataAdapter(ArrayList<QuestionariesDataResponse.Brand> brandArrayList, Context context) {
+    public B_DataAdapter(ArrayList<QuestionariesDataResponse.Data.Customer.Brand> brandArrayList, Context context) {
         this.brands = brandArrayList;
         this.context = context;
     }

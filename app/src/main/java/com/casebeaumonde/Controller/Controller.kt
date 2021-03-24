@@ -46,6 +46,8 @@ import com.casebeaumonde.fragments.chat.GetChatUsers
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
+import com.casebeaumonde.fragments.shop.Shop
+import com.casebeaumonde.fragments.shop.response.ShopResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -120,6 +122,7 @@ public class Controller {
     var deleteOutFitAPI : DeleteOutFitAPI? = null
     var deleteOutfitsItemsAPI : DeleteOutfitItemAPI? = null
     var addOutfitItemAPI : AddOutfitItemAPI? = null
+    var shopAPI : ShopAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -372,6 +375,12 @@ public class Controller {
     {
         addClosetItemListAPI = addClosetItemList
         addOutfitItemAPI = outfitItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(shop: ShopAPI)
+    {
+        shopAPI = shop
         webAPI = WebAPI()
     }
 
@@ -1630,6 +1639,21 @@ public class Controller {
         })
     }
 
+    fun Shop(token: String?)
+    {
+        webAPI?.api?.shop(token)?.enqueue(object : Callback<ShopResponse>
+        {
+            override fun onResponse(call: Call<ShopResponse>, response: Response<ShopResponse>) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onFailure(call: Call<ShopResponse>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -1950,5 +1974,10 @@ public class Controller {
     interface AddOutfitItemAPI {
         fun onaddOutfitItemSuccess(success: Response<AddOutfitItemResponse>)
         fun error(error: String?)
+    }
+
+    interface ShopAPI {
+        fun onShopSuccess(success:Response<ShopResponse>)
+        fun error(error:String)
     }
 }

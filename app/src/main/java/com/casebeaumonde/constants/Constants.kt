@@ -29,4 +29,7 @@ object Constants
     val CHAT = "chat"
     val QUESTIONARIES_STATUS = "questionariesstatus"
     val OUTFITID ="outfitid"
+    val FACEBOOKURL ="facebookurl"
+    val INSTAGRAMURL ="instagramurl"
+    val TWITTERURL ="twitterurl"
 }

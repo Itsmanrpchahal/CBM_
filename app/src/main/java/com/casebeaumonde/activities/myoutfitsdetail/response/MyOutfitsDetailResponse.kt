@@ -65,7 +65,7 @@ class MyOutfitsDetailResponse {
 
                 @SerializedName("parent_id")
                 @Expose
-                var parentId: Int? = null
+                var parentId: String? = null
 
                 @SerializedName("creator_id")
                 @Expose
@@ -105,7 +105,7 @@ class MyOutfitsDetailResponse {
 
                 @SerializedName("price")
                 @Expose
-                var price: Int? = null
+                var price: Double? = null
 
                 @SerializedName("picture")
                 @Expose
@@ -139,10 +139,37 @@ class MyOutfitsDetailResponse {
                 @Expose
                 var category: Category? = null
 
+
                 @SerializedName("hearts")
                 @Expose
-                var hearts: List<Any>? = null
+                val hearts: List<Heart>? = null
 
+
+               inner class Heart {
+                    @SerializedName("id")
+                    @Expose
+                    var id: Int? = null
+
+                    @SerializedName("user_id")
+                    @Expose
+                    var userId: Int? = null
+
+                    @SerializedName("heartable_type")
+                    @Expose
+                    var heartableType: String? = null
+
+                    @SerializedName("heartable_id")
+                    @Expose
+                    var heartableId: Int? = null
+
+                    @SerializedName("created_at")
+                    @Expose
+                    var createdAt: String? = null
+
+                    @SerializedName("updated_at")
+                    @Expose
+                    var updatedAt: String? = null
+                }
 
 
                 inner class Size {
@@ -260,7 +287,7 @@ class MyOutfitsDetailResponse {
 
                     @SerializedName("parent_id")
                     @Expose
-                    var parentId: Int? = null
+                    var parentId: String? = null
 
                     @SerializedName("name")
                     @Expose

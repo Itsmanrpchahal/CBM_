@@ -63,6 +63,7 @@
                             android:layout_below="@id/username"
                             android:layout_width="wrap_content"
                             android:layout_height="35dp"
+                            android:singleLine="true"
                             android:text="Update profile picture"
                             android:textColor="@color/colorBlack"
                             android:textAlignment="center"

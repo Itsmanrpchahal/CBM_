@@ -141,9 +141,9 @@ class Profile : BaseFrag(),
     private lateinit var profile_mycontracts: Button
     private lateinit var profile_myclosets: Button
     private lateinit var profile_myevents: Button
-    private lateinit var profile_myoutfits : Button
+    private lateinit var profile_myoutfits: Button
     private lateinit var profile_eventInvitation: Button
-    private lateinit var social_accounts : LinearLayout
+    private lateinit var social_accounts: LinearLayout
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
@@ -263,7 +263,6 @@ class Profile : BaseFrag(),
         profile_eventInvitation.setOnClickListener {
             startActivity(Intent(context, EventsInvitations::class.java).putExtra("userID", userID))
         }
-
 
 
     }
@@ -623,7 +622,8 @@ class Profile : BaseFrag(),
             } else if (getStringVal(Constants.CHAT).equals("3")) {
                 radio_noone.isChecked = true
                 mesgFrom = "3"
-            } else {}
+            } else {
+            }
         }
 
         editprofile_firstname.setText(getStringVal(Constants.FIRSTNAME))
@@ -631,6 +631,9 @@ class Profile : BaseFrag(),
         editprofile_email.setText(getStringVal(Constants.EMAIL))
         editprofile_phone.setText(getStringVal(Constants.PHONE))
         editprofile_about.setText(getStringVal(Constants.ABOUT))
+        editprofile_fburl.setText(getStringVal(Constants.FACEBOOKURL))
+        editprofile_twitterurl.setText(getStringVal(Constants.TWITTERURL))
+        editprofile_instaurl.setText(getStringVal(Constants.INSTAGRAMURL))
         if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             editprofile_paypal_email.setText("")
         } else {
@@ -661,56 +664,133 @@ class Profile : BaseFrag(),
         }
 
         update_profile.setOnClickListener {
-            when {
-                editprofile_firstname.text.isEmpty() -> {
-                    editprofile_firstname.requestFocus()
-                    editprofile_firstname.error = getString(R.string.enterfirstname)
-                }
+            if (getStringVal(Constants.USER_ROLE).equals("customer")) {
+                when {
+                    editprofile_firstname.text.isEmpty() -> {
+                        editprofile_firstname.requestFocus()
+                        editprofile_firstname.error = getString(R.string.enterfirstname)
+                    }
 
-                editprofile_lastname.text.isEmpty() -> {
-                    editprofile_lastname.requestFocus()
-                    editprofile_lastname.error = getString(R.string.enterlastname)
-                }
+                    editprofile_lastname.text.isEmpty() -> {
+                        editprofile_lastname.requestFocus()
+                        editprofile_lastname.error = getString(R.string.enterlastname)
+                    }
 
-                editprofile_email.text.isEmpty() -> {
-                    editprofile_email.requestFocus()
-                    editprofile_email.error = getString(R.string.enterlastname)
-                }
+                    editprofile_email.text.isEmpty() -> {
+                        editprofile_email.requestFocus()
+                        editprofile_email.error = getString(R.string.enterlastname)
+                    }
 
-                editprofile_phone.text.isEmpty() -> {
-                    editprofile_email.requestFocus()
-                    editprofile_email.error = getString(R.string.enteremail)
-                }
+                    editprofile_phone.text.isEmpty() -> {
+                        editprofile_email.requestFocus()
+                        editprofile_email.error = getString(R.string.enteremail)
+                    }
 
-                editprofile_about.text.isEmpty() -> {
-                    editprofile_about.requestFocus()
-                    editprofile_about.error = getString(R.string.enterabout)
-                }
+                    editprofile_about.text.isEmpty() -> {
+                        editprofile_about.requestFocus()
+                        editprofile_about.error = getString(R.string.enterabout)
+                    }
 
-                else -> {
-                    if (utility.isConnectingToInternet(context)) {
-                        pd.show()
-                        pd.setContentView(R.layout.loading)
-                        controller.setUpDateProfile(
-                            "Bearer " + getStringVal(Constants.TOKEN),
-                            editprofile_firstname.text.toString(),
-                            editprofile_lastname.text.toString(),
-                            editprofile_email.text.toString(),
-                            editprofile_paypal_email.text.toString(),
-                            editprofile_phone.text.toString(),
-                            editprofile_about.text.toString(),
-                            getStringVal(Constants.USERID).toString(),
-                            mesgFrom
-                        )
-                    } else {
-                        utility!!.relative_snackbar(
-                            parent_main,
-                            getString(R.string.nointernet),
-                            getString(R.string.close_up)
-                        )
+                    else -> {
+                        if (utility.isConnectingToInternet(context)) {
+                            pd.show()
+                            pd.setContentView(R.layout.loading)
+
+                            controller.setUpDateProfile(
+                                "Bearer " + getStringVal(Constants.TOKEN),
+                                editprofile_firstname.text.toString(),
+                                editprofile_lastname.text.toString(),
+                                editprofile_email.text.toString(),
+                                editprofile_paypal_email.text.toString(),
+                                editprofile_phone.text.toString(),
+                                editprofile_about.text.toString(),
+                                getStringVal(Constants.USERID).toString(),
+                                mesgFrom, "",
+                                "", ""
+                            )
+
+
+                        } else {
+                            utility!!.relative_snackbar(
+                                parent_main,
+                                getString(R.string.nointernet),
+                                getString(R.string.close_up)
+                            )
+                        }
+                    }
+                }
+            } else {
+                when {
+                    editprofile_firstname.text.isEmpty() -> {
+                        editprofile_firstname.requestFocus()
+                        editprofile_firstname.error = getString(R.string.enterfirstname)
+                    }
+
+                    editprofile_lastname.text.isEmpty() -> {
+                        editprofile_lastname.requestFocus()
+                        editprofile_lastname.error = getString(R.string.enterlastname)
+                    }
+
+                    editprofile_email.text.isEmpty() -> {
+                        editprofile_email.requestFocus()
+                        editprofile_email.error = getString(R.string.enterlastname)
+                    }
+
+                    editprofile_phone.text.isEmpty() -> {
+                        editprofile_email.requestFocus()
+                        editprofile_email.error = getString(R.string.enteremail)
+                    }
+
+                    editprofile_about.text.isEmpty() -> {
+                        editprofile_about.requestFocus()
+                        editprofile_about.error = getString(R.string.enterabout)
+                    }
+
+                    editprofile_fburl.text.isEmpty() -> {
+                        editprofile_fburl.requestFocus()
+                        editprofile_fburl.error = "Enter Facebook url"
+                    }
+
+                    editprofile_instaurl.text.isEmpty() -> {
+                        editprofile_instaurl.requestFocus()
+                        editprofile_instaurl.error = "Enter Instagram url"
+                    }
+
+                    editprofile_twitterurl.text.isEmpty() -> {
+                        editprofile_twitterurl.requestFocus()
+                        editprofile_twitterurl.error = "Enter Twitter url"
+                    }
+
+                    else -> {
+                        if (utility.isConnectingToInternet(context)) {
+                            pd.show()
+                            pd.setContentView(R.layout.loading)
+
+                            controller.setUpDateProfile(
+                                "Bearer " + getStringVal(Constants.TOKEN),
+                                editprofile_firstname.text.toString(),
+                                editprofile_lastname.text.toString(),
+                                editprofile_email.text.toString(),
+                                editprofile_paypal_email.text.toString(),
+                                editprofile_phone.text.toString(),
+                                editprofile_about.text.toString(),
+                                getStringVal(Constants.USERID).toString(),
+                                "1", editprofile_twitterurl.text.toString(),
+                                editprofile_fburl.text.toString(), editprofile_instaurl.text.toString()
+                            )
+
+
+                        } else {
+                            utility!!.relative_snackbar(
+                                parent_main,
+                                getString(R.string.nointernet),
+                                getString(R.string.close_up)
+                            )
+                        }
                     }
                 }
             }
+
         }
 
         update_userimage.setOnClickListener {
@@ -864,7 +944,8 @@ class Profile : BaseFrag(),
 
             Glide.with(context!!)
                 .load(
-                    "http://"+userProfileResponse.body()?.getData()?.filePath + userProfileResponse.body()
+                    "http://" + userProfileResponse.body()
+                        ?.getData()?.filePath + userProfileResponse.body()
                         ?.getData()?.user?.avatar?.toString()
                 )
                 .placeholder(R.drawable.login_banner).into(profile_profilePic)
@@ -880,6 +961,9 @@ class Profile : BaseFrag(),
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.getData()?.user?.phone)
+            setStringVal(Constants.INSTAGRAMURL, userProfileResponse.body()!!.getData()?.user!!.profile?.instagram_url)
+            setStringVal(Constants.FACEBOOKURL, userProfileResponse.body()!!.getData()?.user!!.profile?.facebook_url)
+            setStringVal(Constants.TWITTERURL, userProfileResponse.body()!!.getData()?.user!!.profile?.twitter_url)
             setStringVal(
                 Constants.PAYPALID,
                 userProfileResponse.body()?.getData()?.user?.paypal_email.toString()
@@ -921,8 +1005,7 @@ class Profile : BaseFrag(),
                 setStringVal(Constants.BUSSINESSSUBSSCRIPTION, "1")
             }
 
-            if (!userProfileResponse.body()?.getData()?.user!!.role.equals("customer"))
-            {
+            if (!userProfileResponse.body()?.getData()?.user!!.role.equals("customer")) {
                 profile_mycontracts.visibility = View.VISIBLE
                 social_accounts.visibility = View.VISIBLE
                 profile_mycontracts.visibility = View.VISIBLE
@@ -939,7 +1022,7 @@ class Profile : BaseFrag(),
 
                 profile_mywall.visibility = View.VISIBLE
                 //profile_mycontracts.visibility = View.VISIBLE
-                profile_myevents.visibility = View.VISIBLE
+                profile_myevents.visibility = View.GONE
                 profile_eventInvitation.visibility = View.VISIBLE
                 profile_myclosets.visibility = View.VISIBLE
             } else {
@@ -966,9 +1049,10 @@ class Profile : BaseFrag(),
                 )
 
                 pd.show()
-                controller.SetPaymentMethod("Bearer "+getStringVal(Constants.TOKEN))
-                val addpaymentmethod : Button
-                payment_method_recycler = mypaymentdialog.findViewById(R.id.payment_method_recycler1)
+                controller.SetPaymentMethod("Bearer " + getStringVal(Constants.TOKEN))
+                val addpaymentmethod: Button
+                payment_method_recycler =
+                    mypaymentdialog.findViewById(R.id.payment_method_recycler1)
                 close_paymentdialog = mypaymentdialog.findViewById(R.id.close_paymentdialog)
                 addpaymentmethod = mypaymentdialog.findViewById(R.id.addpaymentmethod)
 
@@ -1204,16 +1288,15 @@ class Profile : BaseFrag(),
     override fun onPaymentSuccess(paymentMethod: Response<PaymentMethodResponse>) {
         pd.dismiss()
         if (paymentMethod.isSuccessful) {
-            if(paymentMethod.body()?.getData()!=null)
-            {
+            if (paymentMethod.body()?.getData() != null) {
                 cards = ArrayList()
 
-                    cards = paymentMethod.body()
-                        ?.getData()?.paymentProfiles !!as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
-                    payment_method_recycler.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    val adapter = CardsAdapter(context!!, cards)
-                    payment_method_recycler.adapter = adapter
+                cards = paymentMethod.body()
+                    ?.getData()?.paymentProfiles!! as ArrayList<PaymentMethodResponse.Data.PaymentProfile>
+                payment_method_recycler.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                val adapter = CardsAdapter(context!!, cards)
+                payment_method_recycler.adapter = adapter
 
             } else {
                 //mypaymentdialog.dismiss()

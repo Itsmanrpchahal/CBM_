@@ -47,42 +47,48 @@
 
             </TextView>
 
-            <ru.nikartm.support.ImageBadgeView
-                android:id="@+id/toolbar_notifiction"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                app:ibv_badgeColor="@color/colorWhite"
-                app:ibv_badgeTextColor="@color/colorWhite"
-                android:src="@drawable/ic_baseline_notifications_24"
-                android:layout_toLeftOf="@id/outfits"
-                app:ibv_showCounter="true">
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true">
 
-            </ru.nikartm.support.ImageBadgeView>
+                <ru.nikartm.support.ImageBadgeView
+                    android:id="@+id/toolbar_notifiction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    app:ibv_badgeColor="@color/colorWhite"
+                    app:ibv_badgeTextColor="@color/colorWhite"
+                    android:src="@drawable/ic_baseline_notifications_24"
+                    app:ibv_showCounter="true">
 
-            <ImageButton
-                android:id="@+id/outfits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/create_closets"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_8dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_outfiticon">
+                </ru.nikartm.support.ImageBadgeView>
 
-            </ImageButton>
+                <ImageButton
+                    android:id="@+id/outfits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_outfiticon">
 
-            <ImageButton
-                android:id="@+id/create_closets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_add_24">
+                </ImageButton>
 
-            </ImageButton>
+                <ImageButton
+                    android:id="@+id/create_closets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_add_24">
+
+                </ImageButton>
+            </LinearLayout>
+
+
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 

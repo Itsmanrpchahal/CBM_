@@ -12,13 +12,18 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myoutfitsdetail.AddNewOutfitItem
 import com.casebeaumonde.activities.myoutfitsdetail.MyOutfitsItems
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.shop.Shop
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closet_layout.view.*
+import kotlinx.android.synthetic.main.closet_layout.view.closetitem_favorite
+import kotlinx.android.synthetic.main.closet_layout.view.hainger
+import kotlinx.android.synthetic.main.closetsitems.view.*
 import java.util.*
 
 
@@ -58,8 +63,10 @@ class MyOutfitItemsAdapter(
         holder.itemView.closets_delete.setOnClickListener {
             MyOutfitsItems.outfitidIf?.getClosetID(myOutfits.id.toString(), position.toString())
         }
-        holder.itemView.hainger.layoutParams.height = 22
-        holder.itemView.hainger.layoutParams.width = 22
+        holder.itemView.hainger.visibility = View.GONE
+        holder.itemView.hainger.setBackgroundResource(R.drawable.ic_mycart)
+        holder.itemView.hainger.layoutParams.height = 24
+        holder.itemView.hainger.layoutParams.width = 28
 
         holder.itemView.closets_additem.setOnClickListener {
             context.startActivity(
@@ -68,6 +75,35 @@ class MyOutfitItemsAdapter(
                     myOutfits.id.toString()
                 )
             )
+        }
+        holder.itemView.closetitem_favorite.setOnClickListener {
+            MyOutfitsItems.outfitfavidIf?.getOutfitId(outfitItems.get(position).id.toString())
+        }
+
+//        holder.itemView.closetitem_favorite.setOnCheckedChangeListener { buttonView, isChecked ->
+//            if (isChecked)
+//            {
+//                MyOutfitsItems.outfitfavidIf?.getOutfitId(outfitItems.get(position).id.toString())
+//            }  else {
+//                MyOutfitsItems.outfitfavidIf?.getOutfitId(outfitItems.get(position).id.toString())
+//            }
+//        }
+
+
+        searchUserHeart(myOutfits, holder.itemView.closetitem_favorite)
+    }
+
+    private fun searchUserHeart(myOutfits: MyOutfitsDetailResponse.Data.Outfit.Item, closetitemFavorite: CheckBox?) {
+        if (myOutfits.hearts!!.size>0)
+        {
+            for (i in myOutfits.hearts!!.indices)
+            {
+                val heart = myOutfits.hearts!![i]
+                if (heart.userId.toString().equals(userid))
+                {
+                    closetitemFavorite?.isChecked = true
+                }
+            }
         }
     }
 
@@ -90,6 +126,8 @@ class MyOutfitItemsAdapter(
             var closets_edititem: Button
             var closets_delete: Button
             var hainger : ImageButton
+            var closetitem_favorite : CheckBox
+            var closetitem_favcount : TextView
 
             closet_banner = itemView.findViewById(R.id.closet_banner)
             closet_username = itemView.findViewById(R.id.closet_username)
@@ -103,6 +141,8 @@ class MyOutfitItemsAdapter(
             closets_edititem = itemView.findViewById(R.id.closets_edititem)
             closets_delete = itemView.findViewById(R.id.closets_delete)
             hainger = itemView.findViewById(R.id.hainger)
+            closetitem_favorite = itemView.findViewById(R.id.closetitem_favorite)
+            closetitem_favcount = itemView.findViewById(R.id.closetitem_favcount)
         }
     }
 

@@ -24,6 +24,8 @@ import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse
+import com.casebeaumonde.activities.myoutfitsdetail.IF.OutfitFavID_IF
+import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -33,7 +35,7 @@ import kotlinx.android.synthetic.main.activity_my_outfits.*
 import retrofit2.Response
 
 class MyOutfits : BaseClass(),
-    Controller.MyOutfitsAPI, OutfitID_IF, DeleteID_IF,Controller.CreateOutfitAPI, Controller.EditOutFitAPI,Controller.DeleteOutFitAPI {
+    Controller.MyOutfitsAPI, OutfitID_IF, DeleteID_IF,Controller.CreateOutfitAPI, Controller.EditOutFitAPI,Controller.DeleteOutFitAPI ,OutfitFavID_IF,Controller.FavOutfitAPI{
 
     private lateinit var userID: String
     private lateinit var controller: Controller
@@ -138,7 +140,7 @@ class MyOutfits : BaseClass(),
 
     private fun findIDs() {
         controller = Controller()
-        controller.Controller(this, this, this,this)
+        controller.Controller(this, this, this,this,this)
         myclosets_back = findViewById(R.id.myclosets_back)
         myoutfits_recyler = findViewById(R.id.myoutfits_recyler)
         create_outfit = findViewById(R.id.create_outfit)
@@ -153,6 +155,7 @@ class MyOutfits : BaseClass(),
 
         outfitidIf = this
         deleteidIf = this
+        outfitfavidIf = this
         controller.MyOutfits("Bearer " + getStringVal(Constants.TOKEN))
         pd!!.show()
         pd!!.setContentView(R.layout.loading)
@@ -186,6 +189,7 @@ class MyOutfits : BaseClass(),
     companion object {
         var outfitidIf: OutfitID_IF? = null
         var deleteidIf: DeleteID_IF? = null
+        var outfitfavidIf: OutfitFavID_IF? = null
     }
 
     override fun onCreateOutfitSuccess(success: Response<NewOutfitResponse>) {
@@ -214,6 +218,9 @@ class MyOutfits : BaseClass(),
         }
     }
 
+    override fun onFavOutfitSuccess(success: Response<FavOutfitResponse>) {
+        pd.dismiss()
+    }
 
 
     override fun error(error: String?) {
@@ -281,5 +288,9 @@ class MyOutfits : BaseClass(),
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun getOutfitId(id: String?) {
+        controller.FavOutFit("Bearer "+getStringVal(Constants.TOKEN),id,"outfit")
     }
 }

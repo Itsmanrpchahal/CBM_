@@ -24,6 +24,7 @@
             android:visibility="visible"
             android:gravity="center_vertical"
             android:layout_marginRight="2dp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/textsize_14sp">
 
@@ -74,7 +75,7 @@
             android:background="@color/colorWhite"
             android:visibility="visible"
             android:layout_toRightOf="@id/view1"
-            android:layout_below="@id/onboard_contact">
+            android:layout_below="@id/onboard_home">
 
         </Button>
 
@@ -88,7 +89,7 @@
             android:layout_marginLeft="@dimen/margin_8dp"
             android:textSize="@dimen/textsize_16sp"
             android:background="@drawable/whiteborder"
-            android:layout_below="@id/onboard_contact"
+            android:layout_below="@id/onboard_home"
             android:layout_toRightOf="@id/onboard_registerBt">
 
         </Button>

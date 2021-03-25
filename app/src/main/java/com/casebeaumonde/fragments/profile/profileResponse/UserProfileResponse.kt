@@ -332,6 +332,16 @@ class UserProfileResponse {
                 @Expose
                 var updatedAt: String? = null
 
+                @SerializedName("instagram_url")
+                @Expose
+                var instagram_url: String? = null
+ @SerializedName("facebook_url")
+                @Expose
+                var facebook_url: String? = null
+ @SerializedName("twitter_url")
+                @Expose
+                var twitter_url: String? = null
+
                 @SerializedName("deleted_at")
                 @Expose
                 var deletedAt: Any? = null

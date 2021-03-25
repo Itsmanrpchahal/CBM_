@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
@@ -19,7 +20,8 @@ import kotlinx.android.synthetic.main.custom_mywall.view.*
 class MyWallAdapter(
     val context: Context,
     val myWallList: ArrayList<MyWallResponse.Data.Fashionable>,
-    var filePath: String
+    var filePath: String,
+    var userID : String
 ) :
     RecyclerView.Adapter<MyWallAdapter.ViewHolder>() {
 
@@ -40,7 +42,8 @@ class MyWallAdapter(
         holder.itemView.myWall_lastupdate.text = "Last update at: " +Utils.changeDateTimeToDateTime(fashionable.updatedAt)
 
         holder.itemView.setOnClickListener {
-            context.startActivity(Intent(context, ClosetsItems::class.java).putExtra(Constants.CLOSETID,""+fashionable.id))
+            context.startActivity(Intent(context, ClosetsItems::class.java).putExtra(Constants.CLOSETID,fashionable.id.toString()).putExtra("userID",userID))
+
         }
     }
 

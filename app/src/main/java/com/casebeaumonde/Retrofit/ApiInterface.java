@@ -18,6 +18,7 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
 import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
@@ -165,7 +166,10 @@ public interface ApiInterface {
             @Field("phone") String phone,
             @Field("about_me") String about_me,
             @Field("id") String id,
-            @Field("chat_invitation") String chat_invitation
+            @Field("chat_invitation") String chat_invitation,
+            @Field("twitter_url") String twitter_url,
+            @Field("facebook_url") String facebook_url,
+            @Field("instagram_url") String instagram_url
     );
 
     @DELETE("api/v1/removeNotification/{input}")
@@ -639,4 +643,14 @@ public interface ApiInterface {
     Call<ShopResponse> shop(
       @Header("Authorization") String token
     );
+
+
+    @FormUrlEncoded
+    @POST("api/v1/heartOutfit")
+    Call<FavOutfitResponse> favOutfit(
+            @Header("Authorization") String token,
+            @Field("id") String id,
+            @Field("type") String type
+    );
+
 }

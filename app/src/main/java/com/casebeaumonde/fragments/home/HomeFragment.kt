@@ -14,6 +14,7 @@ import com.casebeaumonde.activities.register.userRegister.RegisterTypeScreen
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
+import kotlinx.android.synthetic.main.cart_custom.*
 
 class HomeFragment : BaseFrag() {
 
@@ -72,6 +73,12 @@ class HomeFragment : BaseFrag() {
         onboard_registerBt = view.findViewById(R.id.onboard_registerBt)
         onboard_pricing = view.findViewById(R.id.onboard_pricing)
         onboard_contact = view.findViewById(R.id.onboard_contact)
+
+        if (getStringVal(Constants.TOKEN).equals(""))
+        {
+            onboard_pricing.visibility = View.GONE
+            onboard_contact.visibility = View.GONE
+        }
 
         if (!getStringVal(Constants.TOKEN).equals(""))
         {

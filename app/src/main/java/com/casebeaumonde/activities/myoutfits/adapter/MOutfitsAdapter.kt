@@ -5,15 +5,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.ClosetItem.ClosetsItems
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myoutfits.MyOutfits
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
@@ -54,7 +49,8 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
             "Customer: " + myOutfits.creator?.firstname + " " + myOutfits.creator?.lastname
         holder.itemView.closet_createdat.text =
             "Created at: " + Utils.changeDateTimeToDateTime(myOutfits.createdAt)
-        holder.itemView.haingerllayout.visibility = View.GONE
+        holder.itemView.haingerllayout.visibility = View.VISIBLE
+        holder.itemView.hainger.visibility = View.GONE
 
         holder.itemView.closet_go_to_closets.setOnClickListener {
             context.startActivity(
@@ -63,6 +59,10 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
                     MyOutfitsItems::class.java
                 ).putExtra(Constants.OUTFITID, "" + myOutfits.id).putExtra("userID",userID).putExtra("creatorID",myOutfits.creatorId)
             )
+        }
+
+        holder.itemView.closetitem_favorite.setOnClickListener {
+            MyOutfits.outfitfavidIf?.getOutfitId(myOutfits.id.toString())
         }
 
         holder.itemView.closets_duplicate.visibility = View.GONE
@@ -85,6 +85,7 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
         }
     }
 
+
     override fun getItemCount(): Int {
        return myOutfits.size
     }
@@ -104,6 +105,8 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
             var closets_edititem: Button
             var closets_delete: Button
             var haingerllayout : RelativeLayout
+            var hainger : ImageButton
+            var  closetitem_favorite : CheckBox
 
             closet_banner = itemView.findViewById(R.id.closet_banner)
             closet_username = itemView.findViewById(R.id.closet_username)
@@ -117,6 +120,8 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
             closets_edititem = itemView.findViewById(R.id.closets_edititem)
             closets_delete = itemView.findViewById(R.id.closets_delete)
             haingerllayout = itemView.findViewById(R.id.haingerllayout)
+            hainger = itemView.findViewById(R.id.hainger)
+            closetitem_favorite = itemView.findViewById(R.id.closetitem_favorite)
         }
     }
 }

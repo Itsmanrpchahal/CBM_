@@ -31,6 +31,7 @@ import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.AddOutfitItemResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
 import com.casebeaumonde.activities.openchat.response.BlockResponse
@@ -123,6 +124,7 @@ public class Controller {
     var deleteOutfitsItemsAPI : DeleteOutfitItemAPI? = null
     var addOutfitItemAPI : AddOutfitItemAPI? = null
     var shopAPI : ShopAPI? = null
+    var favOutfitAPI : FavOutfitAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -355,19 +357,21 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(myOutfits: MyOutfitsAPI,newoutfit:CreateOutfitAPI,editOutFit: EditOutFitAPI,deleteOutfit:DeleteOutFitAPI)
+    fun Controller(myOutfits: MyOutfitsAPI,newoutfit:CreateOutfitAPI,editOutFit: EditOutFitAPI,deleteOutfit:DeleteOutFitAPI,favOutfit: FavOutfitAPI)
     {
         myOutfitsAPI = myOutfits
         newOutfitAPI = newoutfit
         editOutfitAPI = editOutFit
         deleteOutFitAPI = deleteOutfit
+        favOutfitAPI = favOutfit
         webAPI = WebAPI()
     }
 
-    fun Controller(myOutfitsItems: MyOutfitsItemsAPI,deleteOutfitItem: DeleteOutfitItemAPI)
+    fun Controller(myOutfitsItems: MyOutfitsItemsAPI,deleteOutfitItem: DeleteOutfitItemAPI,favOutfit: FavOutfitAPI)
     {
         myOutfitsDetailAPI = myOutfitsItems
         deleteOutfitsItemsAPI = deleteOutfitItem
+        favOutfitAPI = favOutfit
         webAPI = WebAPI()
     }
 
@@ -482,9 +486,12 @@ public class Controller {
         phone: String,
         about: String,
         userID: String,
-        chat_invitation:String
+        chat_invitation:String,
+        twitter_url:String,
+        facebook_url:String,
+        instagram_url:String
     ) {
-        webAPI?.api?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID,chat_invitation)
+        webAPI?.api?.editProfile(token, firstname, lastname, email,paypal_email, phone, about, userID,chat_invitation,twitter_url,facebook_url,instagram_url)
             ?.enqueue(object : Callback<EditProfileResponse> {
                 override fun onResponse(
                     call: Call<EditProfileResponse>,
@@ -1644,11 +1651,29 @@ public class Controller {
         webAPI?.api?.shop(token)?.enqueue(object : Callback<ShopResponse>
         {
             override fun onResponse(call: Call<ShopResponse>, response: Response<ShopResponse>) {
-                TODO("Not yet implemented")
+               shopAPI?.onShopSuccess(response)
             }
 
             override fun onFailure(call: Call<ShopResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                shopAPI?.error(t.localizedMessage)
+            }
+
+        })
+    }
+
+    fun FavOutFit(token: String?,id: String?,outfit_item:String)
+    {
+        webAPI?.api?.favOutfit(token, id,outfit_item)?.enqueue(object :Callback<FavOutfitResponse>
+        {
+            override fun onResponse(
+                call: Call<FavOutfitResponse>,
+                response: Response<FavOutfitResponse>
+            ) {
+                favOutfitAPI?.onFavOutfitSuccess(response)
+            }
+
+            override fun onFailure(call: Call<FavOutfitResponse>, t: Throwable) {
+                favOutfitAPI?.error(t.localizedMessage)
             }
 
         })
@@ -1979,5 +2004,10 @@ public class Controller {
     interface ShopAPI {
         fun onShopSuccess(success:Response<ShopResponse>)
         fun error(error:String)
+    }
+
+    interface FavOutfitAPI {
+        fun onFavOutfitSuccess(success:Response<FavOutfitResponse>)
+        fun error(error: String?)
     }
 }

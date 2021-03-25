@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myoutfits.IF.OutfitID_IF
+import com.casebeaumonde.activities.myoutfitsdetail.IF.OutfitFavID_IF
 import com.casebeaumonde.activities.myoutfitsdetail.adapter.MyOutfitItemsAdapter
 import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
@@ -25,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_my_outfits_items.*
 import retrofit2.Response
 
 class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
-    Controller.DeleteOutfitItemAPI {
+    Controller.DeleteOutfitItemAPI,OutfitFavID_IF ,Controller.FavOutfitAPI{
 
     private lateinit var userID: String
     private lateinit var controller: Controller
@@ -62,7 +64,7 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
         outfitItems_recycler = findViewById(R.id.outfitItems_recycler)
         closetiems_add = findViewById(R.id.closetiems_add)
         controller = Controller()
-        controller.Controller(this, this)
+        controller.Controller(this, this,this)
         controller.MyOutfitsItems("Bearer " + getStringVal(Constants.TOKEN), outfitID)
         utility = Utility()
         pd = ProgressDialog(this)
@@ -72,6 +74,8 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
         pd!!.setCancelable(false)
         pd!!.show()
         pd!!.setContentView(R.layout.loading)
+
+        outfitfavidIf  =  this
 
         if(userID.equals(getStringVal(Constants.USERID)))
         {
@@ -104,6 +108,20 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
         outfitItems_recycler.adapter = adapter
     }
 
+    override fun onFavOutfitSuccess(success: Response<FavOutfitResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful)
+        {
+           // controller.MyOutfitsItems("Bearer " + getStringVal(Constants.TOKEN), outfitID)
+        } else {
+            utility!!.relative_snackbar(
+                parent_outfitsitems,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
 
     override fun error(error: String?) {
         pd.dismiss()
@@ -116,6 +134,7 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
 
     companion object {
         var outfitidIf: OutfitID_IF? = null
+        var outfitfavidIf : OutfitFavID_IF? = null
     }
 
     override fun getClosetID(ID: String?, pos: String?) {
@@ -142,5 +161,10 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun getOutfitId(id: String?) {
+       // Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
+        controller.FavOutFit("Bearer "+getStringVal(Constants.TOKEN),id,"outfit_item")
     }
 }

@@ -9,10 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.appcompat.widget.AppCompatSpinner
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
@@ -45,6 +42,9 @@ class B_Tell_US_MORE :  BaseClass() , Controller.QuestionariesAPI {
     private lateinit var countries : ArrayList<String>
     private lateinit var brandID : ArrayList<String>
     private lateinit var continue_bt : LinearLayout
+    private lateinit var b_address_et : EditText
+    private lateinit var b_addressline2_et : EditText
+    private lateinit var b_city_et : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +81,49 @@ class B_Tell_US_MORE :  BaseClass() , Controller.QuestionariesAPI {
 
     private fun listeners() {
         back.setOnClickListener { onBackPressed() }
-        continue_bt.setOnClickListener { startActivity(Intent(this,B_BasicInfoActivity::class.java)) }
+        continue_bt.setOnClickListener {
+            when {
+                b_address_et.text.isEmpty() -> {
+                    b_address_et.requestFocus()
+                    b_address_et.error ="Enter Address"
+                }
+
+                b_addressline2_et.text.isEmpty() -> {
+                    b_addressline2_et.requestFocus()
+                    b_addressline2_et.error = "Enter Addressline 2"
+                }
+
+                b_city_et.text.isEmpty() -> {
+                    b_city_et.requestFocus()
+                    b_city_et.error = "Enter City"
+                }
+
+                selected_state.toString().equals("-Select State-") -> {
+                    utility.relative_snackbar(
+                        b_tell_us_more!!,
+                        "Select State",
+                        getString(R.string.close_up)
+                    )
+                }
+
+                selected_country.toString().equals("-Select Country-") -> {
+                    utility.relative_snackbar(
+                        b_tell_us_more!!,
+                        "Select Country",
+                        getString(R.string.close_up)
+                    )
+                }
+                else -> {
+                    startActivity(Intent(this,B_BasicInfoActivity::class.java).
+                    putExtra("b_address",b_address_et.text.toString()).
+                    putExtra("b_address1",b_addressline2_et.text.toString()).
+                    putExtra("b_city",b_city_et.text.toString()).
+                    putExtra("state",selected_state).
+                    putExtra("country",selected_country).
+                    putExtra("brandID",brandID)) }
+                }
+            }
+
 
     }
 
@@ -91,6 +133,9 @@ class B_Tell_US_MORE :  BaseClass() , Controller.QuestionariesAPI {
         state_spinner = findViewById(R.id.state_spinner)
         country_spinner = findViewById(R.id.country_spinner)
         continue_bt = findViewById(R.id.continue_bt)
+        b_address_et = findViewById(R.id.b_address_et)
+        b_addressline2_et = findViewById(R.id.b_addressline2_et)
+        b_city_et = findViewById(R.id.b_city_et)
 
         brandID = intent.getStringArrayListExtra("brandID")!!
     }

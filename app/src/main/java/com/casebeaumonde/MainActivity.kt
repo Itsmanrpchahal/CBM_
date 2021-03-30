@@ -123,11 +123,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             if (getStringVal(Constants.USER_ROLE).equals("customer") && getStringVal(Constants.QUESTIONARIES_STATUS).equals("0")) {
                 startActivity(Intent(this, GetStartedActivity::class.java))
             } else {
-//                if (getStringVal(Constants.QUESTIONARIES_STATUS).equals("0"))
-//                {
-                   // startActivity(Intent(this, B_GetStartedActivity::class.java))
-//                }
-//                startActivity(Intent(this, Biz_Questionaries1::class.java))
+               // if (getStringVal(Constants.QUESTIONARIES_STATUS).equals("0"))
+               // {
+                    startActivity(Intent(this, B_GetStartedActivity::class.java))
+               // }
+               // startActivity(Intent(this, Biz_Questionaries1::class.java))
 
             }
         }

@@ -9,6 +9,7 @@ import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse;
+import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse;
@@ -554,7 +555,7 @@ public interface ApiInterface {
     @Multipart
     @POST("api/v1/basicQuestionnaire")
     Call<BasicQuestionariesResponse> basicQuestionaries(
-            @Header("Authorization") String token,
+            @Header("") String token,
             @Query("name") String name,
             @Query("basic_city") String basic_city,
             @Query("basic_state") String basic_state,
@@ -651,6 +652,40 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Field("id") String id,
             @Field("type") String type
+    );
+
+    @FormUrlEncoded
+    @POST("api/v1/secondQuestionnaire")
+    Call<SecondQuestionnaireResponse> secondQuestionnaire (
+            @Header("Authorization") String Authorization,
+            @Field("aspirational_brands") ArrayList<String> aspirational_brands,
+            @Field("address") String address,
+            @Field("address2") String address2,
+            @Field("city") String city,
+            @Field("state") String state,
+            @Field("country") String country,
+            @Field("fav_occasions") String fav_occasions,
+            @Field("best_feature") String best_feature,
+            @Field("downplay_or_hide") String downplay_or_hide,
+            @Field("fav_about_fashion") String fav_about_fashion,
+            @Field("hope_with_cbm") String hope_with_cbm,
+            @Field("frustation_with_shopping") String frustation_with_shopping,
+            @Field("hunt_for") String hunt_for,
+            @Field("never_seem") String never_seem,
+            @Field("item_to_obtain") String item_to_obtain,
+            @Field("fashion_sense") String fashion_sense,
+            @Field("worked_with_stylist") String worked_with_stylist,
+            @Field("stylist_exp") String stylist_exp,
+            @Field("more_meaningfull") String more_meaningfull,
+            @Field("spend_on_cloth") String spend_on_cloth,
+            @Field("impulsive_shopper") String impulsive_shopper,
+            @Field("love_to_shop") String love_to_shop,
+            @Field("drives_to_shop") String drives_to_shop,
+            @Field("fashion_events") ArrayList<String> fashion_events,
+            @Field("like_cbm") ArrayList<String> like_cbm,
+            @Field("fav_colors") ArrayList<String> fav_colors,
+            @Field("least_fav_color") ArrayList<String> least_fav_color,
+            @Field("user_id") String user_id
     );
 
 }

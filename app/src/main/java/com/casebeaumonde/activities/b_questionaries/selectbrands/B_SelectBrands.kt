@@ -64,8 +64,6 @@ class B_SelectBrands : BaseClass() , B_SelectedBrand_IF, Controller.Questionarie
     private var height : String =""
     private var eycolor : String =""
     private var haircolor : String =""
-    private lateinit var images : ArrayList<String>
-    private lateinit var imageData : ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent_b_baisic1"
     android:background="@color/colorBackground"
     tools:context=".activities.b_questionaries.b_basicInfo1.B_BasicInfoActivity1">
 
@@ -91,6 +92,7 @@
 
             </View>
 
+
             <EditText
                 android:id="@+id/basic1_et1"
                 android:layout_width="match_parent"
@@ -98,16 +100,15 @@
                 android:layout_marginLeft="@dimen/margin_8dp"
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/margin_8dp"
-                android:textSize="@dimen/textsize_12sp"
                 android:background="@android:color/transparent"
                 android:hint="THE ELUSIVE FASHION ITEM YOU’RE TRYING TO OBTAIN"
                 android:inputType="textShortMessage"
                 android:padding="2dp"
                 android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite">
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_12sp">
 
             </EditText>
-
 
             <View
                 android:layout_width="match_parent"
@@ -157,7 +158,7 @@
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="@dimen/textsize_12sp"
-                android:text="HOW WOULD YOU DESCRIBE YOUR FASHION SENSE?">
+                android:text="HAVE YOU EVER WORKED WITH A STYLIST OR PERSONAL SHOPPER BEFORE?">
 
             </TextView>
 
@@ -171,6 +172,7 @@
                     android:id="@+id/yes_checkbox"
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/textsize_12sp"
+                    android:checked="true"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorWhite"
                     android:text="YES">
@@ -303,9 +305,10 @@
                 android:padding="8dp">
 
                 <CheckBox
-                    android:id="@+id/yes1_checkbox"
+                    android:id="@+id/yes1_checkboxshopper"
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/textsize_12sp"
+                    android:checked="true"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorWhite"
                     android:text="YES">
@@ -313,7 +316,7 @@
                 </CheckBox>
 
                 <CheckBox
-                    android:id="@+id/no1_checkbox"
+                    android:id="@+id/no1_checkboxshopper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textsize_12sp"
@@ -346,17 +349,18 @@
                 android:padding="8dp">
 
                 <CheckBox
-                    android:id="@+id/yes2_checkbox"
+                    android:id="@+id/yes2_checkboxlovetoshop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textsize_12sp"
+                    android:checked="true"
                     android:buttonTint="@color/colorWhite"
                     android:text="YES">
 
                 </CheckBox>
 
                 <CheckBox
-                    android:id="@+id/no2_checkbox"
+                    android:id="@+id/no2_checkboxlovetoshop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textsize_12sp"

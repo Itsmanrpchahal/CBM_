@@ -34,11 +34,15 @@ class B_FashionEventAdapter(var context: Context,var fashionEvents : ArrayList<S
               //  DescribeYourself.selectyourselfIf?.getID(characterstic.get(position), "1");
                 holder.itemView.fashioneventtecb.setTextColor(Color.BLACK)
                 holder.itemView.fashioneventtecb.setBackgroundColor(Color.WHITE)
+                B_FashionEventsActivity.selectedfashionIf?.getID(fashionEvents.get(position),"1")
             } else {
                // DescribeYourself.selectyourselfIf?.getID(characterstic.get(position), "0");
                 holder.itemView.fashioneventtecb.setTextColor(Color.WHITE)
                 holder.itemView.fashioneventtecb.setBackgroundColor(Color.LTGRAY)
+                B_FashionEventsActivity.selectedfashionIf?.getID(fashionEvents.get(position),"0")
             }
+
+
         })
     }
 

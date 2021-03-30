@@ -1,22 +1,34 @@
 package com.casebeaumonde.activities.b_questionaries.b_colorPicker1
 
+import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
 import com.casebeaumonde.activities.questionaries.SelectBodyTalk
 import com.casebeaumonde.activities.questionaries.colorScreen.ColorAdapter
 import com.casebeaumonde.activities.questionaries.colorScreen.ColorPickerScreen
 import com.casebeaumonde.activities.questionaries.colorScreen.SelectColor_IF
 import com.casebeaumonde.constants.BaseClass
+import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.utilities.Utility
+import kotlinx.android.synthetic.main.activity_b__color_picker.*
+import kotlinx.android.synthetic.main.activity_select_stores.*
+import kotlinx.android.synthetic.main.activity_select_stores.parent_store
+import retrofit2.Response
 
-class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1 {
+class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1,Controller.SecondQuestonariesAPI {
 
     var mColors = arrayOf(
         "FFEBEE", "FFCDD2", "EF9A9A", "E57373", "EF5350", "F44336", "E53935",  //reds
@@ -62,6 +74,39 @@ class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1 {
     private lateinit var back: ImageButton
     private lateinit var colorsRecycler: RecyclerView
     private lateinit var colorscode: ArrayList<String>
+
+    private lateinit var b_address: String
+    private lateinit var b_address1: String
+    private lateinit var b_city: String
+    private lateinit var state: String
+    private lateinit var country: String
+    private lateinit var brandID: ArrayList<String>
+    private lateinit var basic1: String
+    private lateinit var basic2: String
+    private lateinit var basic3: String
+    private lateinit var basic4: String
+    private lateinit var basic5: String
+    private lateinit var basic6: String
+    private lateinit var basic7: String
+    private lateinit var basic8: String
+    private lateinit var elusivefashion:String
+    private lateinit var fashionsense:String
+    private lateinit var personalshopper : String
+    private lateinit var yourexp : String
+    private lateinit var meaningful : String
+    private lateinit var spend:String
+    private lateinit var impulseshopper: String
+    private lateinit var lovetoshop: String
+    private lateinit var drivetoshop: String
+    private lateinit var selectedfashion : ArrayList<String>
+    private lateinit var likecbm : ArrayList<String>
+    private lateinit var favcolors : ArrayList<String>
+
+
+    private lateinit var pd : ProgressDialog
+    private lateinit var controller: Controller
+    private lateinit var utility: Utility
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_b__color_picker)
@@ -83,8 +128,48 @@ class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1 {
             if (colorscode.size == 0) {
                 Toast.makeText(this, "Select atleast one color", Toast.LENGTH_SHORT).show()
             } else {
+                   Log.d("testB",b_address+"\n"+b_address1+"\n"+b_city+"\n"+state+"\n"+country+"\n"+brandID+"\n"+basic1+"\n"+basic2+"\n"+basic3+"\n"+basic4+"\n"+basic5+"\n"+basic6+"\n"+basic7+"\n"+basic8+
+                   "\n"+elusivefashion+"\n"+fashionsense+"\n"+personalshopper+"\n"+yourexp+"\n"+meaningful+"\n"+spend+"\n"+impulseshopper+"\n"+lovetoshop+"\n"+drivetoshop+"\n"+selectedfashion+"\n"+likecbm+"\n"+favcolors+"\n"+colorscode)
 
+                if (utility.isConnectingToInternet(this))
+                {
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+                    controller.SecondQuestonaries("Bearer "+getStringVal(Constants.TOKEN),brandID,b_address,
+                    b_address1,
+                    b_city,
+                    state,
+                    country,
+                    basic1,
+                    basic2,basic3,
+                    basic4,
+                        basic5,
+                    basic6,
+                    basic7,
+                    basic8,elusivefashion,
+                    fashionsense,
+                    personalshopper,
+                    yourexp,
+                    meaningful,
+                    spend,
+                    impulseshopper,
+                    lovetoshop,
+                    drivetoshop,
+                    selectedfashion,
+                    likecbm,
+                    favcolors,
+                    colorscode,
+                        getStringVal(Constants.USERID)!!
+                    )
+                } else {
+                    utility.relative_snackbar(
+                        parent_second!!,
+                        "No Internet Connectivity",
+                        getString(R.string.close_up)
+                    )
+                }
             }
+
         }
 
         back.setOnClickListener { onBackPressed() }
@@ -94,6 +179,43 @@ class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1 {
         continue_bt = findViewById(R.id.b_continue_bt)
         back = findViewById(R.id.back)
         colorsRecycler = findViewById(R.id.colorsRecycler)
+
+        b_address = intent.getStringExtra("b_address").toString()
+        b_address1 = intent.getStringExtra("b_address1").toString()
+        b_city = intent.getStringExtra("b_city").toString()
+        state = intent.getStringExtra("state").toString()
+        country = intent.getStringExtra("country").toString()
+        brandID = intent.getStringArrayListExtra("brandID")!!
+        basic1 = intent.getStringExtra("basic1").toString()
+        basic2 = intent.getStringExtra("basic2").toString()
+        basic3 = intent.getStringExtra("basic3").toString()
+        basic4 = intent.getStringExtra("basic4").toString()
+        basic5 = intent.getStringExtra("basic5").toString()
+        basic6 = intent.getStringExtra("basic6").toString()
+        basic7 = intent.getStringExtra("basic7").toString()
+        basic8 = intent.getStringExtra("basic8").toString()
+        elusivefashion = intent.getStringExtra("elusivefashion").toString()
+        fashionsense = intent.getStringExtra("fashionsense").toString()
+        personalshopper = intent.getStringExtra("personalshopper").toString()
+        yourexp = intent.getStringExtra("yourexp").toString()
+        meaningful = intent.getStringExtra("meaningful").toString()
+        spend = intent.getStringExtra("spend").toString()
+        impulseshopper = intent.getStringExtra("impulseshopper").toString()
+        lovetoshop = intent.getStringExtra("lovetoshop").toString()
+        drivetoshop = intent.getStringExtra("drivetoshop").toString()
+        selectedfashion = intent.getStringArrayListExtra("fashionevents")!!
+        likecbm = intent.getStringArrayListExtra("likecbm")!!
+        favcolors = intent.getStringArrayListExtra("favcolors")!!
+
+        utility = Utility()
+        controller = Controller()
+        controller.Controller(this)
+        pd = ProgressDialog(this)
+        pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        pd!!.isIndeterminate = true
+        pd!!.setCancelable(false)
+
 
         colorsRecycler.layoutManager = GridLayoutManager(this, 5)
         val adapter = B_ColorAdapter1(this, mColors)
@@ -109,5 +231,18 @@ class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1 {
             colorscode.add(id.toString())
             Log.d("yourcolors", "" + colorscode)
         }
+    }
+
+    override fun onSecondQuestionaries(success: Response<SecondQuestionnaireResponse>) {
+        pd.dismiss()
+    }
+
+    override fun error(error: String?) {
+        pd.dismiss()
+        utility.relative_snackbar(
+            parent_second!!,
+            error,
+            getString(R.string.close_up)
+        )
     }
 }

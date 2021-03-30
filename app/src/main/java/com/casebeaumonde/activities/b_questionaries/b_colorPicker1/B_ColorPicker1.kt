@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
+import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
 import com.casebeaumonde.activities.questionaries.SelectBodyTalk
@@ -235,6 +236,26 @@ class B_ColorPicker1 : BaseClass(), B_SelectColor_IF1,Controller.SecondQuestonar
 
     override fun onSecondQuestionaries(success: Response<SecondQuestionnaireResponse>) {
         pd.dismiss()
+        if (success.isSuccessful)
+        {
+            if (success.body()?.code.equals("200"))
+            {
+                startActivity(Intent(this,MainActivity::class.java))
+                setStringVal(Constants.QUESTIONARIES_STATUS,"1")
+            } else {
+                utility.relative_snackbar(
+                    parent_second!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+        }else {
+            utility.relative_snackbar(
+                parent_second!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
     }
 
     override fun error(error: String?) {

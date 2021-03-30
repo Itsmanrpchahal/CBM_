@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/parent_contract"
     android:background="@color/colorBackground"
     tools:context=".fragments.contracts.ContractsFB">
 
@@ -22,6 +23,7 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -50,6 +52,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -92,6 +95,7 @@
 
 
             <TextView
+                android:id="@+id/gigcount"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
@@ -126,6 +130,7 @@
 
 
             <TextView
+                android:id="@+id/workinvitationcount"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
@@ -160,6 +165,7 @@
 
 
             <TextView
+                android:id="@+id/newoffercount"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
@@ -194,6 +200,7 @@
 
 
             <TextView
+                android:id="@+id/invitecollaboratecount"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"

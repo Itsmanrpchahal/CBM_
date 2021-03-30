@@ -110,8 +110,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 ), drawerLayout
             )
 
-            if (getStringVal(Constants.USER_ROLE).equals("customer"))
-            {
+            if (getStringVal(Constants.USER_ROLE).equals("customer")) {
                 navView.getMenu().findItem(R.id.nav_contractor).isVisible = false
             }
             navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener({ menuItem ->
@@ -119,15 +118,17 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 true
             })
 
-           // Toast.makeText(this,""+getStringVal(Constants.USER_ROLE),Toast.LENGTH_SHORT).show()
-            if (getStringVal(Constants.USER_ROLE).equals("customer") && getStringVal(Constants.QUESTIONARIES_STATUS).equals("0")) {
+            // Toast.makeText(this,""+getStringVal(Constants.USER_ROLE),Toast.LENGTH_SHORT).show()
+            if (getStringVal(Constants.USER_ROLE).equals("customer") && getStringVal(Constants.QUESTIONARIES_STATUS).equals(
+                    "0"
+                )
+            ) {
                 startActivity(Intent(this, GetStartedActivity::class.java))
             } else {
-               // if (getStringVal(Constants.QUESTIONARIES_STATUS).equals("0"))
-               // {
+                if (getStringVal(Constants.QUESTIONARIES_STATUS).equals("0")) {
                     startActivity(Intent(this, B_GetStartedActivity::class.java))
-               // }
-               // startActivity(Intent(this, Biz_Questionaries1::class.java))
+                }
+                // startActivity(Intent(this, Biz_Questionaries1::class.java))
 
             }
         }

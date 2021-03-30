@@ -46,6 +46,7 @@ import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataRespo
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.chat.GetChatUsers
+import com.casebeaumonde.fragments.contracts.ContractCountResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
@@ -128,6 +129,7 @@ public class Controller {
     var shopAPI: ShopAPI? = null
     var favOutfitAPI: FavOutfitAPI? = null
     var secondQuestonariesAPI: SecondQuestonariesAPI? = null
+    var contractCountAPI :ContractCountAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -403,6 +405,11 @@ public class Controller {
         webAPI = WebAPI()
     }
 
+    fun Controller(contractCount: ContractCountAPI)
+    {
+        contractCountAPI = contractCount
+        webAPI = WebAPI()
+    }
 
     fun setForgotPassword(email: String) {
         webAPI?.api?.forgotPassword(email)?.enqueue(object : Callback<ForgotPassworResponse> {
@@ -1815,6 +1822,24 @@ public class Controller {
         })
     }
 
+    fun ContractCount(token: String?)
+    {
+        webAPI?.api?.contractCount(token)?.enqueue(object :Callback<ContractCountResponse>
+        {
+            override fun onResponse(
+                call: Call<ContractCountResponse>,
+                response: Response<ContractCountResponse>
+            ) {
+               contractCountAPI?.onContractCount(response)
+            }
+
+            override fun onFailure(call: Call<ContractCountResponse>, t: Throwable) {
+               contractCountAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -2149,6 +2174,11 @@ public class Controller {
 
     interface SecondQuestonariesAPI {
         fun onSecondQuestionaries(success: Response<SecondQuestionnaireResponse>)
+        fun error(error: String?)
+    }
+
+    interface ContractCountAPI {
+        fun onContractCount(success:Response<ContractCountResponse>)
         fun error(error: String?)
     }
 }

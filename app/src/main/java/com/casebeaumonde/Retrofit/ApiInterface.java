@@ -21,6 +21,7 @@ import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.Mak
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
 import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
+import com.casebeaumonde.fragments.contracts.ContractCountResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
@@ -688,4 +689,9 @@ public interface ApiInterface {
             @Field("user_id") String user_id
     );
 
+
+    @GET("api/v1/assetsCount")
+    Call<ContractCountResponse> contractCount(
+            @Header("Authorization") String token
+    );
 }

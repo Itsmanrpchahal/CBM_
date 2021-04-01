@@ -66,9 +66,9 @@ class BussinessRegisterTypeScreen : AppCompatActivity() {
         continue_bt.setOnClickListener {
             if(type.equals("Personal"))
             {
-                startActivity(Intent(this,BusinessRegisterActivity::class.java))
+                startActivity(Intent(this,BusinessRegisterActivity::class.java).putExtra("from","1"))
             } else {
-                startActivity(Intent(this,BusinessRegisterActivity::class.java))
+                startActivity(Intent(this,BusinessRegisterActivity::class.java).putExtra("from","0"))
             }
 
 

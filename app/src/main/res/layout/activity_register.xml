@@ -98,7 +98,32 @@
                 android:layout_marginTop="@dimen/default_margin_16dp"
                 android:layout_marginRight="@dimen/default_margin_16dp"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="Name"
+                android:hint="Firstname"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </EditText>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@color/colorWhite">
+
+            </View>
+
+            <EditText
+                android:id="@+id/register_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:layout_marginTop="@dimen/default_margin_16dp"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="Lastname"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"

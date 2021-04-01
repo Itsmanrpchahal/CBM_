@@ -52,6 +52,7 @@ class RegisterActivity : BaseClass() {
     private lateinit var register_cpassword: EditText
     private lateinit var register_phone: EditText
     private lateinit var register_aboutme: EditText
+
     private lateinit var register_upload: Button
     private lateinit var agreecheck: CheckBox
     private lateinit var register_regiter_bt: Button
@@ -85,6 +86,7 @@ class RegisterActivity : BaseClass() {
         pd!!.setCancelable(false)
         register_forbusiness = findViewById(R.id.register_forbusiness)
         register_firstname = findViewById(R.id.register_firstname)
+        register_lastname = findViewById(R.id.register_lastname)
         register_email = findViewById(R.id.register_email)
         register_password = findViewById(R.id.register_password)
         register_cpassword = findViewById(R.id.register_cpassword)
@@ -170,10 +172,10 @@ class RegisterActivity : BaseClass() {
                 register_firstname.error = getString(R.string.enterfirstname)
             }
 
-//            register_lastname.text.isEmpty() -> {
-//                register_lastname.requestFocus()
-//                register_lastname.error = getString(R.string.enterlastname)
-//            }
+            register_lastname.text.isEmpty() -> {
+                register_lastname.requestFocus()
+                register_lastname.error = getString(R.string.enterlastname)
+            }
 
             register_email.text.isEmpty() -> {
                 register_email.requestFocus()
@@ -239,12 +241,25 @@ class RegisterActivity : BaseClass() {
                 {
                     c = "terms"
                 }
-                val strg = register_firstname.text.split(" ").toTypedArray()
-                if (strg.size==1)
-                {
+//                val strg = register_firstname.text.split(" ").toTypedArray()
+//                if (strg.size==1)
+//                {
+//                    userRegister(
+//                        register_firstname.text.toString(),
+//                       "",
+//                        register_email.text.toString(),
+//                        register_password.text.toString(),
+//                        register_cpassword.text.toString(),
+//                        register_phone.text.toString(),
+//                        register_aboutme.text.toString(),
+//                        part,
+//                        c
+//                    )
+//                } else if (strg.size >=2)
+//                {
                     userRegister(
                         register_firstname.text.toString(),
-                       "",
+                        register_lastname.text.toString(),
                         register_email.text.toString(),
                         register_password.text.toString(),
                         register_cpassword.text.toString(),
@@ -253,20 +268,7 @@ class RegisterActivity : BaseClass() {
                         part,
                         c
                     )
-                } else if (strg.size >=2)
-                {
-                    userRegister(
-                        strg.get(0).toString(),
-                        strg.get(1).toString(),
-                        register_email.text.toString(),
-                        register_password.text.toString(),
-                        register_cpassword.text.toString(),
-                        register_phone.text.toString(),
-                        register_aboutme.text.toString(),
-                        part,
-                        c
-                    )
-                }
+//                }
 
 
             }
@@ -300,7 +302,7 @@ class RegisterActivity : BaseClass() {
                 c,
                 about,
                 part,
-                "customer"
+                "customer",""
             )
             userRegisterCall?.enqueue(object : Callback<UserRegisterResponse> {
 

@@ -51,6 +51,7 @@ class BusinessRegisterActivity : AppCompatActivity() {
     private lateinit var bregister_agreecheck: CheckBox
     private lateinit var bregister_regiter_bt: Button
     private lateinit var register_login: TextView
+    private lateinit var back : ImageButton
     private lateinit var utility: Utility
     private lateinit var userType: String
     private var path: String = ""
@@ -58,7 +59,9 @@ class BusinessRegisterActivity : AppCompatActivity() {
     private lateinit var pd: ProgressDialog
     private lateinit var part: MultipartBody.Part
     private lateinit var bitMap: Bitmap
+    private lateinit var view1: View
     var c: String = ""
+    lateinit var from :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,86 +126,169 @@ class BusinessRegisterActivity : AppCompatActivity() {
             }
         }
 
+        back.setOnClickListener { onBackPressed() }
     }
 
     private fun checkValidations() {
-        when {
-            userType.equals("-Select Team-") -> {
-                utility!!.relative_snackbar(
-                    bregister_parent!!,
-                    "Select team",
-                    getString(R.string.close_up)
-                )
-            }
 
-            bregister_companyname.text.isEmpty() -> {
-                bregister_companyname.requestFocus()
-                bregister_companyname.error = getString(R.string.entercomapanyname)
-            }
+        if (from.equals("1"))
+        {
+            when {
+                userType.equals("-Select Team-") -> {
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Select team",
+                        getString(R.string.close_up)
+                    )
+                }
 
-            bregister_firstname.text.isEmpty() -> {
-                bregister_firstname.requestFocus()
-                bregister_firstname.error = getString(R.string.enterfirstname)
-            }
 
-            bregister_lastname.text.isEmpty() -> {
-                bregister_lastname.requestFocus()
-                bregister_lastname.error = getString(R.string.enterlastname)
-            }
 
-            bregister_email.text.isEmpty() -> {
-                bregister_email.requestFocus()
-                bregister_email.error = getString(R.string.enteremail)
-            }
+                bregister_companyname.text.isEmpty() -> {
+                    bregister_companyname.requestFocus()
+                    bregister_companyname.error = getString(R.string.entercomapanyname)
+                }
 
-            !Patterns.EMAIL_ADDRESS.matcher(bregister_email.text).matches() -> {
-                bregister_email.requestFocus()
-                bregister_email.error = "Enter Valid Email"
-            }
 
-            bregister_password.text.isEmpty() -> {
-                bregister_password.requestFocus()
-                bregister_password.error = getString(R.string.enterpassword)
-            }
 
-            bregister_cpassword.text.isEmpty() -> {
-                bregister_cpassword.requestFocus()
-                bregister_cpassword.error = getString(R.string.confirmpassword)
-            }
+                bregister_firstname.text.isEmpty() -> {
+                    bregister_firstname.requestFocus()
+                    bregister_firstname.error = getString(R.string.enterfirstname)
+                }
 
-            bregister_phone.text.isEmpty() -> {
-                bregister_phone.requestFocus()
-                bregister_phone.error = getString(R.string.enterphone)
-            }
+                bregister_lastname.text.isEmpty() -> {
+                    bregister_lastname.requestFocus()
+                    bregister_lastname.error = getString(R.string.enterlastname)
+                }
 
-            buploadfilename.text.equals("") -> {
-                utility!!.relative_snackbar(
-                    bregister_parent!!,
-                    "Upload Image",
-                    getString(R.string.close_up)
-                )
-            }
+                bregister_email.text.isEmpty() -> {
+                    bregister_email.requestFocus()
+                    bregister_email.error = getString(R.string.enteremail)
+                }
 
-            !bregister_agreecheck.isChecked -> {
-                utility!!.relative_snackbar(
-                    bregister_parent!!,
-                    "Accept terms and condition",
-                    getString(R.string.close_up)
-                )
-            }
+                !Patterns.EMAIL_ADDRESS.matcher(bregister_email.text).matches() -> {
+                    bregister_email.requestFocus()
+                    bregister_email.error = "Enter Valid Email"
+                }
 
-            !bregister_password.text.toString().equals(bregister_cpassword.text.toString()) -> {
-                register_cpassword.requestFocus()
-                register_cpassword.error = getString(R.string.passwordnotmatch)
+                bregister_password.text.isEmpty() -> {
+                    bregister_password.requestFocus()
+                    bregister_password.error = getString(R.string.enterpassword)
+                }
 
+                bregister_cpassword.text.isEmpty() -> {
+                    bregister_cpassword.requestFocus()
+                    bregister_cpassword.error = getString(R.string.confirmpassword)
+                }
+
+                bregister_phone.text.isEmpty() -> {
+                    bregister_phone.requestFocus()
+                    bregister_phone.error = getString(R.string.enterphone)
+                }
+
+                buploadfilename.text.equals("") -> {
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Upload Image",
+                        getString(R.string.close_up)
+                    )
+                }
+
+                !bregister_agreecheck.isChecked -> {
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Accept terms and condition",
+                        getString(R.string.close_up)
+                    )
+                }
+
+                !bregister_password.text.toString().equals(bregister_cpassword.text.toString()) -> {
+                    register_cpassword.requestFocus()
+                    register_cpassword.error = getString(R.string.passwordnotmatch)
+
+                }
+                else -> {
+                    if (checked.equals("1"))
+                    {
+                        c = "terms"
+                    }
+                }
             }
-            else -> {
-                if (checked.equals("1"))
-                {
-                    c = "terms"
+        } else {
+            when {
+                userType.equals("-Select Team-") -> {
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Select team",
+                        getString(R.string.close_up)
+                    )
+                }
+
+                bregister_firstname.text.isEmpty() -> {
+                    bregister_firstname.requestFocus()
+                    bregister_firstname.error = getString(R.string.enterfirstname)
+                }
+
+                bregister_lastname.text.isEmpty() -> {
+                    bregister_lastname.requestFocus()
+                    bregister_lastname.error = getString(R.string.enterlastname)
+                }
+
+                bregister_email.text.isEmpty() -> {
+                    bregister_email.requestFocus()
+                    bregister_email.error = getString(R.string.enteremail)
+                }
+
+                !Patterns.EMAIL_ADDRESS.matcher(bregister_email.text).matches() -> {
+                    bregister_email.requestFocus()
+                    bregister_email.error = "Enter Valid Email"
+                }
+
+                bregister_password.text.isEmpty() -> {
+                    bregister_password.requestFocus()
+                    bregister_password.error = getString(R.string.enterpassword)
+                }
+
+                bregister_cpassword.text.isEmpty() -> {
+                    bregister_cpassword.requestFocus()
+                    bregister_cpassword.error = getString(R.string.confirmpassword)
+                }
+
+                bregister_phone.text.isEmpty() -> {
+                    bregister_phone.requestFocus()
+                    bregister_phone.error = getString(R.string.enterphone)
+                }
+
+                buploadfilename.text.equals("") -> {
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Upload Image",
+                        getString(R.string.close_up)
+                    )
+                }
+
+                !bregister_agreecheck.isChecked -> {
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Accept terms and condition",
+                        getString(R.string.close_up)
+                    )
+                }
+
+                !bregister_password.text.toString().equals(bregister_cpassword.text.toString()) -> {
+                    register_cpassword.requestFocus()
+                    register_cpassword.error = getString(R.string.passwordnotmatch)
+
+                }
+                else -> {
+                    if (checked.equals("1"))
+                    {
+                        c = "terms"
+                    }
                 }
             }
         }
+
     }
 
     private fun setSpinnerData() {
@@ -255,6 +341,15 @@ class BusinessRegisterActivity : AppCompatActivity() {
         bregister_agreecheck = findViewById(R.id.bregister_agreecheck)
         bregister_regiter_bt = findViewById(R.id.bregister_regiter_bt)
         register_login = findViewById(R.id.register_login)
+        back = findViewById(R.id.back)
+        view1 = findViewById(R.id.view1)
+        from = intent.getStringExtra("from").toString()
+
+        if (from.equals("0"))
+        {
+            bregister_companyname.visibility = View.GONE
+            view1.visibility = View.GONE
+        }
     }
 
     private fun pictureSelectionDialog() {
@@ -308,7 +403,7 @@ class BusinessRegisterActivity : AppCompatActivity() {
             var file: File? = ImagePicker.getFile(data)
             //You can also get File Path from intent
             val filePath: String? = ImagePicker.getFilePath(data)
-            uploadfilename.text = filePath
+            buploadfilename.text = filePath
             path = filePath!!
             bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
             part = Utility.sendImageFileToserver(filesDir,bitMap,"image")

@@ -122,7 +122,8 @@ public interface ApiInterface {
             @Query("terms") String terms,
             @Query("about_me") String about_me,
             @Part MultipartBody.Part image,
-            @Query("role") String role
+            @Query("role") String role,
+            @Query("company") String company
     );
 
     @FormUrlEncoded
@@ -556,7 +557,7 @@ public interface ApiInterface {
     @Multipart
     @POST("api/v1/basicQuestionnaire")
     Call<BasicQuestionariesResponse> basicQuestionaries(
-            @Header("") String token,
+            @Header("Authorization") String token,
             @Query("name") String name,
             @Query("basic_city") String basic_city,
             @Query("basic_state") String basic_state,
@@ -638,7 +639,8 @@ public interface ApiInterface {
             @Query("size") String size,
             @Query("color") String color,
             @Query("brand") String brand,
-            @Query("price") Double price
+            @Query("price") Double price,
+            @Query("creator_id") String creator_id
     );
 
     @GET("api/v1/retailer")

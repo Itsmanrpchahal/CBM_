@@ -19,7 +19,6 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
 import com.casebeaumonde.activities.questionaries.SelectBodyTalk
 import com.casebeaumonde.activities.questionaries.colorScreen.ColorAdapter
-import com.casebeaumonde.activities.questionaries.colorScreen.ColorPickerScreen
 import com.casebeaumonde.activities.questionaries.colorScreen.SelectColor_IF
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants

@@ -167,7 +167,8 @@ class AddNewOutfitItem : BaseClass(), Controller.AddClosetItemListAPI,Controller
                         sizeID,
                         colorID,
                         brandID,
-                        aditemtocloset_price.text.toString()
+                        aditemtocloset_price.text.toString(),
+                        getStringVal(Constants.USERID).toString()
                     )
                 }
             }

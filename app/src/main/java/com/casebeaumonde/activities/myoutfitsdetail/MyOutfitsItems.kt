@@ -55,6 +55,22 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (utility.isConnectingToInternet(this))
+        {
+            pd!!.show()
+            pd!!.setContentView(R.layout.loading)
+            controller.MyOutfitsItems("Bearer " + getStringVal(Constants.TOKEN), outfitID)
+        } else {
+            utility!!.relative_snackbar(
+                parent_outfitsitems,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
     private fun findIds() {
         outfitidIf = this
         outfitID = intent.getStringExtra(Constants.OUTFITID).toString()
@@ -65,15 +81,14 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
         closetiems_add = findViewById(R.id.closetiems_add)
         controller = Controller()
         controller.Controller(this, this,this)
-        controller.MyOutfitsItems("Bearer " + getStringVal(Constants.TOKEN), outfitID)
+
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         pd!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         pd!!.isIndeterminate = true
         pd!!.setCancelable(false)
-        pd!!.show()
-        pd!!.setContentView(R.layout.loading)
+
 
         outfitfavidIf  =  this
 

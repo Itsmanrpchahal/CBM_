@@ -1686,7 +1686,8 @@ public class Controller {
         size: String,
         color: String,
         brand: String,
-        price: String
+        price: String,
+        creator_id:String
     ) {
 
         webAPI?.api?.addOutfitItem(
@@ -1699,7 +1700,8 @@ public class Controller {
             size,
             color,
             brand,
-            price.toDouble()
+            price.toDouble(),
+            creator_id
         )?.enqueue(object : Callback<AddOutfitItemResponse> {
             override fun onResponse(
                 call: Call<AddOutfitItemResponse>,

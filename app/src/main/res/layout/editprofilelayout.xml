@@ -215,7 +215,8 @@
                     android:id="@+id/radiogroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
+                    android:scrollbars="horizontal"
                     android:layout_marginTop="@dimen/margin_8dp"
                     android:orientation="horizontal">
 
@@ -224,6 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:enabled="true"
+                        android:fontFamily="@font/oswaldlight"
                         android:text="User I follow"
                         android:textColor="@color/colorWhite"
                         android:buttonTint="@color/colorWhite"
@@ -237,6 +239,7 @@
                         android:layout_height="wrap_content"
                         android:text="All Users"
                         android:layout_marginLeft="@dimen/margin_8dp"
+                        android:fontFamily="@font/oswaldlight"
                         android:textColor="@color/colorWhite"
                         android:buttonTint="@color/colorWhite"
                         android:textStyle="bold">

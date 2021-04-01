@@ -16,6 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.b_questionaries.b_colorPicker.B_ColorPicker"></activity>

@@ -944,7 +944,7 @@ class Profile : BaseFrag(),
 
             Glide.with(context!!)
                 .load(
-                    "http://" + userProfileResponse.body()
+                    userProfileResponse.body()
                         ?.getData()?.filePath + userProfileResponse.body()
                         ?.getData()?.user?.avatar?.toString()
                 )
@@ -956,8 +956,7 @@ class Profile : BaseFrag(),
             username = userProfileResponse.body()?.getData()?.user?.firstname!!
             setStringVal(
                 Constants.FIRSTNAME,
-                userProfileResponse.body()?.getData()?.user?.firstname
-            )
+                userProfileResponse.body()?.getData()?.user?.firstname)
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.getData()?.user?.phone)

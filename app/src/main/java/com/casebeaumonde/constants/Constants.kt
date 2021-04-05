@@ -32,4 +32,5 @@ object Constants
     val FACEBOOKURL ="facebookurl"
     val INSTAGRAMURL ="instagramurl"
     val TWITTERURL ="twitterurl"
+    val USERIMAGE = "userimage"
 }

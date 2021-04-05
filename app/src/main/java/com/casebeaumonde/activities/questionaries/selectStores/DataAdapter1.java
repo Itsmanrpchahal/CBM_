@@ -41,7 +41,7 @@ public class DataAdapter1 extends RecyclerView.Adapter<DataAdapter1.MyHolder> im
         String data = stores.get(position);
         holder.title.setText(data);
 
-
+//        holder.star.setText(data);
         holder.star.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
             {
@@ -51,14 +51,6 @@ public class DataAdapter1 extends RecyclerView.Adapter<DataAdapter1.MyHolder> im
             }
         });
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context,DescribeYourself.class);
-//                context.startActivity(intent);
-////                context.startActivity(new Intent(context, DescribeYourself.class));
-//            }
-//        });
 
     }
 

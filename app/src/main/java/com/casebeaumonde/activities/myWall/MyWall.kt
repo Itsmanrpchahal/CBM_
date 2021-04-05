@@ -75,6 +75,15 @@ class MyWall : BaseClass(),Controller.MyWallAPI  {
                 myWall.body()?.getData()?.filePath.toString(),userID
             )
             myWall_Recycler.adapter = adapter
+
+            if(myWall.body()?.getData()?.fashionables?.size==0)
+            {
+                utility!!.relative_snackbar(
+                    parent_myWall,
+                    "No items on wall",
+                    getString(R.string.close_up)
+                )
+            }
         }else{
             utility!!.relative_snackbar(
                 parent_myWall,

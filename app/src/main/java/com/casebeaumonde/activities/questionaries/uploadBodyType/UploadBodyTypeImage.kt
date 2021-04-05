@@ -279,7 +279,7 @@ class UploadBodyTypeImage : BaseClass()  , Controller.QuestionariesAPI {
     private fun pickImagesIntent() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Image(s)"), PICK_IMAGES_CODE)
     }
@@ -344,6 +344,7 @@ class UploadBodyTypeImage : BaseClass()  , Controller.QuestionariesAPI {
                     part.add(sendImageFileToserver(bitMap)!!)
                     Log.d("bitmap", "" + part)
                     Log.d("IMAGES", "" + imageUri)
+                    images.add(imageUri.toString())
                     imageData.add(data.data.toString())
                     dialog.dismiss()
                     setAdapterData(images)

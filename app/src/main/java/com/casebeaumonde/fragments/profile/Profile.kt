@@ -1,13 +1,16 @@
 package com.casebeaumonde.fragments.profile
 
+import android.R.attr.bitmap
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -29,10 +32,7 @@ import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
-import com.casebeaumonde.activities.myoutfits.MyOutfits
-import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.paymenthistory.PaymentHistory
-import com.casebeaumonde.activities.paymentscreen_b.PaymentScreenBussiness
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.Pricing
@@ -43,8 +43,8 @@ import com.casebeaumonde.fragments.profile.adapter.FollowerAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowingAdapter
 import com.casebeaumonde.fragments.profile.profileResponse.*
 import com.casebeaumonde.utilities.Utility
+import com.casebeaumonde.utilities.Utility.sendImageFileToserver
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
@@ -60,9 +60,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class Profile : BaseFrag(),
     Controller.UserProfileAPI,
@@ -634,6 +638,12 @@ class Profile : BaseFrag(),
         editprofile_fburl.setText(getStringVal(Constants.FACEBOOKURL))
         editprofile_twitterurl.setText(getStringVal(Constants.TWITTERURL))
         editprofile_instaurl.setText(getStringVal(Constants.INSTAGRAMURL))
+        Glide.with(context!!)
+            .load(
+                Constants.BASE_IMAGE_URL + getStringVal(Constants.USERIMAGE)
+            )
+            .placeholder(R.drawable.login_banner).into(editprofile_image)
+
         if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             editprofile_paypal_email.setText("")
         } else {
@@ -775,8 +785,10 @@ class Profile : BaseFrag(),
                                 editprofile_phone.text.toString(),
                                 editprofile_about.text.toString(),
                                 getStringVal(Constants.USERID).toString(),
-                                "1", editprofile_twitterurl.text.toString(),
-                                editprofile_fburl.text.toString(), editprofile_instaurl.text.toString()
+                                "1",
+                                editprofile_twitterurl.text.toString(),
+                                editprofile_fburl.text.toString(),
+                                editprofile_instaurl.text.toString()
                             )
 
 
@@ -956,13 +968,25 @@ class Profile : BaseFrag(),
             username = userProfileResponse.body()?.getData()?.user?.firstname!!
             setStringVal(
                 Constants.FIRSTNAME,
-                userProfileResponse.body()?.getData()?.user?.firstname)
+                userProfileResponse.body()?.getData()?.user?.firstname
+            )
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.getData()?.user?.phone)
-            setStringVal(Constants.INSTAGRAMURL, userProfileResponse.body()!!.getData()?.user!!.profile?.instagram_url)
-            setStringVal(Constants.FACEBOOKURL, userProfileResponse.body()!!.getData()?.user!!.profile?.facebook_url)
-            setStringVal(Constants.TWITTERURL, userProfileResponse.body()!!.getData()?.user!!.profile?.twitter_url)
+            setStringVal(Constants.USERIMAGE, userProfileResponse.body()?.getData()!!.user?.avatar)
+
+            setStringVal(
+                Constants.INSTAGRAMURL,
+                userProfileResponse.body()!!.getData()?.user!!.profile?.instagram_url
+            )
+            setStringVal(
+                Constants.FACEBOOKURL,
+                userProfileResponse.body()!!.getData()?.user!!.profile?.facebook_url
+            )
+            setStringVal(
+                Constants.TWITTERURL,
+                userProfileResponse.body()!!.getData()?.user!!.profile?.twitter_url
+            )
             setStringVal(
                 Constants.PAYPALID,
                 userProfileResponse.body()?.getData()?.user?.paypal_email.toString()
@@ -1072,6 +1096,7 @@ class Profile : BaseFrag(),
         }
 
     }
+
 
     private fun addPaymentMethodDialog() {
         addPaymentMethod = Dialog(context!!)

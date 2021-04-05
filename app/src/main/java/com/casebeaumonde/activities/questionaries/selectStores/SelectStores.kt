@@ -284,7 +284,7 @@ class SelectStores : BaseClass() ,SelectedStores_IF, Controller.QuestionariesAPI
         }
         setStringVal(Constants.QUESTIONARIES_STATUS,"1")
         startActivity(Intent(this,MainActivity::class.java))
-        finish()
+
     }
 
     override fun error(error: String?) {

@@ -57,14 +57,14 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyHolder> impl
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context,DescribeYourself.class);
-                context.startActivity(intent);
-//                context.startActivity(new Intent(context, DescribeYourself.class));
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context,DescribeYourself.class);
+//                context.startActivity(intent);
+////                context.startActivity(new Intent(context, DescribeYourself.class));
+//            }
+//        });
 
     }
 

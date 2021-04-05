@@ -12,6 +12,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myoutfits.MyOutfits
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
+import com.casebeaumonde.activities.myoutfitsdetail.AddNewOutfitItem
 import com.casebeaumonde.activities.myoutfitsdetail.MyOutfitsItems
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
@@ -82,6 +83,10 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
 
         holder.itemView.closets_delete.setOnClickListener {
             MyOutfits.deleteidIf?.getID(position.toString(),myOutfits.id.toString())
+        }
+
+        holder.itemView.closets_additem.setOnClickListener {
+            context.startActivity(Intent(context, AddNewOutfitItem::class.java).putExtra("outfitID",myOutfits.id.toString()))
         }
     }
 

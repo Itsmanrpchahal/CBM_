@@ -313,21 +313,41 @@ class RegisterActivity : BaseClass() {
                     pd.dismiss()
                     Log.d("registerresponse", "" + response.body())
 
-                    register_firstname.setText("")
-                    register_email.setText("")
-                    register_password.setText("")
-                    register_cpassword.setText("")
-                    register_phone.setText("")
-                    register_aboutme.setText("")
-                    uploadfilename.setText("")
-                    bitMap.recycle()
-                    startActivity(Intent(this@RegisterActivity,LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
-                    finish()
-                    utility!!.relative_snackbar(
-                        parent_register!!,
-                        response.body()?.getMessage(),
-                        getString(R.string.close_up)
-                    )
+                    if(response.isSuccessful)
+                    {
+                        if(response.body()?.code.equals("200"))
+                        {
+                            register_firstname.setText("")
+                            register_email.setText("")
+                            register_password.setText("")
+                            register_cpassword.setText("")
+                            register_phone.setText("")
+                            register_aboutme.setText("")
+                            uploadfilename.setText("")
+                            bitMap.recycle()
+                            startActivity(Intent(this@RegisterActivity,LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                            finish()
+                            utility!!.relative_snackbar(
+                                parent_register!!,
+                                response.body()?.getMessage(),
+                                getString(R.string.close_up)
+                            )
+                        }else {
+                            utility!!.relative_snackbar(
+                                parent_register!!,
+                                response.body()?.getMessage(),
+                                getString(R.string.close_up)
+                            )
+                        }
+                    } else
+                    {
+                        utility!!.relative_snackbar(
+                            parent_register!!,
+                            response.message(),
+                            getString(R.string.close_up)
+                        )
+                    }
+
                 }
 
                 override fun onFailure(call: Call<UserRegisterResponse>, t: Throwable) {

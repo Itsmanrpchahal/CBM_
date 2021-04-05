@@ -333,7 +333,18 @@ class ClosetsItems : BaseClass(),
         outFitID = ArrayList()
 
         spinnertitle.text = s
-        moveitem.text = s
+
+
+        if (s.equals("outfit"))
+        {
+            moveitem.text = "Make outfit"
+        } else if (s.equals("move"))
+        {
+            moveitem.text ="Move"
+        } else if (s.equals("duplicate"))
+        {
+            moveitem.text ="Duplicate"
+        }
 
         if (s.equals("move") || s.equals("duplicate")) {
             listview.visibility = View.VISIBLE

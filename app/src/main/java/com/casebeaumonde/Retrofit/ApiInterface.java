@@ -8,6 +8,9 @@ import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
+import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
+import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
+import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse;
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse;
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
@@ -695,5 +698,26 @@ public interface ApiInterface {
     @GET("api/v1/assetsCount")
     Call<ContractCountResponse> contractCount(
             @Header("Authorization") String token
+    );
+
+    @GET("api/v1/retailer_items/{input}")
+    Call<ShopItemsResponse> shopitems (
+            @Header("Authorization") String token,
+            @Path("input") String item_id
+    );
+
+
+    @FormUrlEncoded
+    @POST("api/v1/retailer_items/heartItem")
+    Call<ShopItemsLIKEResponse> shopItemsLike (
+            @Header("Authorization") String token,
+            @Field("id") String id
+    );
+
+    @GET("api/v1/addToCart/{input}/{input1}")
+    Call<AddtoCartResponse> addToCart (
+            @Header("Authorization") String token,
+            @Path("input") String itemId,
+            @Path("input1") String qty
     );
 }

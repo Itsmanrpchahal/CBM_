@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:layout_margin="@dimen/margin_8dp"
     android:id="@+id/parent_liveevents"
+    android:background="@color/colorBackground"
     tools:context=".fragments.Live_Events.LiveEvents">
 
     <RelativeLayout

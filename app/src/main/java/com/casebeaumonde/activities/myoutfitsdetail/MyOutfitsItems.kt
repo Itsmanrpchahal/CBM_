@@ -46,6 +46,8 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
 
         findIds()
         listeners()
+
+        Toast.makeText(this,intent.getStringExtra(Constants.OUTFITID),Toast.LENGTH_SHORT).show()
     }
 
     private fun listeners() {

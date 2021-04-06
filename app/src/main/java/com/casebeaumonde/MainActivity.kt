@@ -118,6 +118,8 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 true
             })
 
+
+
             // Toast.makeText(this,""+getStringVal(Constants.USER_ROLE),Toast.LENGTH_SHORT).show()
             if (getStringVal(Constants.USER_ROLE).equals("customer") && getStringVal(Constants.QUESTIONARIES_STATUS).equals(
                     "0"
@@ -157,6 +159,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
             manager.popBackStack()
             manager.beginTransaction().replace(R.id.nav_host_fragment, Cart()).addToBackStack(null)
                 .commit()
+
         }
     }
 

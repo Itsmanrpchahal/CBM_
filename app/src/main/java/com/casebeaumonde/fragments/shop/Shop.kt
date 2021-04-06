@@ -1,6 +1,7 @@
 package com.casebeaumonde.fragments.shop
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ShopItems.ShopItemsActivity
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.shop.IF.GetShopID_IF
@@ -106,6 +108,7 @@ class Shop : BaseFrag(),Controller.ShopAPI,GetShopID_IF {
     }
 
     override fun getID(id: String?) {
-        Toast.makeText(context,""+id,Toast.LENGTH_SHORT).show()
+        startActivity(Intent(context,ShopItemsActivity::class.java).putExtra("shopID",id.toString()))
+
     }
 }

@@ -1,10 +1,12 @@
 package com.casebeaumonde.Controller
 
-import android.service.controls.Control
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
+import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
+import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
+import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
@@ -50,7 +52,6 @@ import com.casebeaumonde.fragments.contracts.ContractCountResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
-import com.casebeaumonde.fragments.shop.Shop
 import com.casebeaumonde.fragments.shop.response.ShopResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -130,6 +131,9 @@ public class Controller {
     var favOutfitAPI: FavOutfitAPI? = null
     var secondQuestonariesAPI: SecondQuestonariesAPI? = null
     var contractCountAPI :ContractCountAPI? = null
+    var shopItemsAPI:ShopItemsAPI? = null
+    var shopItemsLikeAPI : ShopItemsLikeAPI? = null
+    var addtoCartAPI:AddtoCartAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -408,6 +412,14 @@ public class Controller {
     fun Controller(contractCount: ContractCountAPI)
     {
         contractCountAPI = contractCount
+        webAPI = WebAPI()
+    }
+
+    fun Controller(shopItems : ShopItemsAPI,shopItemsLike: ShopItemsLikeAPI,addtoCart: AddtoCartAPI)
+    {
+        shopItemsAPI = shopItems
+        shopItemsLikeAPI = shopItemsLike
+        addtoCartAPI = addtoCart
         webAPI = WebAPI()
     }
 
@@ -1842,6 +1854,61 @@ public class Controller {
         })
     }
 
+    fun ShopItems(token: String?,id: String?)
+    {
+        webAPI?.api?.shopitems(token,id)?.enqueue(object :Callback<ShopItemsResponse>
+        {
+            override fun onResponse(
+                call: Call<ShopItemsResponse>,
+                response: Response<ShopItemsResponse>
+            ) {
+                shopItemsAPI?.onShopItemsSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ShopItemsResponse>, t: Throwable) {
+                shopItemsAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun ShopItemsLike(token: String?,id: String?)
+    {
+        webAPI?.api?.shopItemsLike(token, id)?.enqueue(object :Callback<ShopItemsLIKEResponse>
+        {
+            override fun onResponse(
+                call: Call<ShopItemsLIKEResponse>,
+                response: Response<ShopItemsLIKEResponse>
+            ) {
+                shopItemsLikeAPI?.onShopItemLikeSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ShopItemsLIKEResponse>, t: Throwable) {
+               shopItemsLikeAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun AddtoCart(token: String?,itemId: String?,qty:String)
+    {
+        webAPI?.api?.addToCart(token, itemId, qty)?.enqueue(object :Callback<AddtoCartResponse>
+        {
+            override fun onResponse(
+                call: Call<AddtoCartResponse>,
+                response: Response<AddtoCartResponse>
+            ) {
+                addtoCartAPI?.onAddtoCartSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AddtoCartResponse>, t: Throwable) {
+              addtoCartAPI?.error(t.message)
+            }
+
+        })
+    }
+
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -2181,6 +2248,21 @@ public class Controller {
 
     interface ContractCountAPI {
         fun onContractCount(success:Response<ContractCountResponse>)
+        fun error(error: String?)
+    }
+
+    interface ShopItemsAPI {
+        fun onShopItemsSuccess(success:Response<ShopItemsResponse>)
+        fun error(error: String?)
+    }
+
+    interface ShopItemsLikeAPI {
+        fun onShopItemLikeSuccess(success:Response<ShopItemsLIKEResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddtoCartAPI {
+        fun onAddtoCartSuccess(success:Response<AddtoCartResponse>)
         fun error(error: String?)
     }
 }

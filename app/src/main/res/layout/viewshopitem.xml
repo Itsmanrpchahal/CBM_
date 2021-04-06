@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:background="@color/colorWhite"
+        android:src="@drawable/login_banner">
+
+    </ImageView>
+
+
+    <TextView
+        android:id="@+id/titletv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/descriptiontv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/pricetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/categorytv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/sizetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/colortv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Color"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/brandtv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brand"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp">
+
+    </TextView>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/shopitem_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_outline_favorite_border_24black"
+            android:button="@drawable/shopitemfav">
+
+        </CheckBox>
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="0"
+            android:textColor="@color/colorBlack">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addtocart"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@color/colorBlack"
+        android:layout_marginLeft="@dimen/margin_8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        android:text="Add to cart"
+        android:textAllCaps="false">
+
+    </Button>
+</LinearLayout>

@@ -37,7 +37,7 @@ class ContractorAdapter(
         val res = data
         Glide.with(context).load(
             Constants.BASE_IMAGE_URL + data.get(position).contractor?.avatar
-        ).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
+        ).placeholder(R.drawable.login_banner1).into(holder.itemView.inviationimage)
 
         holder.itemView.invitation_title.setText(
             "Contract "+ data.get(position).status +" for gig with title: '" + data.get(

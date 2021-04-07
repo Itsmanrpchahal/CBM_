@@ -45,7 +45,7 @@ class ClosetsItemAdapter(
     override fun onBindViewHolder(holder: ClosetsItemAdapter.ViewHolder, position: Int) {
 
         var closetsItems = closetsItem.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner).into(
+        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner1).into(
             holder.itemView.closetItemImage
         )
 

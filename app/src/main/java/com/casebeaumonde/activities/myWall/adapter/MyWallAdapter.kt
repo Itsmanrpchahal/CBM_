@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
@@ -35,7 +34,7 @@ class MyWallAdapter(
         val fashionable = myWallList?.get(position)
 
         Glide.with(context).load(Constants.BASE_IMAGE_URL + fashionable.image)
-            .placeholder(R.drawable.login_banner).into(holder.itemView.myWall_image)
+            .placeholder(R.drawable.login_banner1).into(holder.itemView.myWall_image)
         holder.itemView.myWall_closetname.text = fashionable.title
         holder.itemView.myWall_Decs.text = fashionable.description
         holder.itemView.myWall_morenext.text = fashionable.creator?.firstname+" "+fashionable.creator?.lastname

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
@@ -15,7 +14,6 @@ import com.casebeaumonde.fragments.users.Response.UsersResponse
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.ViewProfile
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.customuser.view.*
 
 class UsersAdapter (val context : Context, val userList:MutableList<UsersResponse.Data.User>,var filepath : String): RecyclerView.Adapter<UsersAdapter.ViewHolder>()
@@ -33,7 +31,7 @@ class UsersAdapter (val context : Context, val userList:MutableList<UsersRespons
     override fun onBindViewHolder(holder: UsersAdapter.ViewHolder, position: Int) {
         val users = userList?.get(position)
         holder.itemView.userName.text = users.firstname+" "+users.lastname
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+users.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.userImage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+users.avatar).placeholder(R.drawable.login_banner1).into(holder.itemView.userImage)
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context,ViewProfile::class.java).putExtra("userID",users.id.toString()))

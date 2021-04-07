@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,6 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.ShopItems.ShopItemsActivity
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import kotlinx.android.synthetic.main.customuser.view.*
 
 class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsResponse.Data.Item>): RecyclerView.Adapter<ShopItemsAdapter.ViewHolder>() {
@@ -25,7 +23,7 @@ class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsRespon
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+items.get(position).image).placeholder(R.drawable.login_banner).into(holder.itemView.userImage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+items.get(position).image).placeholder(R.drawable.login_banner1).into(holder.itemView.userImage)
         holder.itemView.userName.text = "View more"
 
         holder.itemView.userName.setOnClickListener {

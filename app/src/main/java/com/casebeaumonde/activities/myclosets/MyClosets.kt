@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
-import android.app.Notification
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -487,7 +486,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
             part = Utility.sendImageFileToserver(filesDir, bitMap,"image")
 
-            Glide.with(this).load(bitMap).placeholder(R.drawable.login_banner)
+            Glide.with(this).load(bitMap).placeholder(R.drawable.login_banner1)
                 .into(createcloset_imagerperview)
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {

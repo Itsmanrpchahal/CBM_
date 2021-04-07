@@ -39,6 +39,7 @@ class NotificationAdapter(
 
     @SuppressLint("LogNotTimber")
     override fun onBindViewHolder(holder: NotificationAdapter.ViewHolder, position: Int) {
+       // Collections.reverse(notifications)
         val notificationModel = notifications?.get(position)
         holder.itemView.notification_text.text = notificationModel.message
         holder.itemView.notification_time.text =
@@ -47,7 +48,7 @@ class NotificationAdapter(
 
         Glide.with(context)
             .load(Constants.BASE_IMAGE_URL + "" + notificationModel?.data?.user?.avatar.toString()!!)
-            .placeholder(R.drawable.login_banner).into(holder.itemView.notification_image)
+            .placeholder(R.drawable.login_banner1).into(holder.itemView.notification_image)
 
 
         holder.itemView.remove_notification.setOnClickListener {

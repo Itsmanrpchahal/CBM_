@@ -66,7 +66,7 @@
                         android:id="@+id/contractuser_image"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/login_banner">
+                        android:src="@drawable/login_banner1">
 
 
                     </de.hdodenhof.circleimageview.CircleImageView>
@@ -99,7 +99,7 @@
                         android:id="@+id/contractparter_image"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/login_banner">
+                        android:src="@drawable/login_banner1">
 
 
                     </de.hdodenhof.circleimageview.CircleImageView>

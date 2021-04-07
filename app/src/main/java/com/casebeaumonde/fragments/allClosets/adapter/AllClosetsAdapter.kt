@@ -35,7 +35,7 @@ class AllClosetsAdapter (var context: Context,var list: MutableList<AllClosetsRe
     override fun onBindViewHolder(holder: AllClosetsAdapter.ViewHolder, position: Int) {
         val listData = list.get(position)
 
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.image).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.image).placeholder(R.drawable.login_banner1).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = listData.title
         holder.itemView.closetitem_uploadby.text = "Created by "+listData.user?.firstname+" at "+ Utils.changeDateTimeToDateTime(listData.createdAt)
 

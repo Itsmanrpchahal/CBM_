@@ -13,7 +13,6 @@ import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.myclosets.MyClosets
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
-import com.casebeaumonde.activities.myoutfitsdetail.MyOutfitsItems
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closet_layout.view.*
@@ -37,7 +36,7 @@ class MyClosetsAdapter(
         val closets = closetsList.get(position)
         try {
             Glide.with(context).load(Constants.BASE_IMAGE_URL + closets.image)
-                .placeholder(R.drawable.login_banner)
+                .placeholder(R.drawable.login_banner1)
                 .into(holder.itemView.closet_banner)
         } catch (e: Exception) {
 

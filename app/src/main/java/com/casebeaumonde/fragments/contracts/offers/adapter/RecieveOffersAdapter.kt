@@ -38,7 +38,7 @@ class RecieveOffersAdapter (
             Constants.BASE_IMAGE_URL + data.get(
                 position
             ).designer?.avatar
-        ).placeholder(R.drawable.login_banner).into(holder.itemView.inviationimage)
+        ).placeholder(R.drawable.login_banner1).into(holder.itemView.inviationimage)
         holder.itemView.invitation_title.setText(data.get(position).gig?.title)
         holder.itemView.invitation_date.setText(Utils.changeDateTimeToDateTime(data.get(position).createdAt))
         holder.itemView.invitation_status.setText(data.get(position).status)

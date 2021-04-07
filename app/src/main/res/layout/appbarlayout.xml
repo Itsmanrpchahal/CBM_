@@ -63,7 +63,7 @@
             android:layout_height="40dp"
             android:scaleType="fitXY"
             android:layout_marginRight="@dimen/default_margin_16dp"
-            android:src="@drawable/login_banner">
+            android:src="@drawable/login_banner1">
 
         </ImageView>
     </LinearLayout>

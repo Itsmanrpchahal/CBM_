@@ -16,13 +16,15 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.cart.IF.RemoveCartItemIF
 import com.casebeaumonde.fragments.cart.adapter.CartAdapter
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_cart.*
 import retrofit2.Response
 
-class Cart : BaseFrag(), Controller.CartItemAPI {
+class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.RemoveItemCartAPI {
 
     private lateinit var cartitems_recycler: RecyclerView
     private lateinit var utility: Utility
@@ -43,7 +45,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
         val view: View
         view = inflater.inflate(R.layout.fragment_cart, container, false)
         controller = Controller()
-        controller.Controller(this)
+        controller.Controller(this,this)
         findIds(view)
 
         if (utility.isConnectingToInternet(context)) {
@@ -70,6 +72,8 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
     }
 
     private fun findIds(view: View) {
+
+        removeCartItemIF = this
         utility = Utility()
         pd = ProgressDialog(context)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -96,6 +100,10 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
         }
     }
 
+    companion object {
+        var removeCartItemIF : RemoveCartItemIF? = null
+    }
+
     private fun setFullData(response: ArrayList<CartItemsResponse.Data.CartItem>) {
         cartitems_recycler.visibility = View.VISIBLE
         //response = closets
@@ -105,6 +113,8 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
         cartitems_recycler.adapter = adapter
     }
 
+
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -112,5 +122,53 @@ class Cart : BaseFrag(), Controller.CartItemAPI {
             error,
             getString(R.string.close_up)
         )
+    }
+
+    override fun getID(pos: String?, id: String?) {
+        if (utility.isConnectingToInternet(context)) {
+            controller.RemoveCartItem("Bearer "+getStringVal(Constants.TOKEN), id.toString())
+            pd.show()
+            pd.setContentView(R.layout.loading)
+        } else {
+            utility!!.relative_snackbar(
+                parent_cart!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+
+
+    }
+
+    override fun onRemoveCartSuccess(success: Response<RemoveItemCartResponse>) {
+
+        if (success.isSuccessful)
+        {
+            if (success.body()?.code.equals("200"))
+            {
+                controller.CartItems("Bearer " + getStringVal(Constants.TOKEN))
+                utility!!.relative_snackbar(
+                    parent_cart!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+            } else {
+                pd.dismiss()
+                utility!!.relative_snackbar(
+                    parent_cart!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+            }
+        } else {
+            pd.dismiss()
+            utility!!.relative_snackbar(
+                parent_cart!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+
+
     }
 }

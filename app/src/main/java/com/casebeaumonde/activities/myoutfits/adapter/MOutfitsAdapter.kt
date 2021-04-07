@@ -35,7 +35,7 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
         val myOutfits = myOutfits.get(position)
         try {
             Glide.with(context).load(Constants.BASE_IMAGE_URL + myOutfits.image)
-                .placeholder(R.drawable.login_banner)
+                .placeholder(R.drawable.login_banner1)
                 .into(holder.itemView.closet_banner)
         } catch (e: Exception) {
 

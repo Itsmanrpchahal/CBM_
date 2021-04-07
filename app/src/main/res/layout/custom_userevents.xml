@@ -17,7 +17,7 @@
             android:id="@+id/event_imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/login_banner"
+            android:src="@drawable/login_banner1"
             android:scaleType="fitXY"
             android:padding="2dp">
 

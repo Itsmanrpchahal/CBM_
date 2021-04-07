@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
@@ -21,12 +22,11 @@ import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.shop.IF.GetShopID_IF
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_shop_items.*
 import retrofit2.Response
 
-class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Controller.ShopItemsLikeAPI,Controller.AddtoCartAPI{
+class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Controller.ShopItemsLikeAPI,Controller.AddtoCartAPI,Controller.SearchShopItemAPI{
     lateinit var shopID : String
     lateinit var retailer_spinner:Spinner
     lateinit var designer_spinner : Spinner
@@ -59,6 +59,10 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
     lateinit var addtocart : Button
     lateinit var shopid : String
 
+     var catID : String =""
+     var retailerID :String=""
+     var prices :String =""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_items)
@@ -86,7 +90,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         price.add("400-above")
 
         controller = Controller()
-        controller.Controller(this,this,this)
+        controller.Controller(this,this,this,this)
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -108,11 +112,14 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
             if (success.body()?.code.equals("200"))
             {
                 reatilerName = ArrayList()
+                reatilerName.add("All Retailer")
                 for (i in success.body()?.data?.retailers?.indices!!)
 
                 {
                     reatilerName.add(success.body()?.data?.retailers?.get(i)?.firstname.toString()+" "+success.body()?.data?.retailers?.get(i)?.lastname)
                 }
+
+
 
                 //ToDo: Set Retailer in Spinner
                 val adapter = ArrayAdapter(
@@ -120,10 +127,30 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                     android.R.layout.simple_spinner_dropdown_item, reatilerName
                 )
                 retailer_spinner.adapter = adapter
+                retailer_spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        if (position!=0)
+                        {
+                            retailerID = success.body()?.data?.retailers!!.get(position-1).id.toString()
+//                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+//                            pd.show()
+//                            pd.setContentView(R.layout.loading)
+                        }
+                    }
 
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
 
+                    }
+
+                }
 
                 categoryName = ArrayList()
+                categoryName.add("All Category")
                 for (i in success?.body()?.data?.categories?.indices!!)
                 {
                     categoryName.add(success.body()?.data?.categories?.get(i)?.name.toString())
@@ -132,10 +159,52 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                 //ToDo: Set Category in Spinner
                 val adapter1 = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,categoryName)
                 category_spinner.adapter = adapter1
+                category_spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        if (position!=0)
+                        {
+                            catID = success.body()?.data?.categories!!.get(position-1).id.toString()
+//                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+//                            pd.show()
+//                            pd.setContentView(R.layout.loading)
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                    }
+
+                }
 
                 //ToDo: Set Price in Spinner
                 val adapter2 = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,price)
                 price_spinner.adapter = adapter2
+                price_spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        if (position!=0)
+                        {
+                            prices = price.get(position).toString()
+//                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+//                            pd.show()
+//                            pd.setContentView(R.layout.loading)
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                    }
+
+                }
 
 
                 items = ArrayList()
@@ -166,7 +235,34 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         var getShopItemID:GetShopItemID? = null
     }
 
-
+    override fun onSearchShopItemSuccess(success: Response<ShopItemsResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful)
+        {
+            if (success.body()?.code.equals("200"))
+            {
+                utility!!.relative_snackbar(
+                    parent_shopitems!!,
+                    success.body()?.code,
+                    getString(R.string.close_up)
+                )
+            } else {
+                pd.dismiss()
+                utility!!.relative_snackbar(
+                    parent_shopitems!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+        } else {
+            pd.dismiss()
+            utility!!.relative_snackbar(
+                parent_shopitems!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
 
 
     override fun error(error: String?) {
@@ -205,7 +301,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         count = dialog.findViewById(R.id.count)
         addtocart = dialog.findViewById(R.id.addtocart)
 
-        Glide.with(this).load(Constants.BASE_IMAGE_URL+items.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner).into(image)
+        Glide.with(this).load(Constants.BASE_IMAGE_URL+items.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner1).into(image)
         titletv.text = "Title: "+items.get(pos!!.toInt()).name
         descriptiontv.text = "Descrition: "+items.get(pos!!.toInt()).description
         pricetv.text = "Price: $"+items.get(pos!!.toInt()).price

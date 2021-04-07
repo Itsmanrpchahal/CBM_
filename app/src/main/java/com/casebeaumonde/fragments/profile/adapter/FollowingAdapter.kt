@@ -34,7 +34,7 @@ class FollowingAdapter (
         val list = followers.get(position)
         holder.itemView.username.setText(list.firstname + " " + list.lastname)
         Glide.with(context).load(Constants.BASE_IMAGE_URL + list.avatar)
-            .placeholder(R.drawable.login_banner).into(holder.itemView.userimage)
+            .placeholder(R.drawable.login_banner1).into(holder.itemView.userimage)
 
         holder.itemView.viewprofilebt.setOnClickListener {
             Profile.getUserID?.getUserID(list.id.toString())

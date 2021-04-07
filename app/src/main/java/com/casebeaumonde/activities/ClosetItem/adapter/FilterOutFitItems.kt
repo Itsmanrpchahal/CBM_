@@ -39,7 +39,7 @@ class FilterOutFitItems(
 
     override fun onBindViewHolder(holder: FilterOutFitItems.ViewHolder, position: Int) {
         var closetsItems = list.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner).into(
+        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.picture).placeholder(R.drawable.login_banner1).into(
             holder.itemView.closetItemImage
         )
         holder.itemView.closetitem_name.text = closetsItems?.title

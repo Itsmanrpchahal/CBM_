@@ -111,7 +111,7 @@
             android:id="@+id/onboard_image"
             android:layout_width="350dp"
             android:layout_height="210dp"
-            android:src="@drawable/login_banner"
+            android:src="@drawable/login_banner1"
             android:scaleType="fitXY"
             android:maxWidth="310dp"
             android:layout_centerHorizontal="true"

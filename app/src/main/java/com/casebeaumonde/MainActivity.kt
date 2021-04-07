@@ -24,7 +24,6 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.b_questionaries.B_GetStartedActivity
-import com.casebeaumonde.activities.biz_questionaries.Biz_Questionaries1
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse
@@ -36,7 +35,6 @@ import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
 import com.google.android.material.appbar.AppBarLayout
 import com.shreyaspatil.material.navigationview.MaterialNavigationView
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.changeplandialog.view.*
 import retrofit2.Call
@@ -354,7 +352,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                                 .getData()!!.filePath + userProfileResponse.body()!!
                                 .getData()!!.user!!.avatar
                         )
-                        .placeholder(R.drawable.login_banner).into(userImage)
+                        .placeholder(R.drawable.login_banner1).into(userImage)
                 } catch (e: Exception) {
 
                 }

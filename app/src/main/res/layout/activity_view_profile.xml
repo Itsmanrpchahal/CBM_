@@ -293,6 +293,22 @@
 
                 </Button>
 
+                <Button
+                    android:id="@+id/viewprofile__startchat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginRight="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:visibility="visible"
+                    android:text="Start Chat"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/textsize_14sp">
+
+                </Button>
+
             </LinearLayout>
 
         </LinearLayout>

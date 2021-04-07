@@ -10,11 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.eventDetail.EventDetailScreen
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.allClosets.AllClosets
 import kotlinx.android.synthetic.main.closetsitems.view.*
 
 class EventDetailAdapter(
@@ -35,7 +33,7 @@ class EventDetailAdapter(
     override fun onBindViewHolder(holder: EventDetailAdapter.ViewHolder, position: Int) {
        val listdata = list.get(position)
 
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+listdata.picture).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+listdata.picture).placeholder(R.drawable.login_banner1).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = listdata.title
         holder.itemView.closetitem_uploadby.text = "Uploaded by :"+listdata.creator?.firstname
         if (listdata.hearts!!.size>0)

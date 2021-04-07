@@ -30,7 +30,7 @@ class DesignerAdapter (val context : Context,var designers : MutableList<Designe
     override fun onBindViewHolder(holder: DesignerAdapter.ViewHolder, position: Int) {
         val designers = designers?.get(position)
         holder.itemView.userName.text = designers.firstname+" "+designers.lastname
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+designers.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.userImage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+designers.avatar).placeholder(R.drawable.login_banner1).into(holder.itemView.userImage)
 
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context, ViewProfile::class.java).putExtra("userID",designers.id.toString()))

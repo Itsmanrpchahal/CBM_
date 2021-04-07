@@ -1,16 +1,13 @@
 package com.casebeaumonde.fragments.profile
 
-import android.R.attr.bitmap
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -43,16 +40,13 @@ import com.casebeaumonde.fragments.profile.adapter.FollowerAdapter
 import com.casebeaumonde.fragments.profile.adapter.FollowingAdapter
 import com.casebeaumonde.fragments.profile.profileResponse.*
 import com.casebeaumonde.utilities.Utility
-import com.casebeaumonde.utilities.Utility.sendImageFileToserver
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.JsonObject
 import com.stripe.android.Stripe
 import com.stripe.android.TokenCallback
 import com.stripe.android.model.Card
 import com.stripe.android.model.Token
-import kotlinx.android.synthetic.main.activity_card_detail_screen.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.editprofilelayout.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import okhttp3.MultipartBody
 import org.json.JSONObject
@@ -60,9 +54,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.io.IOException
-import java.io.InputStream
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -642,7 +633,7 @@ class Profile : BaseFrag(),
             .load(
                 Constants.BASE_IMAGE_URL + getStringVal(Constants.USERIMAGE)
             )
-            .placeholder(R.drawable.login_banner).into(editprofile_image)
+            .placeholder(R.drawable.login_banner1).into(editprofile_image)
 
         if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             editprofile_paypal_email.setText("")
@@ -960,7 +951,7 @@ class Profile : BaseFrag(),
                         ?.getData()?.filePath + userProfileResponse.body()
                         ?.getData()?.user?.avatar?.toString()
                 )
-                .placeholder(R.drawable.login_banner).into(profile_profilePic)
+                .placeholder(R.drawable.login_banner1).into(profile_profilePic)
             profile_followerscount.text =
                 userProfileResponse.body()?.getData()?.user?.followers?.size.toString()
             profile_followingcount.text =

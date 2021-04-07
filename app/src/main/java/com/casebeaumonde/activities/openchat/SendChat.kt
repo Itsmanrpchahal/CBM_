@@ -60,6 +60,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         controller = Controller()
         controller.Controller(this, this, this)
         id = intent?.getStringExtra("id").toString()
+
         name = intent?.getStringExtra("chatname").toString()
         chatname.setText(name)
 
@@ -168,6 +169,8 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
                 )
             }
         }
+
+
     }
 
     fun blockDialogs(s:String) {

@@ -37,7 +37,7 @@ class FilterAdapter(
 
     override fun onBindViewHolder(holder: FilterAdapter.ViewHodler, position: Int) {
         var closetsItems = filterData.body()?.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.getPicture()).placeholder(R.drawable.login_banner).into(
+        Glide.with(context).load(Constants.BASE_IMAGE_URL + closetsItems?.getPicture()).placeholder(R.drawable.login_banner1).into(
             holder.itemView.closetItemImage
         )
         holder.itemView.closetitem_name.text = closetsItems?.getTitle()

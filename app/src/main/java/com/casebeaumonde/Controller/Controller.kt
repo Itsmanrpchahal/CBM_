@@ -47,6 +47,7 @@ import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.fragments.chat.GetChatUsers
 import com.casebeaumonde.fragments.contracts.ContractCountResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
@@ -134,6 +135,9 @@ public class Controller {
     var shopItemsAPI:ShopItemsAPI? = null
     var shopItemsLikeAPI : ShopItemsLikeAPI? = null
     var addtoCartAPI:AddtoCartAPI? = null
+    var searchShopItemAPI:SearchShopItemAPI? = null
+    var removeItemCartAPI : RemoveItemCartAPI? =null
+
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -289,8 +293,9 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(cartItem: CartItemAPI) {
+    fun Controller(cartItem: CartItemAPI,removeItemCart: RemoveItemCartAPI) {
         cartItemAPI = cartItem
+        removeItemCartAPI = removeItemCart
         webAPI = WebAPI()
     }
 
@@ -415,11 +420,12 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(shopItems : ShopItemsAPI,shopItemsLike: ShopItemsLikeAPI,addtoCart: AddtoCartAPI)
+    fun Controller(shopItems : ShopItemsAPI,shopItemsLike: ShopItemsLikeAPI,addtoCart: AddtoCartAPI,searchShopItem: SearchShopItemAPI)
     {
         shopItemsAPI = shopItems
         shopItemsLikeAPI = shopItemsLike
         addtoCartAPI = addtoCart
+        searchShopItemAPI = searchShopItemAPI
         webAPI = WebAPI()
     }
 
@@ -1908,6 +1914,42 @@ public class Controller {
         })
     }
 
+    fun SearchShopItems(token: String,retailer_id:String,category_id : String,price:String)
+    {
+        webAPI?.api?.serachShopItem(token, retailer_id, category_id, price)?.enqueue(object :Callback<ShopItemsResponse>
+        {
+            override fun onResponse(
+                call: Call<ShopItemsResponse>,
+                response: Response<ShopItemsResponse>
+            ) {
+                searchShopItemAPI?.onSearchShopItemSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ShopItemsResponse>, t: Throwable) {
+                searchShopItemAPI?.error(t.message)
+            }
+
+        })
+
+    }
+
+    fun RemoveCartItem (token: String?,cartID:String)
+    {
+        webAPI?.api?.removeCartItem(token, cartID)?.enqueue(object :Callback<RemoveItemCartResponse>
+        {
+            override fun onResponse(
+                call: Call<RemoveItemCartResponse>,
+                response: Response<RemoveItemCartResponse>
+            ) {
+                removeItemCartAPI?.onRemoveCartSuccess(response)
+            }
+
+            override fun onFailure(call: Call<RemoveItemCartResponse>, t: Throwable) {
+                removeItemCartAPI?.error(t.message)
+            }
+
+        })
+    }
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -2263,6 +2305,16 @@ public class Controller {
 
     interface AddtoCartAPI {
         fun onAddtoCartSuccess(success:Response<AddtoCartResponse>)
+        fun error(error: String?)
+    }
+
+    interface SearchShopItemAPI {
+        fun onSearchShopItemSuccess(success:Response<ShopItemsResponse>)
+        fun error(error: String?)
+    }
+
+    interface RemoveItemCartAPI {
+        fun onRemoveCartSuccess(success: Response<RemoveItemCartResponse>)
         fun error(error: String?)
     }
 }

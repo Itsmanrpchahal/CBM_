@@ -1212,7 +1212,7 @@ class ClosetsItems : BaseClass(),
         }
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL + closetResponse.get(id!!).picture)
-            .placeholder(R.drawable.login_banner).into(viewitem_image)
+            .placeholder(R.drawable.login_banner1).into(viewitem_image)
         viewitem_title.text = "Title :" + closetResponse.get(id).title
         viewitem_color.text = "Color :" + closetResponse.get(id).color?.name
         if (closetResponse.get(id).hearts!!.size > 0) {

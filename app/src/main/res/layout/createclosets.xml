@@ -143,7 +143,7 @@
                 android:layout_height="160dp"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:background="@drawable/blackroundcorners"
-                android:src="@drawable/login_banner"
+                android:src="@drawable/login_banner1"
                 android:scaleType="centerCrop">
 
             </ImageButton>

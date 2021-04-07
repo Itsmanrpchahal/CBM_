@@ -28,7 +28,7 @@ class AllChatUsersAdapter (var context: Context, var list: MutableList<GetChatUs
     override fun onBindViewHolder(holder: AllChatUsersAdapter.ViewHolder, position: Int) {
         val listData = list.get(position)
 
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.chatuser_image)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+listData.avatar).placeholder(R.drawable.login_banner1).into(holder.itemView.chatuser_image)
         holder.itemView.chatuser_name.text = listData.firstname+" "+listData.lastname
 
         holder.itemView.setOnClickListener {

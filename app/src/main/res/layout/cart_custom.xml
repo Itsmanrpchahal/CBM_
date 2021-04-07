@@ -31,7 +31,7 @@
                     android:layout_height="100dp"
                     android:maxWidth="100dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/login_banner">
+                    android:src="@drawable/login_banner1">
 
                 </ImageView>
 

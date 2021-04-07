@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -38,7 +37,7 @@ class UserInvitationsAdapter (val context: Context,val events : MutableList<User
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: UserInvitationsAdapter.ViewHolder, position: Int) {
 
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+events.get(position)?.event?.image.toString()!!).placeholder(R.drawable.login_banner).into(holder.itemView.event_imageView)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+events.get(position)?.event?.image.toString()!!).placeholder(R.drawable.login_banner1).into(holder.itemView.event_imageView)
         holder.itemView.event_sentby.setText("Sent by: "+events.get(position).event?.creator?.company)
         holder.itemView.event_sentat.setText("Sent at: "+ Utils.changeDateTimeToDateTime(events.get(position).createdAt))
         holder.itemView.event_name.setText(events.get(position).event?.title)

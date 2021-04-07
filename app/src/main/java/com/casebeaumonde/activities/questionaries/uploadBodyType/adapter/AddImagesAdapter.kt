@@ -19,7 +19,7 @@ class AddImagesAdapter(var context: Context, var list: ArrayList<String?>) : Rec
     }
 
     override fun onBindViewHolder(holder: AddImagesAdapter.ViewHolder, position: Int) {
-       Glide.with(context).load(list.get(position)).placeholder(R.drawable.login_banner).into(holder.itemView.add_image)
+       Glide.with(context).load(list.get(position)).placeholder(R.drawable.login_banner1).into(holder.itemView.add_image)
 
         holder.itemView.delete_image.setOnClickListener {
             val position: Int = holder.getAdapterPosition()

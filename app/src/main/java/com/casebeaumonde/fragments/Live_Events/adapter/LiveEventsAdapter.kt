@@ -17,7 +17,6 @@ import com.casebeaumonde.fragments.Live_Events.LiveEvents
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closetsitems.view.*
-import kotlinx.android.synthetic.main.createclosets.view.*
 
 class LiveEventsAdapter(val context : Context,val data: MutableList<LiveEventsResponse.Event>,var userID:String) : RecyclerView.Adapter<LiveEventsAdapter.ViewHolder>()
 {
@@ -31,7 +30,7 @@ class LiveEventsAdapter(val context : Context,val data: MutableList<LiveEventsRe
 
     override fun onBindViewHolder(holder: LiveEventsAdapter.ViewHolder, position: Int) {
         val  list = data.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+list.image).placeholder(R.drawable.login_banner).into(holder.itemView.closetItemImage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+list.image).placeholder(R.drawable.login_banner1).into(holder.itemView.closetItemImage)
         holder.itemView.closetitem_name.text = list.title
         holder.itemView.closetitem_uploadby.text = "Created by: "+data.get(position).creator?.firstname +" at "+ Utils.changeDateTimeToDateTime(list.createdAt)
 

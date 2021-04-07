@@ -23,7 +23,7 @@ class ShopAdapter(var context: Context, var shops: Response<ShopResponse>): Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+shops.body()?.data?.get(position)?.avatar).placeholder(R.drawable.login_banner).into(holder.itemView.shopimage)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL+shops.body()?.data?.get(position)?.avatar).placeholder(R.drawable.login_banner1).into(holder.itemView.shopimage)
 
         holder.itemView.setOnClickListener {
             Shop.getshopidIf?.getID(shops.body()?.data?.get(position)?.id.toString())

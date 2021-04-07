@@ -206,7 +206,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
         itemview_editbt.visibility = View.GONE
         itemview_removebt.visibility = View.GONE
 
-        Glide.with(this).load(Constants.BASE_IMAGE_URL+response.get(id!!).picture).placeholder(R.drawable.login_banner).into(viewitem_image)
+        Glide.with(this).load(Constants.BASE_IMAGE_URL+response.get(id!!).picture).placeholder(R.drawable.login_banner1).into(viewitem_image)
         viewitem_title.text = "Title :"+response.get(id).title
         viewitem_color.text = "Color :"+response.get(id).color?.name
         if (response.get(id).hearts!!.size>0)

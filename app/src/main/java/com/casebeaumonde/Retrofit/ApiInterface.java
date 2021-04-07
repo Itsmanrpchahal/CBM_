@@ -24,6 +24,7 @@ import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.Mak
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
 import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
+import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse;
 import com.casebeaumonde.fragments.contracts.ContractCountResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
@@ -719,5 +720,21 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Path("input") String itemId,
             @Path("input1") String qty
+
+    );
+
+
+    @POST("api/v1/retailer_items/search")
+    Call<ShopItemsResponse> serachShopItem (
+            @Header("Authorization") String token,
+            @Query("retailer_id") String retailer_id,
+            @Query("category_id") String category_id,
+            @Query("price") String price
+    );
+
+    @GET("api/v1/removeCartItem/{input}")
+    Call<RemoveItemCartResponse> removeCartItem (
+            @Header("Authorization") String token,
+            @Path("input") String cartID
     );
 }

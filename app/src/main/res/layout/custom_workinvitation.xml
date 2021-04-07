@@ -16,7 +16,7 @@
         android:id="@+id/inviationimage"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/login_banner">
+        android:src="@drawable/login_banner1">
 
     </de.hdodenhof.circleimageview.CircleImageView>
 

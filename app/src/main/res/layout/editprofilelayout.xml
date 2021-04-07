@@ -35,7 +35,7 @@
                         android:id="@+id/editprofile_image"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
-                        android:src="@drawable/login_banner"
+                        android:src="@drawable/login_banner1"
                         android:scaleType="fitXY">
 
                     </ImageView>

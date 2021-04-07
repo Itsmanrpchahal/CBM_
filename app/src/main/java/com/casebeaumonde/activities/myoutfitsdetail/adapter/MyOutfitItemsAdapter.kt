@@ -1,8 +1,5 @@
 package com.casebeaumonde.activities.myoutfitsdetail.adapter
 
-import android.R.attr.left
-import android.R.attr.right
-import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,18 +9,15 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myoutfitsdetail.AddNewOutfitItem
 import com.casebeaumonde.activities.myoutfitsdetail.MyOutfitsItems
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.shop.Shop
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closet_layout.view.*
 import kotlinx.android.synthetic.main.closet_layout.view.closetitem_favorite
 import kotlinx.android.synthetic.main.closet_layout.view.hainger
-import kotlinx.android.synthetic.main.closetsitems.view.*
 import java.util.*
 
 
@@ -43,7 +37,7 @@ class MyOutfitItemsAdapter(
         val myOutfits = outfitItems.get(position)
         try {
             Glide.with(context).load(Constants.BASE_IMAGE_URL + myOutfits.picture)
-                .placeholder(R.drawable.login_banner)
+                .placeholder(R.drawable.login_banner1)
                 .into(holder.itemView.closet_banner)
         } catch (e: Exception) {
 

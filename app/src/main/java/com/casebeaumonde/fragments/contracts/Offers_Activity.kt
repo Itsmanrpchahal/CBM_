@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -252,7 +251,7 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
             offer_title.setText("Offer for gig with title: " + sendOffer.get(pos.toInt()).gig?.title)
             Glide.with(this!!)
                 .load(Constants.BASE_IMAGE_URL + sendOffer.get(pos?.toInt()!!).designer?.avatar)
-                .placeholder(R.drawable.login_banner).into(offer_image)
+                .placeholder(R.drawable.login_banner1).into(offer_image)
             offer_offer_rate.setText("Proposed rate: $" + sendOffer.get(pos.toInt()).rate)
             offer_ratetype.setText("Proposed rate type:" + sendOffer.get(pos.toInt()).rateType)
             offers_comments.setText("" + sendOffer.get(pos.toInt()).comments)
@@ -273,7 +272,7 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
             offer_title.setText("Offer for gig with title: " + recieveOffer.get(pos.toInt()).gig?.title)
             Glide.with(this!!)
                 .load(Constants.BASE_IMAGE_URL + recieveOffer.get(pos?.toInt()!!).designer?.avatar)
-                .placeholder(R.drawable.login_banner).into(offer_image)
+                .placeholder(R.drawable.login_banner1).into(offer_image)
             offer_offer_rate.setText("Proposed rate: $" + recieveOffer.get(pos.toInt()).rate)
             offer_ratetype.setText("Proposed rate type:" + recieveOffer.get(pos.toInt()).rateType)
             offers_comments.setText("" + recieveOffer.get(pos.toInt()).comments)

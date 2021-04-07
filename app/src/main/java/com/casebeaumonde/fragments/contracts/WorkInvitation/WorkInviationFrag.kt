@@ -244,7 +244,7 @@ class WorkInviationFrag : BaseFrag(), Controller.WorkInvitationAPI, GetInviID_IF
             Constants.BASE_IMAGE_URL + sendIvitations.get(
                 position
             ).designer?.avatar
-        ).placeholder(R.drawable.login_banner).into(offer_image)
+        ).placeholder(R.drawable.login_banner1).into(offer_image)
         gigtitletv1.setText(sendIvitations.get(position).description)
         gigdecstv1.setText(sendIvitations.get(position).gig?.description)
         rateet.setText(sendIvitations.get(position).gig?.rate.toString())

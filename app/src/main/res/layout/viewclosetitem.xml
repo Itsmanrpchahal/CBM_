@@ -277,7 +277,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:padding="2dp"
-            android:src="@drawable/login_banner"
+            android:src="@drawable/login_banner1"
             android:background="@drawable/whiteborderblack1"
             android:layout_height="150dp">
 

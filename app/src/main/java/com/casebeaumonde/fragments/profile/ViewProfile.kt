@@ -4,10 +4,8 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -16,16 +14,13 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
-import com.casebeaumonde.activities.notifications.Notifications
+import com.casebeaumonde.activities.openchat.SendChat
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.profile.profileResponse.FollowUnFollowResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
-import com.google.android.material.tabs.TabLayout
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_view_profile.*
-import kotlinx.android.synthetic.main.fragment_my_wall.*
 import retrofit2.Response
 
 class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnFollowAPI {
@@ -44,7 +39,10 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
     private lateinit var viewprofile_followbt: Button
     private lateinit var viewprofile__mywall: Button
     private lateinit var viewprofile__mycloset: Button
+    private lateinit var viewprofile__startchat : Button
     private lateinit var role: String
+    private lateinit var id :String
+    private lateinit var name : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +83,10 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
         viewprofile__mycloset.setOnClickListener {
             startActivity(Intent(this, MyClosets::class.java).putExtra("userID", userID))
         }
+
+        viewprofile__startchat.setOnClickListener {
+            startActivity(Intent(this, SendChat::class.java).putExtra("id",id).putExtra("chatname",name))
+        }
     }
 
     private fun findIds() {
@@ -106,6 +108,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
         viewprofile_followbt = findViewById(R.id.viewprofile_followbt)
         viewprofile__mywall = findViewById(R.id.viewprofile__mywall)
         viewprofile__mycloset = findViewById(R.id.viewprofile__mycloset)
+        viewprofile__startchat = findViewById(R.id.viewprofile__startchat)
     }
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
@@ -116,6 +119,9 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
             } else {
                 viewprofile_followbt.setText("Follow")
             }
+
+            id = userProfileResponse.body()?.getData()?.user?.id.toString()
+            name = userProfileResponse.body()?.getData()?.user?.firstname.toString()+" "+userProfileResponse.body()?.getData()?.user?.lastname.toString()
             viewprofile__username.setText(
                 userProfileResponse.body()?.getData()?.user?.firstname + "'s Profile"
             )
@@ -130,7 +136,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
                 userProfileResponse.body()?.getData()?.user?.following?.size.toString()
             Glide.with(this).load(
                 Constants.BASE_IMAGE_URL + userProfileResponse.body()?.getData()?.user?.avatar
-            ).placeholder(R.drawable.login_banner).into(viewprofile_profilePic)
+            ).placeholder(R.drawable.login_banner1).into(viewprofile_profilePic)
 
             role = userProfileResponse.body()?.getData()?.user?.role.toString()
 

@@ -251,6 +251,12 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                     "Bearer " + getStringVal(Constants.TOKEN),
                     getStringVal(Constants.USERID)
                 )
+
+                controller.setNotificationAPI(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    getStringVal(Constants.USERID)
+                )
+
                 ha.postDelayed(this, 10000)
             }
         }, 10000)
@@ -364,6 +370,11 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
     override fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>) {
 
         if (notificationsResponseResponse.isSuccessful) {
+            if( notificationsResponseResponse.body()?.getData()?.notification?.size!!>=1)
+            {
+
+            }
+
             toolbar_notifiction.setBadgeValue(
                 notificationsResponseResponse.body()?.getData()?.notification?.size!!
             )

@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.EventsInvitations.EventsInvitations
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
@@ -55,11 +56,28 @@ class UserInvitationsAdapter (val context: Context,val events : MutableList<User
 
         if (todaymilliseconds > timeInMillisecondsExpire.toString())
         {
-          //  holder.itemView.visibility = View.GONE
+            holder.itemView.visibility = View.GONE
         }
 
         holder.itemView.setOnClickListener {
            // Toast.makeText(context,""+events.get(position).event?.title,Toast.LENGTH_SHORT).show()
+        }
+
+        if (events.get(position).status.equals("accepted"))
+        {
+          holder.itemView.accept_bt.text = "Accepted"
+            holder.itemView.accept_bt.visibility = View.GONE
+        }
+        if (!holder.itemView.accept_bt.text.equals("Accepted"))
+        {
+            holder.itemView.accept_bt.setOnClickListener {
+                EventsInvitations?.getEventID_IF?.getID("1",events?.get(position).id.toString())
+            }
+        }
+
+
+        holder.itemView.decline_bt.setOnClickListener {
+            EventsInvitations?.getEventID_IF?.getID("0",events?.get(position).id.toString())
         }
     }
 
@@ -92,6 +110,7 @@ class UserInvitationsAdapter (val context: Context,val events : MutableList<User
             event_enddate = itemView.findViewById(R.id.event_enddate)
             event_status=  itemView.findViewById(R.id.event_status)
             details_bt = itemView.findViewById(R.id.details_bt)
+            accept_bt = itemView.findViewById(R.id.accept_bt)
             decline_bt = itemView.findViewById(R.id.decline_bt)
         }
     }

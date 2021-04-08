@@ -138,10 +138,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             override fun onNothingSelected(parent: AdapterView<*>) {
 
             }
-
-
         }
-
     }
 
     private fun findIds() {
@@ -515,9 +512,9 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     position: Int,
                     id: Long
                 ) {
-                    additemclosets_brands.setText(brands.get(position).name)
-
-                    brandID = brands.get(position).id.toString()
+//                    additemclosets_brands.setText(brands.get(position).name)
+//
+//                    brandID = brands.get(position).id.toString()
 
                     additemclosets_Brandpinner.setSelection(brandPos)
                 }

@@ -79,6 +79,16 @@
 
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Firstname"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+
+                </TextView>
 
                 <EditText
                     android:id="@+id/editprofile_firstname"
@@ -95,6 +105,16 @@
 
                 </EditText>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lastname"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+
+                </TextView>
 
                 <EditText
                     android:id="@+id/editprofile_lastname"
@@ -111,6 +131,16 @@
 
                 </EditText>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+
+                </TextView>
 
                 <EditText
                     android:id="@+id/editprofile_email"
@@ -145,6 +175,16 @@
 
                 </EditText>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+
+                </TextView>
 
 
                 <EditText
@@ -210,6 +250,16 @@
 
                 </EditText>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Who can send me chat request?"
+                    android:layout_marginTop="10sp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+
+                </TextView>
 
                 <RadioGroup
                     android:id="@+id/radiogroup"
@@ -260,6 +310,16 @@
                     </RadioButton>
                 </RadioGroup>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About me"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+
+                </TextView>
 
                 <EditText
                     android:id="@+id/editprofile_about"
@@ -271,6 +331,7 @@
                     android:fontFamily="@font/oswaldlight"
                     android:gravity="start"
                     android:inputType="text"
+                    android:hint="About me"
                     android:textColorHint="@color/colorWhite"
                     android:padding="@dimen/margin_8dp"
                     android:backgroundTint="@color/colorWhite">
@@ -282,7 +343,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="right"
-                    android:layout_marginTop="@dimen/default_margin_16dp">
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:layout_marginBottom="@dimen/textsize_16sp">
 
                     <Button
                         android:id="@+id/changepassword_closebt"

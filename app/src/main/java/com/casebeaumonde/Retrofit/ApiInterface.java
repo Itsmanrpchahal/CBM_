@@ -7,6 +7,7 @@ import com.casebeaumonde.activities.ClosetItem.response.DeleteClosetItemResponse
 import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse;
 import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
+import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
@@ -736,5 +737,12 @@ public interface ApiInterface {
     Call<RemoveItemCartResponse> removeCartItem (
             @Header("Authorization") String token,
             @Path("input") String cartID
+    );
+
+    @GET("api/v1/set-invitation-decision/{input}/{input1}")
+    Call<AcceptDeclineInvitationResponse> acceptdeclineInviation (
+            @Header("Authorization") String token,
+            @Path("input") String id,
+            @Path("input1") String action
     );
 }

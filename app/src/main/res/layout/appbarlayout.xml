@@ -37,9 +37,12 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/default_margin_16dp"
             app:ibv_badgeColor="@color/colorWhite"
+            android:padding="3dp"
+            app:ibv_badgeTextSize="@dimen/textsize_14sp"
             app:ibv_badgeTextColor="@color/colorWhite"
             android:src="@drawable/ic_baseline_notifications_24"
             android:layout_alignParentRight="true"
+            app:ibv_maxBadgeValue="9"
             app:ibv_showCounter="true">
 
         </ru.nikartm.support.ImageBadgeView>

@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.EventsInvitations.IF.GetEventID_IF
 import com.casebeaumonde.activities.EventsInvitations.adapter.UserInvitationsAdapter
+import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractCustomerAdapter
 import com.casebeaumonde.constants.BaseClass
@@ -27,7 +29,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
+class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI,Controller.AcceptDeclineInvitationAPI,GetEventID_IF {
 
     private lateinit var back : ImageButton
     private lateinit var controller: Controller
@@ -41,7 +43,7 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events_invitations)
         controller = Controller()
-        controller.Controller(this)
+        controller.Controller(this,this)
         userID = intent.getStringExtra("userID")!!
         findIDs()
 
@@ -73,6 +75,8 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
         pd!!.setCancelable(false)
         back = findViewById(R.id.back)
         events_recyler = findViewById(R.id.events_recyler)
+
+        getEventID_IF = this
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -120,6 +124,47 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
 
     }
 
+    companion object {
+        var getEventID_IF : GetEventID_IF? = null
+    }
+
+    override fun getID(pos: String?, id: String?) {
+    controller.AcceptDeclineInvitation("Bearer "+getStringVal(Constants.TOKEN),  id.toString(),pos.toString())
+        pd.show()
+        pd.setContentView(R.layout.loading)
+    }
+
+    override fun onAcceptDeclineInvitationSuccess(success: Response<AcceptDeclineInvitationResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful)
+        {
+
+                if (utility.isConnectingToInternet(this)) {
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+                    controller.UserInvitation("Bearer " + getStringVal(Constants.TOKEN), userID)
+                } else {
+                    utility.relative_snackbar(
+                        parent_events!!,
+                        "No Internet Connectivity",
+                        getString(R.string.close_up)
+                    )
+                }
+                utility.relative_snackbar(
+                    parent_events!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+
+        } else {
+            utility.relative_snackbar(
+                parent_events!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
     override fun error(error: String?) {
         pd.dismiss()
         utility.relative_snackbar(
@@ -128,4 +173,6 @@ class EventsInvitations : BaseClass(),Controller.UserInviatationsAPI {
             getString(R.string.close_up)
         )
     }
+
+
 }

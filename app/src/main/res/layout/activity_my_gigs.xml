@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MyGigs"
+                android:text="My Services"
                 android:layout_centerInParent="true"
                 android:textSize="@dimen/textsize_16sp"
                 android:textColor="@color/colorWhite"

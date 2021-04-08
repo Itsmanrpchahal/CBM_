@@ -5,261 +5,273 @@
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
     android:background="@color/colorBlack"
-    android:padding="@dimen/textsize_16sp"
-    android:layout_margin="@dimen/textsize_16sp">
+    android:padding="@dimen/textsize_16sp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Manage your payment methods"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Card holder"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-
-    <EditText
-        android:id="@+id/plan_cardholdername"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:hint="Enter name on card"
-        android:inputType="textPersonName"
-        android:textSize="@dimen/textsize_16sp"
-        android:textColor="@color/colorTextHint"
-        android:textColorHint="@color/colorTextHint"
-        android:padding="@dimen/margin_8dp"
-        android:background="@drawable/roundcorners">
+        android:layout_height="wrap_content">
 
-    </EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Card number"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-
-    <EditText
-        android:id="@+id/plan_cardnumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:hint="Enter card number"
-        android:inputType="number"
-        android:maxEms="16"
-        android:maxLength="16"
-        android:textSize="@dimen/textsize_16sp"
-        android:textColor="@color/colorTextHint"
-        android:textColorHint="@color/colorTextHint"
-        android:padding="@dimen/margin_8dp"
-        android:background="@drawable/roundcorners">
-
-    </EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Expiration date"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-
-    <EditText
-        android:id="@+id/plan_carddate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:hint="Enter expiration date (MM/YYYY)"
-        android:inputType="number"
-        android:editable="false"
-        android:focusable="false"
-        android:clickable="true"
-        android:textSize="@dimen/textsize_16sp"
-        android:textColor="@color/colorTextHint"
-        android:textColorHint="@color/colorTextHint"
-        android:padding="@dimen/margin_8dp"
-        android:background="@drawable/roundcorners">
-
-    </EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CVC"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-
-    <EditText
-        android:id="@+id/plan_cvc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:hint="Enter card verification code"
-        android:inputType="number"
-        android:textSize="@dimen/textsize_16sp"
-        android:maxEms="3"
-        android:maxLength="3"
-        android:textColor="@color/colorTextHint"
-        android:textColorHint="@color/colorTextHint"
-        android:padding="@dimen/margin_8dp"
-        android:background="@drawable/roundcorners">
-
-    </EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Billing zip code"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-
-    <EditText
-        android:id="@+id/plan_billingzipcode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:hint="Enter billing zip code"
-        android:inputType="number"
-        android:textSize="@dimen/textsize_16sp"
-        android:textColor="@color/colorTextHint"
-        android:textColorHint="@color/colorTextHint"
-        android:padding="@dimen/margin_8dp"
-        android:background="@drawable/roundcorners">
-
-    </EditText>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Supported payment methods"
-        android:layout_marginTop="@dimen/margin_8dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textsize_16sp">
-
-    </TextView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="6">
-
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/visa"
-            android:padding="5dp"
-            android:layout_weight="1">
+            android:orientation="vertical">
 
-        </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manage your payment methods"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/mastercard"
-            android:padding="5dp"
-            android:layout_weight="1">
+            </TextView>
 
-        </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card holder"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/amex"
-            android:padding="5dp"
-            android:layout_weight="1">
+            </TextView>
 
-        </ImageView>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/discover"
-            android:padding="5dp"
-            android:layout_weight="1">
+            <EditText
+                android:id="@+id/plan_cardholdername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter name on card"
+                android:inputType="textPersonName"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
 
-        </ImageView>
+            </EditText>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jcb"
-            android:padding="5dp"
-            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Card number"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
-        </ImageView>
+            </TextView>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/diners"
-            android:padding="5dp"
-            android:layout_weight="1">
 
-        </ImageView>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/plan_cardnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter card number"
+                android:inputType="number"
+                android:maxEms="16"
+                android:maxLength="16"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:layout_marginBottom="@dimen/default_margin_16dp"
-        android:orientation="horizontal">
+            </EditText>
 
-        <Button
-            android:id="@+id/plan_verfybt"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_40dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:layout_marginLeft="@dimen/margin_8dp"
-            android:background="@drawable/roundcorners"
-            android:text="Verify"
-            android:textColor="@color/colorBlack"
-            android:textAllCaps="false"
-            android:textSize="@dimen/textsize_16sp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expiration date"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
 
-        </Button>
+            </TextView>
 
-        <Button
-            android:id="@+id/plan_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/margin_40dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:layout_marginLeft="@dimen/margin_8dp"
-            android:background="@drawable/roundcorners"
-            android:text="Cancel"
-            android:textColor="@color/colorBlack"
-            android:textAllCaps="false"
-            android:textSize="@dimen/textsize_16sp">
 
-        </Button>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/plan_carddate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter expiration date (MM/YYYY)"
+                android:inputType="number"
+                android:editable="false"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CVC"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_cvc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter card verification code"
+                android:inputType="number"
+                android:textSize="@dimen/textsize_16sp"
+                android:maxEms="3"
+                android:maxLength="3"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Billing zip code"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+            <EditText
+                android:id="@+id/plan_billingzipcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:hint="Enter billing zip code"
+                android:inputType="number"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorTextHint"
+                android:textColorHint="@color/colorTextHint"
+                android:padding="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supported payment methods"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="6">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/visa"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/mastercard"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/amex"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/discover"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/jcb"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diners"
+                    android:padding="5dp"
+                    android:layout_weight="1">
+
+                </ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_marginBottom="@dimen/default_margin_16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/plan_verfybt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners"
+                    android:text="Verify"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/plan_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners"
+                    android:text="Cancel"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

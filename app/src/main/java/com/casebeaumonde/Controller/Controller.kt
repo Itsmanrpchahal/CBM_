@@ -3,6 +3,7 @@ package com.casebeaumonde.Controller
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
+import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
@@ -137,6 +138,7 @@ public class Controller {
     var addtoCartAPI:AddtoCartAPI? = null
     var searchShopItemAPI:SearchShopItemAPI? = null
     var removeItemCartAPI : RemoveItemCartAPI? =null
+    var acceptDeclineInvitationAPI : AcceptDeclineInvitationAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -334,8 +336,9 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(userInvitation: UserInviatationsAPI) {
+    fun Controller(userInvitation: UserInviatationsAPI,acceptDeclineInvitation: AcceptDeclineInvitationAPI) {
         userInviatationsAPI = userInvitation
+        acceptDeclineInvitationAPI = acceptDeclineInvitation
         webAPI = WebAPI()
     }
 
@@ -576,6 +579,24 @@ public class Controller {
                 }
 
             })
+    }
+
+    fun AcceptDeclineInvitation(token: String?,id:String,action:String)
+    {
+        webAPI?.api?.acceptdeclineInviation(token, id, action)?.enqueue(object :Callback<AcceptDeclineInvitationResponse>
+        {
+            override fun onResponse(
+                call: Call<AcceptDeclineInvitationResponse>,
+                response: Response<AcceptDeclineInvitationResponse>
+            ) {
+                acceptDeclineInvitationAPI?.onAcceptDeclineInvitationSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AcceptDeclineInvitationResponse>, t: Throwable) {
+                acceptDeclineInvitationAPI?.error(t.message)
+            }
+
+        })
     }
 
     fun GetUserGigs(token: String?, userId: String?) {
@@ -2315,6 +2336,11 @@ public class Controller {
 
     interface RemoveItemCartAPI {
         fun onRemoveCartSuccess(success: Response<RemoveItemCartResponse>)
+        fun error(error: String?)
+    }
+
+    interface AcceptDeclineInvitationAPI {
+        fun onAcceptDeclineInvitationSuccess(success:Response<AcceptDeclineInvitationResponse>)
         fun error(error: String?)
     }
 }

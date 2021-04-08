@@ -166,21 +166,40 @@
 
             </View>
 
-            <EditText
-                android:id="@+id/register_password"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin_16dp"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="PASSWORD"
-                android:inputType="textPassword"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp">
+                android:layout_height="wrap_content">
 
-            </EditText>
+                <EditText
+                    android:id="@+id/register_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:layout_marginRight="45dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="PASSWORD"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </EditText>
+
+                <CheckBox
+                    android:id="@+id/see_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_centerVertical="true"
+                    android:button="@drawable/visiblepassword"
+                    android:src="@drawable/ic_baseline_visibility_24">
+
+                </CheckBox>
+            </RelativeLayout>
+
+
 
             <View
                 android:layout_width="match_parent"
@@ -191,21 +210,39 @@
 
             </View>
 
-            <EditText
-                android:id="@+id/register_cpassword"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin_16dp"
-                android:layout_marginTop="@dimen/default_margin_16dp"
-                android:layout_marginRight="@dimen/default_margin_16dp"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="@string/confirmpassword"
-                android:inputType="textPassword"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp">
+                android:layout_height="wrap_content">
 
-            </EditText>
+                <EditText
+                    android:id="@+id/register_cpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginTop="@dimen/default_margin_16dp"
+                    android:layout_marginRight="45dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="@string/confirmpassword"
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </EditText>
+
+                <CheckBox
+                    android:id="@+id/see_password1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_centerVertical="true"
+                    android:button="@drawable/visiblepassword"
+                    android:src="@drawable/ic_baseline_visibility_24">
+
+                </CheckBox>
+            </RelativeLayout>
+
 
             <View
                 android:layout_width="match_parent"

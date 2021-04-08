@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -496,6 +497,9 @@ class Profile : BaseFrag(),
         val changepass_current: EditText
         val changepassword_newPassword: EditText
         val changepassword_CnewPassword: EditText
+        val see_password : CheckBox
+        val see_password1 : CheckBox
+        val see_password2 : CheckBox
 
         changepassword_closebt =
             changePasswordDialog.findViewById(R.id.changepassword_closebt)
@@ -506,6 +510,9 @@ class Profile : BaseFrag(),
             changePasswordDialog.findViewById(R.id.changepassword_newPassword)
         changepassword_CnewPassword =
             changePasswordDialog.findViewById(R.id.changepassword_CnewPassword)
+        see_password = changePasswordDialog.findViewById(R.id.see_password)
+        see_password1 = changePasswordDialog.findViewById(R.id.see_password1)
+        see_password2 = changePasswordDialog.findViewById(R.id.see_password2)
 
         changepassword_closebt.setOnClickListener {
             changePasswordDialog.dismiss()
@@ -555,6 +562,43 @@ class Profile : BaseFrag(),
                 }
             }
         }
+
+        see_password.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                changepass_current.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                changepass_current.setSelection(changepass_current.text.length)
+            } else {
+                changepass_current.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                changepass_current.setSelection(changepass_current.text.length)
+            }
+        }
+
+        see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                changepassword_newPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                changepassword_newPassword.setSelection(changepassword_newPassword.text.length)
+            } else {
+                changepassword_newPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                changepassword_newPassword.setSelection(changepassword_newPassword.text.length)
+            }
+        }
+
+        see_password2.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                changepassword_CnewPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                changepassword_CnewPassword.setSelection(changepassword_CnewPassword.text.length)
+            } else {
+                changepassword_CnewPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                changepassword_CnewPassword.setSelection(changepassword_CnewPassword.text.length)
+            }
+        }
+
         changePasswordDialog.show()
     }
 

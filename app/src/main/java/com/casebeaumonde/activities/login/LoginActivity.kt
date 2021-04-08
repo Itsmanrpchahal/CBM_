@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
@@ -28,7 +29,6 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 
 class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
 
@@ -43,6 +43,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
     private lateinit var pd: ProgressDialog
     private lateinit var dialog: Dialog
     lateinit var controller: Controller
+    private lateinit var see_password: CheckBox
     private lateinit var from: String
     private var remember: String = "0"
 //Test
@@ -76,6 +77,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
         login_forgot_TV = findViewById(R.id.login_forgot_TV)
         login_resgiter_TV = findViewById(R.id.login_resgiter_TV)
         rememberme_checkbox = findViewById(R.id.rememberme_checkbox)
+        see_password = findViewById(R.id.see_password)
     }
 
     private fun lisenters() {
@@ -95,7 +97,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
 
         login_forgot_TV.setOnClickListener {
 //            forgotPassword()
-            startActivity(Intent(this,ForgotActivity::class.java))
+            startActivity(Intent(this, ForgotActivity::class.java))
         }
 
         back.setOnClickListener { onBackPressed() }
@@ -105,6 +107,18 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
                 remember = "1"
             } else {
                 remember = "0"
+            }
+        }
+
+        see_password.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                login_Password_ET.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                login_Password_ET.setSelection(login_Password_ET.text.length)
+            } else {
+                login_Password_ET.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                login_Password_ET.setSelection(login_Password_ET.text.length)
             }
         }
     }
@@ -199,11 +213,13 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
                                 response.body()?.data?.user?.id.toString()
                             )
                             setStringVal(Constants.TOKEN, response.body()?.data?.token)
-                            setStringVal(Constants.REMEMBERME,remember)
-                            setStringVal(Constants.USER_ROLE,
+                            setStringVal(Constants.REMEMBERME, remember)
+                            setStringVal(
+                                Constants.USER_ROLE,
                                 response.body()?.data?.user?.role?.toString()
                             )
-                            setStringVal(Constants.QUESTIONARIES_STATUS,
+                            setStringVal(
+                                Constants.QUESTIONARIES_STATUS,
                                 response.body()?.data?.questionnaire.toString()
                             )
 

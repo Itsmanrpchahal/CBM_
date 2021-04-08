@@ -13,6 +13,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.InputType
 import android.util.Log
 import android.util.Patterns
 import android.view.Window
@@ -65,6 +66,8 @@ class RegisterActivity : BaseClass() {
     private lateinit var bitMap: Bitmap
     private lateinit var  dialog: Dialog
     var c:String = ""
+    private lateinit var see_password: CheckBox
+    private lateinit var see_password1: CheckBox
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,10 +98,11 @@ class RegisterActivity : BaseClass() {
         register_upload = findViewById(R.id.register_upload)
         agreecheck = findViewById(R.id.agreecheck)
         register_regiter_bt = findViewById(R.id.register_regiter_bt)
-        //register_login = findViewById(R.id.register_login)
         back = findViewById(R.id.back)
         donthaveaccount = findViewById(R.id.donthaveaccount)
         forgotpassword = findViewById(R.id.forgotpassword)
+        see_password = findViewById(R.id.see_password)
+        see_password1 = findViewById(R.id.see_password1)
     }
 
     private fun listerners() {
@@ -161,6 +165,30 @@ class RegisterActivity : BaseClass() {
 
         forgotpassword.setOnClickListener {
             startActivity(Intent(this,ForgotActivity::class.java))
+        }
+
+        see_password.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                register_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                register_password.setSelection(register_password.text.length)
+            } else {
+                register_password.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                register_password.setSelection(register_password.text.length)
+            }
+        }
+
+        see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                register_cpassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                register_cpassword.setSelection(register_cpassword.text.length)
+            } else {
+                register_cpassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                register_cpassword.setSelection(register_cpassword.text.length)
+            }
         }
     }
 

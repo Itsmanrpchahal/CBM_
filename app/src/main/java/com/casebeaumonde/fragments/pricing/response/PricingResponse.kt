@@ -157,6 +157,36 @@ class PricingResponse {
             @SerializedName("plan_features")
             @Expose
             var planFeatures: List<PlanFeature>? = null
+
+            inner class PlanFeature {
+                @SerializedName("id")
+                @Expose
+                var id: Int? = null
+
+                @SerializedName("featureable_id")
+                @Expose
+                var featureableId: Int? = null
+
+                @SerializedName("featureable_type")
+                @Expose
+                var featureableType: String? = null
+
+                @SerializedName("feature")
+                @Expose
+                var feature: String? = null
+
+                @SerializedName("status")
+                @Expose
+                var status: String? = null
+
+                @SerializedName("created_at")
+                @Expose
+                var createdAt: String? = null
+
+                @SerializedName("updated_at")
+                @Expose
+                var updatedAt: String? = null
+            }
         }
 
         inner class BusinessPlan {
@@ -407,34 +437,6 @@ class PricingResponse {
             var updatedAt: String? = null
         }
 
-        inner class PlanFeature {
-            @SerializedName("id")
-            @Expose
-            var id: Int? = null
 
-            @SerializedName("featureable_id")
-            @Expose
-            var featureableId: Int? = null
-
-            @SerializedName("featureable_type")
-            @Expose
-            var featureableType: String? = null
-
-            @SerializedName("feature")
-            @Expose
-            var feature: String? = null
-
-            @SerializedName("status")
-            @Expose
-            var status: String? = null
-
-            @SerializedName("created_at")
-            @Expose
-            var createdAt: String? = null
-
-            @SerializedName("updated_at")
-            @Expose
-            var updatedAt: String? = null
-        }
     }
 }

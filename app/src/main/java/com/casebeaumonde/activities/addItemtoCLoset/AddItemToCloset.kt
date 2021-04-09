@@ -162,7 +162,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         aditemtocloset_cancel = findViewById(R.id.aditemtocloset_cancel)
         aditemtocloset_add = findViewById(R.id.aditemtocloset_add)
         additemclosets_brands = findViewById(R.id.additemclosets_brands)
-        additemclosets_size = findViewById(R.id.additemclosets_size)
+       // additemclosets_size = findViewById(R.id.additemclosets_size)
         additemclosets_color = findViewById(R.id.additemclosets_color)
         backon_additemstocloset = findViewById(R.id.backon_additemstocloset)
     }
@@ -516,7 +516,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 //
 //                    brandID = brands.get(position).id.toString()
 
-                    additemclosets_Brandpinner.setSelection(brandPos)
+                   // additemclosets_Brandpinner.setSelection(brandPos)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -538,9 +538,9 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 ) {
 
                     sizeID = size.get(position).id.toString()
-                    additemclosets_size.setText(size.get(position).name)
+                  //  additemclosets_size.setText(size.get(position).name)
 
-                    additemclosets_Sizespinner.setSelection(sizePos)
+                   // additemclosets_Sizespinner.setSelection(sizePos)
 
                 }
 
@@ -562,7 +562,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                     id: Long
                 ) {
                     additemclosets_color.setText(color.get(position).name)
-                    additemclosets_Colorpinner.setSelection(colorPos)
+                    //additemclosets_Colorpinner.setSelection(colorPos)
                     colorID = color.get(position).name.toString()
                 }
 

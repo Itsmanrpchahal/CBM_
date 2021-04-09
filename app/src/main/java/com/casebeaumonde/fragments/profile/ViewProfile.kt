@@ -43,6 +43,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
     private lateinit var role: String
     private lateinit var id :String
     private lateinit var name : String
+    private lateinit var user_decs : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,6 +110,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
         viewprofile__mywall = findViewById(R.id.viewprofile__mywall)
         viewprofile__mycloset = findViewById(R.id.viewprofile__mycloset)
         viewprofile__startchat = findViewById(R.id.viewprofile__startchat)
+        user_decs = findViewById(R.id.user_decs)
     }
 
     override fun onPrfileSucess(userProfileResponse: Response<UserProfileResponse>) {
@@ -130,6 +132,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
                     ?.getData()?.user?.firstname + " " + userProfileResponse.body()
                     ?.getData()?.user?.lastname
             )
+            user_decs.text = userProfileResponse?.body()?.getData()?.user?.profile?.aboutMe.toString()
             viewprofile_followerscount.text =
                 userProfileResponse.body()?.getData()?.user?.followers?.size.toString()
             viewprofile__followingcount.text =

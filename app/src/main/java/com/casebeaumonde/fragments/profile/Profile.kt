@@ -8,12 +8,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -188,6 +190,7 @@ class Profile : BaseFrag(),
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun listeners() {
         profile_changetv.setOnClickListener {
 
@@ -481,6 +484,7 @@ class Profile : BaseFrag(),
         followfollowingDialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun changePassworddialog() {
         changePasswordDialog = Dialog(context!!)
         changePasswordDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -564,39 +568,59 @@ class Profile : BaseFrag(),
         }
 
         see_password.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (changepass_current.text.length>1)
             {
-                changepass_current.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                changepass_current.setSelection(changepass_current.text.length)
-            } else {
-                changepass_current.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                changepass_current.setSelection(changepass_current.text.length)
+                if (isChecked)
+                {
+                    changepass_current.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    changepass_current.setSelection(changepass_current.text.length)
+                    changepass_current.setTypeface(resources.getFont(R.font.opensans_regular));
+                } else {
+                    changepass_current.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    changepass_current.setSelection(changepass_current.text.length)
+                    changepass_current.setTypeface(resources.getFont(R.font.opensans_regular));
+                }
+
             }
+
+
         }
 
         see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (see_password1.text.length>1)
             {
-                changepassword_newPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                changepassword_newPassword.setSelection(changepassword_newPassword.text.length)
-            } else {
-                changepassword_newPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                changepassword_newPassword.setSelection(changepassword_newPassword.text.length)
+                if (isChecked)
+                {
+                    changepassword_newPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    changepassword_newPassword.setSelection(changepassword_newPassword.text.length)
+                    changepassword_newPassword.setTypeface(resources.getFont(R.font.opensans_regular));
+                } else {
+                    changepassword_newPassword.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    changepassword_newPassword.setSelection(changepassword_newPassword.text.length)
+                    changepassword_newPassword.setTypeface(resources.getFont(R.font.opensans_regular));
+                }
             }
+
         }
 
         see_password2.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (see_password2.text.length>1)
             {
-                changepassword_CnewPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                changepassword_CnewPassword.setSelection(changepassword_CnewPassword.text.length)
-            } else {
-                changepassword_CnewPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                changepassword_CnewPassword.setSelection(changepassword_CnewPassword.text.length)
+                if (isChecked)
+                {
+                    changepassword_CnewPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    changepassword_CnewPassword.setSelection(changepassword_CnewPassword.text.length)
+                    changepassword_CnewPassword.setTypeface(resources.getFont(R.font.opensans_regular));
+                } else {
+                    changepassword_CnewPassword.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    changepassword_CnewPassword.setSelection(changepassword_CnewPassword.text.length)
+                    changepassword_CnewPassword.setTypeface(resources.getFont(R.font.opensans_regular));
+                }
             }
+
         }
 
         changePasswordDialog.show()
@@ -624,6 +648,7 @@ class Profile : BaseFrag(),
         val editprofile_fburl: EditText
         val editprofile_instaurl: EditText
         val editprofile_twitterurl: EditText
+        val username : TextView
 
         editprofile_firstname = dialog.findViewById(R.id.editprofile_firstname)
         editprofile_lastname = dialog.findViewById(R.id.editprofile_lastname)
@@ -642,6 +667,7 @@ class Profile : BaseFrag(),
         editprofile_fburl = dialog.findViewById(R.id.editprofile_fburl)
         editprofile_instaurl = dialog.findViewById(R.id.editprofile_instaurl)
         editprofile_twitterurl = dialog.findViewById(R.id.editprofile_twitterurl)
+        username = dialog.findViewById(R.id.username)
 
 
         if (!getStringVal(Constants.USER_ROLE).equals("customer")) {
@@ -673,6 +699,7 @@ class Profile : BaseFrag(),
         editprofile_fburl.setText(getStringVal(Constants.FACEBOOKURL))
         editprofile_twitterurl.setText(getStringVal(Constants.TWITTERURL))
         editprofile_instaurl.setText(getStringVal(Constants.INSTAGRAMURL))
+        username.setText(getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME))
         Glide.with(context!!)
             .load(
                 Constants.BASE_IMAGE_URL + getStringVal(Constants.USERIMAGE)
@@ -992,8 +1019,8 @@ class Profile : BaseFrag(),
             Glide.with(context!!)
                 .load(
                     userProfileResponse.body()
-                        ?.getData()?.filePath + userProfileResponse.body()
-                        ?.getData()?.user?.avatar?.toString()
+                        !!.getData()!!.filePath + userProfileResponse.body()
+                        !!.getData()!!.user!!.avatar!!.toString()
                 )
                 .placeholder(R.drawable.login_banner1).into(profile_profilePic)
             profile_followerscount.text =
@@ -1005,6 +1032,7 @@ class Profile : BaseFrag(),
                 Constants.FIRSTNAME,
                 userProfileResponse.body()?.getData()?.user?.firstname
             )
+            user_decs.text = userProfileResponse.body()?.getData()?.user?.profile?.aboutMe.toString()
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)
             setStringVal(Constants.PHONE, userProfileResponse.body()?.getData()?.user?.phone)

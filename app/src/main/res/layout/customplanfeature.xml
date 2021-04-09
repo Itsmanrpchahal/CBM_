@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorBackground"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/plantext"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:layout_below="@+id/freepaid_tv"
+        android:fontFamily="@font/oswaldlight"
+        android:layout_centerHorizontal="true"
+        android:text="A fun, new connected way to do all your favorite tasks in the fashion world."
+        android:textColor="@color/colorWhite"
+        tools:ignore="RtlCompat">
+
+    </TextView>
+</RelativeLayout>

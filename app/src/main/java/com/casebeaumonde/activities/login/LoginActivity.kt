@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -13,6 +14,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.MainActivity
 import com.casebeaumonde.R
@@ -80,6 +82,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
         see_password = findViewById(R.id.see_password)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun lisenters() {
         login_resgiter_TV.setOnClickListener {
             startActivity(
@@ -111,15 +114,20 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
         }
 
         see_password.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (login_Password_ET.text.length>1)
             {
-                login_Password_ET.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                login_Password_ET.setSelection(login_Password_ET.text.length)
-            } else {
-                login_Password_ET.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                login_Password_ET.setSelection(login_Password_ET.text.length)
+                if (isChecked)
+                {
+                    login_Password_ET.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    login_Password_ET.setSelection(login_Password_ET.text.length)
+                    login_Password_ET.setTypeface(resources.getFont(R.font.opensans_regular));
+                } else {
+                    login_Password_ET.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    login_Password_ET.setSelection(login_Password_ET.text.length)
+                }
             }
+
         }
     }
 

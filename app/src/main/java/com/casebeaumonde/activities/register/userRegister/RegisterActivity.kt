@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
@@ -20,6 +21,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
@@ -70,6 +72,7 @@ class RegisterActivity : BaseClass() {
     private lateinit var see_password1: CheckBox
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -105,6 +108,7 @@ class RegisterActivity : BaseClass() {
         see_password1 = findViewById(R.id.see_password1)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun listerners() {
 //        register_login.setOnClickListener {
 //            startActivity(
@@ -168,27 +172,37 @@ class RegisterActivity : BaseClass() {
         }
 
         see_password.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (see_password.text.length>1)
             {
-                register_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                register_password.setSelection(register_password.text.length)
-            } else {
-                register_password.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                register_password.setSelection(register_password.text.length)
+                if (isChecked)
+                {
+                    register_password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    register_password.setSelection(register_password.text.length)
+                } else {
+                    register_password.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    register_password.setSelection(register_password.text.length)
+                }
+                register_password.setTypeface(resources.getFont(R.font.opensans_regular));
             }
+
         }
 
         see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked)
+            if (see_password1.text.length>1)
             {
-                register_cpassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                register_cpassword.setSelection(register_cpassword.text.length)
-            } else {
-                register_cpassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                register_cpassword.setSelection(register_cpassword.text.length)
+                if (isChecked)
+                {
+                    register_cpassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    register_cpassword.setSelection(register_cpassword.text.length)
+                } else {
+                    register_cpassword.inputType =
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    register_cpassword.setSelection(register_cpassword.text.length)
+                }
+                register_cpassword.setTypeface(resources.getFont(R.font.opensans_regular));
             }
+
         }
     }
 

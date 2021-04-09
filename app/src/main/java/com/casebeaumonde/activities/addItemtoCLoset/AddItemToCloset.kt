@@ -514,7 +514,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 ) {
 //                    additemclosets_brands.setText(brands.get(position).name)
 //
-//                    brandID = brands.get(position).id.toString()
+                    brandID = brands.get(position).id.toString()
 
                    // additemclosets_Brandpinner.setSelection(brandPos)
                 }

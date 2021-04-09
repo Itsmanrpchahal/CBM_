@@ -174,8 +174,6 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                 }
 
 
-
-
                 plansname.adapter = adapter
                 plansname.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(

@@ -570,7 +570,7 @@ class Profile : BaseFrag(),
         }
 
         see_password.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (changepass_current.text.length>1)
+            if (changepass_current.text.length>=1)
             {
                 if (isChecked)
                 {
@@ -590,7 +590,7 @@ class Profile : BaseFrag(),
         }
 
         see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (changepassword_newPassword.text.length>1)
+            if (changepassword_newPassword.text.length>=1)
             {
                 if (isChecked)
                 {
@@ -608,7 +608,7 @@ class Profile : BaseFrag(),
         }
 
         see_password2.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (changepassword_CnewPassword.text.length>1)
+            if (changepassword_CnewPassword.text.length>=1)
             {
                 if (isChecked)
                 {

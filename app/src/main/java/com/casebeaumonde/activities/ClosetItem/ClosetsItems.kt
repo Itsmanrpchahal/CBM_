@@ -116,7 +116,8 @@ class ClosetsItems : BaseClass(),
     private lateinit var sizeID: ArrayList<String>
     private lateinit var priceTitle: ArrayList<String>
     private lateinit var hashMap: HashMap<String, String>
-    private lateinit var hourlayout : RelativeLayout
+    private lateinit var hourlayout: RelativeLayout
+    private  var lenght : Int = 0
 
     var select: Int = 0
     var selectAll: Int = 0
@@ -149,6 +150,7 @@ class ClosetsItems : BaseClass(),
         viewclosetidIf = this
         selectedclosetId = this
         userID = intent.getStringExtra("userID")!!
+
         listeners()
     }
 
@@ -212,6 +214,8 @@ class ClosetsItems : BaseClass(),
             closet_makeoutfitbt.visibility = View.GONE
         }
 
+
+
         closet_selectitembt.setOnClickListener {
             checkedClosetIDs.clear()
             for (i in closetResponse.indices) {
@@ -220,7 +224,9 @@ class ClosetsItems : BaseClass(),
             selectAll = 1
             setFullData(closetResponse, select, selectAll)
             Log.d("test", "" + checkedClosetIDs)
+
             if (checkedClosetIDs.size > 0) {
+
                 closet_moveitembt.visibility = View.VISIBLE
                 closet_duplicateitembt.visibility = View.VISIBLE
                 closet_makeoutfitbt.visibility = View.VISIBLE
@@ -251,7 +257,7 @@ class ClosetsItems : BaseClass(),
 
         search_ET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+                lenght = s?.length!!
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -263,6 +269,7 @@ class ClosetsItems : BaseClass(),
             }
 
             override fun afterTextChanged(s: Editable?) {
+
                 if (s!!.isNotEmpty()) {
 
                     searchByTitle(s.toString())
@@ -271,7 +278,6 @@ class ClosetsItems : BaseClass(),
                     setFullData(closetResponse, select, selectAll)
                 }
             }
-
         })
 
         search_ET.setOnKeyListener(object : View.OnKeyListener {
@@ -329,7 +335,7 @@ class ClosetsItems : BaseClass(),
         var moveitem: Button
         var cancelitem: Button
         var addnewclosetet: EditText
-        var spinnertitle : TextView
+        var spinnertitle: TextView
         var checkbox: CheckBox
         var addoutfit: CheckBox
         listview = moveItemDialog.findViewById(R.id.listview)
@@ -348,15 +354,12 @@ class ClosetsItems : BaseClass(),
         spinnertitle.text = s
 
 
-        if (s.equals("outfit"))
-        {
+        if (s.equals("outfit")) {
             moveitem.text = "Make outfit"
-        } else if (s.equals("move"))
-        {
-            moveitem.text ="Move"
-        } else if (s.equals("duplicate"))
-        {
-            moveitem.text ="Duplicate"
+        } else if (s.equals("move")) {
+            moveitem.text = "Move"
+        } else if (s.equals("duplicate")) {
+            moveitem.text = "Duplicate"
         }
 
         if (s.equals("move") || s.equals("duplicate")) {
@@ -378,6 +381,7 @@ class ClosetsItems : BaseClass(),
             list.add(title.title.toString())
             listID.add(title.id.toString())
         }
+
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_multiple_choice, list
@@ -1101,8 +1105,12 @@ class ClosetsItems : BaseClass(),
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val adapter = getStringVal(Constants.USERID)?.let {
                 FilterOutFitItems(
-                    this, (outfiFIlter.body()?.getData()?.closetItem as MutableList<OutfitFilterResponse.Data.ClosetItem>?)!!,
-                    it, select, selectAll
+                    this,
+                    (outfiFIlter.body()
+                        ?.getData()?.closetItem as MutableList<OutfitFilterResponse.Data.ClosetItem>?)!!,
+                    it,
+                    select,
+                    selectAll
                 )
             }
             outfitResponse = ArrayList()
@@ -1181,7 +1189,8 @@ class ClosetsItems : BaseClass(),
         Viewdialog = Dialog(this!!)
         Viewdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         Viewdialog.setContentView(R.layout.viewclosetitem)
-        Viewdialog.getWindow()?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        Viewdialog.getWindow()
+            ?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
         val window = Viewdialog.window
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
@@ -1202,8 +1211,8 @@ class ClosetsItems : BaseClass(),
         var itemview_closebt: Button
         var itemview_addtoclosetbt: Button
         var itemview_pinnertitle: TextView
-        var itemview_move : Button
-        var itemview_copy : Button
+        var itemview_move: Button
+        var itemview_copy: Button
 
         viewitem_image = Viewdialog.findViewById(R.id.viewitem_image)
         viewitem_title = Viewdialog.findViewById(R.id.viewitem_title)
@@ -1259,7 +1268,8 @@ class ClosetsItems : BaseClass(),
             Viewdialog.dismiss()
             startActivity(
                 Intent(this, AddItemToCloset::class.java).putExtra("closetID", closetID)
-                    .putExtra("edit", "1").putExtra("closetItemID", id.toString()))
+                    .putExtra("edit", "1").putExtra("closetItemID", id.toString())
+            )
             //addItemToCloset(closetItemID)
         }
 
@@ -1274,14 +1284,17 @@ class ClosetsItems : BaseClass(),
         listData.add(closetID)
 
         itemview_move.setOnClickListener {
-           showMoveDialog("move")
+            showMoveDialog("move")
         }
 
         itemview_copy.setOnClickListener {
             showMoveDialog("duplicate")
         }
 
-        searchUserHeart(closetResponse.get(id).hearts as MutableList<ClosetsItemsResponse.Data.Closet.Item.Heart>, viewitem_checkbox)
+        searchUserHeart(
+            closetResponse.get(id).hearts as MutableList<ClosetsItemsResponse.Data.Closet.Item.Heart>,
+            viewitem_checkbox
+        )
 
         setSpinnerData(
             userClosets,
@@ -1404,7 +1417,10 @@ class ClosetsItems : BaseClass(),
         }
 
         if (checkedClosetIDs.size > 0) {
-            closet_moveitembt.visibility = View.VISIBLE
+            if (userID.equals(getStringVal(Constants.USERID))) {
+                closet_moveitembt.visibility = View.VISIBLE
+            }
+
             closet_duplicateitembt.visibility = View.VISIBLE
             closet_makeoutfitbt.visibility = View.VISIBLE
         } else {

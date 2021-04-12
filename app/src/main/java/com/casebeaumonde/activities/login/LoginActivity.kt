@@ -114,7 +114,7 @@ class LoginActivity : BaseClass(), Controller.FOrgotPasswordAPI {
         }
 
         see_password.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (login_Password_ET.text.length>1)
+            if (login_Password_ET.text.length>=1)
             {
                 if (isChecked)
                 {

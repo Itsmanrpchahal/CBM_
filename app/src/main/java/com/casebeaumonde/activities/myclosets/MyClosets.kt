@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -136,6 +137,17 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                 }
             }
 
+        })
+
+        search_ET.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    //this is for backspace
+                    search_ET.setText("")
+                }
+                return false
+            }
         })
 
         outfits.setOnClickListener {

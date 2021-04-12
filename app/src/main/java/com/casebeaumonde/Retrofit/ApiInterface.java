@@ -10,6 +10,7 @@ import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
+import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse;
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse;
@@ -513,7 +514,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/filter-closet")
-    Call<List<FilterResponse>> filterCLosetItems(
+    Call<FilterResponse> filterCLosetItems(
             @Header("Authorization") String token,
             @Field("closetid") String closetid,
             @FieldMap HashMap<String,String> map
@@ -726,7 +727,7 @@ public interface ApiInterface {
 
 
     @POST("api/v1/retailer_items/search")
-    Call<ShopItemsResponse> serachShopItem (
+    Call<ShopFilterItemsResponse> serachShopItem (
             @Header("Authorization") String token,
             @Query("retailer_id") String retailer_id,
             @Query("category_id") String category_id,

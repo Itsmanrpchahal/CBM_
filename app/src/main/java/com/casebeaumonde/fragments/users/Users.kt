@@ -6,20 +6,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.constants.GridItemDecoration
 import com.casebeaumonde.fragments.users.Response.UsersResponse
 import com.casebeaumonde.fragments.users.adapter.UsersAdapter
 import com.casebeaumonde.utilities.Utility
@@ -56,9 +50,13 @@ class Users : BaseFrag(),Controller.UsersAPI {
         if (utility.isConnectingToInternet(context)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.GetUsers("Bearer "+getStringVal(Constants.TOKEN))
+            controller.GetUsers("Bearer " + getStringVal(Constants.TOKEN))
         }else{
-            utility!!.relative_snackbar(parent_notifications!!, getString(R.string.nointernet), getString(R.string.close_up))
+            utility!!.relative_snackbar(
+                parent_notifications!!, getString(R.string.nointernet), getString(
+                    R.string.close_up
+                )
+            )
         }
 
         listeners()
@@ -74,33 +72,45 @@ class Users : BaseFrag(),Controller.UsersAPI {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (count > 0) {
-                    searchByTitle(s.toString(),filePath)
+                    searchByTitle(s.toString(), filePath)
                 } else {
-                    setFullData(response,filePath)
+                    setFullData(response, filePath)
                 }
             }
 
             override fun afterTextChanged(s: Editable) {
+
                 if (s.isNotEmpty()) {
 
-                    searchByTitle(s.toString(),filePath)
+                    searchByTitle(s.toString(), filePath)
                 } else {
                     user_recyler.visibility = View.VISIBLE
-                    setFullData(response,filePath)
+                    setFullData(response, filePath)
                 }
             }
 
         })
+
+        search_ET.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    //this is for backspace
+                    search_ET.setText("")
+                }
+                return false
+            }
+        })
     }
 
-    private fun setFullData(response: ArrayList<UsersResponse.Data.User>,filePath : String) {
-        user_recyler.layoutManager = GridLayoutManager(context,2)
+    private fun setFullData(response: ArrayList<UsersResponse.Data.User>, filePath: String) {
+        user_recyler.layoutManager = GridLayoutManager(context, 2)
         //user_recyler.addItemDecoration(GridItemDecoration(10, 2))
-        val adapter = UsersAdapter(context!!,response,filePath)
+        val adapter = UsersAdapter(context!!, response, filePath)
         user_recyler.adapter = adapter
     }
 
-    private fun searchByTitle(toString: String,filePath: String) {
+    private fun searchByTitle(toString: String, filePath: String) {
         filterData = ArrayList()
         if (response.size > 0) {
             for (i in response!!.indices) {
@@ -109,9 +119,9 @@ class Users : BaseFrag(),Controller.UsersAPI {
                     filterData!!.add(closetModel)
 
                 if (filterData.size > 0) {
-                    user_recyler.layoutManager = GridLayoutManager(context,2)
+                    user_recyler.layoutManager = GridLayoutManager(context, 2)
                     //user_recyler.addItemDecoration(GridItemDecoration(10, 2))
-                    val adapter = UsersAdapter(context!!,filterData,filePath)
+                    val adapter = UsersAdapter(context!!, filterData, filePath)
                     user_recyler.adapter = adapter
                 }
             }
@@ -140,9 +150,13 @@ class Users : BaseFrag(),Controller.UsersAPI {
         {
             filePath =  usersResponse.body()?.getData()?.filePath.toString()
             response = usersResponse.body()?.getData()?.users as ArrayList<UsersResponse.Data.User>
-            setFullData(response,filePath)
+            setFullData(response, filePath)
         }else{
-            utility!!.relative_snackbar(parent_users!!, usersResponse.message(), getString(R.string.close_up))
+            utility!!.relative_snackbar(
+                parent_users!!,
+                usersResponse.message(),
+                getString(R.string.close_up)
+            )
         }
 
     }

@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ShopItems.ShopItemsActivity
+import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
 import com.casebeaumonde.constants.Constants
 import kotlinx.android.synthetic.main.customuser.view.*
 
-class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsResponse.Data.Item>): RecyclerView.Adapter<ShopItemsAdapter.ViewHolder>() {
+class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsResponse.Data.Item>,var filteritems : ArrayList<ShopFilterItemsResponse.Datum>,var type:String): RecyclerView.Adapter<ShopItemsAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,12 +24,31 @@ class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsRespon
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+items.get(position).image).placeholder(R.drawable.login_banner1).into(holder.itemView.userImage)
+
+        if (type.equals("filter"))
+        {
+            if (filteritems.size>0)
+            {
+                Glide.with(context).load(Constants.BASE_IMAGE_URL+filteritems.get(position).image).placeholder(R.drawable.login_banner1).into(holder.itemView.userImage)
+                holder.itemView.userName.setOnClickListener {
+                    ShopItemsActivity.getShopItemID?.getID(position.toString(), filteritems.get(position).id.toString(),"filter")
+                }
+            }
+
+        }else {
+            if (items.size>0)
+            {
+                Glide.with(context).load(Constants.BASE_IMAGE_URL+items.get(position).image).placeholder(R.drawable.login_banner1).into(holder.itemView.userImage)
+                holder.itemView.userName.setOnClickListener {
+                    ShopItemsActivity.getShopItemID?.getID(position.toString(), items.get(position).id.toString(),"all")
+                }
+            }
+
+        }
+
         holder.itemView.userName.text = "View more"
 
-        holder.itemView.userName.setOnClickListener {
-            ShopItemsActivity.getShopItemID?.getID(position.toString(), items.get(position).id.toString())
-        }
+
 
 
     }
@@ -37,7 +57,13 @@ class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsRespon
 
 
     override fun getItemCount(): Int {
-        return items.size
+        if (type.equals("filter"))
+        {
+
+            return filteritems.size
+        } else {
+            return items.size
+        }
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {

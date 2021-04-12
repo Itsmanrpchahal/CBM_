@@ -18,6 +18,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.ShopItems.IF.GetShopItemID
 import com.casebeaumonde.activities.ShopItems.adapter.ShopItemsAdapter
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
+import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
 import com.casebeaumonde.constants.BaseClass
@@ -41,6 +42,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
     private lateinit var categoryName : ArrayList<String>
     private lateinit var price :ArrayList<String>
     private lateinit var items : ArrayList<ShopItemsResponse.Data.Item>
+    private lateinit var filterItems : ArrayList<ShopFilterItemsResponse.Datum>
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -58,6 +60,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
     lateinit var count : TextView
     lateinit var addtocart : Button
     lateinit var shopid : String
+    lateinit var reset: Button
 
      var catID : String =""
      var retailerID :String=""
@@ -69,6 +72,19 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
 
         findIds()
         closetitems_back.setOnClickListener { onBackPressed() }
+        reset.setOnClickListener {
+            retailer_spinner.setSelection(0)
+            category_spinner.setSelection(0)
+            price_spinner.setSelection(0)
+
+            catID = ""
+            retailerID = ""
+            prices =""
+            controller.ShopItems("Bearer "+getStringVal(Constants.TOKEN),"1")
+            pd.show()
+            pd.setContentView(R.layout.loading)
+
+        }
     }
 
     private fun findIds() {
@@ -80,6 +96,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         price_spinner = findViewById(R.id.price_spinner)
         shop_items_recyler = findViewById(R.id.shop_items_recyler)
         closetitems_back = findViewById(R.id.closetitems_back)
+        reset = findViewById(R.id.reset)
 
         price = ArrayList()
         price.add("Any price")
@@ -137,9 +154,9 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                         if (position!=0)
                         {
                             retailerID = success.body()?.data?.retailers!!.get(position-1).id.toString()
-//                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
-//                            pd.show()
-//                            pd.setContentView(R.layout.loading)
+                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+                            pd.show()
+                            pd.setContentView(R.layout.loading)
                         }
                     }
 
@@ -169,9 +186,9 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                         if (position!=0)
                         {
                             catID = success.body()?.data?.categories!!.get(position-1).id.toString()
-//                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
-//                            pd.show()
-//                            pd.setContentView(R.layout.loading)
+                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+                            pd.show()
+                            pd.setContentView(R.layout.loading)
                         }
                     }
 
@@ -194,10 +211,11 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                         if (position!=0)
                         {
                             prices = price.get(position).toString()
-//                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
-//                            pd.show()
-//                            pd.setContentView(R.layout.loading)
+                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+                            pd.show()
+                            pd.setContentView(R.layout.loading)
                         }
+
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -208,11 +226,13 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
 
 
                 items = ArrayList()
+                filterItems = ArrayList()
+                filterItems.clear()
                 items.addAll(success.body()?.data?.items!!)
                 shop_items_recyler.layoutManager =
                     GridLayoutManager(this, 2)
                 val itemsadapter = ShopItemsAdapter(
-                    this, items
+                    this, items,filterItems,"all"
                 )
                 shop_items_recyler.adapter = itemsadapter
             } else {
@@ -235,17 +255,25 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         var getShopItemID:GetShopItemID? = null
     }
 
-    override fun onSearchShopItemSuccess(success: Response<ShopItemsResponse>) {
+    override fun onSearchShopItemSuccess(success: Response<ShopFilterItemsResponse>) {
         pd.dismiss()
         if (success.isSuccessful)
         {
             if (success.body()?.code.equals("200"))
             {
-                utility!!.relative_snackbar(
-                    parent_shopitems!!,
-                    success.body()?.code,
-                    getString(R.string.close_up)
+                filterItems = ArrayList()
+                for (i in success.body()?.data?.indices!!)
+                {
+
+                }
+                filterItems.addAll(success.body()?.data!!)
+                shop_items_recyler.layoutManager =
+                    GridLayoutManager(this, 2)
+                val itemsadapter = ShopItemsAdapter(
+                    this, items,filterItems,"filter"
                 )
+                shop_items_recyler.adapter = itemsadapter
+
             } else {
                 pd.dismiss()
                 utility!!.relative_snackbar(
@@ -277,7 +305,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
 
 
     @SuppressLint("CheckResult")
-    override fun getID(pos: String?, id: String?) {
+    override fun getID(pos: String?, id: String?,type:String) {
         dialog = Dialog(this!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.viewshopitem)
@@ -301,24 +329,48 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         count = dialog.findViewById(R.id.count)
         addtocart = dialog.findViewById(R.id.addtocart)
 
-        Glide.with(this).load(Constants.BASE_IMAGE_URL+items.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner1).into(image)
-        titletv.text = "Title: "+items.get(pos!!.toInt()).name
-        descriptiontv.text = "Descrition: "+items.get(pos!!.toInt()).description
-        pricetv.text = "Price: $"+items.get(pos!!.toInt()).price
-        categorytv.text = "Category: "+items.get(pos!!.toInt()).categoryId.toString()
-        sizetv.text = "Size: "+items.get(pos!!.toInt()).size.toString()
-        colortv.text = "Color: "+items.get(pos!!.toInt()).color.toString()
-        brandtv.text = "Brand: "+items.get(pos!!.toInt()).brand.toString()
-        count.text = items.get(pos!!.toInt()).likes.size.toString()
+        if (type.equals("filter"))
+        {
+            Glide.with(this).load(Constants.BASE_IMAGE_URL+filterItems.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner1).into(image)
+            titletv.text = "Title: "+filterItems.get(pos!!.toInt()).name
+            descriptiontv.text = "Descrition: "+filterItems.get(pos!!.toInt()).description
+            pricetv.text = "Price: $"+filterItems.get(pos!!.toInt()).price
+            categorytv.text = "Category: "+filterItems.get(pos!!.toInt()).categoryId.toString()
+            sizetv.text = "Size: "+filterItems.get(pos!!.toInt()).size.toString()
+            colortv.text = "Color: "+filterItems.get(pos!!.toInt()).color.toString()
+            brandtv.text = "Brand: "+filterItems.get(pos!!.toInt()).brand.toString()
+            count.text = filterItems.get(pos!!.toInt()).likes.size.toString()
 
-        shopitem_favorite.setOnClickListener {
-            controller.ShopItemsLike("Bearer "+getStringVal(Constants.TOKEN),id)
+            shopitem_favorite.setOnClickListener {
+                controller.ShopItemsLike("Bearer "+getStringVal(Constants.TOKEN),id)
+            }
+
+
+            searchUserHeart(items.get(pos!!.toInt()),shopitem_favorite)
+
+            addtoCart(addtocart,id)
+        } else {
+            Glide.with(this).load(Constants.BASE_IMAGE_URL+items.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner1).into(image)
+            titletv.text = "Title: "+items.get(pos!!.toInt()).name
+            descriptiontv.text = "Descrition: "+items.get(pos!!.toInt()).description
+            pricetv.text = "Price: $"+items.get(pos!!.toInt()).price
+            categorytv.text = "Category: "+items.get(pos!!.toInt()).categoryId.toString()
+            sizetv.text = "Size: "+items.get(pos!!.toInt()).size.toString()
+            colortv.text = "Color: "+items.get(pos!!.toInt()).color.toString()
+            brandtv.text = "Brand: "+items.get(pos!!.toInt()).brand.toString()
+            count.text = items.get(pos!!.toInt()).likes.size.toString()
+
+            shopitem_favorite.setOnClickListener {
+                controller.ShopItemsLike("Bearer "+getStringVal(Constants.TOKEN),id)
+            }
+
+
+            searchUserHeart(items.get(pos!!.toInt()),shopitem_favorite)
+
+            addtoCart(addtocart,id)
         }
 
 
-        searchUserHeart(items.get(pos!!.toInt()),shopitem_favorite)
-
-        addtoCart(addtocart,id)
         dialog.show()
     }
 
@@ -336,6 +388,8 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         {
             if (success.body()?.code?.equals("200")!!)
             {
+
+
                 dialog.dismiss()
                 utility!!.relative_snackbar(
                     parent_shopitems!!,
@@ -382,11 +436,14 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         {
             if (success.body()?.code.equals("200"))
             {
-                utility!!.relative_snackbar(
-                    parent_shopitems!!,
-                    success.body()?.message,
-                    getString(R.string.close_up)
+                filterItems = ArrayList()
+                filterItems.clear()
+                shop_items_recyler.layoutManager =
+                    GridLayoutManager(this, 2)
+                val itemsadapter = ShopItemsAdapter(
+                    this, items,filterItems,"all"
                 )
+                shop_items_recyler.adapter = itemsadapter
             } else {
                 utility!!.relative_snackbar(
                     parent_shopitems!!,

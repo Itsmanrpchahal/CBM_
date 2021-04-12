@@ -206,6 +206,7 @@
             android:id="@+id/hourlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@id/gigratetype"
             android:layout_marginTop="@dimen/margin_8dp"
             android:background="@drawable/roundcorners">

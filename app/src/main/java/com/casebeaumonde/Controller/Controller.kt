@@ -6,6 +6,7 @@ import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
+import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
@@ -428,7 +429,7 @@ public class Controller {
         shopItemsAPI = shopItems
         shopItemsLikeAPI = shopItemsLike
         addtoCartAPI = addtoCart
-        searchShopItemAPI = searchShopItemAPI
+        searchShopItemAPI = searchShopItem
         webAPI = WebAPI()
     }
 
@@ -1442,16 +1443,16 @@ public class Controller {
 
     fun FilterCloseItems(token: String?, closet_id: String, hashMap: HashMap<String, String>) {
         webAPI?.api?.filterCLosetItems(token, closet_id, hashMap)
-            ?.enqueue(object : Callback<List<FilterResponse>> {
+            ?.enqueue(object : Callback<FilterResponse> {
                 override fun onResponse(
-                    call: Call<List<FilterResponse>>,
-                    response: Response<List<FilterResponse>>
+                    call: Call<FilterResponse>,
+                    response: Response<FilterResponse>
                 ) {
                     val filtercloset = response
                     filterClosetItemsAPI?.onFilterClosetItemSuccess(filtercloset)
                 }
 
-                override fun onFailure(call: Call<List<FilterResponse>>, t: Throwable) {
+                override fun onFailure(call: Call<FilterResponse>, t: Throwable) {
                     filterClosetItemsAPI?.error(t.message)
                 }
 
@@ -1937,16 +1938,16 @@ public class Controller {
 
     fun SearchShopItems(token: String,retailer_id:String,category_id : String,price:String)
     {
-        webAPI?.api?.serachShopItem(token, retailer_id, category_id, price)?.enqueue(object :Callback<ShopItemsResponse>
+        webAPI?.api?.serachShopItem(token, retailer_id, category_id, price)?.enqueue(object :Callback<ShopFilterItemsResponse>
         {
             override fun onResponse(
-                call: Call<ShopItemsResponse>,
-                response: Response<ShopItemsResponse>
+                call: Call<ShopFilterItemsResponse>,
+                response: Response<ShopFilterItemsResponse>
             ) {
                 searchShopItemAPI?.onSearchShopItemSuccess(response)
             }
 
-            override fun onFailure(call: Call<ShopItemsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ShopFilterItemsResponse>, t: Throwable) {
                 searchShopItemAPI?.error(t.message)
             }
 
@@ -2219,7 +2220,7 @@ public class Controller {
     }
 
     interface FilterClosetItemsAPI {
-        fun onFilterClosetItemSuccess(filtersucces: Response<List<FilterResponse>>)
+        fun onFilterClosetItemSuccess(filtersucces: Response<FilterResponse>)
         fun error(error: String?)
     }
 
@@ -2330,7 +2331,7 @@ public class Controller {
     }
 
     interface SearchShopItemAPI {
-        fun onSearchShopItemSuccess(success:Response<ShopItemsResponse>)
+        fun onSearchShopItemSuccess(success:Response<ShopFilterItemsResponse>)
         fun error(error: String?)
     }
 

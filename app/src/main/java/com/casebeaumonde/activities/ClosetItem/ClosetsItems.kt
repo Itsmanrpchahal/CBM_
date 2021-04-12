@@ -115,6 +115,7 @@ class ClosetsItems : BaseClass(),
     private lateinit var sizeID: ArrayList<String>
     private lateinit var priceTitle: ArrayList<String>
     private lateinit var hashMap: HashMap<String, String>
+    private lateinit var hourlayout : RelativeLayout
 
     var select: Int = 0
     var selectAll: Int = 0
@@ -541,6 +542,7 @@ class ClosetsItems : BaseClass(),
         color_title = findViewById(R.id.color_title)
         size_title = findViewById(R.id.size_title)
         price_title = findViewById(R.id.price_title)
+        hourlayout = findViewById(R.id.hourlayout)
     }
 
     //ToDo: Get  Closet All Items
@@ -557,10 +559,12 @@ class ClosetsItems : BaseClass(),
             listData.clear()
             checkedClosetIDs.clear()
 
+
             if (closetItemsResponse.body()?.getData()?.closet?.userId.toString()
                     .equals(getStringVal(Constants.USERID))
             ) {
                 closetiems_add.visibility = View.VISIBLE
+                hourlayout.visibility = View.VISIBLE
             }
 
 
@@ -893,7 +897,7 @@ class ClosetsItems : BaseClass(),
 
                     if (!colorTitle[position].equals("Select Color")) {
                         pd.show()
-                        hashMap.put("color", colorTitle[position])
+                        hashMap.put("color", colorID[position])
                         Log.d("hashmap", "" + hashMap)
                         controller.FilterCloseItems(
                             "Bearer " + getStringVal(Constants.TOKEN),
@@ -1101,7 +1105,7 @@ class ClosetsItems : BaseClass(),
         }
     }
 
-    override fun onFilterClosetItemSuccess(filtersucces: Response<List<FilterResponse>>) {
+    override fun onFilterClosetItemSuccess(filtersucces: Response<FilterResponse>) {
         pd.dismiss()
 
         if (filtersucces.isSuccessful) {
@@ -1209,7 +1213,9 @@ class ClosetsItems : BaseClass(),
         if (userID != getStringVal(Constants.USERID)) {
             itemview_removebt.visibility = View.GONE
             itemview_editbt.visibility = View.GONE
+            itemview_move.visibility = View.GONE
         }
+
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL + closetResponse.get(id!!).picture)
             .placeholder(R.drawable.login_banner1).into(viewitem_image)

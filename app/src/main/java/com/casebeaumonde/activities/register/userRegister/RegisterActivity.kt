@@ -172,7 +172,7 @@ class RegisterActivity : BaseClass() {
         }
 
         see_password.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (see_password.text.length>1)
+            if (register_password.text.length>1)
             {
                 if (isChecked)
                 {
@@ -189,7 +189,7 @@ class RegisterActivity : BaseClass() {
         }
 
         see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (see_password1.text.length>1)
+            if (register_cpassword.text.length>1)
             {
                 if (isChecked)
                 {

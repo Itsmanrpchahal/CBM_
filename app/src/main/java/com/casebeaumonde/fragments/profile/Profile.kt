@@ -145,12 +145,14 @@ class Profile : BaseFrag(),
     val c = Calendar.getInstance()
     private var MONTH: Int = 0
     private var YEAR: Int = 0
+    private lateinit var id :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -252,7 +254,7 @@ class Profile : BaseFrag(),
         }
 
         profile_myclosets.setOnClickListener {
-            startActivity(Intent(context, MyClosets::class.java).putExtra("userID", userID))
+            startActivity(Intent(context, MyClosets::class.java).putExtra("userID", id))
         }
 
         profile_myevents.setOnClickListener {
@@ -588,7 +590,7 @@ class Profile : BaseFrag(),
         }
 
         see_password1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (see_password1.text.length>1)
+            if (changepassword_newPassword.text.length>1)
             {
                 if (isChecked)
                 {
@@ -606,7 +608,7 @@ class Profile : BaseFrag(),
         }
 
         see_password2.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (see_password2.text.length>1)
+            if (changepassword_CnewPassword.text.length>1)
             {
                 if (isChecked)
                 {
@@ -1032,6 +1034,7 @@ class Profile : BaseFrag(),
                 Constants.FIRSTNAME,
                 userProfileResponse.body()?.getData()?.user?.firstname
             )
+            id = userProfileResponse.body()?.getData()?.user?.id.toString()
             user_decs.text = userProfileResponse.body()?.getData()?.user?.profile?.aboutMe.toString()
             setStringVal(Constants.LASTNAME, userProfileResponse.body()?.getData()?.user?.lastname)
             setStringVal(Constants.EMAIL, userProfileResponse.body()?.getData()?.user?.email)

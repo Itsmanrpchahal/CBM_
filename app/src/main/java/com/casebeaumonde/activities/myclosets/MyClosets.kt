@@ -98,6 +98,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         {
             create_closets.visibility = View.GONE
         }
+
+
         lsiteners()
     }
 
@@ -201,6 +203,10 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         createcloset_savebt = dialog.findViewById(R.id.createcloset_savebt)
         createcloset_cancelbt = dialog.findViewById(R.id.createcloset_cancelbt)
 
+        if(getStringVal(Constants.USER_ROLE).equals("customer"))
+        {
+            createcloset_checkbox.visibility = View.GONE
+        }
         if (pos != -1) {
             createcloset_title.setText(response.get(pos!!).title)
             createcloset_description.setText(response.get(pos!!).description)

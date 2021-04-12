@@ -95,6 +95,17 @@ class HireAnExpertFragment : BaseFrag(), Controller.HireAnExpertAPI, HireExpertI
             }
 
         })
+
+        search_ET.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    //this is for backspace
+                    search_ET.setText("")
+                }
+                return false
+            }
+        })
     }
 
     fun setFullData(expert : ArrayList<HireAnExpertResponse.Data.Gig>)

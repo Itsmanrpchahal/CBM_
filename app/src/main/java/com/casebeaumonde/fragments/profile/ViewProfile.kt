@@ -44,6 +44,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
     private lateinit var id :String
     private lateinit var name : String
     private lateinit var user_decs : TextView
+    private lateinit var profileuserUD : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,7 @@ class ViewProfile : BaseClass(), Controller.UserProfileAPI, Controller.FollowUnF
         }
 
         viewprofile__mycloset.setOnClickListener {
-            startActivity(Intent(this, MyClosets::class.java).putExtra("userID", userID))
+            startActivity(Intent(this, MyClosets::class.java).putExtra("userID", id))
         }
 
         viewprofile__startchat.setOnClickListener {

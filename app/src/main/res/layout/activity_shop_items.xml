@@ -58,8 +58,10 @@
         </androidx.appcompat.widget.Toolbar>
 
         <HorizontalScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,6 +117,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <TextView
@@ -253,6 +256,17 @@
 
 
         </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_40dp"
+            android:background="@color/colorWhite"
+            android:text="Reset"
+            android:textColor="@color/colorBlack"
+            android:layout_margin="5dp">
+
+        </Button>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/shop_items_recyler"

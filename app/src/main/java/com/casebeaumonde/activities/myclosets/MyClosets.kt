@@ -42,6 +42,7 @@ import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_my_closets.*
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -73,6 +74,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var toolbar_notifiction : ImageBadgeView
     private lateinit var search_ET: EditText
     private lateinit var dialog: Dialog
+    private lateinit var deleteDialog : Dialog
     private var checked: String = "0"
     private lateinit var userID : String
     var c: String = ""
@@ -545,17 +547,55 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
 
     private fun DeleteClosetAPI(pos: String?) {
-        if (utility.isConnectingToInternet(this)) {
-            pd.show()
-            pd.setContentView(R.layout.loading)
-           controller.DeleteCloset("Bearer "+getStringVal(Constants.TOKEN), pos.toString())
-        } else {
-            utility!!.relative_snackbar(
-                parent_myclosets,
-                R.string.nointernet.toString(),
-                getString(R.string.close_up)
-            )
+
+        deleteDialog = Dialog(this)
+        deleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        deleteDialog.setCancelable(false)
+        deleteDialog.setContentView(R.layout.logout_dialog)
+        val window = deleteDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+        val logout_tv : TextView
+
+        no = deleteDialog.findViewById(R.id.logout_no)
+        yes = deleteDialog.findViewById(R.id.logout_yes)
+        logout_tv = deleteDialog.findViewById(R.id.logout_tv)
+        logout_tv.setText("ARE YOU SURE YOU WANT TO DELETE?")
+
+        no.setOnClickListener {
+            deleteDialog.dismiss()
         }
+
+        yes.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+
+                if (utility.isConnectingToInternet(this)) {
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+                    controller.DeleteCloset("Bearer "+getStringVal(Constants.TOKEN), pos.toString())
+                } else {
+                    utility!!.relative_snackbar(
+                        parent_myclosets,
+                        R.string.nointernet.toString(),
+                        getString(R.string.close_up)
+                    )
+                }
+            } else {
+                utility.relative_snackbar(
+                    parent_myclosets!!,
+                    "No Internet Connectivity",
+                    getString(R.string.close_up)
+                )
+            }
+        }
+
+        deleteDialog.show()
+
     }
 
     override fun onDeleteClosetSuccess(deleteClosetResponse: Response<DeleteClosetResponse>) {

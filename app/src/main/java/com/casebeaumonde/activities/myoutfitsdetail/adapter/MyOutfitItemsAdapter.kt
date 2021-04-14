@@ -43,6 +43,7 @@ class MyOutfitItemsAdapter(
 
         }
 
+        holder.itemView.closets_additem.visibility = View.GONE
         holder.itemView.closet_username.text = myOutfits.title
         holder.itemView.closet_descripition.text = myOutfits.description.toString()
         holder.itemView.closet_visibilty.visibility = View.GONE

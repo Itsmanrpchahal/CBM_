@@ -51,6 +51,7 @@ class MyClosetsAdapter(
             "Created at: " + Utils.changeDateTimeToDateTime(closets.createdAt)
         holder.itemView.hainger.visibility = View.GONE
         holder.itemView.closetitem_favorite.visibility = View.GONE
+        holder.itemView.closets_duplicate.visibility = View.GONE
 
         holder.itemView.closet_go_to_closets.setOnClickListener {
             context.startActivity(
@@ -102,6 +103,7 @@ class MyClosetsAdapter(
             var closets_delete: Button
             var hainger : ImageButton
             var closetitem_favorite :  CheckBox
+            var closets_duplicate:Button
 
             closet_banner = itemView.findViewById(R.id.closet_banner)
             closet_username = itemView.findViewById(R.id.closet_username)
@@ -116,6 +118,7 @@ class MyClosetsAdapter(
             closets_delete = itemView.findViewById(R.id.closets_delete)
             hainger = itemView.findViewById(R.id.hainger)
             closetitem_favorite = itemView.findViewById(R.id.closetitem_favorite)
+            closets_duplicate = itemView.findViewById(R.id.closets_duplicate)
         }
     }
 }

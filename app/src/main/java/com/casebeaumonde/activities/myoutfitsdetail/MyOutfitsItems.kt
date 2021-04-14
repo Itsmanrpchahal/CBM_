@@ -1,13 +1,17 @@
 package com.casebeaumonde.activities.myoutfitsdetail
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +43,7 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
     private lateinit var outfits: ArrayList<MyOutfitsDetailResponse.Data.Outfit.Item>
     private var outfitID: String = ""
     private var creatorID: String = ""
+    private lateinit var deleteDialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +52,6 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
         findIds()
         listeners()
 
-        Toast.makeText(this,intent.getStringExtra(Constants.OUTFITID),Toast.LENGTH_SHORT).show()
     }
 
     private fun listeners() {
@@ -155,9 +159,38 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
     }
 
     override fun getClosetID(ID: String?, pos: String?) {
-        pd.show()
-        pd.setContentView(R.layout.loading)
-        controller.DeleteOutfitItem("Bearer "+getStringVal(Constants.TOKEN),ID)
+
+        deleteDialog = Dialog(this)
+        deleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        deleteDialog.setCancelable(false)
+        deleteDialog.setContentView(R.layout.logout_dialog)
+        val window = deleteDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+        val text: TextView
+
+        no = deleteDialog.findViewById(R.id.logout_no)
+        yes = deleteDialog.findViewById(R.id.logout_yes)
+        text = deleteDialog.findViewById(R.id.logout_tv)
+        text.text = "Are you sure you want to delete it?"
+
+        no.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+
+        yes.setOnClickListener {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.DeleteOutfitItem("Bearer "+getStringVal(Constants.TOKEN),ID)
+        }
+        deleteDialog.show()
+
+
     }
 
     override fun onDeleteOnfitItemSuccess(success: Response<DeleteOutfitItemResponse>) {

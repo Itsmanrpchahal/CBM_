@@ -117,7 +117,8 @@ class ClosetsItems : BaseClass(),
     private lateinit var priceTitle: ArrayList<String>
     private lateinit var hashMap: HashMap<String, String>
     private lateinit var hourlayout: RelativeLayout
-    private  var lenght : Int = 0
+    private var lenght: Int = 0
+    private lateinit var deleteDialog: Dialog
 
     var select: Int = 0
     var selectAll: Int = 0
@@ -290,7 +291,6 @@ class ClosetsItems : BaseClass(),
                 return false
             }
         })
-
     }
 
     private fun searchByTitle(toString: String) {
@@ -1251,16 +1251,45 @@ class ClosetsItems : BaseClass(),
         viewitem_category.text = "Category :" + closetResponse.get(id).category?.name
 
         itemview_removebt.setOnClickListener {
-            if (utility.isConnectingToInternet(this)) {
 
-                DeleteDialog(closetResponse.get(id).id.toString())
-            } else {
-                utility.relative_snackbar(
-                    parent_closetsItems!!,
-                    "No Internet Connectivity",
-                    getString(R.string.close_up)
-                )
+            deleteDialog = Dialog(this)
+            deleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            deleteDialog.setCancelable(false)
+            deleteDialog.setContentView(R.layout.logout_dialog)
+            val window = deleteDialog.window
+            window?.setLayout(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+
+            val no: Button
+            val yes: Button
+            val logout_tv : TextView
+
+            no = deleteDialog.findViewById(R.id.logout_no)
+            yes = deleteDialog.findViewById(R.id.logout_yes)
+            logout_tv = deleteDialog.findViewById(R.id.logout_tv)
+            logout_tv.setText("ARE YOU SURE YOU WANT TO DELETE?")
+
+            no.setOnClickListener {
+                deleteDialog.dismiss()
             }
+
+            yes.setOnClickListener {
+                if (utility.isConnectingToInternet(this)) {
+
+                    DeleteDialog(closetResponse.get(id).id.toString())
+                } else {
+                    utility.relative_snackbar(
+                        parent_closetsItems!!,
+                        "No Internet Connectivity",
+                        getString(R.string.close_up)
+                    )
+                }
+            }
+
+            deleteDialog.show()
+
         }
 
 

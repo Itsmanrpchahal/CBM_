@@ -8,10 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
@@ -47,6 +44,7 @@ class MyOutfits : BaseClass(),
     private lateinit var create_outfit: ImageButton
     private lateinit var addnewoutfitDialog: Dialog
     private lateinit var outfitname: EditText
+    private lateinit var deleteDialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -263,8 +261,55 @@ class MyOutfits : BaseClass(),
     }
 
     override fun getID(pos: String?, id: String?) {
-        pd.show()
-        controller.DeleteOutfit("Bearer "+getStringVal(Constants.TOKEN),id)
+
+        deleteDialog = Dialog(this)
+        deleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        deleteDialog.setCancelable(false)
+        deleteDialog.setContentView(R.layout.logout_dialog)
+        val window = deleteDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+        val logout_tv : TextView
+
+        no = deleteDialog.findViewById(R.id.logout_no)
+        yes = deleteDialog.findViewById(R.id.logout_yes)
+        logout_tv = deleteDialog.findViewById(R.id.logout_tv)
+        logout_tv.setText("ARE YOU SURE YOU WANT TO DELETE?")
+
+        no.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+
+        yes.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+
+                if (utility.isConnectingToInternet(this)) {
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+                    controller.DeleteOutfit("Bearer "+getStringVal(Constants.TOKEN),id)
+                } else {
+                    utility!!.relative_snackbar(
+                        parent_myclosets,
+                        R.string.nointernet.toString(),
+                        getString(R.string.close_up)
+                    )
+                }
+            } else {
+                utility.relative_snackbar(
+                    parent_myclosets!!,
+                    "No Internet Connectivity",
+                    getString(R.string.close_up)
+                )
+            }
+        }
+
+        deleteDialog.show()
+
     }
 
     override fun onDeleteOutfitSuccess(success: Response<DeleteOutfitResponse>) {

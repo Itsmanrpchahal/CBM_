@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
-                android:hint="Test Item Title"
+                android:hint="Title"
                 android:inputType="text"
                 android:textSize="@dimen/textsize_16sp"
                 android:textColor="@color/colorWhite"
@@ -188,18 +188,18 @@
 
                 </Spinner>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/additemclosets_size"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:text="Select Brand"-->
-<!--                    android:textColor="@color/colorWhite"-->
-<!--                    android:visibility="gone"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:paddingLeft="@dimen/margin_8dp">-->
+                <TextView
+                    android:id="@+id/additemclosets_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Select Brand"
+                    android:textColor="@color/colorWhite"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_8dp">
 
-<!--                </TextView>-->
+                </TextView>
 
             </RelativeLayout>
 

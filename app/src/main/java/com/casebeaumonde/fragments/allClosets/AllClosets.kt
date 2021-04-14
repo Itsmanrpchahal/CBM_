@@ -1,6 +1,7 @@
 package com.casebeaumonde.fragments.allClosets
 
 import android.app.Activity
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -37,6 +38,7 @@ class AllClosets : BaseFrag(),Controller.AllClosetsAPI,ClosetItemID_IF ,Controll
     private lateinit var search_ET: EditText
     private lateinit var response : ArrayList<AllClosetsResponse.Data.Closet>
     private lateinit var filterData : ArrayList<AllClosetsResponse.Data.Closet>
+    private lateinit var deleteDialog :Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -184,6 +186,7 @@ class AllClosets : BaseFrag(),Controller.AllClosetsAPI,ClosetItemID_IF ,Controll
     }
 
     override fun getClosetID(id: String?) {
+
         if (utility.isConnectingToInternet(context)) {
             pd.show()
             pd.setContentView(R.layout.loading)

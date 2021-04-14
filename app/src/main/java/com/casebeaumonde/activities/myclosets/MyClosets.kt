@@ -50,8 +50,8 @@ import ru.nikartm.support.ImageBadgeView
 import java.io.File
 
 class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetAPI,
-    Controller.UpdateClosetAPI,Controller.DeleteClosetAPI,
-    ClosetItemID_IF,DeleteClosetID {
+    Controller.UpdateClosetAPI, Controller.DeleteClosetAPI,
+    ClosetItemID_IF, DeleteClosetID {
 
     private lateinit var myclosets_back: ImageButton
     private lateinit var controller: Controller
@@ -68,15 +68,15 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private lateinit var createcloset_upload: Button
     private lateinit var createcloset_uploadfilename: TextView
     private lateinit var createcloset_imagerperview: ImageView
-    private lateinit var outfits : ImageButton
+    private lateinit var outfits: ImageButton
     private lateinit var createcloset_savebt: Button
     private lateinit var createcloset_cancelbt: Button
-    private lateinit var toolbar_notifiction : ImageBadgeView
+    private lateinit var toolbar_notifiction: ImageBadgeView
     private lateinit var search_ET: EditText
     private lateinit var dialog: Dialog
-    private lateinit var deleteDialog : Dialog
+    private lateinit var deleteDialog: Dialog
     private var checked: String = "0"
-    private lateinit var userID : String
+    private lateinit var userID: String
     var c: String = ""
     private var pos: Int = 0
     private lateinit var response: ArrayList<MyClosetsResponse.Data.Closet>
@@ -93,12 +93,11 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         setContentView(R.layout.activity_my_closets)
         findIds()
         controller = Controller()
-        controller.Controller(this, this, this,this)
+        controller.Controller(this, this, this, this)
         closetitemidIf = this
         deleteClosetID = this
         userID = intent.getStringExtra("userID")!!
-        if (userID != getStringVal(Constants.USERID))
-        {
+        if (userID != getStringVal(Constants.USERID)) {
             create_closets.visibility = View.GONE
         }
 
@@ -153,11 +152,16 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         })
 
         outfits.setOnClickListener {
-            startActivity(Intent(this, MyOutfits::class.java).putExtra("userID",getStringVal(Constants.USERID)))
+            startActivity(
+                Intent(this, MyOutfits::class.java).putExtra(
+                    "userID",
+                    getStringVal(Constants.USERID)
+                )
+            )
         }
 
         toolbar_notifiction.setOnClickListener {
-            startActivity(Intent(this,Notifications::class.java))
+            startActivity(Intent(this, Notifications::class.java))
         }
 
     }
@@ -174,7 +178,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                     closets_recyler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     //closets =  response
-                    val adapter = MyClosetsAdapter(this, response!!,userID,
+                    val adapter = MyClosetsAdapter(
+                        this, response!!, userID,
                         getStringVal(Constants.USERID).toString()
                     )
                     closets_recyler.adapter = adapter
@@ -191,7 +196,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             closets
         closets_recyler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = MyClosetsAdapter(this, closets!!,userID,
+        val adapter = MyClosetsAdapter(
+            this, closets!!, userID,
             getStringVal(Constants.USERID).toString()
         )
         closets_recyler.adapter = adapter
@@ -217,8 +223,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         createcloset_savebt = dialog.findViewById(R.id.createcloset_savebt)
         createcloset_cancelbt = dialog.findViewById(R.id.createcloset_cancelbt)
 
-        if(getStringVal(Constants.USER_ROLE).equals("customer"))
-        {
+        if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             createcloset_checkbox.visibility = View.GONE
         }
         if (pos != -1) {
@@ -243,7 +248,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                         Log.d("image", "" + resource)
                         createcloset_uploadfilename.text = resource.toString()
                         bitMap = resource
-                        part = Utility.sendImageFileToserver(filesDir, bitMap,"image")
+                        part = Utility.sendImageFileToserver(filesDir, bitMap, "image")
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) {
@@ -278,7 +283,45 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
         createcloset_savebt.setOnClickListener {
 
-            checkValidations(createcloset_savebt.text.toString(),createcloset_title.text.toString(),createcloset_description.text.toString(),part,id)
+            createcloset_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    checked = "1"
+                } else {
+                    checked = "0"
+                }
+
+            }
+
+            when {
+                createcloset_title.text.isEmpty() -> {
+                    createcloset_title.requestFocus()
+                    createcloset_title.error = "Closet Title"
+                }
+
+                createcloset_description.text.isEmpty() -> {
+                    createcloset_description.requestFocus()
+                    createcloset_description.error = "Closet Description"
+                }
+
+                createcloset_uploadfilename.text.equals("") -> {
+                    utility!!.relative_snackbar(
+                        parent_myclosets!!,
+                        "Upload Image",
+                        getString(R.string.close_up)
+                    )
+                }
+                else -> {
+                    checkValidations(
+                        createcloset_savebt.text.toString(),
+                        createcloset_title.text.toString(),
+                        createcloset_description.text.toString(),
+                        part,
+                        id
+                    )
+                }
+
+            }
+
         }
     }
 
@@ -292,40 +335,12 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     ) {
 
 
-        createcloset_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                checked = "1"
-            } else {
-                checked = "0"
-            }
-
+        if (checked.equals("1")) {
+            c = "public"
+        } else {
+            c = "private"
         }
 
-        when {
-            createcloset_title.text.isEmpty() -> {
-                createcloset_title.requestFocus()
-                createcloset_title.error = "Closet Title"
-            }
-
-            createcloset_description.text.isEmpty() -> {
-                createcloset_description.requestFocus()
-                createcloset_description.error = "Closet Description"
-            }
-
-            createcloset_uploadfilename.text.equals("") -> {
-                utility!!.relative_snackbar(
-                    parent_myclosets!!,
-                    "Upload Image",
-                    getString(R.string.close_up)
-                )
-            }
-            else -> {
-
-                if (checked.equals("1")) {
-                    c = "public"
-                } else {
-                    c = "private"
-                }
 
                 if (utility.isConnectingToInternet(this)) {
                     pd.show()
@@ -357,8 +372,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                         getString(R.string.close_up)
                     )
                 }
-            }
-        }
+
+
     }
 
     private fun createClosetAPI(title: String, c: String, decs: String, part: MultipartBody.Part) {
@@ -407,7 +422,8 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
         if (myClosetsResponse.isSuccessful) {
             closets =
-                myClosetsResponse.body()?.getData()?.closet as ArrayList<MyClosetsResponse.Data.Closet>
+                myClosetsResponse.body()
+                    ?.getData()?.closet as ArrayList<MyClosetsResponse.Data.Closet>
             setFullData(closets)
         } else {
             utility!!.relative_snackbar(
@@ -417,7 +433,6 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             )
         }
     }
-
 
 
     override fun onCreateClosetSuccess(createClosetResponse: Response<CreateClosetResponse>) {
@@ -431,7 +446,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             )
             utility!!.relative_snackbar(
                 parent_myclosets,
-                createClosetResponse.message(),
+                "Closet Created",
                 getString(R.string.close_up)
             )
         }
@@ -504,7 +519,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             path = filePath!!
             createcloset_uploadfilename.text = filePath
             bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
-            part = Utility.sendImageFileToserver(filesDir, bitMap,"image")
+            part = Utility.sendImageFileToserver(filesDir, bitMap, "image")
 
             Glide.with(this).load(bitMap).placeholder(R.drawable.login_banner1)
                 .into(createcloset_imagerperview)
@@ -526,7 +541,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
     companion object {
         var closetitemidIf: ClosetItemID_IF? = null
-        var deleteClosetID : DeleteClosetID? = null
+        var deleteClosetID: DeleteClosetID? = null
     }
 
     @SuppressLint("MissingPermission", "HardwareIds")
@@ -560,7 +575,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
 
         val no: Button
         val yes: Button
-        val logout_tv : TextView
+        val logout_tv: TextView
 
         no = deleteDialog.findViewById(R.id.logout_no)
         yes = deleteDialog.findViewById(R.id.logout_yes)
@@ -577,7 +592,10 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                 if (utility.isConnectingToInternet(this)) {
                     pd.show()
                     pd.setContentView(R.layout.loading)
-                    controller.DeleteCloset("Bearer "+getStringVal(Constants.TOKEN), pos.toString())
+                    controller.DeleteCloset(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        pos.toString()
+                    )
                 } else {
                     utility!!.relative_snackbar(
                         parent_myclosets,
@@ -599,9 +617,9 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     }
 
     override fun onDeleteClosetSuccess(deleteClosetResponse: Response<DeleteClosetResponse>) {
-       pd.dismiss()
-        if (deleteClosetResponse.isSuccessful)
-        {
+        pd.dismiss()
+        deleteDialog.dismiss()
+        if (deleteClosetResponse.isSuccessful) {
             utility!!.relative_snackbar(
                 parent_myclosets,
                 deleteClosetResponse.body()?.getMessage(),
@@ -612,7 +630,7 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
                 userID
             )
 
-        }else {
+        } else {
             utility!!.relative_snackbar(
                 parent_myclosets,
                 R.string.nointernet.toString(),

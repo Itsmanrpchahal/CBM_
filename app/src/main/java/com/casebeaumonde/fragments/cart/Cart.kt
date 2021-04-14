@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.cart.IF.AddtoCartIF
 import com.casebeaumonde.fragments.cart.IF.RemoveCartItemIF
 import com.casebeaumonde.fragments.cart.adapter.CartAdapter
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
@@ -24,7 +26,8 @@ import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_cart.*
 import retrofit2.Response
 
-class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.RemoveItemCartAPI {
+class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.RemoveItemCartAPI,
+    AddtoCartIF {
 
     private lateinit var cartitems_recycler: RecyclerView
     private lateinit var utility: Utility
@@ -74,6 +77,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
     private fun findIds(view: View) {
 
         removeCartItemIF = this
+        addtoCartIF = this
         utility = Utility()
         pd = ProgressDialog(context)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -102,6 +106,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
 
     companion object {
         var removeCartItemIF : RemoveCartItemIF? = null
+        var addtoCartIF : AddtoCartIF? = null
     }
 
     private fun setFullData(response: ArrayList<CartItemsResponse.Data.CartItem>) {
@@ -171,4 +176,10 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
 
 
     }
+
+    override fun getCartQuantity(quantity: String?, id: String?) {
+        Toast.makeText(context,""+quantity+"  "+id,Toast.LENGTH_SHORT).show()
+    }
+
+
 }

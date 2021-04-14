@@ -210,10 +210,19 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                     ) {
                         if (position!=0)
                         {
-                            prices = price.get(position).toString()
-                            controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
                             pd.show()
                             pd.setContentView(R.layout.loading)
+
+                            if (position==5)
+                            {
+                                prices = "400-10000000"
+                                controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+                            } else {
+                                prices = price.get(position).toString()
+                                controller.SearchShopItems("Bearer "+getStringVal(Constants.TOKEN),retailerID,catID,prices)
+                            }
+
+
                         }
 
                     }

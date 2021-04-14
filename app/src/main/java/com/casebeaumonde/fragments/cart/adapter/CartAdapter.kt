@@ -34,7 +34,9 @@ class CartAdapter(val context: Context, var cartsItems: ArrayList<CartItemsRespo
 
         holder.itemView.plus.setOnClickListener {
             count++
+
             holder.itemView.count_tv.text = count.toString()
+            Cart.addtoCartIF?.getCartQuantity(count.toString(),cartlist.id.toString())
         }
 
 

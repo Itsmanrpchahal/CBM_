@@ -46,7 +46,7 @@ class ShopItemsAdapter(var context: Context,var items: ArrayList<ShopItemsRespon
 
         }
 
-        holder.itemView.userName.text = "Description"
+        holder.itemView.userName.text = "View more"
 
 
 

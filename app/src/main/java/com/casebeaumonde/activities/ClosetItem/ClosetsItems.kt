@@ -216,7 +216,6 @@ class ClosetsItems : BaseClass(),
         }
 
 
-
         closet_selectitembt.setOnClickListener {
             checkedClosetIDs.clear()
             for (i in closetResponse.indices) {

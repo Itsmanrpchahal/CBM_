@@ -63,6 +63,9 @@ class MyOutfitItemsAdapter(
         holder.itemView.hainger.layoutParams.height = 24
         holder.itemView.hainger.layoutParams.width = 28
 
+        holder.itemView.closets_edititem.visibility = View.GONE
+        holder.itemView.closets_duplicate.visibility = View.GONE
+
         holder.itemView.closets_additem.setOnClickListener {
             context.startActivity(
                 Intent(context, AddNewOutfitItem::class.java).putExtra(
@@ -120,6 +123,7 @@ class MyOutfitItemsAdapter(
             var closets_additem: Button
             var closets_edititem: Button
             var closets_delete: Button
+            var closets_duplicate : Button
             var hainger : ImageButton
             var closetitem_favorite : CheckBox
             var closetitem_favcount : TextView
@@ -137,6 +141,7 @@ class MyOutfitItemsAdapter(
             closets_delete = itemView.findViewById(R.id.closets_delete)
             hainger = itemView.findViewById(R.id.hainger)
             closetitem_favorite = itemView.findViewById(R.id.closetitem_favorite)
+            closets_duplicate = itemView.findViewById(R.id.closets_duplicate)
             closetitem_favcount = itemView.findViewById(R.id.closetitem_favcount)
         }
     }

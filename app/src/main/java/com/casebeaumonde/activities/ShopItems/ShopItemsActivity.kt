@@ -342,7 +342,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         {
             Glide.with(this).load(Constants.BASE_IMAGE_URL+filterItems.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner1).into(image)
             titletv.text = "Title: "+filterItems.get(pos!!.toInt()).name
-            descriptiontv.text = "Descrition: "+filterItems.get(pos!!.toInt()).description
+            descriptiontv.text = "Description: "+filterItems.get(pos!!.toInt()).description
             pricetv.text = "Price: $"+filterItems.get(pos!!.toInt()).price
             categorytv.text = "Category: "+filterItems.get(pos!!.toInt()).categoryId.toString()
             sizetv.text = "Size: "+filterItems.get(pos!!.toInt()).size.toString()
@@ -361,7 +361,7 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         } else {
             Glide.with(this).load(Constants.BASE_IMAGE_URL+items.get(pos!!.toInt()).image).placeholder(R.drawable.login_banner1).into(image)
             titletv.text = "Title: "+items.get(pos!!.toInt()).name
-            descriptiontv.text = "Descrition: "+items.get(pos!!.toInt()).description
+            descriptiontv.text = "Description: "+items.get(pos!!.toInt()).description
             pricetv.text = "Price: $"+items.get(pos!!.toInt()).price
             categorytv.text = "Category: "+items.get(pos!!.toInt()).categoryId.toString()
             sizetv.text = "Size: "+items.get(pos!!.toInt()).size.toString()

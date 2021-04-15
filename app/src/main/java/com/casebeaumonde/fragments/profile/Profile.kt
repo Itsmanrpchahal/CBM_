@@ -701,7 +701,7 @@ class Profile : BaseFrag(),
         editprofile_fburl.setText(getStringVal(Constants.FACEBOOKURL))
         editprofile_twitterurl.setText(getStringVal(Constants.TWITTERURL))
         editprofile_instaurl.setText(getStringVal(Constants.INSTAGRAMURL))
-        username.setText(getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME))
+        username.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME))
         Glide.with(context!!)
             .load(
                 Constants.BASE_IMAGE_URL + getStringVal(Constants.USERIMAGE)
@@ -1018,13 +1018,18 @@ class Profile : BaseFrag(),
                     ?.getData()?.user?.firstname + " " + userProfileResponse.body()
                     ?.getData()?.user?.lastname
 
-            Glide.with(context!!)
-                .load(
-                    userProfileResponse.body()
+            try {
+                Glide.with(context!!)
+                    .load(
+                        userProfileResponse.body()
                         !!.getData()!!.filePath + userProfileResponse.body()
                         !!.getData()!!.user!!.avatar!!.toString()
-                )
-                .placeholder(R.drawable.login_banner1).into(profile_profilePic)
+                    )
+                    .placeholder(R.drawable.login_banner1).into(profile_profilePic)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+
             profile_followerscount.text =
                 userProfileResponse.body()?.getData()?.user?.followers?.size.toString()
             profile_followingcount.text =

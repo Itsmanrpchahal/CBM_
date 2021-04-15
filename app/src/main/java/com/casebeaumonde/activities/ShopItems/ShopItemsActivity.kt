@@ -311,8 +311,6 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         )
     }
 
-
-
     @SuppressLint("CheckResult")
     override fun getID(pos: String?, id: String?,type:String) {
         dialog = Dialog(this!!)

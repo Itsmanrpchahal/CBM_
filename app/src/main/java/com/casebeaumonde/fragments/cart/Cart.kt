@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.cart.IF.AddtoCartIF
@@ -23,11 +24,12 @@ import com.casebeaumonde.fragments.cart.adapter.CartAdapter
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.utilities.Utility
+import kotlinx.android.synthetic.main.activity_shop_items.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import retrofit2.Response
 
-class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.RemoveItemCartAPI,
-    AddtoCartIF {
+class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF, Controller.RemoveItemCartAPI,
+    AddtoCartIF, Controller.AddtoCartAPI {
 
     private lateinit var cartitems_recycler: RecyclerView
     private lateinit var utility: Utility
@@ -35,6 +37,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
     private lateinit var checkout_bt: Button
     private lateinit var controller: Controller
     private lateinit var response: ArrayList<CartItemsResponse.Data.CartItem>
+    private var quantity1: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +51,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
         val view: View
         view = inflater.inflate(R.layout.fragment_cart, container, false)
         controller = Controller()
-        controller.Controller(this,this)
+        controller.Controller(this, this, this)
         findIds(view)
 
         if (utility.isConnectingToInternet(context)) {
@@ -70,7 +73,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
 
     private fun lisenters() {
         checkout_bt.setOnClickListener {
-              startActivity(Intent(context,PersonalInfoScreen::class.java))
+            startActivity(Intent(context, PersonalInfoScreen::class.java))
         }
     }
 
@@ -93,7 +96,8 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
 
         if (cartitem.isSuccessful) {
 
-            response = cartitem.body()?.getData()?.cartItems as ArrayList<CartItemsResponse.Data.CartItem>
+            response =
+                cartitem.body()?.getData()?.cartItems as ArrayList<CartItemsResponse.Data.CartItem>
             setFullData(response)
         } else {
             utility!!.relative_snackbar(
@@ -105,8 +109,8 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
     }
 
     companion object {
-        var removeCartItemIF : RemoveCartItemIF? = null
-        var addtoCartIF : AddtoCartIF? = null
+        var removeCartItemIF: RemoveCartItemIF? = null
+        var addtoCartIF: AddtoCartIF? = null
     }
 
     private fun setFullData(response: ArrayList<CartItemsResponse.Data.CartItem>) {
@@ -117,7 +121,6 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
         val adapter = CartAdapter(context!!, response)
         cartitems_recycler.adapter = adapter
     }
-
 
 
     override fun error(error: String?) {
@@ -131,7 +134,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
 
     override fun getID(pos: String?, id: String?) {
         if (utility.isConnectingToInternet(context)) {
-            controller.RemoveCartItem("Bearer "+getStringVal(Constants.TOKEN), id.toString())
+            controller.RemoveCartItem("Bearer " + getStringVal(Constants.TOKEN), id.toString())
             pd.show()
             pd.setContentView(R.layout.loading)
         } else {
@@ -147,10 +150,8 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
 
     override fun onRemoveCartSuccess(success: Response<RemoveItemCartResponse>) {
 
-        if (success.isSuccessful)
-        {
-            if (success.body()?.code.equals("200"))
-            {
+        if (success.isSuccessful) {
+            if (success.body()?.code.equals("200")) {
                 controller.CartItems("Bearer " + getStringVal(Constants.TOKEN))
                 utility!!.relative_snackbar(
                     parent_cart!!,
@@ -178,8 +179,42 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF,Controller.Rem
     }
 
     override fun getCartQuantity(quantity: String?, id: String?) {
-        Toast.makeText(context,""+quantity+"  "+id,Toast.LENGTH_SHORT).show()
+        quantity1 = quantity
+        if (utility.isConnectingToInternet(context)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.AddtoCart("Bearer " + getStringVal(Constants.TOKEN), id, quantity!!)
+        } else {
+            pd.dismiss()
+            utility!!.relative_snackbar(
+                parent_cart!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
     }
 
+    override fun onAddtoCartSuccess(success: Response<AddtoCartResponse>) {
 
+        if (success.isSuccessful) {
+            if (utility.isConnectingToInternet(context)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                controller.CartItems("Bearer " + getStringVal(Constants.TOKEN))
+            } else {
+                utility!!.relative_snackbar(
+                    parent_cart!!,
+                    getString(R.string.nointernet),
+                    getString(R.string.close_up)
+                )
+            }
+        } else {
+            pd.dismiss()
+            utility!!.relative_snackbar(
+                parent_cart!!,
+                success.body()?.message,
+                getString(R.string.close_up)
+            )
+        }
+    }
 }

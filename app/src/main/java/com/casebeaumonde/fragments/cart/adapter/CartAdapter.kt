@@ -15,35 +15,41 @@ import com.casebeaumonde.fragments.cart.Cart
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import kotlinx.android.synthetic.main.cart_custom.view.*
 
-class CartAdapter(val context: Context, var cartsItems: ArrayList<CartItemsResponse.Data.CartItem>):
+class CartAdapter(
+    val context: Context,
+    var cartsItems: ArrayList<CartItemsResponse.Data.CartItem>
+) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
-     var count =0
+    var count = 1
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartAdapter.ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.cart_custom,parent,false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.cart_custom, parent, false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: CartAdapter.ViewHolder, position: Int) {
         val cartlist = cartsItems.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL+cartlist.image).placeholder(R.drawable.login_banner1).into(holder.itemView.cartimage)
-        holder.itemView.itemdata.setText("Name :"+cartlist.name)
-        holder.itemView.pricetv.setText("$"+cartlist.price)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL + cartlist.image)
+            .placeholder(R.drawable.login_banner1).into(holder.itemView.cartimage)
+        holder.itemView.itemdata.setText("Name :" + cartlist.name)
+        holder.itemView.pricetv.setText("$" + cartlist.price)
 
         holder.itemView.plus.setOnClickListener {
             count++
 
             holder.itemView.count_tv.text = count.toString()
-            Cart.addtoCartIF?.getCartQuantity(count.toString(),cartlist.id.toString())
+
+            Cart.addtoCartIF?.getCartQuantity(count.toString(), cartlist.id.toString())
+
+
         }
 
 
         holder.itemView.minus.setOnClickListener {
 
-            if (count.toInt()>1)
-            {
+            if (count.toInt() > 1) {
                 count--
                 holder.itemView.count_tv.text = count.toString()
             } else {
@@ -55,18 +61,17 @@ class CartAdapter(val context: Context, var cartsItems: ArrayList<CartItemsRespo
     }
 
     override fun getItemCount(): Int {
-       return cartsItems.size
+        return cartsItems.size
     }
 
-    class ViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView) {
-        fun bindfun()
-        {
-            var cartimage : ImageView
-            var itemdata : TextView
-            var pricetv : TextView
-            var plus : ImageButton
-            var minus : ImageButton
-            var count_tv : TextView
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindfun() {
+            var cartimage: ImageView
+            var itemdata: TextView
+            var pricetv: TextView
+            var plus: ImageButton
+            var minus: ImageButton
+            var count_tv: TextView
 
             cartimage = itemView.findViewById(R.id.cartimage)
             itemdata = itemView.findViewById(R.id.itemdata)

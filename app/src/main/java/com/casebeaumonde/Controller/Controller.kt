@@ -296,9 +296,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(cartItem: CartItemAPI,removeItemCart: RemoveItemCartAPI) {
+    fun Controller(cartItem: CartItemAPI,removeItemCart: RemoveItemCartAPI,addtoCart: AddtoCartAPI) {
         cartItemAPI = cartItem
         removeItemCartAPI = removeItemCart
+        addtoCartAPI = addtoCart
         webAPI = WebAPI()
     }
 

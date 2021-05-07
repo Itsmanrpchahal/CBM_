@@ -27,6 +27,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.EventsInvitations.EventsInvitations
+import com.casebeaumonde.activities.MyEvents.MyEventsActivity
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
 import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
@@ -258,7 +259,7 @@ class Profile : BaseFrag(),
         }
 
         profile_myevents.setOnClickListener {
-
+            startActivity(Intent(context,MyEventsActivity::class.java).putExtra("userID",id))
         }
 
         profile_eventInvitation.setOnClickListener {
@@ -1103,6 +1104,7 @@ class Profile : BaseFrag(),
                 profile_mycontracts.visibility = View.VISIBLE
                 social_accounts.visibility = View.VISIBLE
                 profile_mycontracts.visibility = View.VISIBLE
+                profile_myevents.visibility = View.VISIBLE
 
             }
             if (userProfileResponse.body()
@@ -1116,7 +1118,7 @@ class Profile : BaseFrag(),
 
                 profile_mywall.visibility = View.VISIBLE
                 //profile_mycontracts.visibility = View.VISIBLE
-                profile_myevents.visibility = View.GONE
+                //profile_myevents.visibility = View.GONE
                 profile_eventInvitation.visibility = View.VISIBLE
                 profile_myclosets.visibility = View.VISIBLE
             } else {

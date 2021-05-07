@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/parent_myevents"
+    tools:context=".activities.MyEvents.MyEventsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/myclosets_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAllCaps="true"
+                android:text="My Closets"
+                android:fontFamily="@font/oswaldlight"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true">
+
+                <ru.nikartm.support.ImageBadgeView
+                    android:id="@+id/toolbar_notifiction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    app:ibv_badgeColor="@color/colorWhite"
+                    app:ibv_badgeTextColor="@color/colorWhite"
+                    android:src="@drawable/ic_baseline_notifications_24"
+                    app:ibv_showCounter="true">
+
+                </ru.nikartm.support.ImageBadgeView>
+
+                <ImageButton
+                    android:id="@+id/outfits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_outfiticon">
+
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/create_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_baseline_add_24">
+
+                </ImageButton>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40dp"
+            android:background="@color/colorWhite"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/default_margin_16dp"
+            android:layout_marginRight="@dimen/margin_8dp">
+
+        </Spinner>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_40dp"
+            android:background="@color/colorWhite"
+            android:layout_marginRight="@dimen/default_margin_16dp"
+            android:layout_marginLeft="@dimen/margin_8dp"
+            android:layout_weight="1">
+
+        </Spinner>
+
+    </LinearLayout>
+
+    <include layout="@layout/searchbar"></include>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/event_recyler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

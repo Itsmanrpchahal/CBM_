@@ -1,8 +1,10 @@
 package com.casebeaumonde
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,6 +14,7 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
@@ -40,6 +43,7 @@ import kotlinx.android.synthetic.main.changeplandialog.view.*
 import retrofit2.Call
 import retrofit2.Response
 import ru.nikartm.support.ImageBadgeView
+
 
 class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserProfileAPI {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -84,6 +88,7 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 ), drawerLayout
             )
             toolbarrelative.visibility = View.GONE
+
             // setupActionBarWithNavController(frameLayout, appBarConfiguration)
             // navView.setupWithNavController(frameLayout)
 

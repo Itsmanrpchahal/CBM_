@@ -99,7 +99,7 @@
                 android:layout_marginRight="@dimen/default_margin_16dp"
                 android:backgroundTint="@android:color/transparent"
                 android:hint="Firstname"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">
@@ -124,7 +124,7 @@
                 android:layout_marginRight="@dimen/default_margin_16dp"
                 android:backgroundTint="@android:color/transparent"
                 android:hint="Lastname"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">

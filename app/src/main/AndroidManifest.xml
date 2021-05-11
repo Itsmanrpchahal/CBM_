@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.MyEvents.MyEventsActivity"></activity>
+        <activity android:name=".activities.addnewevent.AddNewEventActivity"></activity>
+        <activity android:name=".activities.MyEventDetailScreen.MyEventDetailScreen" />
+        <activity android:name=".activities.MyEvents.MyEventsActivity" />
         <activity android:name=".activities.ShopItems.ShopItemsActivity" />
         <activity android:name=".activities.b_questionaries.b_colorPicker.B_ColorPicker" />
         <activity android:name=".activities.b_questionaries.b_colorPicker1.B_ColorPicker1" />

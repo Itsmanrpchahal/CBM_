@@ -119,7 +119,6 @@ class ClosetsItems : BaseClass(),
     private lateinit var hourlayout: RelativeLayout
     private var lenght: Int = 0
     private lateinit var deleteDialog: Dialog
-
     var select: Int = 0
     var selectAll: Int = 0
 

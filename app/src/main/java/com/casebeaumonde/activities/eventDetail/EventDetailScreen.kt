@@ -24,7 +24,6 @@ import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
-import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_event_detail_screen.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -127,7 +126,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
         }else {
             pd.dismiss()
             recreate()
-            utility!!.relative_snackbar(parent_closetsItems!!, addToFavClosetItemResponse.message(), getString(R.string.close_up))
+            utility!!.relative_snackbar(parent_eventdetail!!, addToFavClosetItemResponse.message(), getString(R.string.close_up))
         }
     }
 

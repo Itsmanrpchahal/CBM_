@@ -221,7 +221,7 @@ class LiveEvents : BaseFrag(), Controller.LiveEventsAPI ,LiveEventIF,Controller.
         }
     }
 
-    companion object {
+    companion   object {
         var liveEventIF: LiveEventIF? = null
     }
 

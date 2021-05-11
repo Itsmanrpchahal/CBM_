@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/parent_addEvent"
+    tools:context=".activities.addnewevent.AddNewEventActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/backon_additemstocloset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="@dimen/default_margin_16dp"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24">
+
+            </ImageButton>
+
+
+            <TextView
+                android:id="@+id/texttitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Item"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_centerInParent="true">
+
+            </TextView>
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/aditemtocloset_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:background="@drawable/whiteborder"
+                android:hint="Title"
+                android:inputType="text"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite"
+                android:padding="@dimen/margin_8dp">
+
+            </EditText>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp">
+
+                <RadioButton
+                    android:id="@+id/public_bt"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorWhite"
+                    android:text="Public">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/colorWhite"
+                    android:text="Private">
+
+                </RadioButton>
+            </RadioGroup>
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:text="This event is for a particular customer"
+                android:buttonTint="@color/colorWhite">
+
+            </CheckBox>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_40dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+                <Spinner
+                    android:id="@+id/users_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginRight="@dimen/margin_8dp">
+                </Spinner>
+
+                <TextView
+                    android:id="@+id/users_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/textsize_16sp"
+                    android:textColor="@color/colorBlack">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/startdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:hint="Start Date"
+                android:inputType="text"
+                android:textSize="@dimen/textsize_16sp"
+                android:background="@drawable/whiteborder"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite"
+                android:padding="@dimen/margin_8dp">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Date"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/enddate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:hint="End Date"
+                android:inputType="text"
+                android:textSize="@dimen/textsize_16sp"
+                android:background="@drawable/whiteborder"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite"
+                android:padding="@dimen/margin_8dp">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/descrition"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="@dimen/margin_8dp"
+                android:hint="Description"
+                android:inputType="text"
+                android:gravity="start"
+                android:background="@drawable/whiteborder"
+                android:textSize="@dimen/textsize_16sp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:backgroundTint="@color/colorWhite"
+                android:padding="@dimen/margin_8dp">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:fontFamily="@font/oswaldlight"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_40dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:background="@drawable/roundcorners">
+
+                <Spinner
+                    android:id="@+id/status_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40dp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginLeft="@dimen/default_margin_16dp"
+                    android:layout_marginRight="@dimen/margin_8dp">
+                </Spinner>
+
+                <TextView
+                    android:id="@+id/status_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/default_margin_16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/textsize_16sp"
+                    android:textColor="@color/colorBlack">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:background="@drawable/whiteborder"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <Button
+                    android:id="@+id/additemclosets__upload1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Upload"
+                    android:background="@color/colorWhite"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorBlack">
+
+                </Button>
+
+
+                <TextView
+                    android:id="@+id/additemclosets__uploadfilename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Filename123.png"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:layout_marginBottom="@dimen/default_margin_16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/aditemtocloset_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Save"
+                    android:fontFamily="@font/oswaldlight"
+                    android:background="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="true">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/aditemtocloset_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Cancel"
+                    android:visibility="visible"
+                    android:background="@color/colorWhite"
+                    android:textColor="@color/colorBlack"
+                    android:textAllCaps="false"
+                    android:layout_marginLeft="@dimen/default_margin_16dp">
+
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

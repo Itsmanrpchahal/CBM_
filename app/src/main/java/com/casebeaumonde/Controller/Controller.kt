@@ -5,6 +5,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
+import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
@@ -140,6 +141,8 @@ public class Controller {
     var searchShopItemAPI:SearchShopItemAPI? = null
     var removeItemCartAPI : RemoveItemCartAPI? =null
     var acceptDeclineInvitationAPI : AcceptDeclineInvitationAPI? = null
+    var myEventAPI : MyEventsAPI?=null
+    var myEventsDetailAPI : MyEventsDetailAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -431,6 +434,18 @@ public class Controller {
         shopItemsLikeAPI = shopItemsLike
         addtoCartAPI = addtoCart
         searchShopItemAPI = searchShopItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(myEvents: MyEventsAPI)
+    {
+        myEventAPI = myEvents
+        webAPI = WebAPI()
+    }
+
+    fun Controller(myEventsDetail: MyEventsDetailAPI)
+    {
+        myEventsDetailAPI = myEventsDetail
         webAPI = WebAPI()
     }
 
@@ -1974,6 +1989,46 @@ public class Controller {
         })
     }
 
+    fun MyEvents(token: String?)
+    {
+        webAPI?.api?.myevents(token)?.enqueue(object :Callback<MyEventsResponse>
+        {
+            override fun onResponse(
+                call: Call<MyEventsResponse>,
+                response: Response<MyEventsResponse>
+            ) {
+                myEventAPI?.onMyEventsSuccess(response)
+            }
+
+            override fun onFailure(call: Call<MyEventsResponse>, t: Throwable) {
+                myEventAPI?.error(t.message)
+            }
+
+        })
+
+    }
+
+    fun MyEventDetail(token: String?,eventID:String)
+    {
+        webAPI?.api?.myeventDetail(token,eventID)?.enqueue(object :Callback<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>
+        {
+            override fun onResponse(
+                call: Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>,
+                response: Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>
+            ) {
+                myEventsDetailAPI?.onMyEventDetailSuccess(response)
+            }
+
+            override fun onFailure(
+                call: Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>,
+                t: Throwable
+            ) {
+                myEventsDetailAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -2345,4 +2400,16 @@ public class Controller {
         fun onAcceptDeclineInvitationSuccess(success:Response<AcceptDeclineInvitationResponse>)
         fun error(error: String?)
     }
+
+    interface MyEventsAPI {
+        fun onMyEventsSuccess(success:Response<MyEventsResponse>)
+        fun error(error: String?)
+    }
+
+
+    interface MyEventsDetailAPI {
+        fun onMyEventDetailSuccess(success:Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>)
+        fun error(error: String?)
+    }
+
 }

@@ -9,6 +9,7 @@ import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
+import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse;
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
@@ -79,7 +80,6 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -745,5 +745,16 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Path("input") String id,
             @Path("input1") String action
+    );
+
+    @GET("api/v1/userEvents")
+    Call<MyEventsResponse> myevents(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/v1/eventDetail/{input}")
+    Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse> myeventDetail (
+            @Header("Authorization") String token,
+            @Path("input") String eventID
     );
 }

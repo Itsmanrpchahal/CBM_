@@ -189,10 +189,12 @@
 
 
                 <Button
+                    android:id="@+id/invite_customerbt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/buttonheight"
                     android:background="@color/colorWhite"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:textColor="@color/colorBlack"
                     android:layout_marginRight="5dp"
                     android:textStyle="bold"
@@ -203,6 +205,7 @@
 
 
                 <Button
+                    android:id="@+id/invite_collaboratebt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/buttonheight"
                     android:background="@color/colorWhite"

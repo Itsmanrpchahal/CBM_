@@ -9,6 +9,9 @@ import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
+import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse;
+import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse;
+import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse;
 import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse;
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse;
@@ -756,5 +759,24 @@ public interface ApiInterface {
     Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse> myeventDetail (
             @Header("Authorization") String token,
             @Path("input") String eventID
+    );
+
+    @POST("api/v1/searchEvent")
+    Call<FilterEventResponse> filterevent (
+            @Header("Authorization") String token,
+            @Query("status") String status,
+            @Query("type") String type
+    );
+
+    @GET("api/v1/inviteCustomers/{input}")
+    Call<InviteCustomersResponse> inviteCustomer (
+            @Header("Authorization") String token,
+            @Path("input") String event_id
+    );
+
+    @GET("api/v1/inviteCollaborators/{input}")
+    Call<InviteCollaboratorsResponse> inviteCollaborates(
+            @Header("Authorization") String token,
+            @Path("input") String event_id
     );
 }

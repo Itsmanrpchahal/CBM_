@@ -5,6 +5,9 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
+import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse
+import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse
+import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse
 import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
@@ -143,6 +146,9 @@ public class Controller {
     var acceptDeclineInvitationAPI : AcceptDeclineInvitationAPI? = null
     var myEventAPI : MyEventsAPI?=null
     var myEventsDetailAPI : MyEventsDetailAPI? = null
+    var filterEventAPI : FilterEventFilterAPI?=null
+    var inviteCustomerAPI:InviteCustomerAPI? = null
+    var inviteCollaboratesAPI : InviteCollaboratesAPI? = null
 
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
@@ -437,15 +443,19 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(myEvents: MyEventsAPI)
+    fun Controller(myEvents: MyEventsAPI,filterEventFilter: FilterEventFilterAPI,inviteCustomer: InviteCustomerAPI,inviteCollaborates: InviteCollaboratesAPI)
     {
         myEventAPI = myEvents
+        filterEventAPI = filterEventFilter
+        inviteCustomerAPI = inviteCustomer
+        inviteCollaboratesAPI = inviteCollaborates
         webAPI = WebAPI()
     }
 
     fun Controller(myEventsDetail: MyEventsDetailAPI)
     {
         myEventsDetailAPI = myEventsDetail
+
         webAPI = WebAPI()
     }
 
@@ -2029,6 +2039,59 @@ public class Controller {
         })
     }
 
+    fun FilterEvent(token: String?,status:String,type:String)
+    {
+        webAPI?.api?.filterevent(token, status, type)?.enqueue(object :Callback<FilterEventResponse>
+        {
+            override fun onResponse(
+                call: Call<FilterEventResponse>,
+                response: Response<FilterEventResponse>
+            ) {
+                filterEventAPI?.onFilterEventSuccess(response)
+            }
+
+            override fun onFailure(call: Call<FilterEventResponse>, t: Throwable) {
+               filterEventAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun InviteCustomer(token: String?,eventID: String)
+    {
+        webAPI?.api?.inviteCustomer(token,eventID)?.enqueue(object :Callback<InviteCustomersResponse>
+        {
+            override fun onResponse(
+                call: Call<InviteCustomersResponse>,
+                response: Response<InviteCustomersResponse>
+            ) {
+                inviteCustomerAPI?.onInviteCustomerSuccess(response)
+            }
+
+            override fun onFailure(call: Call<InviteCustomersResponse>, t: Throwable) {
+               inviteCustomerAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun InviteCollaborates(token: String?,eventID: String)
+    {
+       webAPI?.api?.inviteCollaborates(token,eventID)?.enqueue(object :Callback<InviteCollaboratorsResponse>
+       {
+           override fun onResponse(
+               call: Call<InviteCollaboratorsResponse>,
+               response: Response<InviteCollaboratorsResponse>
+           ) {
+               inviteCollaboratesAPI?.onInviteCollaborateSuccess(response)
+           }
+
+           override fun onFailure(call: Call<InviteCollaboratorsResponse>, t: Throwable) {
+               inviteCollaboratesAPI?.error(t.message)
+           }
+       })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -2412,4 +2475,18 @@ public class Controller {
         fun error(error: String?)
     }
 
+    interface FilterEventFilterAPI {
+        fun onFilterEventSuccess(success:Response<FilterEventResponse>)
+        fun error(error: String?)
+    }
+
+    interface InviteCustomerAPI {
+        fun onInviteCustomerSuccess(success:Response<InviteCustomersResponse>)
+        fun error(error: String?)
+    }
+
+    interface InviteCollaboratesAPI {
+        fun onInviteCollaborateSuccess(success: Response<InviteCollaboratorsResponse>)
+        fun error(error: String?)
+    }
 }

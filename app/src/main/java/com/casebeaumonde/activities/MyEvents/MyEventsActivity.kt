@@ -27,11 +27,9 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.MyEventDetailScreen.IF.EventID_IF
+import com.casebeaumonde.activities.MyEvents.IF.GetCollaboratorID_IF
 import com.casebeaumonde.activities.MyEvents.IF.GetEvent_ID
-import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse
-import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse
-import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse
-import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse
+import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.MyEvents.adapter.InviteCollaboratorsAdapter
 import com.casebeaumonde.activities.MyEvents.adapter.InviteUserAdapter
 import com.casebeaumonde.activities.MyEvents.adapter.MyEventsAdapter
@@ -47,8 +45,15 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 
-class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
-    Controller.FilterEventFilterAPI, GetEvent_ID, Controller.InviteCustomerAPI ,Controller.InviteCollaboratesAPI{
+class MyEventsActivity : BaseClass(),
+    Controller.MyEventsAPI,
+    EventID_IF,
+    Controller.FilterEventFilterAPI,
+    GetEvent_ID,
+    Controller.InviteCustomerAPI ,
+    Controller.InviteCollaboratesAPI,
+    Controller.SendInviteAPI,
+    GetCollaboratorID_IF{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -95,6 +100,7 @@ class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
     private lateinit var users_recycler: RecyclerView
     private lateinit var  collaborators : ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var  filtercollaborators : ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
+    private lateinit var eventID : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,10 +109,11 @@ class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
         findIDs()
         eventId_if = this
         eventId = this
+        getCollaborateID = this
         listeners()
 
         controller = Controller()
-        controller.Controller(this, this, this,this)
+        controller.Controller(this, this, this,this,this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -579,6 +586,7 @@ class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
     companion object {
         var eventId_if: EventID_IF? = null
         var eventId: GetEvent_ID? = null
+        var getCollaborateID : GetCollaboratorID_IF? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -602,6 +610,8 @@ class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
+
+        eventID = id.toString()
 
         var search_ET : EditText
         var cancelcustomer : Button
@@ -660,7 +670,6 @@ class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
                     users_recycler.adapter = adapter
                 }
             }
-
         })
 
         search_ET.setOnKeyListener(object : View.OnKeyListener {
@@ -865,5 +874,60 @@ class MyEventsActivity : BaseClass(), Controller.MyEventsAPI, EventID_IF,
                 users_recycler.visibility = View.GONE
             }
         }
+    }
+
+    override fun onSendInviteSuccess(success: Response<SendInviteResponse>) {
+        pd.dismiss()
+        inviteCollaborateDialog.dismiss()
+        if (success.isSuccessful)
+        {
+            if (success.code().equals("200"))
+            {
+                utility!!.relative_snackbar(
+                    parent_myevents!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_myevents!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                success.body()?.message,
+                getString(R.string.close_up)
+            )
+        }
+
+
+    }
+
+    override fun getCollaborrateID(id: String) {
+      //  pd.dismiss()
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.SendInvite("Bearer " + getStringVal(Constants.TOKEN),eventID,
+                getStringVal(Constants.USERID).toString(),"collaborator")
+
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+
+       // Toast.makeText(this,""+id+"    "+eventID,Toast.LENGTH_SHORT).show()
     }
 }

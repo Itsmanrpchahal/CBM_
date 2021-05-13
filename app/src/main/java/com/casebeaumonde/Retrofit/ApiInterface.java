@@ -13,6 +13,7 @@ import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse;
 import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse;
+import com.casebeaumonde.activities.MyEvents.Response.SendInviteResponse;
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
@@ -778,5 +779,13 @@ public interface ApiInterface {
     Call<InviteCollaboratorsResponse> inviteCollaborates(
             @Header("Authorization") String token,
             @Path("input") String event_id
+    );
+
+    @POST("api/v1/sendEventInvite")
+    Call<SendInviteResponse> sendInvite (
+            @Header("Authorization") String token,
+            @Query("event_id") String event_id,
+            @Query("user_id") String user_id,
+            @Query("user_type") String user_type
     );
 }

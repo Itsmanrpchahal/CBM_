@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.MyEvents.MyEventsActivity
 import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse
 import com.casebeaumonde.constants.Constants
@@ -37,6 +38,10 @@ class InviteCollaboratorsAdapter(var context: Context, var users : MutableList<I
         } else {
             holder.itemView.invitebt.setText("Invited")
             holder.itemView.invitebt.isEnabled = false
+        }
+
+        holder.itemView.invitebt.setOnClickListener {
+            MyEventsActivity.getCollaborateID?.getCollaborrateID(users.get(position).id.toString())
         }
     }
 

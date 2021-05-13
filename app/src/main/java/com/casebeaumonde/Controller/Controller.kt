@@ -5,10 +5,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
-import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse
-import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse
-import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse
-import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse
+import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
@@ -137,19 +134,19 @@ public class Controller {
     var shopAPI: ShopAPI? = null
     var favOutfitAPI: FavOutfitAPI? = null
     var secondQuestonariesAPI: SecondQuestonariesAPI? = null
-    var contractCountAPI :ContractCountAPI? = null
-    var shopItemsAPI:ShopItemsAPI? = null
-    var shopItemsLikeAPI : ShopItemsLikeAPI? = null
-    var addtoCartAPI:AddtoCartAPI? = null
-    var searchShopItemAPI:SearchShopItemAPI? = null
-    var removeItemCartAPI : RemoveItemCartAPI? =null
-    var acceptDeclineInvitationAPI : AcceptDeclineInvitationAPI? = null
-    var myEventAPI : MyEventsAPI?=null
-    var myEventsDetailAPI : MyEventsDetailAPI? = null
-    var filterEventAPI : FilterEventFilterAPI?=null
-    var inviteCustomerAPI:InviteCustomerAPI? = null
-    var inviteCollaboratesAPI : InviteCollaboratesAPI? = null
-
+    var contractCountAPI: ContractCountAPI? = null
+    var shopItemsAPI: ShopItemsAPI? = null
+    var shopItemsLikeAPI: ShopItemsLikeAPI? = null
+    var addtoCartAPI: AddtoCartAPI? = null
+    var searchShopItemAPI: SearchShopItemAPI? = null
+    var removeItemCartAPI: RemoveItemCartAPI? = null
+    var acceptDeclineInvitationAPI: AcceptDeclineInvitationAPI? = null
+    var myEventAPI: MyEventsAPI? = null
+    var myEventsDetailAPI: MyEventsDetailAPI? = null
+    var filterEventAPI: FilterEventFilterAPI? = null
+    var inviteCustomerAPI: InviteCustomerAPI? = null
+    var inviteCollaboratesAPI: InviteCollaboratesAPI? = null
+    var sendInviteAPI : SendInviteAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -305,7 +302,11 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(cartItem: CartItemAPI,removeItemCart: RemoveItemCartAPI,addtoCart: AddtoCartAPI) {
+    fun Controller(
+        cartItem: CartItemAPI,
+        removeItemCart: RemoveItemCartAPI,
+        addtoCart: AddtoCartAPI
+    ) {
         cartItemAPI = cartItem
         removeItemCartAPI = removeItemCart
         addtoCartAPI = addtoCart
@@ -347,7 +348,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(userInvitation: UserInviatationsAPI,acceptDeclineInvitation: AcceptDeclineInvitationAPI) {
+    fun Controller(
+        userInvitation: UserInviatationsAPI,
+        acceptDeclineInvitation: AcceptDeclineInvitationAPI
+    ) {
         userInviatationsAPI = userInvitation
         acceptDeclineInvitationAPI = acceptDeclineInvitation
         webAPI = WebAPI()
@@ -428,14 +432,17 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(contractCount: ContractCountAPI)
-    {
+    fun Controller(contractCount: ContractCountAPI) {
         contractCountAPI = contractCount
         webAPI = WebAPI()
     }
 
-    fun Controller(shopItems : ShopItemsAPI,shopItemsLike: ShopItemsLikeAPI,addtoCart: AddtoCartAPI,searchShopItem: SearchShopItemAPI)
-    {
+    fun Controller(
+        shopItems: ShopItemsAPI,
+        shopItemsLike: ShopItemsLikeAPI,
+        addtoCart: AddtoCartAPI,
+        searchShopItem: SearchShopItemAPI
+    ) {
         shopItemsAPI = shopItems
         shopItemsLikeAPI = shopItemsLike
         addtoCartAPI = addtoCart
@@ -443,17 +450,22 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(myEvents: MyEventsAPI,filterEventFilter: FilterEventFilterAPI,inviteCustomer: InviteCustomerAPI,inviteCollaborates: InviteCollaboratesAPI)
-    {
+    fun Controller(
+        myEvents: MyEventsAPI,
+        filterEventFilter: FilterEventFilterAPI,
+        inviteCustomer: InviteCustomerAPI,
+        inviteCollaborates: InviteCollaboratesAPI,
+        sendInvite: SendInviteAPI
+    ) {
         myEventAPI = myEvents
         filterEventAPI = filterEventFilter
         inviteCustomerAPI = inviteCustomer
         inviteCollaboratesAPI = inviteCollaborates
+        sendInviteAPI = sendInvite
         webAPI = WebAPI()
     }
 
-    fun Controller(myEventsDetail: MyEventsDetailAPI)
-    {
+    fun Controller(myEventsDetail: MyEventsDetailAPI) {
         myEventsDetailAPI = myEventsDetail
 
         webAPI = WebAPI()
@@ -608,22 +620,21 @@ public class Controller {
             })
     }
 
-    fun AcceptDeclineInvitation(token: String?,id:String,action:String)
-    {
-        webAPI?.api?.acceptdeclineInviation(token, id, action)?.enqueue(object :Callback<AcceptDeclineInvitationResponse>
-        {
-            override fun onResponse(
-                call: Call<AcceptDeclineInvitationResponse>,
-                response: Response<AcceptDeclineInvitationResponse>
-            ) {
-                acceptDeclineInvitationAPI?.onAcceptDeclineInvitationSuccess(response)
-            }
+    fun AcceptDeclineInvitation(token: String?, id: String, action: String) {
+        webAPI?.api?.acceptdeclineInviation(token, id, action)
+            ?.enqueue(object : Callback<AcceptDeclineInvitationResponse> {
+                override fun onResponse(
+                    call: Call<AcceptDeclineInvitationResponse>,
+                    response: Response<AcceptDeclineInvitationResponse>
+                ) {
+                    acceptDeclineInvitationAPI?.onAcceptDeclineInvitationSuccess(response)
+                }
 
-            override fun onFailure(call: Call<AcceptDeclineInvitationResponse>, t: Throwable) {
-                acceptDeclineInvitationAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<AcceptDeclineInvitationResponse>, t: Throwable) {
+                    acceptDeclineInvitationAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
     fun GetUserGigs(token: String?, userId: String?) {
@@ -1753,7 +1764,7 @@ public class Controller {
         color: String,
         brand: String,
         price: String,
-        creator_id:String
+        creator_id: String
     ) {
 
         webAPI?.api?.addOutfitItem(
@@ -1874,8 +1885,7 @@ public class Controller {
             fav_colors,
             least_fav_color,
             user_id
-        )?.enqueue(object :Callback<SecondQuestionnaireResponse>
-        {
+        )?.enqueue(object : Callback<SecondQuestionnaireResponse> {
             override fun onResponse(
                 call: Call<SecondQuestionnaireResponse>,
                 response: Response<SecondQuestionnaireResponse>
@@ -1890,28 +1900,24 @@ public class Controller {
         })
     }
 
-    fun ContractCount(token: String?)
-    {
-        webAPI?.api?.contractCount(token)?.enqueue(object :Callback<ContractCountResponse>
-        {
+    fun ContractCount(token: String?) {
+        webAPI?.api?.contractCount(token)?.enqueue(object : Callback<ContractCountResponse> {
             override fun onResponse(
                 call: Call<ContractCountResponse>,
                 response: Response<ContractCountResponse>
             ) {
-               contractCountAPI?.onContractCount(response)
+                contractCountAPI?.onContractCount(response)
             }
 
             override fun onFailure(call: Call<ContractCountResponse>, t: Throwable) {
-               contractCountAPI?.error(t.message)
+                contractCountAPI?.error(t.message)
             }
 
         })
     }
 
-    fun ShopItems(token: String?,id: String?)
-    {
-        webAPI?.api?.shopitems(token,id)?.enqueue(object :Callback<ShopItemsResponse>
-        {
+    fun ShopItems(token: String?, id: String?) {
+        webAPI?.api?.shopitems(token, id)?.enqueue(object : Callback<ShopItemsResponse> {
             override fun onResponse(
                 call: Call<ShopItemsResponse>,
                 response: Response<ShopItemsResponse>
@@ -1926,10 +1932,8 @@ public class Controller {
         })
     }
 
-    fun ShopItemsLike(token: String?,id: String?)
-    {
-        webAPI?.api?.shopItemsLike(token, id)?.enqueue(object :Callback<ShopItemsLIKEResponse>
-        {
+    fun ShopItemsLike(token: String?, id: String?) {
+        webAPI?.api?.shopItemsLike(token, id)?.enqueue(object : Callback<ShopItemsLIKEResponse> {
             override fun onResponse(
                 call: Call<ShopItemsLIKEResponse>,
                 response: Response<ShopItemsLIKEResponse>
@@ -1938,16 +1942,14 @@ public class Controller {
             }
 
             override fun onFailure(call: Call<ShopItemsLIKEResponse>, t: Throwable) {
-               shopItemsLikeAPI?.error(t.message)
+                shopItemsLikeAPI?.error(t.message)
             }
 
         })
     }
 
-    fun AddtoCart(token: String?,itemId: String?,qty:String)
-    {
-        webAPI?.api?.addToCart(token, itemId, qty)?.enqueue(object :Callback<AddtoCartResponse>
-        {
+    fun AddtoCart(token: String?, itemId: String?, qty: String) {
+        webAPI?.api?.addToCart(token, itemId, qty)?.enqueue(object : Callback<AddtoCartResponse> {
             override fun onResponse(
                 call: Call<AddtoCartResponse>,
                 response: Response<AddtoCartResponse>
@@ -1956,53 +1958,49 @@ public class Controller {
             }
 
             override fun onFailure(call: Call<AddtoCartResponse>, t: Throwable) {
-              addtoCartAPI?.error(t.message)
+                addtoCartAPI?.error(t.message)
             }
 
         })
     }
 
-    fun SearchShopItems(token: String,retailer_id:String,category_id : String,price:String)
-    {
-        webAPI?.api?.serachShopItem(token, retailer_id, category_id, price)?.enqueue(object :Callback<ShopFilterItemsResponse>
-        {
-            override fun onResponse(
-                call: Call<ShopFilterItemsResponse>,
-                response: Response<ShopFilterItemsResponse>
-            ) {
-                searchShopItemAPI?.onSearchShopItemSuccess(response)
-            }
+    fun SearchShopItems(token: String, retailer_id: String, category_id: String, price: String) {
+        webAPI?.api?.serachShopItem(token, retailer_id, category_id, price)
+            ?.enqueue(object : Callback<ShopFilterItemsResponse> {
+                override fun onResponse(
+                    call: Call<ShopFilterItemsResponse>,
+                    response: Response<ShopFilterItemsResponse>
+                ) {
+                    searchShopItemAPI?.onSearchShopItemSuccess(response)
+                }
 
-            override fun onFailure(call: Call<ShopFilterItemsResponse>, t: Throwable) {
-                searchShopItemAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<ShopFilterItemsResponse>, t: Throwable) {
+                    searchShopItemAPI?.error(t.message)
+                }
 
-        })
+            })
 
     }
 
-    fun RemoveCartItem (token: String?,cartID:String)
-    {
-        webAPI?.api?.removeCartItem(token, cartID)?.enqueue(object :Callback<RemoveItemCartResponse>
-        {
-            override fun onResponse(
-                call: Call<RemoveItemCartResponse>,
-                response: Response<RemoveItemCartResponse>
-            ) {
-                removeItemCartAPI?.onRemoveCartSuccess(response)
-            }
+    fun RemoveCartItem(token: String?, cartID: String) {
+        webAPI?.api?.removeCartItem(token, cartID)
+            ?.enqueue(object : Callback<RemoveItemCartResponse> {
+                override fun onResponse(
+                    call: Call<RemoveItemCartResponse>,
+                    response: Response<RemoveItemCartResponse>
+                ) {
+                    removeItemCartAPI?.onRemoveCartSuccess(response)
+                }
 
-            override fun onFailure(call: Call<RemoveItemCartResponse>, t: Throwable) {
-                removeItemCartAPI?.error(t.message)
-            }
+                override fun onFailure(call: Call<RemoveItemCartResponse>, t: Throwable) {
+                    removeItemCartAPI?.error(t.message)
+                }
 
-        })
+            })
     }
 
-    fun MyEvents(token: String?)
-    {
-        webAPI?.api?.myevents(token)?.enqueue(object :Callback<MyEventsResponse>
-        {
+    fun MyEvents(token: String?) {
+        webAPI?.api?.myevents(token)?.enqueue(object : Callback<MyEventsResponse> {
             override fun onResponse(
                 call: Call<MyEventsResponse>,
                 response: Response<MyEventsResponse>
@@ -2018,10 +2016,9 @@ public class Controller {
 
     }
 
-    fun MyEventDetail(token: String?,eventID:String)
-    {
-        webAPI?.api?.myeventDetail(token,eventID)?.enqueue(object :Callback<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>
-        {
+    fun MyEventDetail(token: String?, eventID: String) {
+        webAPI?.api?.myeventDetail(token, eventID)?.enqueue(object :
+            Callback<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse> {
             override fun onResponse(
                 call: Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>,
                 response: Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>
@@ -2039,57 +2036,73 @@ public class Controller {
         })
     }
 
-    fun FilterEvent(token: String?,status:String,type:String)
+    fun FilterEvent(token: String?, status: String, type: String) {
+        webAPI?.api?.filterevent(token, status, type)
+            ?.enqueue(object : Callback<FilterEventResponse> {
+                override fun onResponse(
+                    call: Call<FilterEventResponse>,
+                    response: Response<FilterEventResponse>
+                ) {
+                    filterEventAPI?.onFilterEventSuccess(response)
+                }
+
+                override fun onFailure(call: Call<FilterEventResponse>, t: Throwable) {
+                    filterEventAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun InviteCustomer(token: String?, eventID: String) {
+        webAPI?.api?.inviteCustomer(token, eventID)
+            ?.enqueue(object : Callback<InviteCustomersResponse> {
+                override fun onResponse(
+                    call: Call<InviteCustomersResponse>,
+                    response: Response<InviteCustomersResponse>
+                ) {
+                    inviteCustomerAPI?.onInviteCustomerSuccess(response)
+                }
+
+                override fun onFailure(call: Call<InviteCustomersResponse>, t: Throwable) {
+                    inviteCustomerAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun InviteCollaborates(token: String?, eventID: String) {
+        webAPI?.api?.inviteCollaborates(token, eventID)
+            ?.enqueue(object : Callback<InviteCollaboratorsResponse> {
+                override fun onResponse(
+                    call: Call<InviteCollaboratorsResponse>,
+                    response: Response<InviteCollaboratorsResponse>
+                ) {
+                    inviteCollaboratesAPI?.onInviteCollaborateSuccess(response)
+                }
+
+                override fun onFailure(call: Call<InviteCollaboratorsResponse>, t: Throwable) {
+                    inviteCollaboratesAPI?.error(t.message)
+                }
+            })
+    }
+
+
+    fun SendInvite(token: String?,eventID: String,user_id:String,userType:String)
     {
-        webAPI?.api?.filterevent(token, status, type)?.enqueue(object :Callback<FilterEventResponse>
+        webAPI?.api?.sendInvite(token,eventID,user_id,userType)?.enqueue(object :Callback<SendInviteResponse>
         {
             override fun onResponse(
-                call: Call<FilterEventResponse>,
-                response: Response<FilterEventResponse>
+                call: Call<SendInviteResponse>,
+                response: Response<SendInviteResponse>
             ) {
-                filterEventAPI?.onFilterEventSuccess(response)
+                sendInviteAPI?.onSendInviteSuccess(response)
             }
 
-            override fun onFailure(call: Call<FilterEventResponse>, t: Throwable) {
-               filterEventAPI?.error(t.message)
+            override fun onFailure(call: Call<SendInviteResponse>, t: Throwable) {
+               sendInviteAPI?.error(t.message)
             }
 
         })
-    }
-
-    fun InviteCustomer(token: String?,eventID: String)
-    {
-        webAPI?.api?.inviteCustomer(token,eventID)?.enqueue(object :Callback<InviteCustomersResponse>
-        {
-            override fun onResponse(
-                call: Call<InviteCustomersResponse>,
-                response: Response<InviteCustomersResponse>
-            ) {
-                inviteCustomerAPI?.onInviteCustomerSuccess(response)
-            }
-
-            override fun onFailure(call: Call<InviteCustomersResponse>, t: Throwable) {
-               inviteCustomerAPI?.error(t.message)
-            }
-
-        })
-    }
-
-    fun InviteCollaborates(token: String?,eventID: String)
-    {
-       webAPI?.api?.inviteCollaborates(token,eventID)?.enqueue(object :Callback<InviteCollaboratorsResponse>
-       {
-           override fun onResponse(
-               call: Call<InviteCollaboratorsResponse>,
-               response: Response<InviteCollaboratorsResponse>
-           ) {
-               inviteCollaboratesAPI?.onInviteCollaborateSuccess(response)
-           }
-
-           override fun onFailure(call: Call<InviteCollaboratorsResponse>, t: Throwable) {
-               inviteCollaboratesAPI?.error(t.message)
-           }
-       })
     }
 
     interface NotificationAPI {
@@ -2430,27 +2443,27 @@ public class Controller {
     }
 
     interface ContractCountAPI {
-        fun onContractCount(success:Response<ContractCountResponse>)
+        fun onContractCount(success: Response<ContractCountResponse>)
         fun error(error: String?)
     }
 
     interface ShopItemsAPI {
-        fun onShopItemsSuccess(success:Response<ShopItemsResponse>)
+        fun onShopItemsSuccess(success: Response<ShopItemsResponse>)
         fun error(error: String?)
     }
 
     interface ShopItemsLikeAPI {
-        fun onShopItemLikeSuccess(success:Response<ShopItemsLIKEResponse>)
+        fun onShopItemLikeSuccess(success: Response<ShopItemsLIKEResponse>)
         fun error(error: String?)
     }
 
     interface AddtoCartAPI {
-        fun onAddtoCartSuccess(success:Response<AddtoCartResponse>)
+        fun onAddtoCartSuccess(success: Response<AddtoCartResponse>)
         fun error(error: String?)
     }
 
     interface SearchShopItemAPI {
-        fun onSearchShopItemSuccess(success:Response<ShopFilterItemsResponse>)
+        fun onSearchShopItemSuccess(success: Response<ShopFilterItemsResponse>)
         fun error(error: String?)
     }
 
@@ -2460,33 +2473,38 @@ public class Controller {
     }
 
     interface AcceptDeclineInvitationAPI {
-        fun onAcceptDeclineInvitationSuccess(success:Response<AcceptDeclineInvitationResponse>)
+        fun onAcceptDeclineInvitationSuccess(success: Response<AcceptDeclineInvitationResponse>)
         fun error(error: String?)
     }
 
     interface MyEventsAPI {
-        fun onMyEventsSuccess(success:Response<MyEventsResponse>)
+        fun onMyEventsSuccess(success: Response<MyEventsResponse>)
         fun error(error: String?)
     }
 
 
     interface MyEventsDetailAPI {
-        fun onMyEventDetailSuccess(success:Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>)
+        fun onMyEventDetailSuccess(success: Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>)
         fun error(error: String?)
     }
 
     interface FilterEventFilterAPI {
-        fun onFilterEventSuccess(success:Response<FilterEventResponse>)
+        fun onFilterEventSuccess(success: Response<FilterEventResponse>)
         fun error(error: String?)
     }
 
     interface InviteCustomerAPI {
-        fun onInviteCustomerSuccess(success:Response<InviteCustomersResponse>)
+        fun onInviteCustomerSuccess(success: Response<InviteCustomersResponse>)
         fun error(error: String?)
     }
 
     interface InviteCollaboratesAPI {
         fun onInviteCollaborateSuccess(success: Response<InviteCollaboratorsResponse>)
+        fun error(error: String?)
+    }
+
+    interface SendInviteAPI {
+        fun onSendInviteSuccess(success: Response<SendInviteResponse>)
         fun error(error: String?)
     }
 }

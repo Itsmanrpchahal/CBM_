@@ -5,6 +5,7 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
+import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse
 import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
@@ -24,6 +25,7 @@ import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
+import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
@@ -147,6 +149,8 @@ public class Controller {
     var inviteCustomerAPI: InviteCustomerAPI? = null
     var inviteCollaboratesAPI: InviteCollaboratesAPI? = null
     var sendInviteAPI : SendInviteAPI? = null
+    var changeEventStatusAPI : ChangeEventStatusAPI? = null
+    var favEventAPI : FavEventAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -465,9 +469,11 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(myEventsDetail: MyEventsDetailAPI) {
+    fun Controller(myEventsDetail: MyEventsDetailAPI,changeEventStatus: ChangeEventStatusAPI,fetchList: FetchListAPI,favEvent: FavEventAPI) {
         myEventsDetailAPI = myEventsDetail
-
+        changeEventStatusAPI = changeEventStatus
+        fetchListAPI= fetchList
+        favEventAPI = favEvent
         webAPI = WebAPI()
     }
 
@@ -2018,16 +2024,16 @@ public class Controller {
 
     fun MyEventDetail(token: String?, eventID: String) {
         webAPI?.api?.myeventDetail(token, eventID)?.enqueue(object :
-            Callback<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse> {
+            Callback<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse> {
             override fun onResponse(
-                call: Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>,
-                response: Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>
+                call: Call<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse>,
+                response: Response<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse>
             ) {
                 myEventsDetailAPI?.onMyEventDetailSuccess(response)
             }
 
             override fun onFailure(
-                call: Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>,
+                call: Call<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse>,
                 t: Throwable
             ) {
                 myEventsDetailAPI?.error(t.message)
@@ -2100,6 +2106,42 @@ public class Controller {
 
             override fun onFailure(call: Call<SendInviteResponse>, t: Throwable) {
                sendInviteAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun ChangeEventStatus(token: String?,eventID:String)
+    {
+        webAPI?.api?.changeeventStatus(token,eventID)?.enqueue(object :Callback<ChangeEventStatusResponse>
+        {
+            override fun onResponse(
+                call: Call<ChangeEventStatusResponse>,
+                response: Response<ChangeEventStatusResponse>
+            ) {
+                changeEventStatusAPI?.onChangeEventSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ChangeEventStatusResponse>, t: Throwable) {
+                changeEventStatusAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun FavEvent(token: String?,id: String?,type:String)
+    {
+        webAPI?.api?.favEventItem(token, id, type)?.enqueue(object :Callback<FavEventItemResponse>
+        {
+            override fun onResponse(
+                call: Call<FavEventItemResponse>,
+                response: Response<FavEventItemResponse>
+            ) {
+                favEventAPI?.onFavEventSuccess(response)
+            }
+
+            override fun onFailure(call: Call<FavEventItemResponse>, t: Throwable) {
+                favEventAPI?.error(t.message)
             }
 
         })
@@ -2484,7 +2526,7 @@ public class Controller {
 
 
     interface MyEventsDetailAPI {
-        fun onMyEventDetailSuccess(success: Response<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse>)
+        fun onMyEventDetailSuccess(success: Response<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse>)
         fun error(error: String?)
     }
 
@@ -2505,6 +2547,16 @@ public class Controller {
 
     interface SendInviteAPI {
         fun onSendInviteSuccess(success: Response<SendInviteResponse>)
+        fun error(error: String?)
+    }
+
+    interface ChangeEventStatusAPI {
+        fun onChangeEventSuccess(success:Response<ChangeEventStatusResponse>)
+        fun error(error: String?)
+    }
+
+    interface FavEventAPI {
+        fun onFavEventSuccess(success:Response<FavEventItemResponse>)
         fun error(error: String?)
     }
 }

@@ -9,6 +9,7 @@ import com.casebeaumonde.activities.ClosetItem.response.FilterResponse;
 import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
+import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse;
 import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse;
@@ -22,6 +23,7 @@ import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemRespon
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
+import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse;
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
@@ -757,7 +759,7 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/eventDetail/{input}")
-    Call<com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse> myeventDetail (
+    Call<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse> myeventDetail (
             @Header("Authorization") String token,
             @Path("input") String eventID
     );
@@ -787,5 +789,18 @@ public interface ApiInterface {
             @Query("event_id") String event_id,
             @Query("user_id") String user_id,
             @Query("user_type") String user_type
+    );
+
+    @GET("api/v1/updateEventStatus/{input}")
+    Call<ChangeEventStatusResponse> changeeventStatus (
+            @Header("Authorization") String token,
+            @Path("input") String event_id
+    );
+
+    @POST("api/v1/heartEvent")
+    Call<FavEventItemResponse> favEventItem (
+            @Header("Authorization") String token,
+            @Query("id") String id,
+            @Query("type") String type
     );
 }

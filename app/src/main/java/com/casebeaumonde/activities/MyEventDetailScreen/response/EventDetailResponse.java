@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.MyEventDetailScreen;
+package com.casebeaumonde.activities.MyEventDetailScreen.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

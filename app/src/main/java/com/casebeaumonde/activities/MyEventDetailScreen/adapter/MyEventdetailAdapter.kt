@@ -10,19 +10,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.MyEventDetailScreen.EventDetailResponse
+import com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse
 import com.casebeaumonde.activities.MyEventDetailScreen.MyEventDetailScreen
-import com.casebeaumonde.activities.eventDetail.adapter.EventDetailAdapter
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
-import kotlinx.android.synthetic.main.closetsitems.view.*
 import kotlinx.android.synthetic.main.custommyevent.view.*
 import kotlinx.android.synthetic.main.custommyevent.view.closetItemImage
 import kotlinx.android.synthetic.main.custommyevent.view.closet_title
 import kotlinx.android.synthetic.main.custommyevent.view.closetitem_favcount
 import kotlinx.android.synthetic.main.custommyevent.view.closetitem_name
 
-class MyEventdetailAdapter(var context: Context,var eventItems :MutableList<EventDetailResponse.Data.Events.Item>,var userID:String):
+class MyEventdetailAdapter(var context: Context, var eventItems :MutableList<EventDetailResponse.Data.Events.Item>, var userID:String):
     RecyclerView.Adapter<MyEventdetailAdapter.ViewHolder>() {
 
 
@@ -57,6 +55,10 @@ class MyEventdetailAdapter(var context: Context,var eventItems :MutableList<Even
 
         holder.itemView.setOnClickListener {
             MyEventDetailScreen.eventidIf?.getClosetID(position.toString())
+        }
+
+        holder.itemView.event_fav.setOnClickListener {
+            MyEventDetailScreen.geteventforfavIf?.getEventIDForFav(eventItems.get(position).id.toString())
         }
     }
 

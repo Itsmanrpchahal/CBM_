@@ -28,6 +28,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.MyEventDetailScreen.IF.EventID_IF
 import com.casebeaumonde.activities.MyEvents.IF.GetCollaboratorID_IF
+import com.casebeaumonde.activities.MyEvents.IF.GetCustomerID_IF
 import com.casebeaumonde.activities.MyEvents.IF.GetEvent_ID
 import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.MyEvents.adapter.InviteCollaboratorsAdapter
@@ -50,10 +51,11 @@ class MyEventsActivity : BaseClass(),
     EventID_IF,
     Controller.FilterEventFilterAPI,
     GetEvent_ID,
-    Controller.InviteCustomerAPI ,
+    Controller.InviteCustomerAPI,
     Controller.InviteCollaboratesAPI,
     Controller.SendInviteAPI,
-    GetCollaboratorID_IF{
+    GetCollaboratorID_IF,
+GetCustomerID_IF{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -96,11 +98,11 @@ class MyEventsActivity : BaseClass(),
     private lateinit var inviteCustomerDialog: Dialog
     private lateinit var inviteCollaborateDialog: Dialog
     private lateinit var users: ArrayList<InviteCustomersResponse.Data.InvitedCustomer>
-    private lateinit var filterusers : ArrayList<InviteCustomersResponse.Data.InvitedCustomer>
+    private lateinit var filterusers: ArrayList<InviteCustomersResponse.Data.InvitedCustomer>
     private lateinit var users_recycler: RecyclerView
-    private lateinit var  collaborators : ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
-    private lateinit var  filtercollaborators : ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
-    private lateinit var eventID : String
+    private lateinit var collaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
+    private lateinit var filtercollaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
+    private lateinit var eventID: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,10 +112,11 @@ class MyEventsActivity : BaseClass(),
         eventId_if = this
         eventId = this
         getCollaborateID = this
+        getcustomeridIf = this
         listeners()
 
         controller = Controller()
-        controller.Controller(this, this, this,this,this)
+        controller.Controller(this, this, this, this, this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -572,8 +575,6 @@ class MyEventsActivity : BaseClass(),
     }
 
 
-
-
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -586,7 +587,8 @@ class MyEventsActivity : BaseClass(),
     companion object {
         var eventId_if: EventID_IF? = null
         var eventId: GetEvent_ID? = null
-        var getCollaborateID : GetCollaboratorID_IF? = null
+        var getCollaborateID: GetCollaboratorID_IF? = null
+        var getcustomeridIf : GetCustomerID_IF ? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -613,9 +615,9 @@ class MyEventsActivity : BaseClass(),
 
         eventID = id.toString()
 
-        var search_ET : EditText
-        var cancelcustomer : Button
-        var typetv : TextView
+        var search_ET: EditText
+        var cancelcustomer: Button
+        var typetv: TextView
         search_ET = inviteCollaborateDialog.findViewById(R.id.search_ET)
         users_recycler = inviteCollaborateDialog.findViewById(R.id.users_recycler)
         cancelcustomer = inviteCollaborateDialog.findViewById(R.id.cancelcustomer)
@@ -629,7 +631,7 @@ class MyEventsActivity : BaseClass(),
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.InviteCollaborates("Bearer " + getStringVal(Constants.TOKEN),"000")
+            controller.InviteCollaborates("Bearer " + getStringVal(Constants.TOKEN), id!!)
 
 
         } else {
@@ -650,7 +652,11 @@ class MyEventsActivity : BaseClass(),
                     searchByTitle2(s.toString())
                 } else {
                     users_recycler.layoutManager =
-                        LinearLayoutManager(this@MyEventsActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MyEventsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     //closets =  response
                     val adapter = InviteCollaboratorsAdapter(this@MyEventsActivity, collaborators)
                     users_recycler.adapter = adapter
@@ -664,7 +670,11 @@ class MyEventsActivity : BaseClass(),
                 } else {
                     users_recycler.visibility = View.VISIBLE
                     users_recycler.layoutManager =
-                        LinearLayoutManager(this@MyEventsActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MyEventsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     //closets =  response
                     val adapter = InviteCollaboratorsAdapter(this@MyEventsActivity, collaborators)
                     users_recycler.adapter = adapter
@@ -696,9 +706,14 @@ class MyEventsActivity : BaseClass(),
 
                 if (filtercollaborators.size > 0) {
                     users_recycler.layoutManager =
-                        LinearLayoutManager(this@MyEventsActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MyEventsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     //closets =  response
-                    val adapter = InviteCollaboratorsAdapter(this@MyEventsActivity, filtercollaborators)
+                    val adapter =
+                        InviteCollaboratorsAdapter(this@MyEventsActivity, filtercollaborators)
                     users_recycler.adapter = adapter
                 }
             }
@@ -782,8 +797,10 @@ class MyEventsActivity : BaseClass(),
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-        var search_ET : EditText
-        var cancelcustomer : Button
+
+        eventID = id.toString()
+        var search_ET: EditText
+        var cancelcustomer: Button
         search_ET = inviteCollaborateDialog.findViewById(R.id.search_ET)
         users_recycler = inviteCollaborateDialog.findViewById(R.id.users_recycler)
         cancelcustomer = inviteCollaborateDialog.findViewById(R.id.cancelcustomer)
@@ -795,7 +812,7 @@ class MyEventsActivity : BaseClass(),
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.InviteCustomer("Bearer " + getStringVal(Constants.TOKEN),"0000")
+            controller.InviteCustomer("Bearer " + getStringVal(Constants.TOKEN), id!!)
 
 
         } else {
@@ -816,7 +833,11 @@ class MyEventsActivity : BaseClass(),
                     searchByTitle1(s.toString())
                 } else {
                     users_recycler.layoutManager =
-                        LinearLayoutManager(this@MyEventsActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MyEventsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     //closets =  response
                     val adapter = InviteUserAdapter(this@MyEventsActivity, users)
                     users_recycler.adapter = adapter
@@ -830,7 +851,11 @@ class MyEventsActivity : BaseClass(),
                 } else {
                     users_recycler.visibility = View.VISIBLE
                     users_recycler.layoutManager =
-                        LinearLayoutManager(this@MyEventsActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MyEventsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     //closets =  response
                     val adapter = InviteUserAdapter(this@MyEventsActivity, users)
                     users_recycler.adapter = adapter
@@ -864,7 +889,11 @@ class MyEventsActivity : BaseClass(),
 
                 if (filterusers.size > 0) {
                     users_recycler.layoutManager =
-                        LinearLayoutManager(this@MyEventsActivity, LinearLayoutManager.VERTICAL, false)
+                        LinearLayoutManager(
+                            this@MyEventsActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
                     //closets =  response
                     val adapter = InviteUserAdapter(this@MyEventsActivity, filterusers)
                     users_recycler.adapter = adapter
@@ -876,30 +905,41 @@ class MyEventsActivity : BaseClass(),
         }
     }
 
+
+
+    override fun getCollaborrateID(id: String) {
+        //  pd.dismiss()
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.SendInvite(
+                "Bearer " + getStringVal(Constants.TOKEN), eventID,
+                id, "collaborator"
+            )
+
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+
+        // Toast.makeText(this,""+id+"    "+eventID,Toast.LENGTH_SHORT).show()
+    }
+
     override fun onSendInviteSuccess(success: Response<SendInviteResponse>) {
         pd.dismiss()
         inviteCollaborateDialog.dismiss()
-        if (success.isSuccessful)
-        {
-            if (success.code().equals("200"))
-            {
-                utility!!.relative_snackbar(
-                    parent_myevents!!,
-                    success.body()?.message,
-                    getString(R.string.close_up)
-                )
-            } else {
-                utility!!.relative_snackbar(
-                    parent_myevents!!,
-                    success.message(),
-                    getString(R.string.close_up)
-                )
-            }
+        if (success.isSuccessful) {
+
             utility!!.relative_snackbar(
                 parent_myevents!!,
-                success.message(),
+                success.body()?.message,
                 getString(R.string.close_up)
             )
+
         } else {
             utility!!.relative_snackbar(
                 parent_myevents!!,
@@ -911,13 +951,14 @@ class MyEventsActivity : BaseClass(),
 
     }
 
-    override fun getCollaborrateID(id: String) {
-      //  pd.dismiss()
+    override fun getCustomerID(id: String) {
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.SendInvite("Bearer " + getStringVal(Constants.TOKEN),eventID,
-                getStringVal(Constants.USERID).toString(),"collaborator")
+            controller.SendInvite(
+                "Bearer " + getStringVal(Constants.TOKEN), eventID,
+                id, "customer"
+            )
 
 
         } else {
@@ -927,7 +968,5 @@ class MyEventsActivity : BaseClass(),
                 getString(R.string.close_up)
             )
         }
-
-       // Toast.makeText(this,""+id+"    "+eventID,Toast.LENGTH_SHORT).show()
     }
 }

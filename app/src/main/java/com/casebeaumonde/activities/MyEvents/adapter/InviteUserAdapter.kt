@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.MyEvents.MyEventsActivity
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse
 import com.casebeaumonde.constants.Constants
 import de.hdodenhof.circleimageview.CircleImageView
@@ -36,6 +37,10 @@ class InviteUserAdapter(var context: Context,var users : MutableList<InviteCusto
         } else {
             holder.itemView.invitebt.setText("Invited")
             holder.itemView.invitebt.isEnabled = false
+        }
+
+        holder.itemView.invitebt.setOnClickListener {
+            MyEventsActivity.getcustomeridIf?.getCustomerID(users.get(position).id.toString())
         }
     }
 

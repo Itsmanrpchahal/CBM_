@@ -147,6 +147,7 @@ public class Controller {
     var myEventsDetailAPI: MyEventsDetailAPI? = null
     var filterEventAPI: FilterEventFilterAPI? = null
     var inviteCustomerAPI: InviteCustomerAPI? = null
+    var inviteCustomer1API: InviteCustomer1API? = null
     var inviteCollaboratesAPI: InviteCollaboratesAPI? = null
     var sendInviteAPI : SendInviteAPI? = null
     var changeEventStatusAPI : ChangeEventStatusAPI? = null
@@ -459,13 +460,15 @@ public class Controller {
         filterEventFilter: FilterEventFilterAPI,
         inviteCustomer: InviteCustomerAPI,
         inviteCollaborates: InviteCollaboratesAPI,
-        sendInvite: SendInviteAPI
+        sendInvite: SendInviteAPI,
+        inviteCustomer1: InviteCustomer1API
     ) {
         myEventAPI = myEvents
         filterEventAPI = filterEventFilter
         inviteCustomerAPI = inviteCustomer
         inviteCollaboratesAPI = inviteCollaborates
         sendInviteAPI = sendInvite
+        inviteCustomer1API = inviteCustomer1
         webAPI = WebAPI()
     }
 
@@ -2076,6 +2079,23 @@ public class Controller {
             })
     }
 
+    fun InviteCustomer1(token: String?, eventID: String) {
+        webAPI?.api?.inviteCustomer1(token, eventID)
+            ?.enqueue(object : Callback<InviteCustomersResponse> {
+                override fun onResponse(
+                    call: Call<InviteCustomersResponse>,
+                    response: Response<InviteCustomersResponse>
+                ) {
+                    inviteCustomer1API?.onInviteCustomer1Success(response)
+                }
+
+                override fun onFailure(call: Call<InviteCustomersResponse>, t: Throwable) {
+                    inviteCustomer1API?.error(t.message)
+                }
+
+            })
+    }
+
     fun InviteCollaborates(token: String?, eventID: String) {
         webAPI?.api?.inviteCollaborates(token, eventID)
             ?.enqueue(object : Callback<InviteCollaboratorsResponse> {
@@ -2537,6 +2557,11 @@ public class Controller {
 
     interface InviteCustomerAPI {
         fun onInviteCustomerSuccess(success: Response<InviteCustomersResponse>)
+        fun error(error: String?)
+    }
+
+    interface InviteCustomer1API {
+        fun onInviteCustomer1Success(success: Response<InviteCustomersResponse>)
         fun error(error: String?)
     }
 

@@ -777,6 +777,12 @@ public interface ApiInterface {
             @Path("input") String event_id
     );
 
+    @GET("api/v1/inviteCustomers/{input}")
+    Call<InviteCustomersResponse> inviteCustomer1 (
+            @Header("Authorization") String token,
+            @Path("input") String event_id
+    );
+
     @GET("api/v1/inviteCollaborators/{input}")
     Call<InviteCollaboratorsResponse> inviteCollaborates(
             @Header("Authorization") String token,

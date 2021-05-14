@@ -3,6 +3,7 @@ package com.casebeaumonde.activities.MyEvents
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -10,6 +11,8 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -20,6 +23,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +49,8 @@ import kotlinx.android.synthetic.main.activity_my_events.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MyEventsActivity : BaseClass(),
     Controller.MyEventsAPI,
@@ -55,7 +61,8 @@ class MyEventsActivity : BaseClass(),
     Controller.InviteCollaboratesAPI,
     Controller.SendInviteAPI,
     GetCollaboratorID_IF,
-GetCustomerID_IF{
+    GetCustomerID_IF,
+    Controller.InviteCustomer1API {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -87,7 +94,7 @@ GetCustomerID_IF{
     private lateinit var status_addtitle: TextView
     private lateinit var additemclosets__upload1: Button
     private lateinit var additemclosets__uploadfilename: TextView
-    private lateinit var aditemtocloset_add: Button
+    private lateinit var addevent_add: Button
     private lateinit var aditemtocloset_cancel: Button
     private lateinit var search_ET: EditText
     private lateinit var part: MultipartBody.Part
@@ -98,11 +105,15 @@ GetCustomerID_IF{
     private lateinit var inviteCustomerDialog: Dialog
     private lateinit var inviteCollaborateDialog: Dialog
     private lateinit var users: ArrayList<InviteCustomersResponse.Data.InvitedCustomer>
+    private lateinit var usersname: ArrayList<String>
     private lateinit var filterusers: ArrayList<InviteCustomersResponse.Data.InvitedCustomer>
     private lateinit var users_recycler: RecyclerView
     private lateinit var collaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var filtercollaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var eventID: String
+    private lateinit var particularUserID: String
+    val c = Calendar.getInstance()
+    private lateinit var datetime: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,7 +127,7 @@ GetCustomerID_IF{
         listeners()
 
         controller = Controller()
-        controller.Controller(this, this, this, this, this)
+        controller.Controller(this, this, this, this, this, this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -151,9 +162,7 @@ GetCustomerID_IF{
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-//                if (position != 0) {
                 status_title.setText(status[position])
-//                }
 
                 statusname = status[position]
 
@@ -319,7 +328,6 @@ GetCustomerID_IF{
                 return false
             }
         })
-
     }
 
     fun searchByTitle(s: String) {
@@ -373,10 +381,68 @@ GetCustomerID_IF{
         additemclosets__upload1 = createeventDialog.findViewById(R.id.additemclosets__upload1)
         additemclosets__uploadfilename =
             createeventDialog.findViewById(R.id.additemclosets__uploadfilename)
-        aditemtocloset_add = createeventDialog.findViewById(R.id.aditemtocloset_add)
+        addevent_add = createeventDialog.findViewById(R.id.addevent_add)
         aditemtocloset_cancel = createeventDialog.findViewById(R.id.aditemtocloset_cancel)
 
+        var dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onDateSet(
+                view: DatePicker, year: Int, monthOfYear: Int,
+                dayOfMonth: Int
+            ) {
+                c.set(Calendar.YEAR, year)
+                c.set(Calendar.MONTH, monthOfYear)
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView()
+            }
+        }
 
+        var dateSetListener1 = object : DatePickerDialog.OnDateSetListener {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onDateSet(
+                view: DatePicker, year: Int, monthOfYear: Int,
+                dayOfMonth: Int
+            ) {
+                c.set(Calendar.YEAR, year)
+                c.set(Calendar.MONTH, monthOfYear)
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView1()
+            }
+        }
+
+        val type = resources.getStringArray(R.array.Status1)
+        val typeAdapter = ArrayAdapter(
+            this!!,
+            android.R.layout.simple_spinner_dropdown_item, type
+        )
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        status_spinner.adapter = typeAdapter
+        status_spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                status_addtitle.setText(type[position])
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.InviteCustomer1("Bearer " + getStringVal(Constants.TOKEN), "00000")
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
 
 
         additemclosets__upload1.setOnClickListener {
@@ -406,7 +472,33 @@ GetCustomerID_IF{
             }
         }
 
-        aditemtocloset_add.setOnClickListener {
+        startdate.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                this,
+                R.style.DialogTheme,
+                dateSetListener,
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+        }
+
+        enddate.setOnClickListener {
+            val datePickerDialog1 = DatePickerDialog(
+                this,
+                R.style.DialogTheme,
+                dateSetListener1,
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH)
+            )
+            datePickerDialog1.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog1.show()
+        }
+
+        addevent_add.setOnClickListener {
 
         }
 
@@ -416,6 +508,28 @@ GetCustomerID_IF{
         }
 
         createeventDialog.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun   updateDateInView() {
+        val myFormat = "dd/MM/yyyy" // mention the format you need
+        val format1 = "mm/dd/yyyy HH:MM:sss"
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        val sdf1 = SimpleDateFormat(format1, Locale.UK)
+        datetime = sdf1.format(c.time)
+        Log.d("TIME", "" + datetime)
+        startdate.setText(datetime)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun   updateDateInView1() {
+        val myFormat = "dd/MM/yyyy" // mention the format you need
+        val format1 = "mm/dd/yyyy HH:MM:sss"
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        val sdf1 = SimpleDateFormat(format1, Locale.UK)
+        datetime = sdf1.format(c.time)
+        Log.d("TIME", "" + datetime)
+        enddate.setText(datetime)
     }
 
     @SuppressLint("MissingPermission", "HardwareIds")
@@ -540,7 +654,6 @@ GetCustomerID_IF{
                 getString(R.string.close_up)
             )
         }
-
     }
 
     override fun onFilterEventSuccess(success: Response<FilterEventResponse>) {
@@ -588,7 +701,7 @@ GetCustomerID_IF{
         var eventId_if: EventID_IF? = null
         var eventId: GetEvent_ID? = null
         var getCollaborateID: GetCollaboratorID_IF? = null
-        var getcustomeridIf : GetCustomerID_IF ? = null
+        var getcustomeridIf: GetCustomerID_IF? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -723,6 +836,58 @@ GetCustomerID_IF{
         }
     }
 
+    override fun onInviteCustomer1Success(success: Response<InviteCustomersResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful) {
+            if (success.body()?.code.equals("200")) {
+                usersname = ArrayList()
+                users = ArrayList()
+                // usersname.add("Select User")
+                for (i in success.body()?.data?.invitedCustomers?.indices!!) {
+                    users.add(success.body()?.data?.invitedCustomers?.get(i)!!)
+                    usersname.add(
+                        success.body()?.data?.invitedCustomers!!.get(i).firstname + " " + success.body()?.data?.invitedCustomers!!.get(
+                            i
+                        ).lastname
+                    )
+                }
+                val statusadapter = ArrayAdapter(
+                    this!!,
+                    android.R.layout.simple_spinner_dropdown_item, usersname
+                )
+                statusadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                users_spinner.adapter = statusadapter
+                users_spinner.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        users_title.setText(usersname[position])
+                        particularUserID = users.get(position).id.toString()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+
+            } else {
+                utility!!.relative_snackbar(
+                    parent_myevents!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
 
     override fun onInviteCustomerSuccess(success: Response<InviteCustomersResponse>) {
         pd.dismiss()
@@ -747,6 +912,7 @@ GetCustomerID_IF{
                     getString(R.string.close_up)
                 )
             }
+
         } else {
             utility!!.relative_snackbar(
                 parent_myevents!!,
@@ -904,7 +1070,6 @@ GetCustomerID_IF{
             }
         }
     }
-
 
 
     override fun getCollaborrateID(id: String) {

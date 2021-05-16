@@ -194,6 +194,7 @@ class MyOutfitsItems : BaseClass(), Controller.MyOutfitsItemsAPI, OutfitID_IF,
     }
 
     override fun onDeleteOnfitItemSuccess(success: Response<DeleteOutfitItemResponse>) {
+        deleteDialog.dismiss()
         if (success.isSuccessful) {
             if (success.body()?.code.equals("200")) {
                 controller.MyOutfitsItems("Bearer " + getStringVal(Constants.TOKEN), outfitID)

@@ -17,6 +17,7 @@ import com.casebeaumonde.activities.myoutfitsdetail.MyOutfitsItems
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.closet_layout.view.*
+import kotlinx.android.synthetic.main.custommyevent.view.*
 import java.lang.Exception
 
 class MOutfitsAdapter(var context: Context,
@@ -65,6 +66,8 @@ var loginuserID :String) : RecyclerView.Adapter<MOutfitsAdapter.ViewHolder>() {
         holder.itemView.closetitem_favorite.setOnClickListener {
             MyOutfits.outfitfavidIf?.getOutfitId(myOutfits.id.toString())
         }
+
+
 
         holder.itemView.closets_duplicate.visibility = View.GONE
 

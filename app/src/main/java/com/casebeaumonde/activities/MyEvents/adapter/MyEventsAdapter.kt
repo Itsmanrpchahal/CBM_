@@ -19,6 +19,7 @@ import com.casebeaumonde.activities.eventDetail.EventDetailScreen
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utils
 import kotlinx.android.synthetic.main.custom_myeventsview.view.*
+import org.w3c.dom.Text
 
 class MyEventsAdapter(
     var context: Context, var events: MutableList<MyEventsResponse.Data.Events.Datum>,
@@ -130,6 +131,10 @@ class MyEventsAdapter(
                 )
             )
         }
+
+        holder.itemView.closets_additem.setOnClickListener {
+            MyEventsActivity.geteventidForcreateitem?.getEventID_FOrCreateItem(events.get(position).id.toString())
+        }
     }
 
     override fun getItemCount(): Int {
@@ -148,6 +153,7 @@ class MyEventsAdapter(
             var closet_go_to_closets: TextView
             var invite_customerbt: Button
             var invite_collaboratebt: Button
+            var closets_additem : TextView
 
             closet_banner = itemView.findViewById(R.id.closet_banner)
             closet_username = itemView.findViewById(R.id.closet_username)
@@ -158,6 +164,7 @@ class MyEventsAdapter(
             closet_go_to_closets = itemView.findViewById(R.id.closet_go_to_closets)
             invite_customerbt = itemView.findViewById(R.id.invite_customerbt)
             invite_collaboratebt = itemView.findViewById(R.id.invite_collaboratebt)
+            closets_additem = itemView.findViewById(R.id.closets_additem)
         }
     }
 }

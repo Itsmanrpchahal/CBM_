@@ -24,6 +24,7 @@ import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
 import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
 import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
+import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
 import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
@@ -149,9 +150,12 @@ public class Controller {
     var inviteCustomerAPI: InviteCustomerAPI? = null
     var inviteCustomer1API: InviteCustomer1API? = null
     var inviteCollaboratesAPI: InviteCollaboratesAPI? = null
-    var sendInviteAPI : SendInviteAPI? = null
-    var changeEventStatusAPI : ChangeEventStatusAPI? = null
-    var favEventAPI : FavEventAPI? = null
+    var sendInviteAPI: SendInviteAPI? = null
+    var changeEventStatusAPI: ChangeEventStatusAPI? = null
+    var favEventAPI: FavEventAPI? = null
+    var createEventAPI: CreateEventAPI? = null
+    var addEventItemsAPI: AddEventItemAPI? = null
+    var updateEventItemsAPI : UpdateEventItemAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -304,6 +308,20 @@ public class Controller {
         addClosetItemsAPI = addclosetItem
         closetItemsAPI = closetItems
         editClosetItemAPI = editClosetItem
+        webAPI = WebAPI()
+    }
+
+    fun Controller(
+        addClosetItemList: AddClosetItemListAPI,
+        eventsDetail: EventsDetailAPI,
+        addEventItem: AddEventItemAPI,
+        updateEventItem: UpdateEventItemAPI
+
+    ) {
+        addClosetItemListAPI = addClosetItemList
+        eventsDetailAPI = eventsDetail
+        addEventItemsAPI = addEventItem
+        updateEventItemsAPI = updateEventItem
         webAPI = WebAPI()
     }
 
@@ -461,7 +479,8 @@ public class Controller {
         inviteCustomer: InviteCustomerAPI,
         inviteCollaborates: InviteCollaboratesAPI,
         sendInvite: SendInviteAPI,
-        inviteCustomer1: InviteCustomer1API
+        inviteCustomer1: InviteCustomer1API,
+        createEvent: CreateEventAPI
     ) {
         myEventAPI = myEvents
         filterEventAPI = filterEventFilter
@@ -469,13 +488,20 @@ public class Controller {
         inviteCollaboratesAPI = inviteCollaborates
         sendInviteAPI = sendInvite
         inviteCustomer1API = inviteCustomer1
+        createEventAPI = createEvent
         webAPI = WebAPI()
     }
 
-    fun Controller(myEventsDetail: MyEventsDetailAPI,changeEventStatus: ChangeEventStatusAPI,fetchList: FetchListAPI,favEvent: FavEventAPI) {
+    fun Controller(
+        myEventsDetail: MyEventsDetailAPI,
+        changeEventStatus: ChangeEventStatusAPI,
+        fetchList: FetchListAPI,
+        favEvent: FavEventAPI
+
+    ) {
         myEventsDetailAPI = myEventsDetail
         changeEventStatusAPI = changeEventStatus
-        fetchListAPI= fetchList
+        fetchListAPI = fetchList
         favEventAPI = favEvent
         webAPI = WebAPI()
     }
@@ -2113,58 +2139,167 @@ public class Controller {
     }
 
 
-    fun SendInvite(token: String?,eventID: String,user_id:String,userType:String)
-    {
-        webAPI?.api?.sendInvite(token,eventID,user_id,userType)?.enqueue(object :Callback<SendInviteResponse>
-        {
+    fun SendInvite(token: String?, eventID: String, user_id: String, userType: String) {
+        webAPI?.api?.sendInvite(token, eventID, user_id, userType)
+            ?.enqueue(object : Callback<SendInviteResponse> {
+                override fun onResponse(
+                    call: Call<SendInviteResponse>,
+                    response: Response<SendInviteResponse>
+                ) {
+                    sendInviteAPI?.onSendInviteSuccess(response)
+                }
+
+                override fun onFailure(call: Call<SendInviteResponse>, t: Throwable) {
+                    sendInviteAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun ChangeEventStatus(token: String?, eventID: String) {
+        webAPI?.api?.changeeventStatus(token, eventID)
+            ?.enqueue(object : Callback<ChangeEventStatusResponse> {
+                override fun onResponse(
+                    call: Call<ChangeEventStatusResponse>,
+                    response: Response<ChangeEventStatusResponse>
+                ) {
+                    changeEventStatusAPI?.onChangeEventSuccess(response)
+                }
+
+                override fun onFailure(call: Call<ChangeEventStatusResponse>, t: Throwable) {
+                    changeEventStatusAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun FavEvent(token: String?, id: String?, type: String) {
+        webAPI?.api?.favEventItem(token, id, type)
+            ?.enqueue(object : Callback<FavEventItemResponse> {
+                override fun onResponse(
+                    call: Call<FavEventItemResponse>,
+                    response: Response<FavEventItemResponse>
+                ) {
+                    favEventAPI?.onFavEventSuccess(response)
+                }
+
+                override fun onFailure(call: Call<FavEventItemResponse>, t: Throwable) {
+                    favEventAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun CreateEvent(
+        token: String?,
+        title: String,
+        status: String,
+        description: String,
+        from: String,
+        to: String,
+        type: String,
+        image: MultipartBody.Part,
+        particularcustomerID: String
+    ) {
+        webAPI?.api?.createEvent(
+            token,
+            title,
+            status,
+            description,
+            from,
+            to,
+            type,
+            image,
+            particularcustomerID
+        )?.enqueue(object : Callback<CreateEventResponse> {
             override fun onResponse(
-                call: Call<SendInviteResponse>,
-                response: Response<SendInviteResponse>
+                call: Call<CreateEventResponse>,
+                response: Response<CreateEventResponse>
             ) {
-                sendInviteAPI?.onSendInviteSuccess(response)
+                createEventAPI?.onCreateEventAPI(response)
             }
 
-            override fun onFailure(call: Call<SendInviteResponse>, t: Throwable) {
-               sendInviteAPI?.error(t.message)
+            override fun onFailure(call: Call<CreateEventResponse>, t: Throwable) {
+                createEventAPI?.error(t.message)
             }
 
         })
     }
 
-    fun ChangeEventStatus(token: String?,eventID:String)
-    {
-        webAPI?.api?.changeeventStatus(token,eventID)?.enqueue(object :Callback<ChangeEventStatusResponse>
-        {
+    fun AddEventItem(
+        token: String?,
+        title: String?,
+        event_id: String?,
+        category_id: String?,
+        size: String?,
+        color: String?,
+        brand: String?,
+        description: String?,
+        price: String?,
+        picture: MultipartBody.Part
+    ) {
+        webAPI?.api?.AddEventItem(
+            token,
+            title,
+            event_id,
+            category_id,
+            size,
+            color,
+            brand,
+            description,
+            price,
+            picture
+        )?.enqueue(object : Callback<AddEventItemResponse> {
             override fun onResponse(
-                call: Call<ChangeEventStatusResponse>,
-                response: Response<ChangeEventStatusResponse>
+                call: Call<AddEventItemResponse>,
+                response: Response<AddEventItemResponse>
             ) {
-                changeEventStatusAPI?.onChangeEventSuccess(response)
+                addEventItemsAPI?.onAddEventSuccess(response)
             }
 
-            override fun onFailure(call: Call<ChangeEventStatusResponse>, t: Throwable) {
-                changeEventStatusAPI?.error(t.message)
+            override fun onFailure(call: Call<AddEventItemResponse>, t: Throwable) {
+                addEventItemsAPI?.error(t.message)
             }
 
         })
     }
 
-    fun FavEvent(token: String?,id: String?,type:String)
-    {
-        webAPI?.api?.favEventItem(token, id, type)?.enqueue(object :Callback<FavEventItemResponse>
-        {
-            override fun onResponse(
-                call: Call<FavEventItemResponse>,
-                response: Response<FavEventItemResponse>
-            ) {
-                favEventAPI?.onFavEventSuccess(response)
-            }
+    fun UpdateEventItem(
+        token: String?,
+                         title: String?,
+                         event_id: String?,
+                         category_id: String?,
+                         size: String?,
+                         color: String?,
+                         brand: String?,
+                         description: String?,
+                         price: String?,
+                         picture: MultipartBody.Part,
+        id:String) {
+       webAPI?.api?.UpdateEventItem(  token,
+           title,
+           event_id,
+           category_id,
+           size,
+           color,
+           brand,
+           description,
+           price,
+           picture,
+           id)?.enqueue(object :Callback<AddEventItemResponse>
+       {
+           override fun onResponse(
+               call: Call<AddEventItemResponse>,
+               response: Response<AddEventItemResponse>
+           ) {
+             updateEventItemsAPI?.onUpdateEventItemSuccess(response)
+           }
 
-            override fun onFailure(call: Call<FavEventItemResponse>, t: Throwable) {
-                favEventAPI?.error(t.message)
-            }
+           override fun onFailure(call: Call<AddEventItemResponse>, t: Throwable) {
+              updateEventItemsAPI?.error(t.message)
+           }
 
-        })
+       })
     }
 
     interface NotificationAPI {
@@ -2576,12 +2711,27 @@ public class Controller {
     }
 
     interface ChangeEventStatusAPI {
-        fun onChangeEventSuccess(success:Response<ChangeEventStatusResponse>)
+        fun onChangeEventSuccess(success: Response<ChangeEventStatusResponse>)
         fun error(error: String?)
     }
 
     interface FavEventAPI {
-        fun onFavEventSuccess(success:Response<FavEventItemResponse>)
+        fun onFavEventSuccess(success: Response<FavEventItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface CreateEventAPI {
+        fun onCreateEventAPI(success: Response<CreateEventResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddEventItemAPI {
+        fun onAddEventSuccess(success: Response<AddEventItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface UpdateEventItemAPI {
+        fun onUpdateEventItemSuccess(success:Response<AddEventItemResponse>)
         fun error(error: String?)
     }
 }

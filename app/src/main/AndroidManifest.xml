@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.addnewevent.AddNewEventActivity"></activity>
+        <activity android:name=".activities.addItemtoEvent.AddItemToEvent"></activity>
+        <activity android:name=".activities.addnewevent.AddNewEventActivity" />
         <activity android:name=".activities.MyEventDetailScreen.MyEventDetailScreen" />
         <activity android:name=".activities.MyEvents.MyEventsActivity" />
         <activity android:name=".activities.ShopItems.ShopItemsActivity" />

@@ -10,6 +10,7 @@ import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse;
+import com.casebeaumonde.activities.MyEvents.Response.CreateEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse;
@@ -20,6 +21,7 @@ import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse;
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse;
+import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse;
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse;
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset;
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse;
@@ -90,6 +92,7 @@ import java.util.HashMap;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -516,14 +519,14 @@ public interface ApiInterface {
             @Field("brand") String brand,
             @Field("payment_method_type") String payment_method_type,
             @Field("token") String stripetoken
-            );
+    );
 
     @FormUrlEncoded
     @POST("api/v1/filter-closet")
     Call<FilterResponse> filterCLosetItems(
             @Header("Authorization") String token,
             @Field("closetid") String closetid,
-            @FieldMap HashMap<String,String> map
+            @FieldMap HashMap<String, String> map
     );
 
     @GET("api/v1/getChatUsers/{id}")
@@ -563,7 +566,7 @@ public interface ApiInterface {
     @GET("api/v1/questionnaireRequirementList")
     Call<QuestionariesDataResponse> questionaries(
             @Header("Authorization") String token
-            );
+    );
 
 
     @Multipart
@@ -591,7 +594,7 @@ public interface ApiInterface {
             @Query("brands") ArrayList<String> brands,
             @Query("basic_profile_builder") String basic_profile_builder,
             @Query("user_id") String user_id
-            );
+    );
 
     @DELETE("api/v1/removeAllNotification")
     Call<RemoveAllNotificationResponse> removeAllNotifications(
@@ -605,8 +608,8 @@ public interface ApiInterface {
 
     @GET("api/v1/outfitDetail/{input}")
     Call<MyOutfitsDetailResponse> myOutfitsItems(
-      @Header("Authorization") String token,
-      @Path("input") String id
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 
 
@@ -628,13 +631,13 @@ public interface ApiInterface {
     );
 
     @DELETE("api/v1/removeOutfit/{input}")
-    Call<DeleteOutfitResponse> deleteOutfit (
-      @Header("Authorization") String token,
-      @Path("input") String id
+    Call<DeleteOutfitResponse> deleteOutfit(
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 
     @DELETE("api/v1/removeOutfitItem/{input}")
-    Call<DeleteOutfitItemResponse> deleteOutfitItem (
+    Call<DeleteOutfitItemResponse> deleteOutfitItem(
             @Header("Authorization") String token,
             @Path("input") String id
     );
@@ -657,7 +660,7 @@ public interface ApiInterface {
 
     @GET("api/v1/retailer")
     Call<ShopResponse> shop(
-      @Header("Authorization") String token
+            @Header("Authorization") String token
     );
 
 
@@ -671,7 +674,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/secondQuestionnaire")
-    Call<SecondQuestionnaireResponse> secondQuestionnaire (
+    Call<SecondQuestionnaireResponse> secondQuestionnaire(
             @Header("Authorization") String Authorization,
             @Field("aspirational_brands") ArrayList<String> aspirational_brands,
             @Field("address") String address,
@@ -710,7 +713,7 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/retailer_items/{input}")
-    Call<ShopItemsResponse> shopitems (
+    Call<ShopItemsResponse> shopitems(
             @Header("Authorization") String token,
             @Path("input") String item_id
     );
@@ -718,13 +721,13 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/v1/retailer_items/heartItem")
-    Call<ShopItemsLIKEResponse> shopItemsLike (
+    Call<ShopItemsLIKEResponse> shopItemsLike(
             @Header("Authorization") String token,
             @Field("id") String id
     );
 
     @GET("api/v1/addToCart/{input}/{input1}")
-    Call<AddtoCartResponse> addToCart (
+    Call<AddtoCartResponse> addToCart(
             @Header("Authorization") String token,
             @Path("input") String itemId,
             @Path("input1") String qty
@@ -733,7 +736,7 @@ public interface ApiInterface {
 
 
     @POST("api/v1/retailer_items/search")
-    Call<ShopFilterItemsResponse> serachShopItem (
+    Call<ShopFilterItemsResponse> serachShopItem(
             @Header("Authorization") String token,
             @Query("retailer_id") String retailer_id,
             @Query("category_id") String category_id,
@@ -741,13 +744,13 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/removeCartItem/{input}")
-    Call<RemoveItemCartResponse> removeCartItem (
+    Call<RemoveItemCartResponse> removeCartItem(
             @Header("Authorization") String token,
             @Path("input") String cartID
     );
 
     @GET("api/v1/set-invitation-decision/{input}/{input1}")
-    Call<AcceptDeclineInvitationResponse> acceptdeclineInviation (
+    Call<AcceptDeclineInvitationResponse> acceptdeclineInviation(
             @Header("Authorization") String token,
             @Path("input") String id,
             @Path("input1") String action
@@ -759,26 +762,26 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/eventDetail/{input}")
-    Call<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse> myeventDetail (
+    Call<com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse> myeventDetail(
             @Header("Authorization") String token,
             @Path("input") String eventID
     );
 
     @POST("api/v1/searchEvent")
-    Call<FilterEventResponse> filterevent (
+    Call<FilterEventResponse> filterevent(
             @Header("Authorization") String token,
             @Query("status") String status,
             @Query("type") String type
     );
 
     @GET("api/v1/inviteCustomers/{input}")
-    Call<InviteCustomersResponse> inviteCustomer (
+    Call<InviteCustomersResponse> inviteCustomer(
             @Header("Authorization") String token,
             @Path("input") String event_id
     );
 
     @GET("api/v1/inviteCustomers/{input}")
-    Call<InviteCustomersResponse> inviteCustomer1 (
+    Call<InviteCustomersResponse> inviteCustomer1(
             @Header("Authorization") String token,
             @Path("input") String event_id
     );
@@ -790,7 +793,7 @@ public interface ApiInterface {
     );
 
     @POST("api/v1/sendEventInvite")
-    Call<SendInviteResponse> sendInvite (
+    Call<SendInviteResponse> sendInvite(
             @Header("Authorization") String token,
             @Query("event_id") String event_id,
             @Query("user_id") String user_id,
@@ -798,15 +801,60 @@ public interface ApiInterface {
     );
 
     @GET("api/v1/updateEventStatus/{input}")
-    Call<ChangeEventStatusResponse> changeeventStatus (
+    Call<ChangeEventStatusResponse> changeeventStatus(
             @Header("Authorization") String token,
             @Path("input") String event_id
     );
 
     @POST("api/v1/heartEvent")
-    Call<FavEventItemResponse> favEventItem (
+    Call<FavEventItemResponse> favEventItem(
             @Header("Authorization") String token,
             @Query("id") String id,
             @Query("type") String type
+    );
+
+    @Multipart
+    @POST("api/v1/createEvent")
+    Call<CreateEventResponse> createEvent(
+            @Header("Authorization") String token,
+            @Query("title") String title,
+            @Query("status") String status,
+            @Query("description") String description,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("type") String type,
+            @Part MultipartBody.Part image,
+            @Query("user_id") String particularcustomerID
+    );
+
+    @Multipart
+    @POST("api/v1/addEventItem")
+    Call<AddEventItemResponse> AddEventItem(
+            @Header("Authorization") String token,
+            @Query("title") String title,
+            @Query("event_id") String event_id,
+            @Query("category_id") String category_id,
+            @Query("size") String size,
+            @Query("color") String color,
+            @Query("brand") String brand,
+            @Query("description") String description,
+            @Query("price") String price,
+            @Part MultipartBody.Part picture
+    );
+
+    @Multipart
+    @POST("api/v1/updateEventItem")
+    Call<AddEventItemResponse> UpdateEventItem(
+            @Header("Authorization") String token,
+            @Query("title") String title,
+            @Query("event_id") String event_id,
+            @Query("category_id") String category_id,
+            @Query("size") String size,
+            @Query("color") String color,
+            @Query("brand") String brand,
+            @Query("description") String description,
+            @Query("price") String price,
+            @Part MultipartBody.Part picture,
+            @Query("id") String id
     );
 }

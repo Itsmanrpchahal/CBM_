@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.addItemtoCLoset
+package com.casebeaumonde.activities.addItemtoEvent
 
 import android.app.Activity
 import android.app.Dialog
@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -20,23 +21,25 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
-import com.casebeaumonde.activities.ClosetItem.response.EditClosetItemResponse
+import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
+import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse
+import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_add_item_to_closet.*
+import kotlinx.android.synthetic.main.activity_add_item_to_closet.parent_additemtocloset
+import kotlinx.android.synthetic.main.activity_add_item_to_event.*
 import kotlinx.android.synthetic.main.activity_closets_items.*
-import kotlinx.android.synthetic.main.changeplandialog.*
+import kotlinx.android.synthetic.main.activity_my_event_detail_screen.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 
-class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller.AddClosetItemAPI,
-    Controller.ClosetItemsAPI, Controller.EditClosetItemAPI {
+class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.EventsDetailAPI,Controller.AddEventItemAPI,Controller.UpdateEventItemAPI{
 
-    //ToDo: Edit at 370 Line
+
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var controller: Controller
@@ -84,23 +87,23 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
     private lateinit var additemclosets_color: TextView
     private lateinit var texttitle: TextView
     private lateinit var backon_additemstocloset: ImageButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_item_to_closet)
-        findIds()
-        controller = Controller()
-        controller.Controller(this, this, this, this)
-        controller.AddClosetItemList("Bearer " + getStringVal(Constants.TOKEN))
-        closetId = intent.getStringExtra("closetID")?.toInt()!!
+        setContentView(R.layout.activity_add_item_to_event)
 
+            findIds()
+        controller = Controller()
+        controller.Controller(this,this,this,this)
+        controller.AddClosetItemList("Bearer " + getStringVal(Constants.TOKEN))
+        closetId = intent.getStringExtra("eventID")?.toInt()!!
         edit = intent.getStringExtra("edit").toString()
+        Toast.makeText(this,""+intent.getStringExtra("closetItemID"),Toast.LENGTH_SHORT).show()
         pd.show()
         pd.setContentView(R.layout.loading)
         listeners()
-        controller.ClosetItems(
+        controller.EventDetail(
             "Bearer " + getStringVal(Constants.TOKEN),
-            intent.getStringExtra("closetID")
+            intent.getStringExtra("eventID")
         )
     }
 
@@ -122,7 +125,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
             aditemtocloset_add.setText("Update")
         }
         aditemtocloset_add.setOnClickListener {
-            addItems(intent.getStringExtra("closetID"), edit)
+            addItems(intent.getStringExtra("eventID"), edit)
         }
 
 
@@ -163,10 +166,74 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
         aditemtocloset_cancel = findViewById(R.id.aditemtocloset_cancel)
         aditemtocloset_add = findViewById(R.id.aditemtocloset_add)
         additemclosets_brands = findViewById(R.id.additemclosets_brands)
-       // additemclosets_size = findViewById(R.id.additemclosets_size)
+        // additemclosets_size = findViewById(R.id.additemclosets_size)
         additemclosets_color = findViewById(R.id.additemclosets_color)
         backon_additemstocloset = findViewById(R.id.backon_additemstocloset)
     }
+
+    private fun addItems(closetId: String?, edit: String) {
+
+        when {
+            aditemtocloset_title.text.isEmpty() -> {
+                aditemtocloset_title.setError("Enter Title")
+                aditemtocloset_title.requestFocus()
+            }
+
+            aditemtocloset_decs.text.isEmpty() -> {
+                aditemtocloset_decs.setError("Enter Description")
+                aditemtocloset_decs.requestFocus()
+            }
+
+            additemclosets__uploadfilename.text.isEmpty() -> {
+                additemclosets__uploadfilename.setError("Upload Image")
+                additemclosets__uploadfilename.requestFocus()
+            }
+
+//            aditemtocloset_price.text.isEmpty() -> {
+//                aditemtocloset_price.setError("Enter Price")
+//                aditemtocloset_price.requestFocus()
+//            }
+            else -> {
+                // if (aditemtocloset_add.equals("Add")) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                if (edit.equals("1")) {
+                    controller.UpdateEventItem(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        aditemtocloset_title.text.toString(),
+                        closetId,
+                        cateID,
+                        sizeID,
+                        colorID,
+                        brandID,
+                        aditemtocloset_decs.text.toString(),
+                        aditemtocloset_price.text.toString(),
+                        part,
+                        closetItemID!!
+                    )
+                } else {
+                    controller.AddEventItem(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        aditemtocloset_title.text.toString(),
+                        closetId,
+                        cateID,
+                        sizeID,
+                        colorID,
+                        brandID,
+                        aditemtocloset_decs.text.toString(),
+                        aditemtocloset_price.text.toString(),
+                        part
+                    )
+
+                }
+
+
+            }
+
+        }
+    }
+
+
 
     private fun pictureSelectionDialog() {
         val camera: LinearLayout
@@ -213,79 +280,21 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             utility!!.relative_snackbar(
-                parent_additemtocloset!!,
+                parent_additemtoevent!!,
                 ImagePicker.getError(data),
                 getString(R.string.close_up)
             )
         } else {
             utility!!.relative_snackbar(
-                parent_additemtocloset,
+                parent_additemtoevent,
                 "Task Cancelled",
                 getString(R.string.close_up)
             )
         }
     }
 
-    private fun addItems(closetId: String?, edit: String) {
-
-        when {
-            aditemtocloset_title.text.isEmpty() -> {
-                aditemtocloset_title.setError("Enter Title")
-                aditemtocloset_title.requestFocus()
-            }
-
-            aditemtocloset_decs.text.isEmpty() -> {
-                aditemtocloset_decs.setError("Enter Description")
-                aditemtocloset_decs.requestFocus()
-            }
-
-            additemclosets__uploadfilename.text.isEmpty() -> {
-                additemclosets__uploadfilename.setError("Upload Image")
-                additemclosets__uploadfilename.requestFocus()
-            }
-
-//            aditemtocloset_price.text.isEmpty() -> {
-//                aditemtocloset_price.setError("Enter Price")
-//                aditemtocloset_price.requestFocus()
-//            }
-            else -> {
-                // if (aditemtocloset_add.equals("Add")) {
-                pd.show()
-                pd.setContentView(R.layout.loading)
-                if (edit.equals("1")) {
-                    controller.EditClosetItem(
-                        "Bearer " + getStringVal(Constants.TOKEN),
-                        part,
-                        aditemtocloset_title.text.toString(),
-                        aditemtocloset_decs.text.toString(),
-                        closetId.toString(),
-                        cateID,
-                        sizeID,
-                        colorID,
-                        brandID,
-                        aditemtocloset_price.text.toString(),
-                        closetItemID
-                    )
-                } else {
-                    controller.AddClosetItems(
-                        "Bearer " + getStringVal(Constants.TOKEN),
-                        part,
-                        aditemtocloset_title.text.toString(),
-                        aditemtocloset_decs.text.toString(),
-                        closetId.toString(),
-                        cateID,
-                        sizeID,
-                        colorID,
-                        brandID,
-                        aditemtocloset_price.text.toString()
-                    )
-                }
-            }
-
-        }
-    }
-
     override fun onAddClosetItemListSuccess(addClosetItemList: Response<AddClosetItemResponse>) {
+        pd.dismiss()
         if (addClosetItemList.isSuccessful) {
             categorties = ArrayList()
             cateName = ArrayList()
@@ -365,88 +374,103 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 }
             }
 
-
-
-
-
             setFetchList()
         } else {
             utility!!.relative_snackbar(
-                parent_additemtocloset!!,
+                parent_additemtoevent!!,
                 addClosetItemList.message(),
                 getString(R.string.close_up)
             )
         }
     }
 
-    override fun onAddClosetItemSuccess(addclosetItem: Response<AddClosetItemResponse>) {
+
+
+    override fun onAddEventSuccess(success: Response<AddEventItemResponse>) {
         pd.dismiss()
-        if (addclosetItem.isSuccessful) {
+        if (success.isSuccessful) {
             utility!!.relative_snackbar(
-                parent_additemtocloset!!,
+                parent_additemtoevent!!,
                 "Successfully Added",
                 getString(R.string.close_up)
             )
             onBackPressed()
         } else {
             utility!!.relative_snackbar(
-                parent_additemtocloset!!,
-                addclosetItem.message(),
+                parent_additemtoevent!!,
+                success.message(),
                 getString(R.string.close_up)
             )
         }
     }
 
-    override fun onClosetItemSuccess(closetItemsResponse: Response<ClosetsItemsResponse>) {
+    override fun onUpdateEventItemSuccess(success: Response<AddEventItemResponse>) {
         pd.dismiss()
-        if (closetItemsResponse.isSuccessful) {
-            if (edit.equals("1")) {
+        if (success.isSuccessful) {
+            utility!!.relative_snackbar(
+                parent_additemtoevent!!,
+                "Successfully Updated",
+                getString(R.string.close_up)
+            )
+           // onBackPressed()
+        } else {
+            utility!!.relative_snackbar(
+                parent_additemtoevent!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
 
-                closetItemID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+    override fun onEventDetailSuccess(eventDetailResponse: Response<EventDetailResponse>) {
+        pd.dismiss()
+        if (eventDetailResponse.isSuccessful) {
+            if (edit.equals("1")) {
+               // Toast.makeText(this,""+intent.getStringExtra("closetItemID")!!.toString(),Toast.LENGTH_SHORT).show()
+                closetItemID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.id.toString()
 
-                brandID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                brandID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.brand?.id.toString()
 
-                colorID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                colorID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.color?.id.toString()
 
-                cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                cateID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.categoryId.toString()
 
                 aditemtocloset_title.setText(
-                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                    eventDetailResponse.body()?.getData()?.events?.items?.get(
                         intent.getStringExtra("closetItemID")!!.toInt()
                     )?.title
                 )
                 aditemtocloset_decs.setText(
-                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                    eventDetailResponse.body()?.getData()?.events?.items?.get(
                         intent.getStringExtra("closetItemID")!!.toInt()
                     )?.description
                 )
                 aditemtocloset_price.setText(
-                    closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                    eventDetailResponse.body()?.getData()?.events?.items?.get(
                         intent.getStringExtra("closetItemID")!!.toInt()
                     )?.price.toString()
                 )
 
-                cateID = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                cateID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.category?.id.toString()!!
 
 
 
-                categoryName = closetItemsResponse.body()?.getData()?.closet?.items?.get(
+                categoryName = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.category?.name!!
 
                 Glide.with(this).asBitmap().load(
-                    Constants.BASE_IMAGE_URL + closetItemsResponse.body()
-                        ?.getData()?.closet?.items?.get(
+                    Constants.BASE_IMAGE_URL + eventDetailResponse.body()?.getData()?.events?.items?.get(
                             intent.getStringExtra("closetItemID")!!.toInt()
                         )?.picture
                 )
@@ -469,22 +493,17 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
         } else {
             utility!!.relative_snackbar(
-                parent_closetsItems!!,
-                closetItemsResponse.message(),
+                parent_additemtoevent!!,
+                eventDetailResponse.message(),
                 getString(R.string.close_up)
             )
         }
     }
 
 
-    override fun onEditClosetItemSuccess(editClosetItem: Response<EditClosetItemResponse>) {
-        pd.dismiss()
-        onBackPressed()
-    }
-
     override fun error(error: String?) {
         utility!!.relative_snackbar(
-            parent_additemtocloset!!,
+            parent_additemtoevent!!,
             error,
             getString(R.string.close_up)
         )
@@ -517,7 +536,7 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
 
                     brandID = brands.get(position).id.toString()
 
-                   // additemclosets_Brandpinner.setSelection(brandPos)
+                    // additemclosets_Brandpinner.setSelection(brandPos)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -539,9 +558,9 @@ class AddItemToCloset : BaseClass(), Controller.AddClosetItemListAPI, Controller
                 ) {
 
                     sizeID = size.get(position).id.toString()
-                  //  additemclosets_size.setText(size.get(position).name)
+                    //  additemclosets_size.setText(size.get(position).name)
 
-                   // additemclosets_Sizespinner.setSelection(sizePos)
+                    // additemclosets_Sizespinner.setSelection(sizePos)
 
                 }
 

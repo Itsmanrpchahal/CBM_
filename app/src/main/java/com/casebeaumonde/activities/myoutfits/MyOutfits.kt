@@ -313,6 +313,7 @@ class MyOutfits : BaseClass(),
     }
 
     override fun onDeleteOutfitSuccess(success: Response<DeleteOutfitResponse>) {
+        deleteDialog.dismiss()
         if (success.isSuccessful) {
             if (success.body()?.code.equals("200")) {
 
@@ -336,6 +337,7 @@ class MyOutfits : BaseClass(),
     }
 
     override fun getOutfitId(id: String?) {
+        pd.show()
         controller.FavOutFit("Bearer "+getStringVal(Constants.TOKEN),id,"outfit")
     }
 }

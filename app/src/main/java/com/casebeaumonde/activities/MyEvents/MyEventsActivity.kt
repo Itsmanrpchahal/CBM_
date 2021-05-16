@@ -33,19 +33,23 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.MyEventDetailScreen.IF.EventID_IF
 import com.casebeaumonde.activities.MyEvents.IF.GetCollaboratorID_IF
 import com.casebeaumonde.activities.MyEvents.IF.GetCustomerID_IF
+import com.casebeaumonde.activities.MyEvents.IF.GetEventID_ForCreateItem
 import com.casebeaumonde.activities.MyEvents.IF.GetEvent_ID
 import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.MyEvents.adapter.InviteCollaboratorsAdapter
 import com.casebeaumonde.activities.MyEvents.adapter.InviteUserAdapter
 import com.casebeaumonde.activities.MyEvents.adapter.MyEventsAdapter
+import com.casebeaumonde.activities.addItemtoEvent.AddItemToEvent
 import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import kotlinx.android.synthetic.main.activity_add_item_to_closet.*
 import kotlinx.android.synthetic.main.activity_my_closets.*
 import kotlinx.android.synthetic.main.activity_my_events.*
+import kotlinx.android.synthetic.main.changeplandialog.view.*
 import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
@@ -62,7 +66,9 @@ class MyEventsActivity : BaseClass(),
     Controller.SendInviteAPI,
     GetCollaboratorID_IF,
     GetCustomerID_IF,
-    Controller.InviteCustomer1API {
+    Controller.InviteCustomer1API,
+    Controller.CreateEventAPI,
+GetEventID_ForCreateItem{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -111,9 +117,11 @@ class MyEventsActivity : BaseClass(),
     private lateinit var collaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var filtercollaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var eventID: String
-    private lateinit var particularUserID: String
+    private  var particularUserID: String =""
     val c = Calendar.getInstance()
     private lateinit var datetime: String
+    private lateinit var particularuserIDonEventCreate: String
+    private var eventType: String = "public"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,10 +132,11 @@ class MyEventsActivity : BaseClass(),
         eventId = this
         getCollaborateID = this
         getcustomeridIf = this
+        geteventidForcreateitem = this
         listeners()
 
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this)
+        controller.Controller(this, this, this, this, this, this,this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -384,6 +393,8 @@ class MyEventsActivity : BaseClass(),
         addevent_add = createeventDialog.findViewById(R.id.addevent_add)
         aditemtocloset_cancel = createeventDialog.findViewById(R.id.aditemtocloset_cancel)
 
+        public_bt.isChecked = true
+
         var dateSetListener = object : DatePickerDialog.OnDateSetListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onDateSet(
@@ -498,7 +509,70 @@ class MyEventsActivity : BaseClass(),
             datePickerDialog1.show()
         }
 
+        if (public_bt.isChecked) {
+            private_bt.isChecked = false
+            eventType = "public"
+        } else if (private_bt.isChecked) {
+            public_bt.isChecked = true
+            eventType = "private"
+        }
+
+
+
         addevent_add.setOnClickListener {
+
+            when {
+                aditemtocloset_title.text.isEmpty() -> {
+                    aditemtocloset_title.requestFocus()
+                    aditemtocloset_title.error = "Enter title"
+
+                }
+
+                startdate.text.isEmpty() -> {
+                    startdate.requestFocus()
+                    startdate.error = "Enter Start Date"
+                }
+
+                enddate.text.isEmpty() -> {
+                    enddate.requestFocus()
+                    enddate.error = "Enter End Date"
+                }
+
+
+                descrition.text.isEmpty() -> {
+                    descrition.requestFocus()
+                    descrition.error = "Enter Description"
+                }
+
+                additemclosets__uploadfilename.text.isEmpty() -> {
+                    additemclosets__uploadfilename.requestFocus()
+                    additemclosets__uploadfilename.error = "Upload  Image"
+                }
+                else -> {
+                    if (utility.isConnectingToInternet(this)) {
+                        pd.show()
+                        pd.setContentView(R.layout.loading)
+                        controller.CreateEvent("Bearer " + getStringVal(Constants.TOKEN),aditemtocloset_title.text.toString(),
+                            status_addtitle.text.toString(),descrition.text.toString(),startdate.text.toString(),enddate.text.toString(),eventType,
+                        part,particularUserID)
+
+
+                    } else {
+                        utility!!.relative_snackbar(
+                            parent_myevents!!,
+                            getString(R.string.nointernet),
+                            getString(R.string.close_up)
+                        )
+                    }
+
+                    Log.d(
+                        "createEvent", aditemtocloset_title.text.toString() + "\n" +
+                                eventType + "\n" + particularUserID + "\n" + startdate.text.toString() + "\n" + enddate.text.toString() + descrition.text.toString() +
+                                status_addtitle.text.toString()
+                    )
+                }
+
+            }
 
         }
 
@@ -511,9 +585,9 @@ class MyEventsActivity : BaseClass(),
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun   updateDateInView() {
+    private fun updateDateInView() {
         val myFormat = "dd/MM/yyyy" // mention the format you need
-        val format1 = "mm/dd/yyyy HH:MM:sss"
+        val format1 = "MM/dd/yyyy HH:MM:ss"
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         val sdf1 = SimpleDateFormat(format1, Locale.UK)
         datetime = sdf1.format(c.time)
@@ -522,9 +596,9 @@ class MyEventsActivity : BaseClass(),
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun   updateDateInView1() {
+    private fun updateDateInView1() {
         val myFormat = "dd/MM/yyyy" // mention the format you need
-        val format1 = "mm/dd/yyyy HH:MM:sss"
+        val format1 = "MM/dd/yyyy HH:MM:ss"
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         val sdf1 = SimpleDateFormat(format1, Locale.UK)
         datetime = sdf1.format(c.time)
@@ -687,6 +761,26 @@ class MyEventsActivity : BaseClass(),
         }
     }
 
+    override fun onCreateEventAPI(success: Response<CreateEventResponse>) {
+       // pd.dismiss()
+        createeventDialog.dismiss()
+        controller.MyEvents("Bearer " + getStringVal(Constants.TOKEN))
+        if (success.isSuccessful)
+        {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                success.body()?.code,
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
 
     override fun error(error: String?) {
         pd.dismiss()
@@ -702,6 +796,7 @@ class MyEventsActivity : BaseClass(),
         var eventId: GetEvent_ID? = null
         var getCollaborateID: GetCollaboratorID_IF? = null
         var getcustomeridIf: GetCustomerID_IF? = null
+        var geteventidForcreateitem : GetEventID_ForCreateItem? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -1133,5 +1228,10 @@ class MyEventsActivity : BaseClass(),
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun getEventID_FOrCreateItem(id: String) {
+        startActivity(Intent(this,AddItemToEvent::class.java).putExtra("eventID",id).putExtra("edit", "0"))
+       // Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
     }
 }

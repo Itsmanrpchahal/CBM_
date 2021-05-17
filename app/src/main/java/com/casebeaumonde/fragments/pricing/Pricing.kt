@@ -263,7 +263,6 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                                 //ToDo: Change THis plan from suscribed
                                 selectthisplan.setText("CHANGE THIS PLAN")
                             }
-
                         }
 
                         if (selectthisplan.text.equals("SUBSCRIBED")) {

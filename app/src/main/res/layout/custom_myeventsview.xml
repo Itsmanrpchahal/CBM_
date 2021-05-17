@@ -157,10 +157,12 @@
                 </Button>
 
                 <Button
-                    android:id="@+id/closets_edititem"
+                    android:id="@+id/closets_edititem1"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:fontFamily="@font/oswaldlight"
                     android:background="@android:color/transparent"
                     android:text="Edit">

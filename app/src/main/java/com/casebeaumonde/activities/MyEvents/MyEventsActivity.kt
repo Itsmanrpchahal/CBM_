@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
@@ -28,19 +29,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.MyEventDetailScreen.IF.EventID_IF
-import com.casebeaumonde.activities.MyEvents.IF.GetCollaboratorID_IF
-import com.casebeaumonde.activities.MyEvents.IF.GetCustomerID_IF
-import com.casebeaumonde.activities.MyEvents.IF.GetEventID_ForCreateItem
-import com.casebeaumonde.activities.MyEvents.IF.GetEvent_ID
+import com.casebeaumonde.activities.MyEvents.IF.*
 import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.MyEvents.adapter.InviteCollaboratorsAdapter
 import com.casebeaumonde.activities.MyEvents.adapter.InviteUserAdapter
 import com.casebeaumonde.activities.MyEvents.adapter.MyEventsAdapter
 import com.casebeaumonde.activities.addItemtoEvent.AddItemToEvent
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -68,7 +66,8 @@ class MyEventsActivity : BaseClass(),
     GetCustomerID_IF,
     Controller.InviteCustomer1API,
     Controller.CreateEventAPI,
-GetEventID_ForCreateItem{
+GetEventID_ForCreateItem,
+GetEventIDForUpdate_IF{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -133,6 +132,7 @@ GetEventID_ForCreateItem{
         getCollaborateID = this
         getcustomeridIf = this
         geteventidForcreateitem = this
+        geteventidforupdateIf = this
         listeners()
 
         controller = Controller()
@@ -281,7 +281,7 @@ GetEventID_ForCreateItem{
 
         create_event.setOnClickListener {
             //startActivity(Intent(this,AddNewEventActivity::class.java))
-            createEventDialog()
+            createEventDialog("add","")
         }
 
         search_ET!!.addTextChangedListener(object : TextWatcher {
@@ -364,7 +364,7 @@ GetEventID_ForCreateItem{
         }
     }
 
-    private fun createEventDialog() {
+    private fun createEventDialog(s: String, s1: String) {
         createeventDialog = Dialog(this!!)
         createeventDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         createeventDialog.setContentView(R.layout.custom_addevent)
@@ -517,6 +517,65 @@ GetEventID_ForCreateItem{
             eventType = "private"
         }
 
+        if (s.equals("update"))
+        {
+            aditemtocloset_title.setText(myEvents.get(s1.toInt()).title)
+            startdate.setText(myEvents.get(s1.toInt()).from)
+            enddate.setText(myEvents.get(s1.toInt()).to)
+            descrition.setText(myEvents.get(s1.toInt()).description)
+
+            if (myEvents.get(s1.toInt()).status.equals("private"))
+            {
+                private_bt.isChecked = true
+                public_bt.isChecked = false
+            } else if (myEvents.get(s1.toInt()).equals("public"))
+            {
+                public_bt.isChecked = true
+                private_bt.isChecked = false
+            }
+
+            val type = resources.getStringArray(R.array.Status2)
+            val typeAdapter = ArrayAdapter(
+                this!!,
+                android.R.layout.simple_spinner_dropdown_item, type
+            )
+            typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            status_spinner.adapter = typeAdapter
+            status_spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    status_addtitle.setText(type[position])
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+
+            Glide.with(this).asBitmap().load(
+                Constants.BASE_IMAGE_URL + myEvents.get(s1.toInt()).image
+            )
+                .into(object : CustomTarget<Bitmap?>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: com.bumptech.glide.request.transition.Transition<in Bitmap?>?
+                    ) {
+                        Log.d("image", "" + resource)
+                        additemclosets__uploadfilename.text = resource.toString()
+                        bitMap = resource
+                        part = Utility.sendImageFileToserver(filesDir, bitMap, "image")
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        Log.d("loadcleared", "" + placeholder)
+                    }
+                })
+
+
+        }
 
 
         addevent_add.setOnClickListener {
@@ -552,9 +611,16 @@ GetEventID_ForCreateItem{
                     if (utility.isConnectingToInternet(this)) {
                         pd.show()
                         pd.setContentView(R.layout.loading)
-                        controller.CreateEvent("Bearer " + getStringVal(Constants.TOKEN),aditemtocloset_title.text.toString(),
-                            status_addtitle.text.toString(),descrition.text.toString(),startdate.text.toString(),enddate.text.toString(),eventType,
-                        part,particularUserID)
+                        if (s.equals("update"))
+                        {
+
+                        } else {
+                            controller.CreateEvent("Bearer " + getStringVal(Constants.TOKEN),aditemtocloset_title.text.toString(),
+                                status_addtitle.text.toString(),descrition.text.toString(),startdate.text.toString(),enddate.text.toString(),eventType,
+                                part,particularUserID)
+                        }
+
+
 
 
                     } else {
@@ -797,6 +863,7 @@ GetEventID_ForCreateItem{
         var getCollaborateID: GetCollaboratorID_IF? = null
         var getcustomeridIf: GetCustomerID_IF? = null
         var geteventidForcreateitem : GetEventID_ForCreateItem? = null
+        var geteventidforupdateIf :GetEventIDForUpdate_IF? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -1233,5 +1300,10 @@ GetEventID_ForCreateItem{
     override fun getEventID_FOrCreateItem(id: String) {
         startActivity(Intent(this,AddItemToEvent::class.java).putExtra("eventID",id).putExtra("edit", "0"))
        // Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getEventItemID(id: String,pos:String) {
+        createEventDialog("update",pos)
+        //Toast.makeText(this,"HERE",Toast.LENGTH_LONG).show()
     }
 }

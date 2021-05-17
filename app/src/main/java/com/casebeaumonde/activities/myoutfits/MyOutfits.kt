@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myoutfits.IF.DeleteID_IF
 import com.casebeaumonde.activities.myoutfits.IF.OutfitID_IF
 import com.casebeaumonde.activities.myoutfits.adapter.MOutfitsAdapter
@@ -26,13 +24,19 @@ import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
-import kotlinx.android.synthetic.main.activity_my_closets.*
 import kotlinx.android.synthetic.main.activity_my_closets.parent_myclosets
 import kotlinx.android.synthetic.main.activity_my_outfits.*
 import retrofit2.Response
 
 class MyOutfits : BaseClass(),
-    Controller.MyOutfitsAPI, OutfitID_IF, DeleteID_IF,Controller.CreateOutfitAPI, Controller.EditOutFitAPI,Controller.DeleteOutFitAPI ,OutfitFavID_IF,Controller.FavOutfitAPI{
+    Controller.MyOutfitsAPI,
+    OutfitID_IF,
+    DeleteID_IF,
+    Controller.CreateOutfitAPI,
+    Controller.EditOutFitAPI,
+    Controller.DeleteOutFitAPI,
+    OutfitFavID_IF,
+    Controller.FavOutfitAPI{
 
     private lateinit var userID: String
     private lateinit var controller: Controller

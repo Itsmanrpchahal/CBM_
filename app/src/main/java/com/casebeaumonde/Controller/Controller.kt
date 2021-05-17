@@ -431,11 +431,13 @@ public class Controller {
     fun Controller(
         myOutfitsItems: MyOutfitsItemsAPI,
         deleteOutfitItem: DeleteOutfitItemAPI,
-        favOutfit: FavOutfitAPI
+        favOutfit: FavOutfitAPI,
+        fetchList: FetchListAPI
     ) {
         myOutfitsDetailAPI = myOutfitsItems
         deleteOutfitsItemsAPI = deleteOutfitItem
         favOutfitAPI = favOutfit
+        fetchListAPI = fetchList
         webAPI = WebAPI()
     }
 

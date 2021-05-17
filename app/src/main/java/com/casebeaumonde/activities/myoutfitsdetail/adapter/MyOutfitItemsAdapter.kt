@@ -79,7 +79,7 @@ class MyOutfitItemsAdapter(
         }
 
         holder.itemView.closets_duplicate.setOnClickListener {
-
+            MyOutfitsItems.outfitidforduplicateIf?.getOutFItItemID(outfitItems?.get(position).id.toString(),"move")
         }
 
 

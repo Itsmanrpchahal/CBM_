@@ -10,12 +10,14 @@ import com.casebeaumonde.activities.ClosetItem.response.OutfitFilterResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse;
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse;
 import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse;
+import com.casebeaumonde.activities.MyEventDetailScreen.response.RemoveEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.CreateEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse;
 import com.casebeaumonde.activities.MyEvents.Response.MyEventsResponse;
 import com.casebeaumonde.activities.MyEvents.Response.SendInviteResponse;
+import com.casebeaumonde.activities.MyEvents.Response.UpdateEventResponse;
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse;
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse;
@@ -828,6 +830,21 @@ public interface ApiInterface {
     );
 
     @Multipart
+    @POST("api/v1/updateEvent")
+    Call<UpdateEventResponse> updateEvent(
+            @Header("Authorization") String token,
+            @Query("id") String id,
+            @Query("title") String title,
+            @Query("status") String status,
+            @Query("description") String description,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("type") String type,
+            @Part MultipartBody.Part image,
+            @Query("user_id") String particularcustomerID
+    );
+
+    @Multipart
     @POST("api/v1/addEventItem")
     Call<AddEventItemResponse> AddEventItem(
             @Header("Authorization") String token,
@@ -857,4 +874,12 @@ public interface ApiInterface {
             @Part MultipartBody.Part picture,
             @Query("id") String id
     );
+
+    @DELETE("api/v1/removeEventItem/{input}")
+    Call<RemoveEventResponse> removeEventItem(
+            @Header("Authorization") String token,
+            @Path("input") String id
+    );
+
+
 }

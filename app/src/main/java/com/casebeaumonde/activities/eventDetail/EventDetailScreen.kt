@@ -2,6 +2,7 @@ package com.casebeaumonde.activities.eventDetail
 
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.AddToFavClosetItemResponse
+import com.casebeaumonde.activities.addItemtoEvent.AddItemToEvent
 import com.casebeaumonde.activities.eventDetail.IF.EventID_IF
 import com.casebeaumonde.activities.eventDetail.adapter.EventDetailAdapter
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
@@ -35,6 +37,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
     private lateinit var eventdetail_back: ImageButton
     private lateinit var eventdetail_eventname: TextView
     private lateinit var eventdetails_items: RecyclerView
+    private lateinit var addevent:ImageButton
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     private lateinit var id: String
@@ -45,6 +48,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
     private lateinit var Viewdialog : Dialog
     private lateinit var list : ArrayList<String>
     private lateinit var listID : ArrayList<String>
+    private lateinit var eventID :String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,7 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
 
         findIDs()
         listeners()
+        //eventID = intent.getStringExtra(Constants.EVENTID).toString()
         controller.Controller(this,this,this)
 
         if (utility.isConnectingToInternet(this)) {
@@ -87,12 +92,15 @@ class EventDetailScreen : BaseClass(), Controller.EventsDetailAPI ,ClosetItemID_
 
     private fun listeners() {
         eventdetail_back.setOnClickListener { onBackPressed() }
+
+
     }
 
     private fun findIDs() {
         eventdetail_back = findViewById(R.id.eventdetail_back)
         eventdetail_eventname = findViewById(R.id.eventdetail_eventname)
         eventdetails_items = findViewById(R.id.eventdetails_items)
+        addevent = findViewById(R.id.addevent)
         eventID_IF = this
         closetitemidIf = this
         utility = Utility()

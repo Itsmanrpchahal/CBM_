@@ -20,8 +20,8 @@ import com.casebeaumonde.activities.MyEventDetailScreen.IF.EventID_IF
 import com.casebeaumonde.activities.MyEventDetailScreen.adapter.MyEventdetailAdapter
 import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse
 import com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse
+import com.casebeaumonde.activities.MyEventDetailScreen.response.RemoveEventResponse
 import com.casebeaumonde.activities.addItemtoEvent.AddItemToEvent
-import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse
 import com.casebeaumonde.activities.eventDetail.IF.GetEventForFav_IF
 import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse
 import com.casebeaumonde.activities.myclosets.response.FetchListResponse
@@ -33,7 +33,8 @@ import kotlinx.android.synthetic.main.activity_my_event_detail_screen.*
 import retrofit2.Response
 
 class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_IF,
-    Controller.ChangeEventStatusAPI ,Controller.FetchListAPI,GetEventForFav_IF,Controller.FavEventAPI{
+    Controller.ChangeEventStatusAPI ,Controller.FetchListAPI,GetEventForFav_IF,Controller.FavEventAPI,
+Controller.RemoveEventItemAPI{
 
     private lateinit var eventdetail_back: ImageButton
     private lateinit var eventdetail_eventname: TextView
@@ -69,6 +70,7 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
     private lateinit var outFitTitle: ArrayList<String>
     private lateinit var outFitID: ArrayList<String>
     private lateinit var eventItemID :String
+    private lateinit var addevent:ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +78,7 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
 
         findIDs()
         listeners()
-        controller.Controller(this, this,this,this)
+        controller.Controller(this, this,this,this,this)
         
     }
 
@@ -114,6 +116,15 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
                 )
             }
         }
+
+        addevent.setOnClickListener {
+            startActivity(
+                Intent(this, AddItemToEvent::class.java).putExtra(
+                    "eventID",
+                    id
+                )
+            )
+        }
     }
 
     private fun findIDs() {
@@ -122,7 +133,7 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
         eventdetail_eventname = findViewById(R.id.eventdetail_eventname)
         eventdetails_items = findViewById(R.id.eventdetails_items)
         active_toogle = findViewById(R.id.active_toogle)
-
+        addevent = findViewById(R.id.addevent)
         category_spinner = findViewById(R.id.category_spinner)
         brand_spinner = findViewById(R.id.brand_spinner)
         color_spinner = findViewById(R.id.color_spinner)
@@ -137,6 +148,7 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
 //        EventDetailScreen.closetitemidIf = this
 
         geteventforfavIf = this
+
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -145,7 +157,6 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
         pd!!.setCancelable(false)
         controller = Controller()
         id = intent.getStringExtra(Constants.EVENTID)!!
-
         eventidIf = this
 
     }
@@ -532,7 +543,21 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
         }
     }
 
-
+    override fun onRemoveEventItemSuccess(success: Response<RemoveEventResponse>) {
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.MyEventDetail("Bearer " + getStringVal(Constants.TOKEN), id)
+            controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
+            //setViewAnalyticsAPI(id,"event_item");
+        } else {
+            utility!!.relative_snackbar(
+                parent_myeventdetailscreen!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+    }
 
 
     override fun error(error: String?) {
@@ -547,6 +572,7 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
     companion object {
         var eventidIf: EventID_IF? = null
         var geteventforfavIf : GetEventForFav_IF ? = null
+
     }
 
     override fun getClosetID(id: String?) {
@@ -630,6 +656,23 @@ eventItemID = id.toString()
             }
         }
 
+        itemview_removebt.setOnClickListener {
+            Viewdialog.dismiss()
+            if (utility.isConnectingToInternet(this)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+            controller.RemoveEventItem("Bearer "+getStringVal(Constants.TOKEN),
+                eventItems.get(id.toInt()).id.toString()
+            )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_myeventdetailscreen!!,
+                    getString(R.string.nointernet),
+                    getString(R.string.close_up)
+                )
+            }
+        }
+
         viewitem_size.text = "Size :"+eventItems.get(id).size?.name
         viewitem_price.text = "Price :"+eventItems.get(id).price
         viewitem_category.text = "Category :"+eventItems.get(id).category?.name
@@ -678,4 +721,6 @@ eventItemID = id.toString()
             )
         }
     }
+
+
 }

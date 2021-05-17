@@ -6,6 +6,7 @@ import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
 import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsResponse
 import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse
+import com.casebeaumonde.activities.MyEventDetailScreen.response.RemoveEventResponse
 import com.casebeaumonde.activities.MyEvents.Response.*
 import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
@@ -156,6 +157,8 @@ public class Controller {
     var createEventAPI: CreateEventAPI? = null
     var addEventItemsAPI: AddEventItemAPI? = null
     var updateEventItemsAPI : UpdateEventItemAPI? = null
+    var updateEventAPI : UpdateEventAPI? = null
+    var removeEventItemAPI : RemoveEventItemAPI?= null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -482,7 +485,8 @@ public class Controller {
         inviteCollaborates: InviteCollaboratesAPI,
         sendInvite: SendInviteAPI,
         inviteCustomer1: InviteCustomer1API,
-        createEvent: CreateEventAPI
+        createEvent: CreateEventAPI,
+        updateEvent  :UpdateEventAPI
     ) {
         myEventAPI = myEvents
         filterEventAPI = filterEventFilter
@@ -491,6 +495,7 @@ public class Controller {
         sendInviteAPI = sendInvite
         inviteCustomer1API = inviteCustomer1
         createEventAPI = createEvent
+        updateEventAPI = updateEvent
         webAPI = WebAPI()
     }
 
@@ -498,13 +503,15 @@ public class Controller {
         myEventsDetail: MyEventsDetailAPI,
         changeEventStatus: ChangeEventStatusAPI,
         fetchList: FetchListAPI,
-        favEvent: FavEventAPI
+        favEvent: FavEventAPI,
+        removeEventItem: RemoveEventItemAPI
 
     ) {
         myEventsDetailAPI = myEventsDetail
         changeEventStatusAPI = changeEventStatus
         fetchListAPI = fetchList
         favEventAPI = favEvent
+        removeEventItemAPI = removeEventItem
         webAPI = WebAPI()
     }
 
@@ -2228,6 +2235,32 @@ public class Controller {
         })
     }
 
+    fun UpdateEvent(token: String?,
+                    id: String?,
+                    title: String,
+                    status: String,
+                    description: String,
+                    from: String,
+                    to: String,
+                    type: String,
+                    image: MultipartBody.Part,
+                    particularcustomerID: String){
+        webAPI?.api?.updateEvent(token, id, title, status, description, from, to, type, image, particularcustomerID)?.enqueue(object :Callback<UpdateEventResponse>
+        {
+            override fun onResponse(
+                call: Call<UpdateEventResponse>,
+                response: Response<UpdateEventResponse>
+            ) {
+                updateEventAPI?.onUpdateEventSuccess(response)
+            }
+
+            override fun onFailure(call: Call<UpdateEventResponse>, t: Throwable) {
+                updateEventAPI?.error(t.message)
+            }
+
+        })
+    }
+
     fun AddEventItem(
         token: String?,
         title: String?,
@@ -2302,6 +2335,24 @@ public class Controller {
            }
 
        })
+    }
+
+    fun RemoveEventItem(token: String?,id: String?)
+    {
+        webAPI?.api?.removeEventItem(token, id)?.enqueue(object :Callback<RemoveEventResponse>
+        {
+            override fun onResponse(
+                call: Call<RemoveEventResponse>,
+                response: Response<RemoveEventResponse>
+            ) {
+                removeEventItemAPI?.onRemoveEventItemSuccess(response)
+            }
+
+            override fun onFailure(call: Call<RemoveEventResponse>, t: Throwable) {
+                removeEventItemAPI?.error(t.message)
+            }
+
+        })
     }
 
     interface NotificationAPI {
@@ -2734,6 +2785,16 @@ public class Controller {
 
     interface UpdateEventItemAPI {
         fun onUpdateEventItemSuccess(success:Response<AddEventItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface UpdateEventAPI {
+        fun onUpdateEventSuccess(success:Response<UpdateEventResponse>)
+        fun error(error: String?)
+    }
+
+    interface RemoveEventItemAPI {
+        fun onRemoveEventItemSuccess(success:Response<RemoveEventResponse>)
         fun error(error: String?)
     }
 }

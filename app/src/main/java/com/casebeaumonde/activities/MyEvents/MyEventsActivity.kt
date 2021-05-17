@@ -66,8 +66,9 @@ class MyEventsActivity : BaseClass(),
     GetCustomerID_IF,
     Controller.InviteCustomer1API,
     Controller.CreateEventAPI,
-GetEventID_ForCreateItem,
-GetEventIDForUpdate_IF{
+    GetEventID_ForCreateItem,
+    GetEventIDForUpdate_IF,
+    Controller.UpdateEventAPI {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -116,7 +117,7 @@ GetEventIDForUpdate_IF{
     private lateinit var collaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var filtercollaborators: ArrayList<InviteCollaboratorsResponse.Data.InvitedCollaborator>
     private lateinit var eventID: String
-    private  var particularUserID: String =""
+    private var particularUserID: String = ""
     val c = Calendar.getInstance()
     private lateinit var datetime: String
     private lateinit var particularuserIDonEventCreate: String
@@ -136,7 +137,7 @@ GetEventIDForUpdate_IF{
         listeners()
 
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this,this)
+        controller.Controller(this, this, this, this, this, this, this, this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -281,7 +282,7 @@ GetEventIDForUpdate_IF{
 
         create_event.setOnClickListener {
             //startActivity(Intent(this,AddNewEventActivity::class.java))
-            createEventDialog("add","")
+            createEventDialog("add", "")
         }
 
         search_ET!!.addTextChangedListener(object : TextWatcher {
@@ -483,6 +484,14 @@ GetEventIDForUpdate_IF{
             }
         }
 
+        public_bt.setOnClickListener {
+            eventType = "public"
+
+        }
+        private_bt.setOnClickListener {
+            eventType = "private"
+        }
+
         startdate.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 this,
@@ -509,6 +518,8 @@ GetEventIDForUpdate_IF{
             datePickerDialog1.show()
         }
 
+
+
         if (public_bt.isChecked) {
             private_bt.isChecked = false
             eventType = "public"
@@ -517,21 +528,20 @@ GetEventIDForUpdate_IF{
             eventType = "private"
         }
 
-        if (s.equals("update"))
-        {
+        if (s.equals("update")) {
             aditemtocloset_title.setText(myEvents.get(s1.toInt()).title)
             startdate.setText(myEvents.get(s1.toInt()).from)
             enddate.setText(myEvents.get(s1.toInt()).to)
             descrition.setText(myEvents.get(s1.toInt()).description)
 
-            if (myEvents.get(s1.toInt()).status.equals("private"))
-            {
+            if (myEvents.get(s1.toInt()).type.equals("private")) {
                 private_bt.isChecked = true
                 public_bt.isChecked = false
-            } else if (myEvents.get(s1.toInt()).equals("public"))
-            {
+                eventType = "private"
+            } else if (myEvents.get(s1.toInt()).type.equals("public")) {
                 public_bt.isChecked = true
                 private_bt.isChecked = false
+                eventType = "public"
             }
 
             val type = resources.getStringArray(R.array.Status2)
@@ -611,16 +621,32 @@ GetEventIDForUpdate_IF{
                     if (utility.isConnectingToInternet(this)) {
                         pd.show()
                         pd.setContentView(R.layout.loading)
-                        if (s.equals("update"))
-                        {
-
+                        if (s.equals("update")) {
+                            controller.UpdateEvent(
+                                "Bearer " + getStringVal(Constants.TOKEN),
+                                myEvents.get(s1.toInt()).id.toString(),
+                                aditemtocloset_title.text.toString(),
+                                status_addtitle.text.toString(),
+                                descrition.text.toString(),
+                                startdate.text.toString(),
+                                enddate.text.toString(),
+                                eventType,
+                                part,
+                                particularUserID
+                            )
                         } else {
-                            controller.CreateEvent("Bearer " + getStringVal(Constants.TOKEN),aditemtocloset_title.text.toString(),
-                                status_addtitle.text.toString(),descrition.text.toString(),startdate.text.toString(),enddate.text.toString(),eventType,
-                                part,particularUserID)
+                            controller.CreateEvent(
+                                "Bearer " + getStringVal(Constants.TOKEN),
+                                aditemtocloset_title.text.toString(),
+                                status_addtitle.text.toString(),
+                                descrition.text.toString(),
+                                startdate.text.toString(),
+                                enddate.text.toString(),
+                                eventType,
+                                part,
+                                particularUserID
+                            )
                         }
-
-
 
 
                     } else {
@@ -828,17 +854,46 @@ GetEventIDForUpdate_IF{
     }
 
     override fun onCreateEventAPI(success: Response<CreateEventResponse>) {
-       // pd.dismiss()
+        // pd.dismiss()
         createeventDialog.dismiss()
         controller.MyEvents("Bearer " + getStringVal(Constants.TOKEN))
-        if (success.isSuccessful)
-        {
+        if (success.isSuccessful) {
             utility!!.relative_snackbar(
                 parent_myevents!!,
                 success.body()?.code,
                 getString(R.string.close_up)
             )
         } else {
+            utility!!.relative_snackbar(
+                parent_myevents!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun onUpdateEventSuccess(success: Response<UpdateEventResponse>) {
+
+
+        if (success.isSuccessful) {
+
+
+            if (utility.isConnectingToInternet(this)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                controller.MyEvents("Bearer " + getStringVal(Constants.TOKEN))
+                createeventDialog.dismiss()
+
+            } else {
+                utility!!.relative_snackbar(
+                    parent_myevents!!,
+                    getString(R.string.nointernet),
+                    getString(R.string.close_up)
+                )
+
+            }
+        } else {
+            pd.dismiss()
             utility!!.relative_snackbar(
                 parent_myevents!!,
                 success.message(),
@@ -862,8 +917,8 @@ GetEventIDForUpdate_IF{
         var eventId: GetEvent_ID? = null
         var getCollaborateID: GetCollaboratorID_IF? = null
         var getcustomeridIf: GetCustomerID_IF? = null
-        var geteventidForcreateitem : GetEventID_ForCreateItem? = null
-        var geteventidforupdateIf :GetEventIDForUpdate_IF? = null
+        var geteventidForcreateitem: GetEventID_ForCreateItem? = null
+        var geteventidforupdateIf: GetEventIDForUpdate_IF? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -1298,12 +1353,14 @@ GetEventIDForUpdate_IF{
     }
 
     override fun getEventID_FOrCreateItem(id: String) {
-        startActivity(Intent(this,AddItemToEvent::class.java).putExtra("eventID",id).putExtra("edit", "0"))
-       // Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
+        startActivity(
+            Intent(this, AddItemToEvent::class.java).putExtra("eventID", id).putExtra("edit", "0")
+        )
+        // Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
     }
 
-    override fun getEventItemID(id: String,pos:String) {
-        createEventDialog("update",pos)
+    override fun getEventItemID(id: String, pos: String) {
+        createEventDialog("update", pos)
         //Toast.makeText(this,"HERE",Toast.LENGTH_LONG).show()
     }
 }

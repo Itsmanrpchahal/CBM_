@@ -18,6 +18,7 @@ import com.casebeaumonde.activities.paymentScreen.CardDetailScreen
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.IF.GetPriceID_IF
+import com.casebeaumonde.fragments.pricing.adapter.BussinessPricingAdapter
 import com.casebeaumonde.fragments.pricing.adapter.CustomerPlanFeaturesAdapter
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
@@ -47,10 +48,10 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
     private var pos: Int = 0
     private var planType: String = "Monthly"
     private lateinit var selectthisplan: Button
-    private lateinit var startone :ImageView
-    private lateinit var starttwo :ImageView
-    private lateinit var startthree :ImageView
-    private lateinit var startfour :ImageView
+    private lateinit var startone: ImageView
+    private lateinit var starttwo: ImageView
+    private lateinit var startthree: ImageView
+    private lateinit var startfour: ImageView
 
     var from: String? = ""
     var planname: String? = ""
@@ -85,13 +86,15 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
     }
 
     private fun listeners() {
-        switchplan.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                freepaid_tv.text = "$" + customerPricing.get(pos).yearlyPrice.toString()
-                planType = "Yearly"
-            } else {
-                freepaid_tv.text = "$" + customerPricing.get(pos).monthlyPrice.toString()
-                planType = "Monthly"
+        if (getStringVal(Constants.USER_ROLE).equals("customer")) {
+            switchplan.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    freepaid_tv.text = "$" + customerPricing.get(pos).yearlyPrice.toString()
+                    planType = "Yearly"
+                } else {
+                    freepaid_tv.text = "$" + customerPricing.get(pos).monthlyPrice.toString()
+                    planType = "Monthly"
+                }
             }
         }
     }
@@ -124,7 +127,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
         selectthisplan = view?.findViewById(R.id.selectthisplan)
         startone = view?.findViewById(R.id.startone)
         starttwo = view?.findViewById(R.id.starttwo)
-        startthree =  view?.findViewById(R.id.startthree)
+        startthree = view?.findViewById(R.id.startthree)
         startfour = view?.findViewById(R.id.startfour)
         // priciing_recyclerview = view?.findViewById(R.id.priciing_recyclerview)!!
         utility = Utility()
@@ -183,24 +186,20 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                         id: Long
                     ) {
                         pos = position
-                        if (position==1)
-                        {
+                        if (position == 1) {
                             starttwo.visibility = View.VISIBLE
                             starttwo.visibility = View.VISIBLE
                             startthree.visibility = View.GONE
                             startfour.visibility = View.GONE
-                        }else if (position==2)
-                        {
+                        } else if (position == 2) {
                             starttwo.visibility = View.VISIBLE
                             startthree.visibility = View.VISIBLE
                             startfour.visibility = View.GONE
-                        } else if (position==3)
-                        {
+                        } else if (position == 3) {
                             starttwo.visibility = View.VISIBLE
                             startthree.visibility = View.VISIBLE
                             startfour.visibility = View.VISIBLE
-                        } else if (position==0)
-                        {
+                        } else if (position == 0) {
                             starttwo.visibility = View.VISIBLE
                             starttwo.visibility = View.GONE
                             startthree.visibility = View.GONE
@@ -260,7 +259,9 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
 //            holder.itemView.setLayoutParams(param);
 
                             } else {
-                                selectthisplan.setText("SUBSCRIBE")
+
+                                //ToDo: Change THis plan from suscribed
+                                selectthisplan.setText("CHANGE THIS PLAN")
                             }
 
                         }
@@ -356,6 +357,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
 //                    context!!, bussinessPricing
 //                )
 //                priciing_recyclerview.adapter = adapter
+
             }
         } else {
             utility!!.relative_snackbar(

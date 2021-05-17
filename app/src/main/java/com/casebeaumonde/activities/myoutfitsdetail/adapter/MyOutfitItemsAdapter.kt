@@ -64,7 +64,7 @@ class MyOutfitItemsAdapter(
         holder.itemView.hainger.layoutParams.width = 28
 
         holder.itemView.closets_edititem.visibility = View.GONE
-        holder.itemView.closets_duplicate.visibility = View.GONE
+        holder.itemView.closets_duplicate.visibility = View.VISIBLE
 
         holder.itemView.closets_additem.setOnClickListener {
             context.startActivity(
@@ -78,14 +78,9 @@ class MyOutfitItemsAdapter(
             MyOutfitsItems.outfitfavidIf?.getOutfitId(outfitItems.get(position).id.toString())
         }
 
-//        holder.itemView.closetitem_favorite.setOnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked)
-//            {
-//                MyOutfitsItems.outfitfavidIf?.getOutfitId(outfitItems.get(position).id.toString())
-//            }  else {
-//                MyOutfitsItems.outfitfavidIf?.getOutfitId(outfitItems.get(position).id.toString())
-//            }
-//        }
+        holder.itemView.closets_duplicate.setOnClickListener {
+
+        }
 
 
         searchUserHeart(myOutfits, holder.itemView.closetitem_favorite)

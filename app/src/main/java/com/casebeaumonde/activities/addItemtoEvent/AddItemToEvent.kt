@@ -16,6 +16,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.casebeaumonde.Controller.Controller
@@ -24,6 +25,7 @@ import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse
 import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
+import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -37,7 +39,8 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import java.io.File
 
-class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.EventsDetailAPI,Controller.AddEventItemAPI,Controller.UpdateEventItemAPI{
+class AddItemToEvent : BaseClass(), Controller.AddClosetItemListAPI, Controller.EventsDetailAPI,
+    Controller.AddEventItemAPI, Controller.UpdateEventItemAPI {
 
 
     private lateinit var utility: Utility
@@ -66,6 +69,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
     private var brandPos: Int = 0
     private var colorPos: Int = 0
     private var sizePos: Int = 0
+    private var catPos: Int = 0
     private var path: String = ""
     private var edit: String = ""
     private lateinit var part: MultipartBody.Part
@@ -91,13 +95,12 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item_to_event)
 
-            findIds()
+        findIds()
         controller = Controller()
-        controller.Controller(this,this,this,this)
+        controller.Controller(this, this, this, this)
         controller.AddClosetItemList("Bearer " + getStringVal(Constants.TOKEN))
         closetId = intent.getStringExtra("eventID")?.toInt()!!
         edit = intent.getStringExtra("edit").toString()
-        Toast.makeText(this,""+intent.getStringExtra("closetItemID"),Toast.LENGTH_SHORT).show()
         pd.show()
         pd.setContentView(R.layout.loading)
         listeners()
@@ -129,20 +132,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
         }
 
 
-        additemclosets_categoryspinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                // additemclosets_category.setText(parent.selectedItem.toString())
-                cateID = categorties.get(position).id.toString()
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
     }
 
     private fun findIds() {
@@ -166,9 +156,10 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
         aditemtocloset_cancel = findViewById(R.id.aditemtocloset_cancel)
         aditemtocloset_add = findViewById(R.id.aditemtocloset_add)
         additemclosets_brands = findViewById(R.id.additemclosets_brands)
-        // additemclosets_size = findViewById(R.id.additemclosets_size)
+        additemclosets_size = findViewById(R.id.additemclosets_size)
         additemclosets_color = findViewById(R.id.additemclosets_color)
         backon_additemstocloset = findViewById(R.id.backon_additemstocloset)
+
     }
 
     private fun addItems(closetId: String?, edit: String) {
@@ -189,10 +180,6 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 additemclosets__uploadfilename.requestFocus()
             }
 
-//            aditemtocloset_price.text.isEmpty() -> {
-//                aditemtocloset_price.setError("Enter Price")
-//                aditemtocloset_price.requestFocus()
-//            }
             else -> {
                 // if (aditemtocloset_add.equals("Add")) {
                 pd.show()
@@ -232,7 +219,6 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
 
         }
     }
-
 
 
     private fun pictureSelectionDialog() {
@@ -296,6 +282,8 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
     override fun onAddClosetItemListSuccess(addClosetItemList: Response<AddClosetItemResponse>) {
         pd.dismiss()
         if (addClosetItemList.isSuccessful) {
+
+
             categorties = ArrayList()
             cateName = ArrayList()
             categorties =
@@ -307,7 +295,16 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 cateName.add(cat.name.toString())
 
             }
+            if (categorties.size > 0) {
 
+                for (i in categorties.indices) {
+                    val catpos = categorties[i]
+
+                    if (catpos.id.toString().equals(cateID)) {
+                        catPos = i
+                    }
+                }
+            }
 
             // catePos = categorties.get(intent.getStringExtra("closetItemID").toInt()).id.toString()
 
@@ -331,6 +328,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                     }
                 }
             }
+
             Size = ArrayList()
             size =
                 addClosetItemList.body()
@@ -347,7 +345,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 for (i in size.indices) {
                     val catpos = size[i]
                     // Toast.makeText(this,""+sizePos+" =>   "+sizeID,Toast.LENGTH_LONG).show()
-                    if (catpos.id.toString().equals(sizeID)) {
+                    if (catpos.id.toString().equals(sizeID.toString())) {
                         sizePos = i
 
                     }
@@ -364,17 +362,21 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
             }
             if (color.size > 0) {
 
+
                 for (i in color.indices) {
                     val catpos = color[i]
 
-                    if (catpos.id.toString().equals(colorID)) {
+                    if (catpos.id.toString().equals(colorID.toString())) {
                         colorPos = i
-
+                        // Toast.makeText(this,""+colorPos,Toast.LENGTH_SHORT).show()
                     }
                 }
             }
 
+
             setFetchList()
+
+
         } else {
             utility!!.relative_snackbar(
                 parent_additemtoevent!!,
@@ -383,7 +385,6 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
             )
         }
     }
-
 
 
     override fun onAddEventSuccess(success: Response<AddEventItemResponse>) {
@@ -412,7 +413,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 "Successfully Updated",
                 getString(R.string.close_up)
             )
-           // onBackPressed()
+             onBackPressed()
         } else {
             utility!!.relative_snackbar(
                 parent_additemtoevent!!,
@@ -426,7 +427,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
         pd.dismiss()
         if (eventDetailResponse.isSuccessful) {
             if (edit.equals("1")) {
-               // Toast.makeText(this,""+intent.getStringExtra("closetItemID")!!.toString(),Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this,""+intent.getStringExtra("closetItemID")!!.toString(),Toast.LENGTH_SHORT).show()
                 closetItemID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.id.toString()
@@ -434,6 +435,8 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 brandID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
                 )?.brand?.id.toString()
+
+                sizeID = eventDetailResponse.body()?.getData()?.events?.items?.get(intent.getStringExtra("closetItemID")!!.toInt())?.size?.id.toString()
 
                 colorID = eventDetailResponse.body()?.getData()?.events?.items?.get(
                     intent.getStringExtra("closetItemID")!!.toInt()
@@ -470,7 +473,8 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 )?.category?.name!!
 
                 Glide.with(this).asBitmap().load(
-                    Constants.BASE_IMAGE_URL + eventDetailResponse.body()?.getData()?.events?.items?.get(
+                    Constants.BASE_IMAGE_URL + eventDetailResponse.body()
+                        ?.getData()?.events?.items?.get(
                             intent.getStringExtra("closetItemID")!!.toInt()
                         )?.picture
                 )
@@ -517,9 +521,40 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
             android.R.layout.simple_spinner_dropdown_item, cateName
         )
         additemclosets_categoryspinner.adapter = adapter
-        if (!cateID.equals("")) {
-            additemclosets_categoryspinner.setSelection(cateID.toInt())
+//        if (!cateID.equals("")) {
+//            additemclosets_categoryspinner.setSelection(cateID.toInt())
+//        }
+
+
+        additemclosets_categoryspinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                // additemclosets_category.setText(parent.selectedItem.toString())
+                cateID = categorties.get(position).id.toString()
+
+                if (catPos == 0) {
+                    //additemclosets_category.setText(categorties.get(position).name)
+                    //additemclosets_Colorpinner.setSelection(colorPos)
+                    cateID = categorties.get(position).id.toString()
+                } else {
+
+                   // additemclosets_category.setText(categorties.get(catPos).name)
+                    additemclosets_categoryspinner.setSelection(catPos)
+                    cateID = categorties.get(catPos).name.toString()
+                    catPos = position
+                    //Toast.makeText(this@AddItemToEvent,""+position.toString(),Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
         }
+
 
         //ToDo: Set Brands in Spinner
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, brandName)
@@ -534,9 +569,21 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 ) {
 //                    additemclosets_brands.setText(brands.get(position).name)
 
-                    brandID = brands.get(position).id.toString()
 
-                    // additemclosets_Brandpinner.setSelection(brandPos)
+
+                    if (brandPos == 0) {
+                       // additemclosets_brands.setText(brands.get(position).name)
+                        //additemclosets_Colorpinner.setSelection(colorPos)
+                        brandID = brands.get(position).id.toString()
+                    } else {
+
+                        //additemclosets_color.setText(brands.get(brandPos).name)
+                        additemclosets_Brandpinner.setSelection(brandPos)
+                        brandID = brands.get(brandPos).name.toString()
+                        brandPos = position
+                        //Toast.makeText(this@AddItemToEvent,""+position.toString(),Toast.LENGTH_SHORT).show()
+
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -557,7 +604,19 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                     id: Long
                 ) {
 
-                    sizeID = size.get(position).id.toString()
+
+                    if (sizePos == 0) {
+                        //additemclosets_size.setText(size.get(sizePos).name)
+                        sizeID = size.get(position).id.toString()
+                        //additemclosets_Colorpinner.setSelection(colorPos)
+                    } else {
+
+                       // additemclosets_size.setText(size.get(sizePos).name)
+                        additemclosets_Sizespinner.setSelection(sizePos)
+                        sizeID = size.get(sizePos).name.toString()
+                        sizePos = position
+                    }
+
                     //  additemclosets_size.setText(size.get(position).name)
 
                     // additemclosets_Sizespinner.setSelection(sizePos)
@@ -570,6 +629,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
 
             }
 
+
         //ToDo : Set Color in  Spinner
         val adapter3 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Colors)
         additemclosets_Colorpinner.adapter = adapter3
@@ -581,9 +641,19 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                     position: Int,
                     id: Long
                 ) {
-                    additemclosets_color.setText(color.get(position).name)
-                    //additemclosets_Colorpinner.setSelection(colorPos)
-                    colorID = color.get(position).name.toString()
+                    if (colorPos == 0) {
+                        //additemclosets_color.setText(color.get(position).name)
+                        //additemclosets_Colorpinner.setSelection(colorPos)
+                        colorID = color.get(position).name.toString()
+                    } else {
+
+                        //additemclosets_color.setText(color.get(colorPos).name)
+                        additemclosets_Colorpinner.setSelection(colorPos)
+                        colorID = color.get(colorPos).name.toString()
+                        colorPos = position
+                        //Toast.makeText(this@AddItemToEvent,""+position.toString(),Toast.LENGTH_SHORT).show()
+
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -591,5 +661,7 @@ class AddItemToEvent : BaseClass(),Controller.AddClosetItemListAPI,Controller.Ev
                 }
 
             }
+
+
     }
 }

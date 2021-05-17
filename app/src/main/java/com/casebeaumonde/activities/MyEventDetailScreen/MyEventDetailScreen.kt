@@ -77,9 +77,7 @@ class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_I
         findIDs()
         listeners()
         controller.Controller(this, this,this,this)
-
-
-
+        
     }
 
     override fun onResume() {
@@ -621,10 +619,8 @@ eventItemID = id.toString()
 
         itemview_editbt.setOnClickListener {
             if (utility.isConnectingToInternet(this)) {
-
-              //  Toast.makeText(this,""+eventID+"  "+eventItemID,Toast.LENGTH_SHORT).show()
+                Viewdialog.dismiss()
                 startActivity(Intent(this,AddItemToEvent::class.java).putExtra("eventID",eventID).putExtra("edit", "1").putExtra("closetItemID", eventItemID))
-                //setViewAnalyticsAPI(id,"event_item");
             } else {
                 utility!!.relative_snackbar(
                     parent_myeventdetailscreen!!,

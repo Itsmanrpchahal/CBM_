@@ -22,6 +22,7 @@ import com.casebeaumonde.activities.myoutfitsdetail.IF.OutfitFavID_IF
 import com.casebeaumonde.activities.myoutfitsdetail.IF.OutfitIDForDuplicate_IF
 import com.casebeaumonde.activities.myoutfitsdetail.adapter.MyOutfitItemsAdapter
 import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.DuplicateOutfitItemResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
 import com.casebeaumonde.constants.BaseClass
@@ -38,7 +39,8 @@ class MyOutfitsItems : BaseClass(),
     OutfitFavID_IF,
     Controller.FavOutfitAPI,
     OutfitIDForDuplicate_IF,
-Controller.FetchListAPI{
+Controller.FetchListAPI,
+Controller.DuplicateOutfitItemAPI{
 
     private lateinit var userID: String
     private lateinit var controller: Controller
@@ -81,7 +83,7 @@ Controller.FetchListAPI{
             pd!!.show()
             pd!!.setContentView(R.layout.loading)
             controller.MyOutfitsItems("Bearer " + getStringVal(Constants.TOKEN), outfitID)
-            controller.FetchList("Bearer "+getStringVal(Constants.TOKEN))
+
         } else {
             utility!!.relative_snackbar(
                 parent_outfitsitems,
@@ -92,6 +94,9 @@ Controller.FetchListAPI{
     }
 
     private fun findIds() {
+        outFitTitle = ArrayList()
+        outFitID = ArrayList()
+        outFitRes = ArrayList()
         outfitidIf = this
         outfitID = intent.getStringExtra(Constants.OUTFITID).toString()
         userID = intent.getStringExtra("userID").toString()
@@ -100,7 +105,7 @@ Controller.FetchListAPI{
         outfitItems_recycler = findViewById(R.id.outfitItems_recycler)
         closetiems_add = findViewById(R.id.closetiems_add)
         controller = Controller()
-        controller.Controller(this, this,this,this)
+        controller.Controller(this, this,this,this,this)
 
         utility = Utility()
         pd = ProgressDialog(this)
@@ -121,12 +126,14 @@ Controller.FetchListAPI{
     }
 
     override fun onMyOutfitItemSuccess(success: Response<MyOutfitsDetailResponse>) {
-        pd.dismiss()
+
+        controller.FetchList("Bearer "+getStringVal(Constants.TOKEN))
         if (success.isSuccessful) {
             outfits =
                 success.body()?.data?.outfit?.items as ArrayList<MyOutfitsDetailResponse.Data.Outfit.Item>
             setFullData(outfits)
         } else {
+            pd.dismiss()
             utility!!.relative_snackbar(
                 parent_outfitsitems,
                 success.message(),
@@ -157,6 +164,8 @@ Controller.FetchListAPI{
             )
         }
     }
+
+
 
 
     override fun error(error: String?) {
@@ -238,9 +247,7 @@ Controller.FetchListAPI{
     override fun onFetchListSuccess(fetchList: Response<FetchListResponse>) {
         pd.dismiss()
         if (fetchList.isSuccessful) {
-            outFitTitle = ArrayList()
-            outFitID = ArrayList()
-            outFitRes = ArrayList()
+
             outFitRes.addAll(fetchList.body()?.getData()?.outfits!!)
 
             //ToDo: Get Outfits
@@ -260,12 +267,12 @@ Controller.FetchListAPI{
         }
     }
 
-    override fun getOutFItItemID(id: String,s:String) {
-//        Toast.makeText(this,""+id,Toast.LENGTH_LONG).show()
-//        showMoveDialog(id,s)
+    override fun getOutFItItemID(id: String, type: String, pos: String) {
+        showMoveDialog(id,type,pos)
     }
 
-    private fun showMoveDialog(id: String,s: String) {
+
+    private fun showMoveDialog(id: String,s: String,pos: String?) {
         moveItemDialog = Dialog(this)
         moveItemDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         moveItemDialog.setContentView(R.layout.customspinner)
@@ -274,7 +281,7 @@ Controller.FetchListAPI{
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-
+        outFitID.add(id)
         var listview: ListView
         var outfitlist: ListView
         var moveitem: Button
@@ -283,6 +290,7 @@ Controller.FetchListAPI{
         var spinnertitle: TextView
         var checkbox: CheckBox
         var addoutfit: CheckBox
+        var title : TextView
         listview = moveItemDialog.findViewById(R.id.listview)
         outfitlist = moveItemDialog.findViewById(R.id.outfitlist)
         moveitem = moveItemDialog.findViewById(R.id.moveitem)
@@ -291,17 +299,33 @@ Controller.FetchListAPI{
         addnewclosetet = moveItemDialog.findViewById(R.id.addnewclosetet)
         addoutfit = moveItemDialog.findViewById(R.id.addoutfit)
         spinnertitle = moveItemDialog.findViewById(R.id.spinnertitle)
+        title = moveItemDialog.findViewById(R.id.title)
+        title.text = "Outfits"
+        addnewclosetet.setHint("Create New Outfit")
+
         list = ArrayList()
         listID = ArrayList()
         outFitTitle = ArrayList()
         outFitID = ArrayList()
 
-        spinnertitle.text = id
+        spinnertitle.text = s
 
-        listview.visibility = View.GONE
-        outfitlist.visibility = View.VISIBLE
-        addoutfit.visibility = View.VISIBLE
-        checkbox.visibility = View.GONE
+        if (s.equals("outfit")) {
+            moveitem.text = "Make outfit"
+        } else if (s.equals("move")) {
+            moveitem.text = "Move"
+        } else if (s.equals("duplicate")) {
+            moveitem.text = "Duplicate"
+        }
+
+
+        if (s.equals("move") || s.equals("duplicate")) {
+            listview.visibility = View.GONE
+            outfitlist.visibility = View.VISIBLE
+            checkbox.visibility = View.GONE
+            addoutfit.visibility = View.VISIBLE
+        }
+
 
         //ToDo: Get Outfits
         for (i in 0 until outFitRes.size) {
@@ -317,16 +341,7 @@ Controller.FetchListAPI{
         outfitlist.setAdapter(outfitadapter)
 
         moveitem.setOnClickListener {
-            if (s.equals("move") || s.equals("duplicate")) {
-                listData = ArrayList()
-                val sbArray: SparseBooleanArray = listview.getCheckedItemPositions()
-                for (i in 0 until sbArray.size()) {
 
-                    val key = sbArray.keyAt(i)
-
-                    if (sbArray[key]) listData.add(listID.get(key))
-                }
-            } else {
                 listData = ArrayList()
                 val sbArray: SparseBooleanArray = outfitlist.getCheckedItemPositions()
                 for (i in 0 until sbArray.size()) {
@@ -335,32 +350,33 @@ Controller.FetchListAPI{
 
                     if (sbArray[key]) listData.add(outFitID.get(key))
                 }
-            }
 
-            pd.show()
-            pd.setContentView(R.layout.loading)
+//            pd.show()
+//            pd.setContentView(R.layout.loading)
 
             val newclosetname = addnewclosetet.text.toString()
-//            if (s.equals("move")) {
-//
+            if (s.equals("move")) {
+
 //                controller.MoveItem(
 //                    "Bearer " + getStringVal(Constants.TOKEN),
 //                    checkedClosetIDs.toString(),
 //                    listData.toString(),
 //                    newclosetname
 //                )
-//
-//
-//            } else if (s.equals("duplicate")) {
-//
-//                controller.DuplicateItem(
-//                    "Bearer " + getStringVal(Constants.TOKEN),
-//                    checkedClosetIDs.toString(),
-//                    listData.toString(),
-//                    newclosetname
-//                )
-//
-//            } else if (s.equals("outfit")) {
+
+
+            } else if (s.equals("duplicate")) {
+            pd.show()
+                controller.DuplicateOutfitItem(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    "",
+                    outFitID.toString(),
+                    listData.toString(),
+                    newclosetname
+                )
+
+            }
+//            else if (s.equals("outfit")) {
 //                controller.OutFIt(
 //                    "Bearer " + getStringVal(Constants.TOKEN),
 //                    checkedClosetIDs.toString(),
@@ -369,12 +385,39 @@ Controller.FetchListAPI{
 //                )
 //            }
 
-            //Log.d("listtag", "" + listData + "    " + checkedClosetIDs)
 
-            cancelitem.setOnClickListener { moveItemDialog.dismiss() }
+            //Log.d("listtag", "" + listData + "    " + checkedClosetIDs)
 
         }
 
+        addoutfit.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                addnewclosetet.visibility = View.VISIBLE
+                outfitlist.visibility = View.GONE
+                listData = ArrayList()
+                listData.clear()
+                outFitID = ArrayList()
+                outFitID.clear()
+            } else {
+                addnewclosetet.visibility = View.GONE
+                outfitlist.visibility = View.VISIBLE
+            }
+
+        }
+        cancelitem.setOnClickListener { moveItemDialog.dismiss() }
+
         moveItemDialog.show()
     }
+
+    override fun onDuplicateOutfitItemSuccess(success: Response<DuplicateOutfitItemResponse>) {
+        pd.dismiss()
+        utility!!.relative_snackbar(
+            parent_outfitsitems,
+            success.body()?.message,
+            getString(R.string.close_up)
+        )
+    }
+
+
 }
+

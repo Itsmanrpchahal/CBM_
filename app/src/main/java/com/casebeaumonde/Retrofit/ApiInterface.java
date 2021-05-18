@@ -35,6 +35,7 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.DuplicateOutfitItemResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
 import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse;
@@ -881,5 +882,13 @@ public interface ApiInterface {
             @Path("input") String id
     );
 
+    @POST("api/v1/duplicate-item-outfit")
+    Call<DuplicateOutfitItemResponse> DuplicateOutfiteItem (
+            @Header("Authorization") String token,
+            @Query("creator_id") String creator_id,
+            @Query("items") String items,
+            @Query("outfittid") String outfittid,
+            @Query("name") String name
+    );
 
 }

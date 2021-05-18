@@ -40,10 +40,7 @@ import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse
-import com.casebeaumonde.activities.myoutfitsdetail.response.AddOutfitItemResponse
-import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse
-import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
-import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse
+import com.casebeaumonde.activities.myoutfitsdetail.response.*
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
 import com.casebeaumonde.activities.openchat.response.BlockResponse
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
@@ -159,6 +156,7 @@ public class Controller {
     var updateEventItemsAPI : UpdateEventItemAPI? = null
     var updateEventAPI : UpdateEventAPI? = null
     var removeEventItemAPI : RemoveEventItemAPI?= null
+    var duplicateOutfitItemAPI : DuplicateOutfitItemAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -435,12 +433,14 @@ public class Controller {
         myOutfitsItems: MyOutfitsItemsAPI,
         deleteOutfitItem: DeleteOutfitItemAPI,
         favOutfit: FavOutfitAPI,
-        fetchList: FetchListAPI
+        fetchList: FetchListAPI,
+        duplicateOutfitItem: DuplicateOutfitItemAPI
     ) {
         myOutfitsDetailAPI = myOutfitsItems
         deleteOutfitsItemsAPI = deleteOutfitItem
         favOutfitAPI = favOutfit
         fetchListAPI = fetchList
+        duplicateOutfitItemAPI = duplicateOutfitItem
         webAPI = WebAPI()
     }
 
@@ -504,7 +504,8 @@ public class Controller {
         changeEventStatus: ChangeEventStatusAPI,
         fetchList: FetchListAPI,
         favEvent: FavEventAPI,
-        removeEventItem: RemoveEventItemAPI
+        removeEventItem: RemoveEventItemAPI,
+        addtoCart: AddtoCartAPI
 
     ) {
         myEventsDetailAPI = myEventsDetail
@@ -512,6 +513,7 @@ public class Controller {
         fetchListAPI = fetchList
         favEventAPI = favEvent
         removeEventItemAPI = removeEventItem
+        addtoCartAPI = addtoCart
         webAPI = WebAPI()
     }
 
@@ -2355,6 +2357,24 @@ public class Controller {
         })
     }
 
+    fun DuplicateOutfitItem(token: String?,creator_id:String,items:String,outfittid:String,name:String)
+    {
+        webAPI?.api?.DuplicateOutfiteItem(token, creator_id, items, outfittid, name)?.enqueue(object :Callback<DuplicateOutfitItemResponse>
+        {
+            override fun onResponse(
+                call: Call<DuplicateOutfitItemResponse>,
+                response: Response<DuplicateOutfitItemResponse>
+            ) {
+                duplicateOutfitItemAPI?.onDuplicateOutfitItemSuccess(response)
+            }
+
+            override fun onFailure(call: Call<DuplicateOutfitItemResponse>, t: Throwable) {
+                duplicateOutfitItemAPI?.error(t.message)
+            }
+
+        })
+    }
+
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
         fun error(error: String?)
@@ -2795,6 +2815,11 @@ public class Controller {
 
     interface RemoveEventItemAPI {
         fun onRemoveEventItemSuccess(success:Response<RemoveEventResponse>)
+        fun error(error: String?)
+    }
+
+    interface DuplicateOutfitItemAPI {
+        fun onDuplicateOutfitItemSuccess(success:Response<DuplicateOutfitItemResponse>)
         fun error(error: String?)
     }
 }

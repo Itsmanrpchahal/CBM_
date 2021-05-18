@@ -21,6 +21,7 @@ import com.casebeaumonde.activities.MyEventDetailScreen.adapter.MyEventdetailAda
 import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse
 import com.casebeaumonde.activities.MyEventDetailScreen.response.EventDetailResponse
 import com.casebeaumonde.activities.MyEventDetailScreen.response.RemoveEventResponse
+import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.addItemtoEvent.AddItemToEvent
 import com.casebeaumonde.activities.eventDetail.IF.GetEventForFav_IF
 import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse
@@ -30,11 +31,13 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_my_event_detail_screen.*
+import kotlinx.android.synthetic.main.activity_shop_items.*
 import retrofit2.Response
 
 class MyEventDetailScreen : BaseClass(), Controller.MyEventsDetailAPI, EventID_IF,
-    Controller.ChangeEventStatusAPI ,Controller.FetchListAPI,GetEventForFav_IF,Controller.FavEventAPI,
-Controller.RemoveEventItemAPI{
+    Controller.ChangeEventStatusAPI, Controller.FetchListAPI, GetEventForFav_IF,
+    Controller.FavEventAPI,
+    Controller.RemoveEventItemAPI, Controller.AddtoCartAPI {
 
     private lateinit var eventdetail_back: ImageButton
     private lateinit var eventdetail_eventname: TextView
@@ -69,8 +72,8 @@ Controller.RemoveEventItemAPI{
     private lateinit var hashMap: HashMap<String, String>
     private lateinit var outFitTitle: ArrayList<String>
     private lateinit var outFitID: ArrayList<String>
-    private lateinit var eventItemID :String
-    private lateinit var addevent:ImageButton
+    private lateinit var eventItemID: String
+    private lateinit var addevent: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +81,8 @@ Controller.RemoveEventItemAPI{
 
         findIDs()
         listeners()
-        controller.Controller(this, this,this,this,this)
-        
+        controller.Controller(this, this, this, this, this, this)
+
     }
 
     override fun onResume() {
@@ -237,7 +240,6 @@ Controller.RemoveEventItemAPI{
 //            outFitRes.addAll(fetchList.body()?.getData()?.outfits!!)
 
 
-
             //ToDo:---------------------------- Get Category------------------------------------
             categoryTitle = ArrayList()
             categoryID = ArrayList()
@@ -268,7 +270,7 @@ Controller.RemoveEventItemAPI{
 
 
                     if (!categoryTitle[position].equals("Select Category")) {
-                       // pd.show()
+                        // pd.show()
                         hashMap.put("category_id", categoryID[position])
                         Log.d("hashmap", "" + hashMap)
 //                        controller.FilterCloseItems(
@@ -280,7 +282,7 @@ Controller.RemoveEventItemAPI{
                     } else {
                         hashMap.remove("category_id")
                         if (hashMap.size == 0) {
-                           // setClosetAPI()
+                            // setClosetAPI()
                         }
 //                        controller.FilterCloseItems(
 //                            "Bearer " + getStringVal(Constants.TOKEN),
@@ -326,7 +328,7 @@ Controller.RemoveEventItemAPI{
                     val pos = brandID[position]
 
                     if (!brandTitle[position].equals("Select Brand")) {
-                       // pd.show()
+                        // pd.show()
                         hashMap.put("brand", brandTitle[position])
                         Log.d("hashmap", "" + hashMap)
 //                        controller.FilterCloseItems(
@@ -384,7 +386,7 @@ Controller.RemoveEventItemAPI{
                     val pos = colorID[position]
 
                     if (!colorTitle[position].equals("Select Color")) {
-                      //  pd.show()
+                        //  pd.show()
                         hashMap.put("color", colorID[position])
                         Log.d("hashmap", "" + hashMap)
 //                        controller.FilterCloseItems(
@@ -442,7 +444,7 @@ Controller.RemoveEventItemAPI{
                     val pos = sizeID[position]
 
                     if (!sizeTitle[position].equals("Select Size")) {
-                     //   pd.show()
+                        //   pd.show()
                         hashMap.put("size", sizeTitle[position])
                         Log.d("hashmap", "" + hashMap)
 //                        controller.FilterCloseItems(
@@ -500,7 +502,7 @@ Controller.RemoveEventItemAPI{
                     price_title.setText(priceTitle[position])
 
                     if (!priceTitle[position].equals("Select Price")) {
-                       // pd.show()
+                        // pd.show()
                         val priice = priceTitle[position]
 
                         hashMap.put("price", priice.replace("$", ""))
@@ -571,12 +573,12 @@ Controller.RemoveEventItemAPI{
 
     companion object {
         var eventidIf: EventID_IF? = null
-        var geteventforfavIf : GetEventForFav_IF ? = null
+        var geteventforfavIf: GetEventForFav_IF? = null
 
     }
 
     override fun getClosetID(id: String?) {
-          ViewEvent(id?.toInt())
+        ViewEvent(id?.toInt())
     }
 
     fun ViewEvent(id: Int?) {
@@ -588,7 +590,7 @@ Controller.RemoveEventItemAPI{
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-eventItemID = id.toString()
+        eventItemID = id.toString()
         var viewitem_image: ImageView
         var viewitem_title: TextView
         var viewitem_color: TextView
@@ -599,13 +601,14 @@ eventItemID = id.toString()
         var itemview_removebt: Button
         var itemview_editbt: Button
         var itemview_copy: Button
-        var itemview_move : Button
+        var itemview_move: Button
         var itemview_closebt: Button
         var viewitem_checkbox: CheckBox
         var itemview_spinner: Spinner
         var itemview_pinnertitle: TextView
         var itemview_addtoclosetbt: Button
         var closetlayout: RelativeLayout
+        var itemview_addtocart: Button
 
         viewitem_image = Viewdialog.findViewById(R.id.viewitem_image)
         viewitem_title = Viewdialog.findViewById(R.id.viewitem_title)
@@ -622,19 +625,20 @@ eventItemID = id.toString()
         itemview_move = Viewdialog.findViewById(R.id.itemview_move)
         itemview_pinnertitle = Viewdialog.findViewById(R.id.itemview_pinnertitle)
         itemview_addtoclosetbt = Viewdialog.findViewById(R.id.itemview_addtoclosetbt)
-        closetlayout= Viewdialog.findViewById(R.id.closetlayout)
+        closetlayout = Viewdialog.findViewById(R.id.closetlayout)
         itemview_copy = Viewdialog.findViewById(R.id.itemview_copy)
+        itemview_addtocart = Viewdialog.findViewById(R.id.itemview_addtocart)
 
         closetlayout.visibility = View.GONE
         itemview_move.visibility = View.GONE
         itemview_copy.visibility = View.GONE
+        itemview_addtocart.visibility = View.VISIBLE
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL + eventItems.get(id!!).picture)
             .placeholder(R.drawable.login_banner1).into(viewitem_image)
-        viewitem_title.text = "Title :"+eventItems.get(id).title
-        viewitem_color.text = "Color :"+eventItems.get(id).color?.name
-        if (eventItems.get(id).hearts!!.size>0)
-        {
+        viewitem_title.text = "Title :" + eventItems.get(id).title
+        viewitem_color.text = "Color :" + eventItems.get(id).color?.name
+        if (eventItems.get(id).hearts!!.size > 0) {
             viewitem_favcount.text = eventItems.get(id).hearts!!.size.toString()
         }
 
@@ -646,7 +650,10 @@ eventItemID = id.toString()
         itemview_editbt.setOnClickListener {
             if (utility.isConnectingToInternet(this)) {
                 Viewdialog.dismiss()
-                startActivity(Intent(this,AddItemToEvent::class.java).putExtra("eventID",eventID).putExtra("edit", "1").putExtra("closetItemID", eventItemID))
+                startActivity(
+                    Intent(this, AddItemToEvent::class.java).putExtra("eventID", eventID)
+                        .putExtra("edit", "1").putExtra("closetItemID", eventItemID)
+                )
             } else {
                 utility!!.relative_snackbar(
                     parent_myeventdetailscreen!!,
@@ -661,9 +668,10 @@ eventItemID = id.toString()
             if (utility.isConnectingToInternet(this)) {
                 pd.show()
                 pd.setContentView(R.layout.loading)
-            controller.RemoveEventItem("Bearer "+getStringVal(Constants.TOKEN),
-                eventItems.get(id.toInt()).id.toString()
-            )
+                controller.RemoveEventItem(
+                    "Bearer " + getStringVal(Constants.TOKEN),
+                    eventItems.get(id.toInt()).id.toString()
+                )
             } else {
                 utility!!.relative_snackbar(
                     parent_myeventdetailscreen!!,
@@ -673,18 +681,55 @@ eventItemID = id.toString()
             }
         }
 
-        viewitem_size.text = "Size :"+eventItems.get(id).size?.name
-        viewitem_price.text = "Price :"+eventItems.get(id).price
-        viewitem_category.text = "Category :"+eventItems.get(id).category?.name
+        itemview_addtocart.setOnClickListener {
+            controller.AddtoCart(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                eventItems.get(id.toInt()).id.toString(), "1"
+            )
+            pd.show()
+            pd.setContentView(R.layout.loading)
+        }
+
+        viewitem_size.text = "Size :" + eventItems.get(id).size?.name
+        viewitem_price.text = "Price :" + eventItems.get(id).price
+        viewitem_category.text = "Category :" + eventItems.get(id).category?.name
 
 //        setSpinnerData(userClosets,itemview_spinner,itemview_pinnertitle,
 //            response.get(id).id!!,itemview_addtoclosetbt)
 //
 //        searchUserHeart(response.get(id).hearts as MutableList<com.casebeaumonde.activities.eventDetail.response.EventDetailResponse.Data.Events.Heart>,viewitem_checkbox)
         viewitem_checkbox.setOnClickListener {
-          //  Toast.makeText(this,"HERE",Toast.LENGTH_SHORT).show()
+            //  Toast.makeText(this,"HERE",Toast.LENGTH_SHORT).show()
         }
         Viewdialog.show()
+    }
+
+    override fun onAddtoCartSuccess(success: Response<AddtoCartResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful) {
+            if (success.body()?.code?.equals("200")!!) {
+
+
+                Viewdialog.dismiss()
+                utility!!.relative_snackbar(
+                    parent_myeventdetailscreen!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_myeventdetailscreen!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+        } else {
+            utility!!.relative_snackbar(
+                parent_myeventdetailscreen!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
     }
 
     override fun getEventIDForFav(id: String) {
@@ -692,7 +737,7 @@ eventItemID = id.toString()
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.FavEvent("Bearer " + getStringVal(Constants.TOKEN), id,"event_item")
+            controller.FavEvent("Bearer " + getStringVal(Constants.TOKEN), id, "event_item")
 
         } else {
             utility!!.relative_snackbar(
@@ -706,17 +751,16 @@ eventItemID = id.toString()
 
     override fun onFavEventSuccess(success: Response<FavEventItemResponse>) {
         pd.dismiss()
-        if (success.isSuccessful)
-        {
+        if (success.isSuccessful) {
             utility!!.relative_snackbar(
                 parent_myeventdetailscreen!!,
-               success.body()?.message,
+                success.body()?.message,
                 getString(R.string.close_up)
             )
-        }else {
+        } else {
             utility!!.relative_snackbar(
                 parent_myeventdetailscreen!!,
-               success.message(),
+                success.message(),
                 getString(R.string.close_up)
             )
         }

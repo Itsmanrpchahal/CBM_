@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:cardBackgroundColor="@color/colorWhite"
@@ -34,6 +34,9 @@
                 android:layout_height="wrap_content"
                 android:text="User blocked"
                 android:textAllCaps="true"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:layout_marginRight="@dimen/margin_8dp"
+                android:textAlignment="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/textsize_24sp"
                 android:layout_marginTop="@dimen/default_margin_16dp">

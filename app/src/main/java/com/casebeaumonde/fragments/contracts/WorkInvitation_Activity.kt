@@ -52,21 +52,7 @@ class WorkInvitation_Activity : BaseClass(), Controller.WorkInvitationAPI, GetIn
         WorkInviationFrag.getinviidIf = this
         findIds()
 
-        if (utility.isConnectingToInternet(this)) {
-            pd.show()
-            pd.setContentView(R.layout.loading)
-            controller.WorkInvitation (
-                "Bearer " + getStringVal(Constants.TOKEN),
-                getStringVal(Constants.USERID)
-            )
 
-        } else {
-            utility.relative_snackbar(
-                parent_workinvitation!!,
-                "No Internet Connectivity",
-                getString(R.string.close_up)
-            )
-        }
 
         listeners()
     }
@@ -99,6 +85,25 @@ class WorkInvitation_Activity : BaseClass(), Controller.WorkInvitationAPI, GetIn
 
         back.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.WorkInvitation (
+                "Bearer " + getStringVal(Constants.TOKEN),
+                getStringVal(Constants.USERID)
+            )
+
+        } else {
+            utility.relative_snackbar(
+                parent_workinvitation!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
         }
     }
 
@@ -340,10 +345,23 @@ class WorkInvitation_Activity : BaseClass(), Controller.WorkInvitationAPI, GetIn
     override fun onMakeOfferSuccess(makeOffer: Response<MakeOfferResponse>) {
         pd.dismiss()
         makeofferDialog.dismiss()
-        utility!!.relative_snackbar(
-            parent_workinvitation!!,
-            makeOffer.body()?.getMessage(),
-            getString(R.string.close_up)
-        )
+        if (makeOffer.isSuccessful)
+        {
+           if (makeOffer.body()?.getCode().equals("200")||makeOffer.body()?.getCode().equals("401"))
+            {
+                utility!!.relative_snackbar(
+                    parent_workinvitation!!,
+                    makeOffer.body()?.getMessage(),
+                    getString(R.string.close_up)
+                )
+            }
+        } else {
+            utility!!.relative_snackbar(
+                parent_workinvitation!!,
+                makeOffer?.message(),
+                getString(R.string.close_up)
+            )
+        }
+
     }
 }

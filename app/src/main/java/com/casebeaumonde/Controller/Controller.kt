@@ -54,6 +54,7 @@ import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.fragments.chat.GetChatUsers
 import com.casebeaumonde.fragments.contracts.ContractCountResponse
+import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
@@ -158,6 +159,7 @@ public class Controller {
     var removeEventItemAPI: RemoveEventItemAPI? = null
     var duplicateOutfitItemAPI: DuplicateOutfitItemAPI? = null
     var deleteEventAPI: DeleteEventAPI? = null
+    var deleteOfferAPI : DeleteOfferAPI?= null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -361,9 +363,10 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(offerlist: OfferListAPI, setOffer: SetOfferDecisionAPI) {
+    fun Controller(offerlist: OfferListAPI, setOffer: SetOfferDecisionAPI,deleteOffer: DeleteOfferAPI) {
         offerListAPI = offerlist
         setOfferDesicionAPI = setOffer
+        deleteOfferAPI = deleteOffer
         webAPI = WebAPI()
     }
 
@@ -401,6 +404,14 @@ public class Controller {
 
     fun Controller(userProfile: UserProfileAPI) {
         userProfileAPI = userProfile
+        webAPI = WebAPI()
+    }
+
+    fun Controller(workInvitation: WorkInvitationAPI,acceptDeclineInvitation: AcceptDeclineInvitationAPI,offerlist: OfferListAPI)
+    {
+        workInvitationAPI = workInvitation
+        acceptDeclineInvitationAPI = acceptDeclineInvitation
+        offerListAPI = offerlist
         webAPI = WebAPI()
     }
 
@@ -2412,6 +2423,24 @@ public class Controller {
         })
     }
 
+    fun DeleteOffer(token: String?,id: String?)
+    {
+       webAPI?.api?.DeleteOffer(token, id)?.enqueue(object :Callback<DeleteOfferResponse>
+       {
+           override fun onResponse(
+               call: Call<DeleteOfferResponse>,
+               response: Response<DeleteOfferResponse>
+           ) {
+               deleteOfferAPI?.onDeleteOfferSuccess(response)
+           }
+
+           override fun onFailure(call: Call<DeleteOfferResponse>, t: Throwable) {
+               deleteOfferAPI?.error(t.message)
+           }
+
+       })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -2863,6 +2892,11 @@ public class Controller {
 
     interface DeleteEventAPI {
         fun onDeleteEventSuccess(success: Response<DeleteEventResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteOfferAPI {
+        fun onDeleteOfferSuccess(success:Response<DeleteOfferResponse>)
         fun error(error: String?)
     }
 }

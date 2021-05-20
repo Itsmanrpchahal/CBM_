@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:id="@+id/parent_workinvitation"
-    android:background="@color/colorBackground"
+    android:background="@color/colorBlack"
     tools:context=".fragments.contracts.WorkInvitation_Activity">
 
 
@@ -82,6 +82,7 @@
         android:id="@+id/workinvitations_recycler"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/margin_8dp"
+        android:background="@color/colorBlack"
         android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -90,6 +91,7 @@
         android:id="@+id/worksentinvitations_recycler"
         android:layout_width="match_parent"
         android:visibility="gone"
+        android:background="@color/colorBlack"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_height="wrap_content">
 

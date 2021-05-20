@@ -127,7 +127,7 @@
                     android:layout_marginLeft="@dimen/default_margin_16dp"
                     android:layout_marginTop="@dimen/margin_8dp"
                     android:layout_marginRight="@dimen/default_margin_16dp"
-                    android:background="@drawable/roundcorners">
+                    android:background="@drawable/blackcorner">
 
                     <Spinner
                         android:id="@+id/gigrate_spinner"
@@ -139,6 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@color/colorBlack">
 
                     </TextView>
@@ -167,7 +168,7 @@
                     android:textColor="@color/colorBlack"
                     android:paddingLeft="@dimen/margin_8dp"
                     android:inputType="number"
-                    android:background="@drawable/blackroundcorners"
+                    android:background="@drawable/blackcorner"
                     android:layout_marginLeft="@dimen/default_margin_16dp"
                     android:layout_marginRight="@dimen/default_margin_16dp"
                     >
@@ -214,7 +215,7 @@
                     android:textColor="@color/colorBlack"
                     android:layout_marginRight="@dimen/default_margin_16dp"
                     android:layout_marginBottom="@dimen/default_margin_16dp"
-                    android:background="@drawable/blackroundcorners"
+                    android:background="@drawable/blackcorner"
                     android:padding="@dimen/margin_8dp"
                     android:textSize="@dimen/textsize_16sp">
 
@@ -226,6 +227,8 @@
                     android:orientation="horizontal"
                     android:layout_below="@id/commetet"
                     android:gravity="right"
+                    android:layout_marginRight="@dimen/margin_8dp"
+                    android:layout_marginBottom="@dimen/margin_8dp"
                     android:layout_marginTop="@dimen/margin_8dp">
 
 
@@ -234,6 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Send offer"
+                        android:background="@color/colorBlack"
                         android:textColor="@color/colorWhite"
                         android:textAllCaps="false">
 
@@ -244,6 +248,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Close"
+                        android:background="@color/colorBlack"
                         android:textColor="@color/colorWhite"
                         android:textAllCaps="false"
                         android:layout_marginLeft="@dimen/default_margin_16dp">

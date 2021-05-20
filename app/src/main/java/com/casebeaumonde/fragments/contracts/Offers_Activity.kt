@@ -18,10 +18,12 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.contracts.offers.IF.getOfferDeleteID_IF
 import com.casebeaumonde.fragments.contracts.offers.IF.getOfferID_IF
 import com.casebeaumonde.fragments.contracts.offers.OffersFrag
 import com.casebeaumonde.fragments.contracts.offers.adapter.RecieveOffersAdapter
 import com.casebeaumonde.fragments.contracts.offers.adapter.SendOffersAdapter
+import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse
 import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.utilities.Utility
@@ -31,7 +33,7 @@ import kotlinx.android.synthetic.main.fragment_offers.*
 import retrofit2.Response
 
 class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
-    Controller.SetOfferDecisionAPI  {
+    Controller.SetOfferDecisionAPI ,getOfferDeleteID_IF,Controller.DeleteOfferAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -45,15 +47,17 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
     private lateinit var recieveOffer: ArrayList<OfferListResponse.Data.User.ReceivedOffer>
     lateinit var type: String
     private lateinit var offerDialog: Dialog
+    private lateinit var deleteDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offers_)
 
         OffersFrag.getOfferID_IF = this
+        getOfferDeleteID_IF = this
         findIds()
         controller = Controller()
-        controller.Controller(this, this)
+        controller.Controller(this, this,this)
         lisenters()
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -117,33 +121,58 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
 
     override fun onOfferListSuccess(offerlist: Response<OfferListResponse>) {
         pd.dismiss()
+        if (offerlist.isSuccessful)
+        {
+            if (offerlist.body()?.getCode().equals("200"))
+            {
+                sendOffer = ArrayList()
+                if (offerlist.body()?.getData()?.user?.sentOffers?.size!! >=1)
+                {
+                    sendOffer =
+                        offerlist.body()?.getData()?.user?.sentOffers as ArrayList<OfferListResponse.Data.User.SentOffer>
 
-        sendOffer = ArrayList()
-        sendOffer =
-            offerlist.body()?.getData()?.user?.sentOffers as ArrayList<OfferListResponse.Data.User.SentOffer>
+                }
 
-        //setFullData(sendOffer, "sent")
-        recieveOffer = ArrayList()
-        recieveOffer =
-            offerlist.body()?.getData()?.user?.receivedOffers as ArrayList<OfferListResponse.Data.User.ReceivedOffer>
-        setRecieveData(recieveOffer, "recieve")
+                //setFullData(sendOffer, "sent")
+                recieveOffer = ArrayList()
+                if(offerlist.body()?.getData()?.user?.receivedOffers?.size!! >=1)
+                {
+                    recieveOffer =
+                        offerlist.body()?.getData()?.user?.receivedOffers as ArrayList<OfferListResponse.Data.User.ReceivedOffer>
+                }
+                setRecieveData(recieveOffer, "recieve")
 
 
-        if (offerlist.body()?.getData()?.user?.role.equals("customer")) {
-            type = "sent"
-            //worksentinvitations_recycler.visibility = View.VISIBLE
-            setFullData(sendOffer, "sent")
-            offersentinvitations_recycler.visibility = View.VISIBLE
+                if (offerlist.body()?.getData()?.user?.role.equals("customer")) {
+                    type = "sent"
+                    //worksentinvitations_recycler.visibility = View.VISIBLE
+                    setFullData(sendOffer, "sent")
+                    offersentinvitations_recycler.visibility = View.VISIBLE
 
+                } else {
+                    offer_recieved.visibility = View.VISIBLE
+                    offer_sent.visibility = View.VISIBLE
+                    offer_recieved.setBackgroundColor(Color.WHITE)
+                    offer_recieved.setTextColor(Color.BLACK)
+                    type = "recieve"
+                    setRecieveData(recieveOffer, type)
+
+                }
+            } else {
+                utility!!.relative_snackbar(
+                    parent_offers!!,
+                    offerlist.message(),
+                    getString(R.string.close_up)
+                )
+            }
         } else {
-            offer_recieved.visibility = View.VISIBLE
-            offer_sent.visibility = View.VISIBLE
-            offer_recieved.setBackgroundColor(Color.WHITE)
-            offer_recieved.setTextColor(Color.BLACK)
-            type = "recieve"
-            setRecieveData(recieveOffer, type)
-
+            utility!!.relative_snackbar(
+                parent_offers!!,
+                offerlist.message(),
+                getString(R.string.close_up)
+            )
         }
+
     }
 
     private fun setRecieveData(
@@ -176,6 +205,8 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
     }
 
 
+
+
     override fun error(error: String?) {
         pd.dismiss()
         utility!!.relative_snackbar(
@@ -187,6 +218,7 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
 
     companion object {
         var getOfferID_IF: getOfferID_IF? = null
+        var getOfferDeleteID_IF : getOfferDeleteID_IF? = null
     }
 
 
@@ -320,5 +352,65 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
             )
         }
 
+    }
+
+    override fun getOfferDeleteID(id: String) {
+        deleteDialog = Dialog(this!!)
+        deleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        deleteDialog.setContentView(R.layout.unblockuser_popup)
+        val window = deleteDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        var title : TextView
+        var subtitle : TextView
+        var go : Button
+        var cancel :Button
+        title = deleteDialog.findViewById(R.id.title)
+        subtitle = deleteDialog.findViewById(R.id.subtitle)
+        go = deleteDialog.findViewById(R.id.go)
+        cancel = deleteDialog.findViewById(R.id.cancel)
+        title.setText("Are you sure?")
+        subtitle.setText("Please confirm you want to delete this offer.")
+        go.setText("Delete")
+
+        cancel.setOnClickListener { deleteDialog.dismiss() }
+        go.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+                pd.show()
+                pd.setContentView(R.layout.loading)
+                controller.DeleteOffer(
+                    "Bearer " + getStringVal(Constants.TOKEN),id
+                )
+
+            } else {
+                utility.relative_snackbar(
+                    parent_offers!!,
+                    "No Internet Connectivity",
+                    getString(R.string.close_up)
+                )
+            }
+        }
+        deleteDialog.show()
+    }
+
+    override fun onDeleteOfferSuccess(success: Response<DeleteOfferResponse>) {
+        deleteDialog.dismiss()
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.OfferList(
+                "Bearer " + getStringVal(Constants.TOKEN)
+            )
+
+        } else {
+            utility.relative_snackbar(
+                parent_offers!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
+        }
     }
 }

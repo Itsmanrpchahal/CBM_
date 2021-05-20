@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    android:orientation="vertical"
+    android:id="@+id/parent_detail"
+    tools:context=".fragments.contracts.detail.DetailPage">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/colorBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/ic_baseline_keyboard_backspace_24">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MANAGE CONTRACTS"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:layout_centerInParent="true"
+                android:textStyle="bold">
+
+            </TextView>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_16dp"
+        android:background="@drawable/whiteborderblack"
+        >
+
+
+        <ImageView
+            android:id="@+id/inviationimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_banner1"
+            android:background="#888888">
+
+        </ImageView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#222222"
+
+            android:layout_below="@id/inviationimage">
+
+            <TextView
+                android:id="@+id/invitation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/invitation_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAllCaps="true"
+                android:layout_below="@+id/invitation_title"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/invitation_date"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/accept_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginRight="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:text="Accept this offer"
+        android:visibility="gone"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/oswald_regular">
+
+    </Button>
+
+
+    <Button
+        android:id="@+id/decline_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginRight="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Decline this offer"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/oswald_regular">
+
+    </Button>
+
+
+    <Button
+        android:id="@+id/completethiscontractbt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginRight="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:text="Complete this contract"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/oswald_regular">
+
+    </Button>
+
+
+    <Button
+        android:id="@+id/open_claimbt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginRight="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:text="Open claim/solve problem"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/oswald_regular"
+        >
+
+    </Button>
+</LinearLayout>

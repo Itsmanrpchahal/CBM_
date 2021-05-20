@@ -64,6 +64,7 @@ class SendChat : BaseClass(), Controller.SendUserChatAPI, Controller.GetChatAPI,
         name = intent?.getStringExtra("chatname").toString()
         chatname.setText(name)
 
+
         if (utility.isConnectingToInternet(this@SendChat)) {
             // pd.show()
             pd.setContentView(R.layout.loading)

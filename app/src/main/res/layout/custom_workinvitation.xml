@@ -3,31 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:padding="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/whiteborderblack"
-        android:padding="@dimen/margin_8dp">
+        >
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/inviationimage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/login_banner1">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_banner1"
+        android:background="#888888">
 
-    </de.hdodenhof.circleimageview.CircleImageView>
+    </ImageView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/inviationimage"
-            android:layout_marginLeft="@dimen/textsize_16sp"
-            android:orientation="vertical"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical">
+            android:background="#222222"
+            android:layout_below="@id/inviationimage">
 
             <TextView
                 android:id="@+id/invitation_title"
@@ -35,8 +34,10 @@
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/textsize_16sp"
-                android:textStyle="bold">
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp">
 
             </TextView>
 
@@ -45,7 +46,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
-                android:textColor="@color/colorWhite"
+                android:textAllCaps="true"
+                android:layout_below="@+id/invitation_title"
+                android:layout_marginLeft="5dp"
                 android:textSize="@dimen/textsize_16sp">
 
             </TextView>
@@ -54,39 +57,71 @@
                 android:id="@+id/invitation_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="Status"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/invitation_date"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp">
 
             </TextView>
+
+            <Button
+                android:id="@+id/makeanofferbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make an offer"
+                android:visibility="gone"
+                android:layout_below="@id/openchat"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:background="@android:color/transparent"
+                android:layout_marginBottom="10dp">
+
+            </Button>
+
+            <Button
+                android:id="@+id/openchat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open Chat"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:background="#00000000">
+
+            </Button>
+
+            <ImageButton
+                android:id="@+id/deleteoffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/openchat"
+                android:visibility="visible"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:layout_marginRight="@dimen/default_margin_16dp"
+                android:background="@android:color/transparent">
+
+            </ImageButton>
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/inviationimage"
+            android:layout_marginLeft="@dimen/textsize_16sp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical">
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/makeanofferbt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Make an offer"
-            android:visibility="gone"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/default_margin_16dp"
-            android:textAllCaps="false"
-            android:background="@android:color/transparent">
 
-        </Button>
 
-        <ImageButton
-            android:id="@+id/deleteoffer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:visibility="gone"
-            android:src="@drawable/ic_baseline_delete_24"
-            android:layout_marginRight="@dimen/default_margin_16dp"
-            android:background="@android:color/transparent">
 
-        </ImageButton>
 
     </RelativeLayout>
 

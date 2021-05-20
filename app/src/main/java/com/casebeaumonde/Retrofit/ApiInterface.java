@@ -41,6 +41,7 @@ import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
 import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse;
 import com.casebeaumonde.fragments.contracts.ContractCountResponse;
+import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
@@ -895,6 +896,12 @@ public interface ApiInterface {
 
     @DELETE("api/v1/deleteEvent/{input}")
     Call<DeleteEventResponse> DeleteEvent(
+            @Header("Authorization") String token,
+            @Path("input") String id
+    );
+
+    @DELETE("api/v1/deleteOffer/{input}")
+    Call<DeleteOfferResponse> DeleteOffer(
             @Header("Authorization") String token,
             @Path("input") String id
     );

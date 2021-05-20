@@ -20,6 +20,7 @@ import com.casebeaumonde.fragments.contracts.offers.adapter.SendOffersAdapter
 import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse
 import com.casebeaumonde.utilities.Utility
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_offers.*
 import retrofit2.Response
 
 class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
-    Controller.SetOfferDecisionAPI {
+    Controller.SetOfferDecisionAPI ,Controller.DeleteOfferAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -51,7 +52,7 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
         getOfferID_IF = this
         findIds(view)
         controller = Controller()
-        controller.Controller(this, this)
+        controller.Controller(this, this,this)
         lisenters()
         if (utility.isConnectingToInternet(context)) {
             pd.show()
@@ -167,6 +168,10 @@ class OffersFrag : BaseFrag(), Controller.OfferListAPI, getOfferID_IF,
                 sentInvitations
             )
         offersentinvitations_recycler.adapter = adapter
+    }
+
+    override fun onDeleteOfferSuccess(success: Response<DeleteOfferResponse>) {
+        TODO("Not yet implemented")
     }
 
 

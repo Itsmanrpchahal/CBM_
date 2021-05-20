@@ -37,6 +37,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
     private lateinit var invitecollaboratecount:TextView
     private lateinit var active: TextView
     private lateinit var complete: TextView
+    private lateinit var contractscount: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +77,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
         invitecollaboratecount = view.findViewById(R.id.invitecollaboratecount)
         active = view.findViewById(R.id.active)
         complete = view.findViewById(R.id.complete)
+        contractscount = view.findViewById(R.id.contractscount)
 
         controller = Controller()
         controller.Controller(this)
@@ -101,6 +103,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
                 invitecollaboratecount.text = success?.body()?.data?.invitesToColaborate.toString()
                 active.text = success?.body()?.data?.activeContract.toString()
                 complete.text = success?.body()?.data?.completedContract.toString()
+                contractscount.text = success?.body()?.data?.completedContract.toString()
             }else {
                 Toast.makeText(context,""+success.code(),Toast.LENGTH_SHORT).show()
             }

@@ -146,6 +146,10 @@ class MyEventsAdapter(
         holder.itemView.closets_edititem1.setOnClickListener {
             MyEventsActivity.geteventidforupdateIf?.getEventItemID(events.get(position).id.toString(), position.toString())
         }
+
+        holder.itemView.event_delete.setOnClickListener {
+            MyEventsActivity.geteventidfordeleteIf?.getEventIdforDelete(events.get(position).id.toString())
+        }
     }
 
     override fun getItemCount(): Int {
@@ -166,6 +170,7 @@ class MyEventsAdapter(
             var invite_collaboratebt: Button
             var closets_additem : TextView
             var closets_edititem1:Button
+            var event_delete : Button
 
             closet_banner = itemView.findViewById(R.id.closet_banner)
             closet_username = itemView.findViewById(R.id.closet_username)
@@ -178,6 +183,7 @@ class MyEventsAdapter(
             invite_collaboratebt = itemView.findViewById(R.id.invite_collaboratebt)
             closets_additem = itemView.findViewById(R.id.closets_additem)
             closets_edititem1 = itemView.findViewById(R.id.closets_edititem1)
+            event_delete = itemView.findViewById(R.id.event_delete)
         }
     }
 }

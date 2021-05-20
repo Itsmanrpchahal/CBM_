@@ -153,10 +153,11 @@ public class Controller {
     var favEventAPI: FavEventAPI? = null
     var createEventAPI: CreateEventAPI? = null
     var addEventItemsAPI: AddEventItemAPI? = null
-    var updateEventItemsAPI : UpdateEventItemAPI? = null
-    var updateEventAPI : UpdateEventAPI? = null
-    var removeEventItemAPI : RemoveEventItemAPI?= null
-    var duplicateOutfitItemAPI : DuplicateOutfitItemAPI? = null
+    var updateEventItemsAPI: UpdateEventItemAPI? = null
+    var updateEventAPI: UpdateEventAPI? = null
+    var removeEventItemAPI: RemoveEventItemAPI? = null
+    var duplicateOutfitItemAPI: DuplicateOutfitItemAPI? = null
+    var deleteEventAPI: DeleteEventAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -486,7 +487,8 @@ public class Controller {
         sendInvite: SendInviteAPI,
         inviteCustomer1: InviteCustomer1API,
         createEvent: CreateEventAPI,
-        updateEvent  :UpdateEventAPI
+        updateEvent: UpdateEventAPI,
+        deleteEvent: DeleteEventAPI
     ) {
         myEventAPI = myEvents
         filterEventAPI = filterEventFilter
@@ -496,6 +498,7 @@ public class Controller {
         inviteCustomer1API = inviteCustomer1
         createEventAPI = createEvent
         updateEventAPI = updateEvent
+        deleteEventAPI = deleteEvent
         webAPI = WebAPI()
     }
 
@@ -1732,8 +1735,8 @@ public class Controller {
         })
     }
 
-    fun CreateNewOutfit(token: String?, title: String?, decripition: String?) {
-        webAPI?.api?.newOutfit(token, title, decripition)
+    fun CreateNewOutfit(token: String?, title: String?, decripition: String?,part: MultipartBody.Part) {
+        webAPI?.api?.newOutfit(token, title, decripition,part)
             ?.enqueue(object : Callback<NewOutfitResponse> {
                 override fun onResponse(
                     call: Call<NewOutfitResponse>,
@@ -2237,18 +2240,30 @@ public class Controller {
         })
     }
 
-    fun UpdateEvent(token: String?,
-                    id: String?,
-                    title: String,
-                    status: String,
-                    description: String,
-                    from: String,
-                    to: String,
-                    type: String,
-                    image: MultipartBody.Part,
-                    particularcustomerID: String){
-        webAPI?.api?.updateEvent(token, id, title, status, description, from, to, type, image, particularcustomerID)?.enqueue(object :Callback<UpdateEventResponse>
-        {
+    fun UpdateEvent(
+        token: String?,
+        id: String?,
+        title: String,
+        status: String,
+        description: String,
+        from: String,
+        to: String,
+        type: String,
+        image: MultipartBody.Part,
+        particularcustomerID: String
+    ) {
+        webAPI?.api?.updateEvent(
+            token,
+            id,
+            title,
+            status,
+            description,
+            from,
+            to,
+            type,
+            image,
+            particularcustomerID
+        )?.enqueue(object : Callback<UpdateEventResponse> {
             override fun onResponse(
                 call: Call<UpdateEventResponse>,
                 response: Response<UpdateEventResponse>
@@ -2303,46 +2318,46 @@ public class Controller {
 
     fun UpdateEventItem(
         token: String?,
-                         title: String?,
-                         event_id: String?,
-                         category_id: String?,
-                         size: String?,
-                         color: String?,
-                         brand: String?,
-                         description: String?,
-                         price: String?,
-                         picture: MultipartBody.Part,
-        id:String) {
-       webAPI?.api?.UpdateEventItem(  token,
-           title,
-           event_id,
-           category_id,
-           size,
-           color,
-           brand,
-           description,
-           price,
-           picture,
-           id)?.enqueue(object :Callback<AddEventItemResponse>
-       {
-           override fun onResponse(
-               call: Call<AddEventItemResponse>,
-               response: Response<AddEventItemResponse>
-           ) {
-             updateEventItemsAPI?.onUpdateEventItemSuccess(response)
-           }
+        title: String?,
+        event_id: String?,
+        category_id: String?,
+        size: String?,
+        color: String?,
+        brand: String?,
+        description: String?,
+        price: String?,
+        picture: MultipartBody.Part,
+        id: String
+    ) {
+        webAPI?.api?.UpdateEventItem(
+            token,
+            title,
+            event_id,
+            category_id,
+            size,
+            color,
+            brand,
+            description,
+            price,
+            picture,
+            id
+        )?.enqueue(object : Callback<AddEventItemResponse> {
+            override fun onResponse(
+                call: Call<AddEventItemResponse>,
+                response: Response<AddEventItemResponse>
+            ) {
+                updateEventItemsAPI?.onUpdateEventItemSuccess(response)
+            }
 
-           override fun onFailure(call: Call<AddEventItemResponse>, t: Throwable) {
-              updateEventItemsAPI?.error(t.message)
-           }
+            override fun onFailure(call: Call<AddEventItemResponse>, t: Throwable) {
+                updateEventItemsAPI?.error(t.message)
+            }
 
-       })
+        })
     }
 
-    fun RemoveEventItem(token: String?,id: String?)
-    {
-        webAPI?.api?.removeEventItem(token, id)?.enqueue(object :Callback<RemoveEventResponse>
-        {
+    fun RemoveEventItem(token: String?, id: String?) {
+        webAPI?.api?.removeEventItem(token, id)?.enqueue(object : Callback<RemoveEventResponse> {
             override fun onResponse(
                 call: Call<RemoveEventResponse>,
                 response: Response<RemoveEventResponse>
@@ -2357,23 +2372,46 @@ public class Controller {
         })
     }
 
-    fun DuplicateOutfitItem(token: String?,creator_id:String,items:String,outfittid:String,name:String)
-    {
-        webAPI?.api?.DuplicateOutfiteItem(token, creator_id, items, outfittid, name)?.enqueue(object :Callback<DuplicateOutfitItemResponse>
+    fun DuplicateOutfitItem(
+        token: String?,
+        creator_id: String,
+        items: String,
+        outfittid: String,
+        name: String
+    ) {
+        webAPI?.api?.DuplicateOutfiteItem(token, creator_id, items, outfittid, name)
+            ?.enqueue(object : Callback<DuplicateOutfitItemResponse> {
+                override fun onResponse(
+                    call: Call<DuplicateOutfitItemResponse>,
+                    response: Response<DuplicateOutfitItemResponse>
+                ) {
+                    duplicateOutfitItemAPI?.onDuplicateOutfitItemSuccess(response)
+                }
+
+                override fun onFailure(call: Call<DuplicateOutfitItemResponse>, t: Throwable) {
+                    duplicateOutfitItemAPI?.error(t.message)
+                }
+
+            })
+    }
+
+    fun DeleteEvent(token: String?,id: String?){
+        webAPI?.api?.DeleteEvent(token,id)?.enqueue(object :Callback<DeleteEventResponse>
         {
             override fun onResponse(
-                call: Call<DuplicateOutfitItemResponse>,
-                response: Response<DuplicateOutfitItemResponse>
+                call: Call<DeleteEventResponse>,
+                response: Response<DeleteEventResponse>
             ) {
-                duplicateOutfitItemAPI?.onDuplicateOutfitItemSuccess(response)
+                deleteEventAPI?.onDeleteEventSuccess(response)
             }
 
-            override fun onFailure(call: Call<DuplicateOutfitItemResponse>, t: Throwable) {
-                duplicateOutfitItemAPI?.error(t.message)
+            override fun onFailure(call: Call<DeleteEventResponse>, t: Throwable) {
+                deleteEventAPI?.error(t.message)
             }
 
         })
     }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -2804,22 +2842,27 @@ public class Controller {
     }
 
     interface UpdateEventItemAPI {
-        fun onUpdateEventItemSuccess(success:Response<AddEventItemResponse>)
+        fun onUpdateEventItemSuccess(success: Response<AddEventItemResponse>)
         fun error(error: String?)
     }
 
     interface UpdateEventAPI {
-        fun onUpdateEventSuccess(success:Response<UpdateEventResponse>)
+        fun onUpdateEventSuccess(success: Response<UpdateEventResponse>)
         fun error(error: String?)
     }
 
     interface RemoveEventItemAPI {
-        fun onRemoveEventItemSuccess(success:Response<RemoveEventResponse>)
+        fun onRemoveEventItemSuccess(success: Response<RemoveEventResponse>)
         fun error(error: String?)
     }
 
     interface DuplicateOutfitItemAPI {
-        fun onDuplicateOutfitItemSuccess(success:Response<DuplicateOutfitItemResponse>)
+        fun onDuplicateOutfitItemSuccess(success: Response<DuplicateOutfitItemResponse>)
+        fun error(error: String?)
+    }
+
+    interface DeleteEventAPI {
+        fun onDeleteEventSuccess(success: Response<DeleteEventResponse>)
         fun error(error: String?)
     }
 }

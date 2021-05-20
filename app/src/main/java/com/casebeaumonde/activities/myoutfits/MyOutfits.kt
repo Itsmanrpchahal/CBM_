@@ -1,15 +1,20 @@
 package com.casebeaumonde.activities.myoutfits
 
+import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myoutfits.IF.DeleteID_IF
@@ -24,9 +29,13 @@ import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
+import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.android.synthetic.main.activity_my_closets.parent_myclosets
 import kotlinx.android.synthetic.main.activity_my_outfits.*
+import kotlinx.android.synthetic.main.createnewoutfitdialog.*
+import okhttp3.MultipartBody
 import retrofit2.Response
+import java.io.File
 
 class MyOutfits : BaseClass(),
     Controller.MyOutfitsAPI,
@@ -49,6 +58,11 @@ class MyOutfits : BaseClass(),
     private lateinit var addnewoutfitDialog: Dialog
     private lateinit var outfitname: EditText
     private lateinit var deleteDialog : Dialog
+    private lateinit var part: MultipartBody.Part
+    private lateinit var bitMap: Bitmap
+    private var path: String = ""
+    private lateinit var addoutfit__uploadfilename : TextView
+    private lateinit var createoutfit_imagerperview :ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,11 +97,16 @@ class MyOutfits : BaseClass(),
         val create: Button
         val outfitname: EditText
         val outfit_decs: EditText
+        val addoutfit__upload : Button
+
 
         cancel = addnewoutfitDialog.findViewById(R.id.cancel_bt)
         create = addnewoutfitDialog.findViewById(R.id.create_bt)
         outfitname = addnewoutfitDialog.findViewById(R.id.outfitname)
         outfit_decs = addnewoutfitDialog.findViewById(R.id.outfit_decs)
+        addoutfit__upload = addnewoutfitDialog.findViewById(R.id.addoutfit__upload)
+        addoutfit__uploadfilename = addnewoutfitDialog.findViewById(R.id.addoutfit__uploadfilename)
+        createoutfit_imagerperview = addnewoutfitDialog.findViewById(R.id.createoutfit_imagerperview)
 
         if (type.equals("edit"))
         {
@@ -112,20 +131,92 @@ class MyOutfits : BaseClass(),
                     outfit_decs.requestFocus()
                     outfit_decs.setError("Enter outfit description")
                 }
+
+                addoutfit__uploadfilename.text.equals("") -> {
+                    utility!!.relative_snackbar(
+                        parent_outfits!!,
+                        "Upload Image",
+                        getString(R.string.close_up)
+                    )
+                }
                 else -> {
 
                     if (type.equals("edit"))
                     {
                         editOutfit(outfitname.text.toString(),outfit_decs.text.toString(),id)
                     } else {
-                        createOutFit(outfitname.text.toString(), outfit_decs.text.toString())
+                        createOutFit(outfitname.text.toString(), outfit_decs.text.toString(),part)
                     }
 
                 }
             }
         }
 
+        addoutfit__upload.setOnClickListener {
+            pictureSelectionDialog()
+        }
+
         addnewoutfitDialog.show()
+    }
+
+    private fun pictureSelectionDialog() {
+        val camera: LinearLayout
+        val gallery: LinearLayout
+        val dialog = Dialog(this!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.imagepicker)
+        camera = dialog.findViewById(R.id.linear_camera) as LinearLayout
+        gallery = dialog.findViewById(R.id.linear_gallery) as LinearLayout
+
+        camera.setOnClickListener {
+            ImagePicker.with(this)
+                .cameraOnly()
+                .crop()         //User can only capture image using Camera
+                .start()
+            dialog.dismiss()
+        }
+
+        gallery.setOnClickListener {
+            ImagePicker.with(this)
+                .galleryOnly()
+                .crop()     //User can only select image from Gallery
+                .start()    //Default Request Code is ImagePicker.REQUEST_CODE
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            val fileUri = data?.data
+
+            //You can get File object from intent
+            var file: File? = ImagePicker.getFile(data)
+            //You can also get File Path from intent
+            val filePath: String? = ImagePicker.getFilePath(data)
+
+            path = filePath!!
+            bitMap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
+            part = Utility.sendImageFileToserver(filesDir, bitMap, "image")
+            addoutfit__uploadfilename.text = path.toString()
+            Glide.with(this).load(bitMap).placeholder(R.drawable.login_banner1)
+                .into(createoutfit_imagerperview)
+
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            utility!!.relative_snackbar(
+                parent_outfits!!,
+                ImagePicker.getError(data),
+                getString(R.string.close_up)
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_outfits,
+                "Task Cancelled",
+                getString(R.string.close_up)
+            )
+        }
     }
 
     private fun editOutfit(title: String, decs: String,id: String) {
@@ -134,8 +225,8 @@ class MyOutfits : BaseClass(),
         controller.EditOutFit("Bearer "+getStringVal(Constants.TOKEN),id,title,decs)
     }
 
-    private fun createOutFit(name: String, decs: String) {
-        controller.CreateNewOutfit("Bearer " + getStringVal(Constants.TOKEN), name, decs)
+    private fun createOutFit(name: String, decs: String, part: MultipartBody.Part) {
+        controller.CreateNewOutfit("Bearer " + getStringVal(Constants.TOKEN), name, decs,part)
         pd.show()
         pd.setContentView(R.layout.loading)
     }

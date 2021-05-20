@@ -68,7 +68,9 @@ class MyEventsActivity : BaseClass(),
     Controller.CreateEventAPI,
     GetEventID_ForCreateItem,
     GetEventIDForUpdate_IF,
-    Controller.UpdateEventAPI {
+    Controller.UpdateEventAPI,
+Controller.DeleteEventAPI,
+GetEventIdforDelete_IF{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -122,6 +124,7 @@ class MyEventsActivity : BaseClass(),
     private lateinit var datetime: String
     private lateinit var particularuserIDonEventCreate: String
     private var eventType: String = "public"
+    private lateinit var deleteDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,10 +137,11 @@ class MyEventsActivity : BaseClass(),
         getcustomeridIf = this
         geteventidForcreateitem = this
         geteventidforupdateIf = this
+        geteventidfordeleteIf = this
         listeners()
 
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this, this, this)
+        controller.Controller(this, this, this, this, this, this, this, this,this)
 
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -902,6 +906,89 @@ class MyEventsActivity : BaseClass(),
         }
     }
 
+    override fun getEventIdforDelete(id: String) {
+
+        deleteDialog = Dialog(this)
+        deleteDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        deleteDialog.setCancelable(false)
+        deleteDialog.setContentView(R.layout.logout_dialog)
+        val window = deleteDialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+
+        val no: Button
+        val yes: Button
+        val logout_tv: TextView
+
+        no = deleteDialog.findViewById(R.id.logout_no)
+        yes = deleteDialog.findViewById(R.id.logout_yes)
+        logout_tv = deleteDialog.findViewById(R.id.logout_tv)
+        logout_tv.setText("ARE YOU SURE YOU WANT TO DELETE?")
+
+        no.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+
+        yes.setOnClickListener {
+            if (utility.isConnectingToInternet(this)) {
+
+                if (utility.isConnectingToInternet(this)) {
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+                    controller.DeleteEvent("Bearer " + getStringVal(Constants.TOKEN),id)
+
+                } else {
+                    utility!!.relative_snackbar(
+                        parent_myevents!!,
+                        getString(R.string.nointernet),
+                        getString(R.string.close_up)
+                    )
+
+                }
+            } else {
+                utility.relative_snackbar(
+                    parent_myclosets!!,
+                    "No Internet Connectivity",
+                    getString(R.string.close_up)
+                )
+            }
+        }
+
+        deleteDialog.show()
+
+    }
+
+    override fun onDeleteEventSuccess(success: Response<DeleteEventResponse>) {
+        deleteDialog.dismiss()
+        if (success.isSuccessful)
+
+        {
+            if (success.body()?.code==200)
+            {
+                utility!!.relative_snackbar(
+                    parent_myevents!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+                controller.MyEvents("Bearer " + getStringVal(Constants.TOKEN))
+            } else {
+                pd.dismiss()
+                utility!!.relative_snackbar(
+                    parent_myevents!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+
+        } else {
+            pd.dismiss()
+
+        }
+
+    }
+
 
     override fun error(error: String?) {
         pd.dismiss()
@@ -919,6 +1006,7 @@ class MyEventsActivity : BaseClass(),
         var getcustomeridIf: GetCustomerID_IF? = null
         var geteventidForcreateitem: GetEventID_ForCreateItem? = null
         var geteventidforupdateIf: GetEventIDForUpdate_IF? = null
+        var geteventidfordeleteIf : GetEventIdforDelete_IF? = null
     }
 
     override fun getClosetID(id: String?) {
@@ -1363,4 +1451,6 @@ class MyEventsActivity : BaseClass(),
         createEventDialog("update", pos)
         //Toast.makeText(this,"HERE",Toast.LENGTH_LONG).show()
     }
+
+
 }

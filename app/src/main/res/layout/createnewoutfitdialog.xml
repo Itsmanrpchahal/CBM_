@@ -52,6 +52,77 @@
 
     </EditText>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorWhite">
+
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image Upload"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginLeft="@dimen/margin_8dp"
+        android:textSize="@dimen/textsize_16sp">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:background="@drawable/whiteborder"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <Button
+            android:id="@+id/addoutfit__upload"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Upload"
+            android:background="@color/colorWhite"
+            android:textAllCaps="true"
+            android:textColor="@color/colorBlack">
+
+        </Button>
+
+
+        <TextView
+            android:id="@+id/addoutfit__uploadfilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:hint="Filename123.png"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_16sp">
+
+        </TextView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorWhite">
+
+    </View>
+
+
+    <ImageView
+        android:id="@+id/createoutfit_imagerperview"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:background="@drawable/blackroundcorners"
+        android:src="@drawable/login_banner1"
+        android:scaleType="centerCrop">
+
+    </ImageView>
+
 
     <LinearLayout
         android:layout_width="match_parent"

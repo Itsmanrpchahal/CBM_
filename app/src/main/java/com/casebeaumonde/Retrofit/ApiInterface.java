@@ -12,6 +12,7 @@ import com.casebeaumonde.activities.EventsInvitations.response.UserInvitationsRe
 import com.casebeaumonde.activities.MyEventDetailScreen.response.ChangeEventStatusResponse;
 import com.casebeaumonde.activities.MyEventDetailScreen.response.RemoveEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.CreateEventResponse;
+import com.casebeaumonde.activities.MyEvents.Response.DeleteEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.FilterEventResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCollaboratorsResponse;
 import com.casebeaumonde.activities.MyEvents.Response.InviteCustomersResponse;
@@ -616,12 +617,13 @@ public interface ApiInterface {
     );
 
 
-    @FormUrlEncoded
+    @Multipart
     @POST("api/v1/createOutfit")
     Call<NewOutfitResponse> newOutfit(
             @Header("Authorization") String token,
-            @Field("title") String title,
-            @Field("description") String description
+            @Query("title") String title,
+            @Query("description") String description,
+            @Part MultipartBody.Part photo
     );
 
     @FormUrlEncoded
@@ -889,6 +891,12 @@ public interface ApiInterface {
             @Query("items") String items,
             @Query("outfittid") String outfittid,
             @Query("name") String name
+    );
+
+    @DELETE("api/v1/deleteEvent/{input}")
+    Call<DeleteEventResponse> DeleteEvent(
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 
 }

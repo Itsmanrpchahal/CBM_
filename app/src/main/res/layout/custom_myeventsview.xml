@@ -171,7 +171,7 @@
 
 
                 <Button
-                    android:id="@+id/closets_delete"
+                    android:id="@+id/event_delete"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"

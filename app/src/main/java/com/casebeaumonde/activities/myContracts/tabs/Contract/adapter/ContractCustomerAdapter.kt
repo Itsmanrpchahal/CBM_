@@ -1,6 +1,7 @@
 package com.casebeaumonde.activities.myContracts.tabs.Contract.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,9 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myContracts.tabs.Contract.MyContractsFrag
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
+import com.casebeaumonde.activities.openchat.SendChat
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.contracts.detail.DetailPage
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.custom_workinvitation.view.*
@@ -42,10 +45,7 @@ class ContractCustomerAdapter (val context: Context,val data : MutableList<Contr
 
         holder.itemView.setOnClickListener {
            // Toast.makeText(context,"HERE",Toast.LENGTH_SHORT).show()
-            MyContractsFrag.getcontractidIf?.getID(
-                data.get(position).customerId.toString(),
-                position.toString()
-            )
+            context.startActivity(Intent(context, DetailPage::class.java).putExtra("id",position.toString()).putExtra("from","customer"))
         }
     }
 
@@ -59,6 +59,7 @@ class ContractCustomerAdapter (val context: Context,val data : MutableList<Contr
         lateinit var invitation_date: TextView
         lateinit var invitation_status: TextView
         lateinit var makeanofferbt: Button
+        lateinit var openchat: Button
         lateinit var deleteoffer: ImageButton
         fun bindItems() {
             inviationimage = itemView.findViewById(R.id.inviationimage)
@@ -67,6 +68,7 @@ class ContractCustomerAdapter (val context: Context,val data : MutableList<Contr
             invitation_status = itemView.findViewById(R.id.invitation_status)
             makeanofferbt = itemView.findViewById(R.id.makeanofferbt)
             deleteoffer = itemView.findViewById(R.id.deleteoffer)
+            openchat = itemView.findViewById(R.id.openchat)
         }
 
     }

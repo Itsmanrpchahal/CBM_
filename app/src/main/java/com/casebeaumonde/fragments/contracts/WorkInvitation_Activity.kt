@@ -51,10 +51,23 @@ class WorkInvitation_Activity : BaseClass(), Controller.WorkInvitationAPI, GetIn
         controller.Controller(this, this)
         WorkInviationFrag.getinviidIf = this
         findIds()
-
-
-
         listeners()
+
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.WorkInvitation (
+                "Bearer " + getStringVal(Constants.TOKEN),
+                getStringVal(Constants.USERID)
+            )
+
+        } else {
+            utility.relative_snackbar(
+                parent_workinvitation!!,
+                "No Internet Connectivity",
+                getString(R.string.close_up)
+            )
+        }
     }
 
     private fun listeners() {
@@ -90,21 +103,7 @@ class WorkInvitation_Activity : BaseClass(), Controller.WorkInvitationAPI, GetIn
 
     override fun onResume() {
         super.onResume()
-        if (utility.isConnectingToInternet(this)) {
-            pd.show()
-            pd.setContentView(R.layout.loading)
-            controller.WorkInvitation (
-                "Bearer " + getStringVal(Constants.TOKEN),
-                getStringVal(Constants.USERID)
-            )
 
-        } else {
-            utility.relative_snackbar(
-                parent_workinvitation!!,
-                "No Internet Connectivity",
-                getString(R.string.close_up)
-            )
-        }
     }
 
     private fun findIds() {
@@ -180,7 +179,7 @@ class WorkInvitation_Activity : BaseClass(), Controller.WorkInvitationAPI, GetIn
         workinvitations_recycler.adapter = adapter
     }
 
-    private fun setFullData(
+    private fun setFullData (
         sentInvitations: MutableList<WorkInvitationResponse.Data.User.SentInvitation>,
         type: String
     ) {

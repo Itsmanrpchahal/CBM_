@@ -30,9 +30,10 @@
             </ImageButton>
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MANAGE CONTRACTS"
+                android:text=""
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textsize_16sp"
                 android:layout_centerInParent="true"
@@ -104,6 +105,90 @@
 
             </TextView>
 
+            <TextView
+                android:id="@+id/contractnumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/detail"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/giggenratedthiscontract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/contractnumber"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/rateagreed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/giggenratedthiscontract"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/typeofrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/rateagreed"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/typeofrate"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/hours"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
         </RelativeLayout>
 
     </RelativeLayout>
@@ -154,6 +239,21 @@
 
     </Button>
 
+    <Button
+        android:id="@+id/setjobasopened"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginRight="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:text="Set job as opened"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/oswald_regular"
+        >
+
+    </Button>
 
     <Button
         android:id="@+id/open_claimbt"

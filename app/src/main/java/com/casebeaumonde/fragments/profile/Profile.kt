@@ -1101,9 +1101,8 @@ class Profile : BaseFrag(),
             }
 
             if (!userProfileResponse.body()?.getData()?.user!!.role.equals("customer")) {
-                profile_mycontracts.visibility = View.VISIBLE
+                profile_mycontracts.visibility = View.GONE
                 social_accounts.visibility = View.VISIBLE
-                profile_mycontracts.visibility = View.VISIBLE
                 profile_myevents.visibility = View.VISIBLE
 
             }

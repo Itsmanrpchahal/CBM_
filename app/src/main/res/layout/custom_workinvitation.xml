@@ -33,6 +33,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/openchat"
+                android:layout_marginRight="@dimen/margin_8dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
@@ -97,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/openchat"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:src="@drawable/ic_baseline_delete_24"
                 android:layout_marginRight="@dimen/default_margin_16dp"
                 android:background="@android:color/transparent">

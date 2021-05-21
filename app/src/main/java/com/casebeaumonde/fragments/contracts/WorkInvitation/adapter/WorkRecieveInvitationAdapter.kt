@@ -47,7 +47,7 @@ class WorkRecieveInvitationAdapter (var context: Context, var data: MutableList<
 //        }
         holder.itemView.deleteoffer.visibility = View.GONE
         holder.itemView.setOnClickListener {
-            context.startActivity(Intent(context,DetailPage::class.java).putExtra("id",position.toString()).putExtra("from","invitation"))
+            context.startActivity(Intent(context,DetailPage::class.java).putExtra("id",position.toString()).putExtra("from","invitation_R"))
           //  Toast.makeText(context,""+data.get(position).description,Toast.LENGTH_SHORT).show()
         }
 

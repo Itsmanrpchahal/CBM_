@@ -75,6 +75,12 @@ class Offers_Activity : BaseClass(), Controller.OfferListAPI, getOfferID_IF,
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
     private fun lisenters() {
 
         back.setOnClickListener {

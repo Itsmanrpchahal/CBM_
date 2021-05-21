@@ -56,7 +56,7 @@ class WorkSendInvitationAdapter(
         }
         holder.itemView.deleteoffer.visibility = View.GONE
         holder.itemView.setOnClickListener {
-            context.startActivity(Intent(context, DetailPage::class.java).putExtra("id",position.toString()).putExtra("from","invitation_R"))
+            context.startActivity(Intent(context, DetailPage::class.java).putExtra("id",position.toString()).putExtra("from","invitation"))
             //  Toast.makeText(context,""+data.get(position).description,Toast.LENGTH_SHORT).show()
         }
 

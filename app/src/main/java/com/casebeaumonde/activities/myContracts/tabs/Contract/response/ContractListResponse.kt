@@ -161,7 +161,7 @@ class ContractListResponse {
 
                 @SerializedName("total_amount")
                 @Expose
-                var totalAmount: Int? = null
+                var totalAmount: String? = null
 
                 @SerializedName("customer_signature")
                 @Expose
@@ -185,7 +185,7 @@ class ContractListResponse {
 
                 @SerializedName("amount_paid_cbm")
                 @Expose
-                var amountPaidCbm: Any? = null
+                var amountPaidCbm: String? = null
 
                 @SerializedName("total_used_days")
                 @Expose
@@ -313,6 +313,9 @@ class ContractListResponse {
                     @SerializedName("firstname")
                     @Expose
                     var firstname: String? = null
+                    @SerializedName("contract_number")
+                    @Expose
+                    var contract_number: String? = null
 
                     @SerializedName("lastname")
                     @Expose
@@ -469,7 +472,8 @@ class ContractListResponse {
 
                 @SerializedName("total_amount")
                 @Expose
-                var totalAmount: Int? = null
+                var totalAmount: String
+                ? = null
 
                 @SerializedName("customer_signature")
                 @Expose
@@ -493,7 +497,7 @@ class ContractListResponse {
 
                 @SerializedName("amount_paid_cbm")
                 @Expose
-                var amountPaidCbm: Any? = null
+                var amountPaidCbm: String? = null
 
                 @SerializedName("total_used_days")
                 @Expose
@@ -621,6 +625,9 @@ class ContractListResponse {
                     @SerializedName("firstname")
                     @Expose
                     var firstname: String? = null
+                    @SerializedName("contract_number")
+                    @Expose
+                    var contract_number: String? = null
 
                     @SerializedName("lastname")
                     @Expose

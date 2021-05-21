@@ -48,12 +48,12 @@ class RecieveOffersAdapter (
         holder.itemView.invitation_status.setText(data.get(position).status?.substring(0,1)?.toUpperCase()+data.get(position).status?.substring(1))
 
 
-        holder.itemView.setOnClickListener {
-            OffersFrag.getOfferID_IF?.getID(
-                data.get(position).gig?.id.toString(),
-                position.toString(),"recieve", data.get(position).id.toString()
-            )
-        }
+//        holder.itemView.setOnClickListener {
+//            OffersFrag.getOfferID_IF?.getID(
+//                data.get(position).gig?.id.toString(),
+//                position.toString(),"recieve", data.get(position).id.toString()
+//            )
+//        }
 
         holder.itemView.openchat.setOnClickListener {
             context.startActivity(

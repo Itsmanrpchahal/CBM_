@@ -87,7 +87,7 @@ class SendOffersAdapter(
         holder.itemView.deleteoffer.setOnClickListener {
             Offers_Activity.getOfferDeleteID_IF?.getOfferDeleteID( data.get(
                 position
-            ).user?.id.toString())
+            ).id.toString())
         }
     }
 

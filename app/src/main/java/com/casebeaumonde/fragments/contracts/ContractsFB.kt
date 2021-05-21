@@ -12,11 +12,14 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.HireExpert.HireAnExpertFragment
+import com.casebeaumonde.fragments.pricing.Pricing
 import com.casebeaumonde.utilities.Utility
 import org.w3c.dom.Text
 import retrofit2.Response
@@ -28,6 +31,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
     lateinit var work_invitations : LinearLayout
     lateinit var newofferstoreview : LinearLayout
     lateinit var invite_collaborate : LinearLayout
+    lateinit var contracts: LinearLayout
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
     lateinit var controller: Controller
@@ -38,6 +42,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
     private lateinit var active: TextView
     private lateinit var complete: TextView
     private lateinit var contractscount: TextView
+    private lateinit var manager:FragmentManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +50,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_contracts_f_b, container, false)
-
+        manager = fragmentManager!!
         findIds(view)
         listeners()
 
@@ -64,6 +69,22 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
         newofferstoreview.setOnClickListener {
             startActivity(Intent(context,Offers_Activity::class.java))
         }
+
+        contracts.setOnClickListener {
+            startActivity(Intent(context,ContractActivity::class.java))
+        }
+        val bundle = Bundle()
+        bundle.putString(Constants.FROM, "")
+
+
+        invite_collaborate.setOnClickListener {
+            val transaction = manager.beginTransaction()
+//            val priceFrag = Pricing()
+//            priceFrag.arguments = bundle
+            transaction.replace(R.id.nav_host_fragment, HireAnExpertFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
 
     private fun findIds(view: View) {
@@ -78,6 +99,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
         active = view.findViewById(R.id.active)
         complete = view.findViewById(R.id.complete)
         contractscount = view.findViewById(R.id.contractscount)
+        contracts = view.findViewById(R.id.contracts)
 
         controller = Controller()
         controller.Controller(this)

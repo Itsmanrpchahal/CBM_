@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VIEW GIGS"
+                android:text="MY SERVICES"
                 android:textColor="@color/colorBlack"
                 android:fontFamily="@font/opensans_regular"
                 android:layout_gravity="center_vertical"

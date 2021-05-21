@@ -407,11 +407,19 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(workInvitation: WorkInvitationAPI,acceptDeclineInvitation: AcceptDeclineInvitationAPI,offerlist: OfferListAPI)
+    fun Controller(workInvitation: WorkInvitationAPI,
+                   acceptDeclineInvitation: AcceptDeclineInvitationAPI,
+                   offerlist: OfferListAPI,
+                   offerDecision: SetOfferDecisionAPI,
+                   contractList: ContractListAPI,
+    openClaim: SendClaimAPI)
     {
         workInvitationAPI = workInvitation
         acceptDeclineInvitationAPI = acceptDeclineInvitation
         offerListAPI = offerlist
+        setOfferDesicionAPI = offerDecision
+        contractListAPI = contractList
+        sendClaimAPI = openClaim
         webAPI = WebAPI()
     }
 

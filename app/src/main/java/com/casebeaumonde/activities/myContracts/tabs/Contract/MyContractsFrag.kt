@@ -289,10 +289,10 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
                 }
                 else -> {
                     pd.show()
-                    controller.SendClaim(
-                        "Bearer " + getStringVal(Constants.TOKEN),
-                        id.toString(), issue_et.text.toString()
-                    )
+//                    controller.SendClaim(
+//                        "Bearer " + getStringVal(Constants.TOKEN),
+//                        id.toString(), issue_et.text.toString()
+//                    )
                 }
             }
         }

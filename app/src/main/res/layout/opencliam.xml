@@ -26,8 +26,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Open claim"
+                    android:text="OPEN CLAIM/SOLVE PROBLEM"
                     android:textColor="@color/colorBlack"
+                    android:layout_centerHorizontal="true"
                     android:textSize="@dimen/textsize_16sp"
                     android:layout_margin="@dimen/margin_8dp">
 
@@ -38,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contract#:"
+                    android:visibility="gone"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/margin_8dp"
                     android:textColor="@color/colorBlack"
@@ -53,17 +55,39 @@
                 android:background="@color/colorBlack">
 
             </View>
-
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/title_et"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please describe the issue as accurate as you can"
-                android:textColor="@color/colorTextHint"
+                android:textColor="@color/colorBlack"
+                android:gravity="start"
+                android:hint="OFFER TITLE"
+                android:textColorHint="@color/colorBlack"
+                android:padding="@dimen/margin_8dp"
+                android:backgroundTint="@color/colorBlack"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginLeft="@dimen/margin_8dp"
-                android:textSize="@dimen/textsize_16sp"
-                android:layout_marginTop="@dimen/margin_8dp">
+                android:layout_marginRight="8dp">
 
-            </TextView>
+            </EditText>
+
+
+
+            <EditText
+                android:id="@+id/reason_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:gravity="start"
+                android:hint="REASON FOR CLAIM"
+                android:textColorHint="@color/colorBlack"
+                android:padding="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:backgroundTint="@color/colorBlack"
+                android:layout_marginRight="8dp">
+
+            </EditText>
 
 
             <EditText
@@ -72,19 +96,15 @@
                 android:layout_height="150dp"
                 android:textColor="@color/colorBlack"
                 android:gravity="start"
+                android:hint="DESCRIBE ISSUE"
+                android:textColorHint="@color/colorBlack"
                 android:padding="@dimen/margin_8dp"
                 android:layout_margin="@dimen/margin_8dp"
-                android:background="@drawable/blackcorner">
+                android:backgroundTint="@color/colorBlack">
 
             </EditText>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:background="@color/colorBlack">
 
-            </View>
 
             <LinearLayout
                 android:layout_width="match_parent"

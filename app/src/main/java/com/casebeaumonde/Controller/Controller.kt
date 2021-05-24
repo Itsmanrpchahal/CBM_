@@ -29,6 +29,7 @@ import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
 import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ChangeContractStatusResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
@@ -160,6 +161,7 @@ public class Controller {
     var duplicateOutfitItemAPI: DuplicateOutfitItemAPI? = null
     var deleteEventAPI: DeleteEventAPI? = null
     var deleteOfferAPI : DeleteOfferAPI?= null
+    var changeContractStatusAPI:ChangeContractStatusAPI?=null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -412,7 +414,8 @@ public class Controller {
                    offerlist: OfferListAPI,
                    offerDecision: SetOfferDecisionAPI,
                    contractList: ContractListAPI,
-    openClaim: SendClaimAPI)
+    openClaim: SendClaimAPI,
+    changeContractStatus: ChangeContractStatusAPI)
     {
         workInvitationAPI = workInvitation
         acceptDeclineInvitationAPI = acceptDeclineInvitation
@@ -420,6 +423,7 @@ public class Controller {
         setOfferDesicionAPI = offerDecision
         contractListAPI = contractList
         sendClaimAPI = openClaim
+        changeContractStatusAPI = changeContractStatus
         webAPI = WebAPI()
     }
 
@@ -1352,8 +1356,8 @@ public class Controller {
             })
     }
 
-    fun SendClaim(token: String?, contract_id: String, description: String) {
-        webAPI?.api?.sendClaim(token, contract_id, description)
+    fun SendClaim(token: String?, contract_id: String, description: String,title: String?,reason:String) {
+        webAPI?.api?.sendClaim(token, contract_id, description,title, reason)
             ?.enqueue(object : Callback<SendClaimResponse> {
                 override fun onResponse(
                     call: Call<SendClaimResponse>,
@@ -2449,6 +2453,24 @@ public class Controller {
        })
     }
 
+    fun ChangeContractStatus(token: String?,id: String?,status: String)
+    {
+        webAPI?.api?.ChangeContractStatus(token, id, status)?.enqueue(object :Callback<ChangeContractStatusResponse>
+        {
+            override fun onResponse(
+                call: Call<ChangeContractStatusResponse>,
+                response: Response<ChangeContractStatusResponse>
+            ) {
+                changeContractStatusAPI?.onChangeContractSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ChangeContractStatusResponse>, t: Throwable) {
+               changeContractStatusAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -2905,6 +2927,11 @@ public class Controller {
 
     interface DeleteOfferAPI {
         fun onDeleteOfferSuccess(success:Response<DeleteOfferResponse>)
+        fun error(error: String?)
+    }
+
+    interface ChangeContractStatusAPI {
+        fun onChangeContractSuccess(success:Response<ChangeContractStatusResponse>)
         fun error(error: String?)
     }
 }

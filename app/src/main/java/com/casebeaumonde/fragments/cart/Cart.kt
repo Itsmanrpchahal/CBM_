@@ -201,6 +201,11 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF, Controller.Re
                 pd.show()
                 pd.setContentView(R.layout.loading)
                 controller.CartItems("Bearer " + getStringVal(Constants.TOKEN))
+                utility!!.relative_snackbar(
+                    parent_cart!!,
+                   success.body()?.message,
+                    getString(R.string.close_up)
+                )
             } else {
                 utility!!.relative_snackbar(
                     parent_cart!!,

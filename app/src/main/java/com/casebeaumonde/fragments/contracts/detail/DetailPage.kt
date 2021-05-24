@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.EventsInvitations.response.AcceptDeclineInvitationResponse
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ChangeContractStatusResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
@@ -32,7 +33,7 @@ import retrofit2.Response
 
 class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
     Controller.AcceptDeclineInvitationAPI, Controller.OfferListAPI, Controller.SetOfferDecisionAPI,
-    Controller.ContractListAPI,Controller.SendClaimAPI {
+    Controller.ContractListAPI,Controller.SendClaimAPI ,Controller.ChangeContractStatusAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -48,6 +49,7 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
     private lateinit var decline_bt: Button
     private lateinit var setjobasopened: Button
     private lateinit var open_claimbt: Button
+    private lateinit var setjobasfinished: Button
     private lateinit var id_c: String
     private lateinit var title: TextView
     private lateinit var contractnumber: TextView
@@ -58,12 +60,13 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
     private lateinit var amount: TextView
     private lateinit var sendClaim:Dialog
     private lateinit var setJobDialog:Dialog
+    private lateinit var fishishedjobDialog:Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_page)
         controller = Controller()
-        controller.Controller(this, this, this, this, this,this)
+        controller.Controller(this, this, this, this, this,this,this)
         findIDs()
         listeners()
 
@@ -151,6 +154,7 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
         accept_bt = findViewById(R.id.accept_bt)
         decline_bt = findViewById(R.id.decline_bt)
         title = findViewById(R.id.title)
+        setjobasfinished = findViewById(R.id.setjobasfinished)
         contractnumber = findViewById(R.id.contractnumber)
         giggenratedthiscontract = findViewById(R.id.giggenratedthiscontract)
         rateagreed = findViewById(R.id.rateagreed)
@@ -446,10 +450,18 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
                     hours.setText("Quantity of hours agreed:"+contractlist.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.hours)
                     amount.setText("Total amount agreed:"+contractlist.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.totalAmount)
 
-                    if (contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.status.equals("funds_release_requested")||contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.status.equals("opened"))
+                    if (contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.status.equals("funds_release_requested"))
+                        //contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.status.equals("opened"))
                     {
                         open_claimbt.visibility = View.VISIBLE
                         setjobasopened.visibility = View.VISIBLE
+                    }
+
+                    if (contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.status.equals("opened"))
+                    {
+                        setjobasfinished.visibility = View.VISIBLE
+                        setjobasopened.visibility = View.GONE
+                        open_claimbt.visibility = View.VISIBLE
                     }
 
                     open_claimbt.setOnClickListener {
@@ -466,11 +478,15 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
                         var sendclaim: Button
                         var closecliam: Button
                         var issue_et: EditText
+                        var title_et: EditText
+                        var reason_et: EditText
                         contract_id = sendClaim.findViewById(R.id.contract_id)
                         sendclaim = sendClaim.findViewById(R.id.sendclaim)
                         closecliam = sendClaim.findViewById(R.id.closecliam)
                         issue_et = sendClaim.findViewById(R.id.issue_et)
-
+                        title_et = sendClaim.findViewById(R.id.title_et)
+                        reason_et = sendClaim.findViewById(R.id.reason_et)
+                        title_et.setText(contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id?.toInt()!!)?.gig?.title)
                         contract_id.setText("Contract#:" + contractlist?.body()?.getData()?.user?.contractsAsContractor?.get(id?.toInt()!!)?.contractNumber)
 
                         closecliam.setOnClickListener {
@@ -478,15 +494,31 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
                         }
                         sendclaim.setOnClickListener {
                             when {
+                                title_et.text.isEmpty() -> {
+                                    title_et.requestFocus()
+                                    title_et.error = "Enter Title"
+                                }
+
+                                reason_et.text.isEmpty() -> {
+                                    reason_et.requestFocus()
+                                    reason_et.error = "Enter Reason"
+                                }
+
                                 issue_et.text.isEmpty() -> {
                                     issue_et.requestFocus()
                                     issue_et.error = " Enter Issue "
+
+
                                 }
                                 else -> {
                                     pd.show()
                                     controller.SendClaim(
                                         "Bearer " + getStringVal(Constants.TOKEN),
-                                        contractlist.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.contractor?.id.toString(), issue_et.text.toString()
+                                        contractlist.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.id.toString()
+                                        , issue_et.text.toString(),
+                                        title.text.toString(),
+                                        reason_et.text.toString()
+
                                     )
                                 }
                             }
@@ -518,10 +550,43 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
                         subtitle.text ="This will notify a job as opened again.Note that if the customer has already taken action on your previous notification of completed job,you must contact us and the client in order to revert this action."
 
                         go.setOnClickListener {
-
+                            pd.show()
+                            setJobDialog.dismiss()
+                           controller.ChangeContractStatus("Bearer "+getStringVal(Constants.TOKEN), contractlist.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.id.toString(),"opened")
                         }
                         cancel.setOnClickListener { setJobDialog.dismiss() }
                         setJobDialog.show()
+                    }
+
+                    setjobasfinished.setOnClickListener {
+                        fishishedjobDialog = Dialog(this!!)
+                        fishishedjobDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        fishishedjobDialog.setContentView(R.layout.unblockuser_popup)
+                        val window = fishishedjobDialog.window
+                        window?.setLayout(
+                            WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.WRAP_CONTENT
+                        )
+
+                        var title:TextView
+                        var subtitle : TextView
+                        var cancel : Button
+                        var go : Button
+                        title = fishishedjobDialog.findViewById(R.id.title)
+                        subtitle = fishishedjobDialog.findViewById(R.id.subtitle)
+                        cancel = fishishedjobDialog.findViewById(R.id.cancel)
+                        go = fishishedjobDialog.findViewById(R.id.go)
+
+                        title.text =  "Funds release request"
+                        subtitle.text ="Please use this feature only if the agreed job in this contract is really completed and you have been in contact with the client via chat about it. This action will generate a payment release request and it will be sent to the client of this contract. In order to actually release the agreed amount, the client must approve the job done. If the client do not approve the job and it is really completly done, we will open an investigation in order to protect the interests of both parts."
+
+                        go.setOnClickListener {
+                            pd.show()
+                            fishishedjobDialog.dismiss()
+                            controller.ChangeContractStatus("Bearer "+getStringVal(Constants.TOKEN), contractlist.body()?.getData()?.user?.contractsAsContractor?.get(id.toInt())?.id.toString(),"funds_release_requested")
+                        }
+                        cancel.setOnClickListener { fishishedjobDialog.dismiss() }
+                        fishishedjobDialog.show()
                     }
 
                 } else {
@@ -624,6 +689,26 @@ class DetailPage : BaseClass(), Controller.WorkInvitationAPI,
             )
         }
      }
+
+    override fun onChangeContractSuccess(success: Response<ChangeContractStatusResponse>) {
+        pd.dismiss()
+
+        if (success.isSuccessful) {
+
+            controller.ContractList("Bearer "+getStringVal(Constants.TOKEN))
+            utility.relative_snackbar(
+                parent_detail!!,
+                success.body()?.getMessage(),
+                getString(R.string.close_up)
+            )
+        } else {
+            utility.relative_snackbar(
+                parent_detail!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
 
 
     override fun error(error: String?) {

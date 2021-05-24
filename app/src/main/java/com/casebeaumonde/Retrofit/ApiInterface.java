@@ -32,6 +32,7 @@ import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse;
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse;
 import com.casebeaumonde.activities.login.loginResponse.LoginResponse;
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse;
+import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ChangeContractStatusResponse;
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse;
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
@@ -103,6 +104,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -458,7 +460,9 @@ public interface ApiInterface {
     Call<SendClaimResponse> sendClaim(
             @Header("Authorization") String token,
             @Field("contract_id") String contract_id,
-            @Field("description") String description
+            @Field("description") String description,
+            @Field("title") String title,
+            @Field("reason") String reason
     );
 
     @GET("api/v1/set-offer-decision/{input}/{input1}")
@@ -904,6 +908,13 @@ public interface ApiInterface {
     Call<DeleteOfferResponse> DeleteOffer(
             @Header("Authorization") String token,
             @Path("input") String id
+    );
+
+    @GET("api/v1/change-contract-status/{input}/{input1}")
+    Call<ChangeContractStatusResponse> ChangeContractStatus(
+            @Header("Authorization") String token,
+            @Path("input") String id,
+            @Path("input1") String status
     );
 
 }

@@ -256,6 +256,23 @@
     </Button>
 
     <Button
+        android:id="@+id/setjobasfinished"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/default_margin_16dp"
+        android:layout_marginLeft="@dimen/default_margin_16dp"
+        android:layout_marginRight="@dimen/default_margin_16dp"
+        android:background="@color/colorWhite"
+        android:text="Set job as finished"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/oswald_regular"
+        >
+
+    </Button>
+
+
+    <Button
         android:id="@+id/open_claimbt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

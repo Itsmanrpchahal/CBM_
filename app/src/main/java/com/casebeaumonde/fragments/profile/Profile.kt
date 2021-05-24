@@ -33,9 +33,12 @@ import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
+import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.paymenthistory.PaymentHistory
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.HireExpert.HireAnExpertFragment
+import com.casebeaumonde.fragments.contracts.ContractsFB
 import com.casebeaumonde.fragments.pricing.Pricing
 import com.casebeaumonde.fragments.profile.IF.GetCardID
 import com.casebeaumonde.fragments.profile.IF.GetUserID
@@ -94,7 +97,9 @@ class Profile : BaseFrag(),
     private lateinit var profile_changepassword: Button
     private lateinit var profile_edit_profile: Button
     private lateinit var profile_chooseyourplan: Button
+    private lateinit var profile_notification: Button
     private lateinit var profile_logout: Button
+    private lateinit var profile_contracts: Button
     private lateinit var profile_mypaymentmethods: Button
     private lateinit var followbt: Button
     private var path: String = ""
@@ -199,6 +204,10 @@ class Profile : BaseFrag(),
 
         }
 
+        profile_notification.setOnClickListener {
+            startActivity(Intent(context,Notifications::class.java))
+        }
+
         profile_edit_profile.setOnClickListener {
             editprofile_Dialog(view)
         }
@@ -251,7 +260,13 @@ class Profile : BaseFrag(),
         }
 
         profile_mycontracts.setOnClickListener {
-            startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
+            //startActivity(Intent(context, MyContracts::class.java).putExtra("userID", userID))
+            val transaction = manager.beginTransaction()
+//            val priceFrag = Pricing()
+//            priceFrag.arguments = bundle
+            transaction.replace(R.id.nav_host_fragment, ContractsFB())
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
         profile_myclosets.setOnClickListener {
@@ -907,6 +922,7 @@ class Profile : BaseFrag(),
         profile_eventInvitation = view.findViewById(R.id.profile_eventInvitation)
         social_accounts = view.findViewById(R.id.social_accounts)
         profile_myoutfits = view.findViewById(R.id.profile_myoutfits)
+        profile_notification = view.findViewById(R.id.profile_notification)
         pd.show()
         pd.setContentView(R.layout.loading)
 
@@ -1116,7 +1132,7 @@ class Profile : BaseFrag(),
                 profile_mypaymentmethods.visibility = View.VISIBLE
 
                 profile_mywall.visibility = View.VISIBLE
-                //profile_mycontracts.visibility = View.VISIBLE
+                profile_mycontracts.visibility = View.VISIBLE
                 //profile_myevents.visibility = View.GONE
                 profile_eventInvitation.visibility = View.VISIBLE
                 profile_myclosets.visibility = View.VISIBLE

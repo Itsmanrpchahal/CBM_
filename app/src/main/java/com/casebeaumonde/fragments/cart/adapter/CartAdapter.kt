@@ -35,6 +35,7 @@ class CartAdapter(
             .placeholder(R.drawable.login_banner1).into(holder.itemView.cartimage)
         holder.itemView.itemdata.setText("Name :" + cartlist.name)
         holder.itemView.pricetv.setText("$" + cartlist.price)
+        holder.itemView.count_tv.setText(cartlist.qty.toString())
 
         holder.itemView.plus.setOnClickListener {
             count++

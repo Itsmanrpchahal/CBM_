@@ -13,7 +13,6 @@
         android:layout_gravity="center"
         android:gravity="center_vertical"
         android:textAlignment="center"
-        android:layout_below="@+id/freepaid_tv"
         android:fontFamily="@font/oswaldlight"
         android:layout_centerHorizontal="true"
         android:text="A fun, new connected way to do all your favorite tasks in the fashion world."

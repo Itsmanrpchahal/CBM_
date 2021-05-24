@@ -179,7 +179,7 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
                             "card",
                             planID.toString(),
                             token?.id!!,
-                            "customer"
+                            getStringVal(Constants.USER_ROLE).toString()
                         )
                     }
 
@@ -257,11 +257,10 @@ class CardDetailScreen : BaseClass(), Controller.SubscribePlanAPI {
         } else {
             utility!!.relative_snackbar(
                 parent_cardscreen!!,
-                subscribe.body()?.getMessage(),
+                subscribe.message(),
                 getString(R.string.close_up)
             )
         }
-
     }
 
     override fun error(error: String?) {

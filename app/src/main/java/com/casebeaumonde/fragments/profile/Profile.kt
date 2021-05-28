@@ -29,7 +29,6 @@ import com.casebeaumonde.UpdateProfilePicResponse
 import com.casebeaumonde.activities.EventsInvitations.EventsInvitations
 import com.casebeaumonde.activities.MyEvents.MyEventsActivity
 import com.casebeaumonde.activities.login.loginResponse.LogoutResponse
-import com.casebeaumonde.activities.myContracts.MyContracts
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.activities.myWall.MyWall
 import com.casebeaumonde.activities.myclosets.MyClosets
@@ -37,8 +36,7 @@ import com.casebeaumonde.activities.notifications.Notifications
 import com.casebeaumonde.activities.paymenthistory.PaymentHistory
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
-import com.casebeaumonde.fragments.HireExpert.HireAnExpertFragment
-import com.casebeaumonde.fragments.contracts.ContractsFB
+import com.casebeaumonde.fragments.contracts.contract.ContractsFB
 import com.casebeaumonde.fragments.pricing.Pricing
 import com.casebeaumonde.fragments.profile.IF.GetCardID
 import com.casebeaumonde.fragments.profile.IF.GetUserID

@@ -8,13 +8,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ackasClient.ClientClosets
 import com.casebeaumonde.activities.myContracts.tabs.Contract.MyContractsFrag
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.openchat.SendChat
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.contracts.contract.ContractsFB
 import com.casebeaumonde.fragments.contracts.detail.DetailPage
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
@@ -74,6 +77,7 @@ class ContractorAdapter(
         holder.itemView.clientcloset.visibility = View.VISIBLE
         holder.itemView.clientcloset.setOnClickListener {
 
+            ContractsFB.getclientidIf?.getClientID(data.get(position).customer?.id.toString())
         }
 
         holder.itemView.setOnClickListener {

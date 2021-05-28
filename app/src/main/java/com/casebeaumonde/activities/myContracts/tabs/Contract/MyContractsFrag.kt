@@ -2,6 +2,7 @@ package com.casebeaumonde.activities.myContracts.tabs.Contract
 
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,11 +10,13 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ackasClient.ClientClosets
 import com.casebeaumonde.activities.myContracts.tabs.Contract.IF.GetContractID_IF
 import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractCustomerAdapter
 import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractorAdapter
@@ -21,6 +24,7 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
+import com.casebeaumonde.fragments.contracts.contract.IF.GetClientID_IF
 import com.casebeaumonde.utilities.Utility
 import com.casebeaumonde.utilities.Utils
 import de.hdodenhof.circleimageview.CircleImageView
@@ -28,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_my_contracts.*
 import retrofit2.Response
 
 class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendClaimAPI,
-    GetContractID_IF {
+    GetContractID_IF,GetClientID_IF {
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -53,6 +57,7 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
         controller = Controller()
         controller.Controller(this, this)
         getcontractidIf = this
+        getClientID_IF = this
         findIds(view)
         lisenters()
         if (utility.isConnectingToInternet(context)) {
@@ -87,6 +92,7 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
 
     companion object {
         var getcontractidIf: GetContractID_IF? = null
+        var getClientID_IF : GetClientID_IF? = null
     }
 
     private fun lisenters() {
@@ -322,6 +328,11 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun getClientID(id: String) {
+        Toast.makeText(context,"HERE", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(context,ClientClosets::class.java).putExtra("userID",id.toString()))
     }
 
 }

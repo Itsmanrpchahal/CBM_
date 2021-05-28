@@ -1,4 +1,4 @@
-package com.casebeaumonde.fragments.contracts
+package com.casebeaumonde.fragments.contracts.contract
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -15,17 +15,22 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ackasClient.ClientClosets
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.HireExpert.HireAnExpertFragment
-import com.casebeaumonde.fragments.pricing.Pricing
+import com.casebeaumonde.fragments.contracts.ContractActivity
+import com.casebeaumonde.fragments.contracts.ContractCountResponse
+import com.casebeaumonde.fragments.contracts.Offers_Activity
+import com.casebeaumonde.fragments.contracts.WorkInvitation_Activity
+import com.casebeaumonde.fragments.contracts.contract.IF.GetClientID_IF
 import com.casebeaumonde.utilities.Utility
-import org.w3c.dom.Text
 import retrofit2.Response
 
 
-class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
+class ContractsFB : BaseFrag() ,Controller.ContractCountAPI,
+GetClientID_IF{
 
     lateinit var view_gigs : LinearLayout
     lateinit var work_invitations : LinearLayout
@@ -52,6 +57,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
         var view = inflater.inflate(R.layout.fragment_contracts_f_b, container, false)
         manager = fragmentManager!!
         findIds(view)
+        getclientidIf = this
         listeners()
 
         return  view
@@ -59,7 +65,7 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
 
     private fun listeners() {
         work_invitations.setOnClickListener {
-            startActivity(Intent(context,WorkInvitation_Activity::class.java))
+            startActivity(Intent(context, WorkInvitation_Activity::class.java))
         }
 
         view_gigs.setOnClickListener {
@@ -67,11 +73,11 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
         }
 
         newofferstoreview.setOnClickListener {
-            startActivity(Intent(context,Offers_Activity::class.java))
+            startActivity(Intent(context, Offers_Activity::class.java))
         }
 
         contracts.setOnClickListener {
-            startActivity(Intent(context,ContractActivity::class.java))
+            startActivity(Intent(context, ContractActivity::class.java))
         }
         val bundle = Bundle()
         bundle.putString(Constants.FROM, "")
@@ -137,5 +143,13 @@ class ContractsFB : BaseFrag() ,Controller.ContractCountAPI{
     override fun error(error: String?) {
         pd.dismiss()
         Toast.makeText(context,""+error,Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        var getclientidIf : GetClientID_IF? = null
+    }
+
+    override fun getClientID(id: String) {
+        startActivity(Intent(context,ClientClosets::class.java).putExtra("userID",id.toString()))
     }
 }

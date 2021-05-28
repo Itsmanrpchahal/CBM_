@@ -209,6 +209,11 @@ public class Controller {
         webAPI = WebAPI()
     }
 
+    fun Controller(myClosets: MyClosetsAPI) {
+        myClosetsAPI = myClosets
+        webAPI = WebAPI()
+    }
+
     fun Controller(userProfile: UserProfileAPI, followUnFollow: FollowUnFollowAPI) {
         userProfileAPI = userProfile
         followUnFollowAPI = followUnFollow

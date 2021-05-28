@@ -14,6 +14,7 @@ import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.ClosetItem.adapter.FilterAdapter
 import com.casebeaumonde.activities.ClosetItem.response.FilterResponse
+import com.casebeaumonde.activities.ackasClient.clientClosetsItems.ClientClosetItems
 import com.casebeaumonde.constants.Constants
 import kotlinx.android.synthetic.main.closetsitems.view.*
 import retrofit2.Response
@@ -50,13 +51,14 @@ class ClientFilterAdapter (
             holder.itemView.closetitem_favcount.text = filterData?.body()?.data?.closet?.get(position)?.hearts?.size.toString()
         }
 
+        holder.itemView.hainger.visibility = View.GONE
         holder.itemView.closetitem_favorite.setOnClickListener {
             ClosetsItems.closetitemidIf!!.getClosetID(filterData?.body()?.data?.closet?.get(position)?.id.toString())
         }
         // searchUserHeart(list, holder.itemView.closetitem_favorite)
 
         holder.itemView.setOnClickListener {
-            ClosetsItems.viewclosetidIf!!.getID(position)
+            ClientClosetItems.viewclosetidIf!!.getID(position)
         }
 
         if (select==0)

@@ -147,9 +147,9 @@ Controller.MyClosetsAPI{
             )
         }
 
-        ClosetsItems.closetitemidIf = this
-        ClosetsItems.viewclosetidIf = this
-        ClosetsItems.selectedclosetId = this
+        closetitemidIf = this
+        viewclosetidIf = this
+        selectedclosetId = this
         userID = intent.getStringExtra("userID")!!
 
         listeners()
@@ -390,7 +390,6 @@ Controller.MyClosetsAPI{
 
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listview.setAdapter(adapter);
-
 
         //ToDo: Get Outfits
         for (i in 0 until outFitRes.size) {
@@ -1190,6 +1189,7 @@ Controller.MyClosetsAPI{
 
     override fun getID(id: Int?) {
         ViewClosetItem(id)
+//        Toast.makeText(this,""+id,Toast.LENGTH_SHORT).show()
     }
 
 

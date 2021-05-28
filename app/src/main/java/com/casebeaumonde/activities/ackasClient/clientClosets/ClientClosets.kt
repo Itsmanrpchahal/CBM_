@@ -45,6 +45,20 @@ class ClientClosets : BaseClass(), Controller.MyClosetsAPI {
         controller = Controller()
         controller.Controller(this)
         userID = intent.getStringExtra("userID")!!
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+            controller.GetMyClosets(
+                "Bearer " + getStringVal(Constants.TOKEN),
+                userID
+            )
+        } else {
+            utility!!.relative_snackbar(
+                parent_clientclosets,
+                R.string.nointernet.toString(),
+                getString(R.string.close_up)
+            )
+        }
 
         listeners()
     }
@@ -161,20 +175,6 @@ class ClientClosets : BaseClass(), Controller.MyClosetsAPI {
     }
 
     override fun onResume() {
-        if (utility.isConnectingToInternet(this)) {
-            pd.show()
-            pd.setContentView(R.layout.loading)
-            controller.GetMyClosets(
-                "Bearer " + getStringVal(Constants.TOKEN),
-                userID
-            )
-        } else {
-            utility!!.relative_snackbar(
-                parent_clientclosets,
-                R.string.nointernet.toString(),
-                getString(R.string.close_up)
-            )
-        }
 
         super.onResume()
     }

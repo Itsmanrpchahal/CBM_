@@ -16,6 +16,7 @@ import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.response.ClosetsItemsResponse
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
+import com.casebeaumonde.activities.ackasClient.clientClosetsItems.ClientClosetItems
 import com.casebeaumonde.constants.Constants
 import kotlinx.android.synthetic.main.closetsitems.view.*
 
@@ -58,8 +59,9 @@ class ClientClosetItemsAdapter(var context: Context,
         }
         searchUserHeart(closetsItems, holder.itemView.closetitem_favorite)
 
-        holder.itemView.hainger.setOnClickListener {
-            ClosetsItems.viewclosetidIf!!.getID(position)
+        holder.itemView.hainger.visibility = View.GONE
+        holder.itemView.setOnClickListener {
+            ClientClosetItems.viewclosetidIf!!.getID(position)
         }
 
         if (select==0)

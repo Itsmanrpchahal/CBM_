@@ -49,7 +49,7 @@ class ClientClosetAdapter(var context: Context,
             "Customer: " + closets.creator?.firstname + " " + closets.creator?.lastname
         holder.itemView.closet_createdat.text =
             "Created at: " + Utils.changeDateTimeToDateTime(closets.createdAt)
-        holder.itemView.hainger.visibility = View.GONE
+
         holder.itemView.closetitem_favorite.visibility = View.GONE
         holder.itemView.closets_duplicate.visibility = View.GONE
 
@@ -68,6 +68,7 @@ class ClientClosetAdapter(var context: Context,
             holder.itemView.closets_additem.visibility = View.GONE
             holder.itemView.closets_delete.visibility = View.GONE
             holder.itemView.closets_duplicate.visibility = View.GONE
+        holder.itemView.hainger.visibility = View.GONE
 //        }
 
 //        holder.itemView.closets_edititem.setOnClickListener {

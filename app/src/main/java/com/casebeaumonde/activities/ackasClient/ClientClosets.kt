@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
+import com.casebeaumonde.activities.ackasClient.adapter.ClientClosetAdapter
 import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.BaseClass
@@ -53,7 +54,6 @@ class ClientClosets : BaseClass(), Controller.MyClosetsAPI {
     }
 
     override fun onBackPressed() {
-
         exitDialog = Dialog(this)
         exitDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         exitDialog.setCancelable(false)
@@ -139,7 +139,7 @@ class ClientClosets : BaseClass(), Controller.MyClosetsAPI {
                     client_closets_recyler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     //closets =  response
-                    val adapter = MyClosetsAdapter(
+                    val adapter = ClientClosetAdapter(
                         this, response!!, userID,
                         getStringVal(Constants.USERID).toString()
                     )
@@ -157,7 +157,7 @@ class ClientClosets : BaseClass(), Controller.MyClosetsAPI {
             closets
         client_closets_recyler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = MyClosetsAdapter(
+        val adapter = ClientClosetAdapter(
             this, closets!!, userID,
             getStringVal(Constants.USERID).toString()
         )

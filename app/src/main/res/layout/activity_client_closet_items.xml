@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/parent_clientclosetsitems"
+    tools:context=".activities.ackasClient.ClientClosetItems">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/closetitems_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:background="@android:color/transparent">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Closets Items"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textAllCaps="true"
+                android:layout_centerInParent="true">
+
+            </TextView>
+
+            <ImageButton
+                android:id="@+id/closetiems_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_add_24"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/default_margin_16dp">
+
+            </ImageButton>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_8dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/category_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/category_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/brand_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/brand_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/color_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/color_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/size_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/size_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:layout_marginLeft="@dimen/margin_8dp"
+                    android:background="@drawable/roundcorners">
+
+                    <Spinner
+                        android:id="@+id/price_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/price_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/textsize_16sp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <include layout="@layout/searchbar"></include>
+
+        <RelativeLayout
+            android:id="@+id/hourlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@id/gigratetype"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@drawable/roundcorners">
+
+            <Spinner
+                android:id="@+id/outfit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+            </Spinner>
+
+            <TextView
+                android:id="@+id/outfit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/textsize_16sp"
+                android:textColor="@color/colorBlack">
+
+            </TextView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:padding="@dimen/margin_8dp">
+
+
+            <Button
+                android:id="@+id/closet_moveitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Move Item"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+            <Button
+                android:id="@+id/closet_duplicateitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Duplicate Item"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+            <Button
+                android:id="@+id/closet_makeoutfitbt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Make Outfit"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+
+            <Button
+                android:id="@+id/closet_selectitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Select All"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+            <Button
+                android:id="@+id/closet_deselectitembt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Deselect All"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/roundcorners">
+
+            </Button>
+
+            <Button
+                android:id="@+id/closet_showselectbt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/roundcorners"
+                android:text="Select Items"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlack">
+
+            </Button>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/closetsItems_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

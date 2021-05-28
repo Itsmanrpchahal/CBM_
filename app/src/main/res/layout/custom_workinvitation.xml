@@ -94,6 +94,19 @@
 
             </Button>
 
+            <Button
+                android:id="@+id/clientcloset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Client Closets"
+                android:visibility="gone"
+                android:layout_below="@id/openchat"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:background="#00000000">
+
+            </Button>
+
             <ImageButton
                 android:id="@+id/deleteoffer"
                 android:layout_width="wrap_content"

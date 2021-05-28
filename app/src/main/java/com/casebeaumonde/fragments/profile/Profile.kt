@@ -983,7 +983,7 @@ class Profile : BaseFrag(),
             var file: File? = ImagePicker.getFile(data)
             //You can also get File Path from intent
             val filePath: String? = ImagePicker.getFilePath(data)
-
+            Toast.makeText(context,""+filePath,Toast.LENGTH_SHORT).show()
             path = filePath!!
             bitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver, fileUri)
             part = Utility.sendImageFileToserver(context?.filesDir, bitMap, "image")

@@ -44,30 +44,36 @@ class ContractorAdapter(
         ).placeholder(R.drawable.login_banner1).into(holder.itemView.inviationimage)
 
         holder.itemView.invitation_title.setText(
-            "Contract "+ data.get(position).status +" for gig with title: '" + data.get(
+            "Contract " + data.get(position).status + " for gig with title: '" + data.get(
                 position
-            ).gig?.title + "' and " + data.get(position).customer?.firstname + " " + data.get(position).customer?.lastname
+            ).gig?.title + "' and " + data.get(position).customer?.firstname + " " + data.get(
+                position
+            ).customer?.lastname
         )
 
         holder.itemView.invitation_date.setText(Utils.changeDateTimeToDate(data.get(position).createdAt))
         holder.itemView.invitation_status.setText("Status:" + data.get(position).status)
 
         holder.itemView.openchat.setOnClickListener {
-                    holder.itemView.openchat.setOnClickListener {
-            context.startActivity(
-                Intent(context, SendChat::class.java).putExtra(
-                    "id", data.get(
-                        position
-                    ).customer?.id.toString()
-                ).putExtra(
-                    "chatname", data.get(
-                        position
-                    ).customer?.firstname + " " + data.get(
-                        position
-                    ).customer?.lastname.toString()
+            holder.itemView.openchat.setOnClickListener {
+                context.startActivity(
+                    Intent(context, SendChat::class.java).putExtra(
+                        "id", data.get(
+                            position
+                        ).customer?.id.toString()
+                    ).putExtra(
+                        "chatname", data.get(
+                            position
+                        ).customer?.firstname + " " + data.get(
+                            position
+                        ).customer?.lastname.toString()
+                    )
                 )
-            )
+            }
         }
+        holder.itemView.clientcloset.visibility = View.VISIBLE
+        holder.itemView.clientcloset.setOnClickListener {
+
         }
 
         holder.itemView.setOnClickListener {
@@ -75,7 +81,12 @@ class ContractorAdapter(
 //                data.get(position).customerId.toString(),
 //                position.toString()
 //            )
-            context.startActivity(Intent(context, DetailPage::class.java).putExtra("id",position.toString()).putExtra("from","contractor"))
+            context.startActivity(
+                Intent(context, DetailPage::class.java).putExtra(
+                    "id",
+                    position.toString()
+                ).putExtra("from", "contractor")
+            )
         }
     }
 
@@ -92,6 +103,7 @@ class ContractorAdapter(
         lateinit var makeanofferbt: Button
         lateinit var deleteoffer: ImageButton
         lateinit var openchat: Button
+        lateinit var clientcloset: Button
 
         fun bindItems() {
             inviationimage = itemView.findViewById(R.id.inviationimage)
@@ -101,6 +113,7 @@ class ContractorAdapter(
             makeanofferbt = itemView.findViewById(R.id.makeanofferbt)
             deleteoffer = itemView.findViewById(R.id.deleteoffer)
             openchat = itemView.findViewById(R.id.openchat)
+            clientcloset = itemView.findViewById(R.id.clientcloset)
         }
 
     }

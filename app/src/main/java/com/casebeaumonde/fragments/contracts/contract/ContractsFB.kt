@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.ackasClient.ClientClosets
+import com.casebeaumonde.activities.ackasClient.clientClosets.ClientClosets
 import com.casebeaumonde.activities.myGigs.MyGigs
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
@@ -150,6 +150,6 @@ GetClientID_IF{
     }
 
     override fun getClientID(id: String) {
-        startActivity(Intent(context,ClientClosets::class.java).putExtra("userID",id.toString()))
+        startActivity(Intent(context, ClientClosets::class.java).putExtra("userID",id.toString()))
     }
 }

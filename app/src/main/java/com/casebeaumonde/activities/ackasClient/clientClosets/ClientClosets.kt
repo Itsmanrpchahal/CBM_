@@ -1,10 +1,9 @@
-package com.casebeaumonde.activities.ackasClient
+package com.casebeaumonde.activities.ackasClient.clientClosets
 
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,15 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.ackasClient.adapter.ClientClosetAdapter
-import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
+import com.casebeaumonde.activities.ackasClient.clientClosets.adapter.ClientClosetAdapter
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_client_closets.*
-import kotlinx.android.synthetic.main.activity_my_closets.*
-import kotlinx.android.synthetic.main.activity_my_closets.parent_myclosets
 import retrofit2.Response
 
 class ClientClosets : BaseClass(), Controller.MyClosetsAPI {

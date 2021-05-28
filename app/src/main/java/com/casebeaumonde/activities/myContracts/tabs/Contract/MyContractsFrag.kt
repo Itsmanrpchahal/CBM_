@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
-import com.casebeaumonde.activities.ackasClient.ClientClosets
+import com.casebeaumonde.activities.ackasClient.clientClosets.ClientClosets
 import com.casebeaumonde.activities.myContracts.tabs.Contract.IF.GetContractID_IF
 import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractCustomerAdapter
 import com.casebeaumonde.activities.myContracts.tabs.Contract.adapter.ContractorAdapter
@@ -332,7 +332,7 @@ class MyContractsFrag : BaseFrag(), Controller.ContractListAPI, Controller.SendC
 
     override fun getClientID(id: String) {
         Toast.makeText(context,"HERE", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(context,ClientClosets::class.java).putExtra("userID",id.toString()))
+        startActivity(Intent(context, ClientClosets::class.java).putExtra("userID",id.toString()))
     }
 
 }

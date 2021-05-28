@@ -1,4 +1,4 @@
-package com.casebeaumonde.activities.ackasClient
+package com.casebeaumonde.activities.ackasClient.clientClosetsItems
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -6,7 +6,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -41,7 +40,6 @@ import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_client_closet_items.*
-import kotlinx.android.synthetic.main.activity_event_detail_screen.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

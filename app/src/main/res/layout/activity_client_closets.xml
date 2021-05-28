@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/parent_clientclosets"
-    tools:context=".activities.ackasClient.ClientClosets">
+    tools:context=".activities.ackasClient.clientClosets.ClientClosets">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

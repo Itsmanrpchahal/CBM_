@@ -275,6 +275,33 @@ public class Controller {
     }
 
     fun Controller(
+        closetItems: ClosetItemsAPI,
+        addTofavClosetItem: AddTofavClosetItemAPI,
+        deleteClosetItem: DeleteClosetItemAPI,
+        addItemToAnotherCloset: AdDItemToAnotherClosetAPI,
+        moveClosetItem: MoveItemAPI,
+        duplicateItem: DuplicateItemAPI,
+        fetchList: FetchListAPI,
+        outfit: OutFItAPI,
+        outfitFilter: OutfitFilterAPI,
+        filterClosetItem: FilterClosetItemsAPI,
+        myClosets: MyClosetsAPI
+    ) {
+        closetItemsAPI = closetItems
+        addTofavClosetItemAPI = addTofavClosetItem
+        deleteClosetItemAPI = deleteClosetItem
+        addItemToAnotherClosetAPI = addItemToAnotherCloset
+        moveItemAPI = moveClosetItem
+        duplicateItemAPI = duplicateItem
+        fetchListAPI = fetchList
+        outFItAPI = outfit
+        outfitFilterAPI = outfitFilter
+        filterClosetItemsAPI = filterClosetItem
+        myClosetsAPI = myClosets
+        webAPI = WebAPI()
+    }
+
+    fun Controller(
         liveEventsAP: LiveEventsAPI,
         favLiveEvent: FavLiveEventAPI
     ) {

@@ -29,13 +29,12 @@ import com.casebeaumonde.activities.ClosetItem.adapter.FilterAdapter
 import com.casebeaumonde.activities.ClosetItem.adapter.FilterOutFitItems
 import com.casebeaumonde.activities.ClosetItem.response.*
 import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
+import com.casebeaumonde.activities.ackasClient.clientClosetsItems.adapter.ClientClosetItemsAdapter
+import com.casebeaumonde.activities.ackasClient.clientClosetsItems.adapter.ClientFilterAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
 import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
 import com.casebeaumonde.activities.myclosets.IF.ViewClosetID_IF
-import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse
-import com.casebeaumonde.activities.myclosets.response.FetchListResponse
-import com.casebeaumonde.activities.myclosets.response.MoveClosetItems
-import com.casebeaumonde.activities.myclosets.response.OutFitResponse
+import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.utilities.Utility
@@ -58,7 +57,8 @@ class ClientClosetItems : BaseClass(),
     Controller.FetchListAPI,
     Controller.OutFItAPI,
     Controller.OutfitFilterAPI,
-    Controller.FilterClosetItemsAPI{
+    Controller.FilterClosetItemsAPI,
+Controller.MyClosetsAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -120,6 +120,8 @@ class ClientClosetItems : BaseClass(),
     private lateinit var deleteDialog: Dialog
     var select: Int = 0
     var selectAll: Int = 0
+    private lateinit var clientClosetsName : ArrayList<MyClosetsResponse.Data.Closet>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_closet_items)
@@ -129,7 +131,7 @@ class ClientClosetItems : BaseClass(),
         checkedClosetIDs = ArrayList()
         selectedItems = ArrayList()
         controller = Controller()
-        controller.Controller(this, this, this, this, this, this, this, this, this, this)
+        controller.Controller(this, this, this, this, this, this, this, this, this, this,this)
         closetID = intent?.getStringExtra(Constants.CLOSETID).toString()
         if (utility.isConnectingToInternet(this)) {
             pd.show()
@@ -174,6 +176,8 @@ class ClientClosetItems : BaseClass(),
     override fun onResume() {
         super.onResume()
         setClosetAPI()
+
+        controller.GetMyClosets("Bearer "+getStringVal(Constants.TOKEN),userID)
     }
 
     private fun listeners() {
@@ -302,7 +306,7 @@ class ClientClosetItems : BaseClass(),
                     closetsItems_recycler.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     //closets =  response
-                    val adapter = ClosetsItemAdapter(
+                    val adapter = ClientClosetItemsAdapter(
                         this, closetResponsefilter!!, userID, select, selectAll
                     )
                     closetsItems_recycler.adapter = adapter
@@ -600,7 +604,7 @@ class ClientClosetItems : BaseClass(),
         closetsItems_recycler.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val adapter = getStringVal(Constants.USERID)?.let {
-            ClosetsItemAdapter(
+            ClientClosetItemsAdapter(
                 this, (items as MutableList<ClosetsItemsResponse.Data.Closet.Item>?)!!,
                 it, select, selectAll
             )
@@ -1130,7 +1134,7 @@ class ClientClosetItems : BaseClass(),
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             val adapter = getStringVal(Constants.USERID)?.let {
                 getStringVal(Constants.USERID)?.let { it1 ->
-                    FilterAdapter(
+                    ClientFilterAdapter(
                         this, filtersucces,
                         it, select, selectAll
                     )
@@ -1145,6 +1149,15 @@ class ClientClosetItems : BaseClass(),
                 filtersucces.message(),
                 getString(R.string.close_up)
             )
+        }
+    }
+
+    override fun onMyClosetsSuccess(myClosetsResponse: Response<MyClosetsResponse>) {
+        pd.dismiss()
+        if (myClosetsResponse.isSuccessful)
+        {
+            clientClosetsName = ArrayList()
+            clientClosetsName.addAll(myClosetsResponse.body()?.getData()?.closet!!)
         }
     }
 
@@ -1323,7 +1336,7 @@ class ClientClosetItems : BaseClass(),
         )
 
         setSpinnerData(
-            userClosets,
+            clientClosetsName,
             itemview_spinner,
             closetResponse.get(id).id!!,
             itemview_addtoclosetbt,
@@ -1333,7 +1346,7 @@ class ClientClosetItems : BaseClass(),
     }
 
     private fun setSpinnerData(
-        userClosets: ArrayList<ClosetsItemsResponse.Data.AllCloset>,
+        userClosets: ArrayList<MyClosetsResponse.Data.Closet>,
         itemviewSpinner: Spinner,
         id: Int,
         itemviewAddtoclosetbt: Button,

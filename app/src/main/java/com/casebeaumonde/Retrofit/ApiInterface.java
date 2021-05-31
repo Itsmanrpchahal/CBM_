@@ -409,6 +409,16 @@ public interface ApiInterface {
             @Field("name") String name
     );
 
+    @FormUrlEncoded
+    @POST("api/v1/outfit-item")
+    Call<OutFitResponse> clientoutfitItem(
+            @Header("Authorization") String token,
+            @Field("items") String items,
+            @Field("outfitid") String outfitid,
+            @Field("name") String name,
+            @Field("creator_id") String creator_id
+    );
+
     @GET("api/v1/fetchList")
     Call<FetchListResponse> fetchList(
             @Header("Authorization") String token

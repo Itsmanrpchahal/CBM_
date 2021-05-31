@@ -446,11 +446,12 @@ class ClientClosetItems : BaseClass(),
                 )
 
             } else if (s.equals("outfit")) {
-                controller.OutFIt(
+                controller.ClientOutFIt(
                     "Bearer " + getStringVal(Constants.TOKEN),
                     checkedClosetIDs.toString(),
                     listData.toString(),
-                    newclosetname
+                    newclosetname,
+                    userID
                 )
             }
 
@@ -1305,9 +1306,7 @@ class ClientClosetItems : BaseClass(),
                     )
                 }
             }
-
             deleteDialog.show()
-
         }
 
 

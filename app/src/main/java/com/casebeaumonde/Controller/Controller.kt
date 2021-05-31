@@ -1275,6 +1275,24 @@ public class Controller {
             })
     }
 
+    fun ClientOutFIt(token: String?, items: String?, outfitid: String?, name: String?,creator_id:String?) {
+        webAPI?.api?.clientoutfitItem(token, items, outfitid, name,creator_id)
+            ?.enqueue(object : Callback<OutFitResponse> {
+                override fun onResponse(
+                    call: Call<OutFitResponse>,
+                    response: Response<OutFitResponse>
+                ) {
+                    val outfit = response
+                    outFItAPI?.onOutfitSuccess(outfit)
+                }
+
+                override fun onFailure(call: Call<OutFitResponse>, t: Throwable) {
+                    outFItAPI?.error(t.message)
+                }
+
+            })
+    }
+
     fun PaymentProfile(token: String?) {
         webAPI?.api?.paymentProfile(token)?.enqueue(object : Callback<PaymentProfileResponse> {
             override fun onResponse(

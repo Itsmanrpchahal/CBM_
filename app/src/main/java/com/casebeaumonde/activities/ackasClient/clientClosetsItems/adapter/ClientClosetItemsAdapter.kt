@@ -55,7 +55,7 @@ class ClientClosetItemsAdapter(var context: Context,
         }
 
         holder.itemView.closetitem_favorite.setOnClickListener {
-            ClosetsItems.closetitemidIf!!.getClosetID(closetsItems.id.toString())
+            ClientClosetItems.closetitemidIf!!.getClosetID(closetsItems.id.toString())
         }
         searchUserHeart(closetsItems, holder.itemView.closetitem_favorite)
 
@@ -82,9 +82,9 @@ class ClientClosetItemsAdapter(var context: Context,
         holder.itemView.select_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                ClosetsItems.selectedclosetId?.getID(closetsItems.id.toString(), "1")
+                ClientClosetItems.selectedclosetId?.getID(closetsItems.id.toString(), "1")
             }  else {
-                ClosetsItems.selectedclosetId?.getID(closetsItems.id.toString(), "0")
+                ClientClosetItems.selectedclosetId?.getID(closetsItems.id.toString(), "0")
             }
         }
     }

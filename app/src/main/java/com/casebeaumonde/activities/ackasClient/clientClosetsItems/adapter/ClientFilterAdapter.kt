@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
-import com.casebeaumonde.activities.ClosetItem.adapter.FilterAdapter
 import com.casebeaumonde.activities.ClosetItem.response.FilterResponse
 import com.casebeaumonde.activities.ackasClient.clientClosetsItems.ClientClosetItems
 import com.casebeaumonde.constants.Constants
@@ -52,10 +51,10 @@ class ClientFilterAdapter (
         }
 
         holder.itemView.hainger.visibility = View.GONE
-        holder.itemView.closetitem_favorite.setOnClickListener {
-            ClosetsItems.closetitemidIf!!.getClosetID(filterData?.body()?.data?.closet?.get(position)?.id.toString())
-        }
-        // searchUserHeart(list, holder.itemView.closetitem_favorite)
+//        holder.itemView.closetitem_favorite.setOnClickListener {
+//            ClosetsItems.closetitemidIf!!.getClosetID(filterData?.body()?.data?.closet?.get(position)?.id.toString())
+//        }
+//         searchUserHeart(filterData.body()?.data?.closet, holder.itemView.closetitem_favorite,position)
 
         holder.itemView.setOnClickListener {
             ClientClosetItems.viewclosetidIf!!.getID(position)
@@ -78,9 +77,28 @@ class ClientFilterAdapter (
         holder.itemView.select_checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                ClosetsItems.selectedclosetId?.getID(filterData?.body()?.data?.closet?.get(position)?.id.toString(), "1")
+                ClientClosetItems.selectedclosetId?.getID(filterData?.body()?.data?.closet?.get(position)?.id.toString(), "1")
             }  else {
-                ClosetsItems.selectedclosetId?.getID(filterData?.body()?.data?.closet?.get(position)?.id.toString(), "0")
+                ClientClosetItems.selectedclosetId?.getID(filterData?.body()?.data?.closet?.get(position)?.id.toString(), "0")
+            }
+        }
+    }
+
+    fun searchUserHeart(
+        closetsItems: List<FilterResponse.Data.Closet>?,
+        closetitemFavorite: CheckBox,
+        position: Int
+    )
+    {
+        if (closetsItems?.get(position)?.hearts!!.size>0)
+        {
+            for (i in closetsItems?.get(position)?.hearts!!.indices)
+            {
+                val heart = closetsItems?.get(position)?.hearts!![i]
+                if (heart.userId.toString().equals(userid))
+                {
+                    closetitemFavorite.isChecked = true
+                }
             }
         }
     }

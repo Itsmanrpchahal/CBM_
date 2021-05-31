@@ -105,7 +105,33 @@ class FilterResponse {
 
             @SerializedName("hearts")
             @Expose
-            var hearts: List<Any>? = null
+            var hearts: List<Heart>? = null
+
+            inner class Heart {
+                @SerializedName("id")
+                @Expose
+                var id: Int? = null
+
+                @SerializedName("user_id")
+                @Expose
+                var userId: Int? = null
+
+                @SerializedName("heartable_type")
+                @Expose
+                var heartableType: String? = null
+
+                @SerializedName("heartable_id")
+                @Expose
+                var heartableId: Int? = null
+
+                @SerializedName("created_at")
+                @Expose
+                var createdAt: String? = null
+
+                @SerializedName("updated_at")
+                @Expose
+                var updatedAt: String? = null
+            }
         }
 
         class Size {

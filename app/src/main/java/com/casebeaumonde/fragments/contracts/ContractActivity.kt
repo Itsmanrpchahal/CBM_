@@ -121,8 +121,11 @@ class ContractActivity : BaseClass(), Controller.ContractListAPI, Controller.Sen
     override fun onContractListSuccess(contractlist: Response<ContractListResponse>) {
         pd.dismiss()
         customer = ArrayList()
-        customer =
-            contractlist.body()?.getData()?.user?.contractsAsCustomer as ArrayList<ContractListResponse.Data.User.ContractsAsCustomer>
+        if (contractlist.body()?.getData()?.user?.contractsAsCustomer?.size!! > 0)
+        {
+            customer =
+                contractlist.body()?.getData()?.user?.contractsAsCustomer as ArrayList<ContractListResponse.Data.User.ContractsAsCustomer>
+        }
 
         contract = contractlist.body()?.getData()?.user?.contractsAsContractor as ArrayList<ContractListResponse.Data.User.ContractsAsContractor>
 

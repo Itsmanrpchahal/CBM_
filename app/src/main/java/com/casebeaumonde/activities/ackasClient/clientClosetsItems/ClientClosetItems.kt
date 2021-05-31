@@ -25,10 +25,8 @@ import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
-import com.casebeaumonde.activities.ClosetItem.adapter.FilterAdapter
 import com.casebeaumonde.activities.ClosetItem.adapter.FilterOutFitItems
 import com.casebeaumonde.activities.ClosetItem.response.*
-import com.casebeaumonde.activities.ClosetItm.adapter.ClosetsItemAdapter
 import com.casebeaumonde.activities.ackasClient.clientClosetsItems.adapter.ClientClosetItemsAdapter
 import com.casebeaumonde.activities.ackasClient.clientClosetsItems.adapter.ClientFilterAdapter
 import com.casebeaumonde.activities.addItemtoCLoset.AddItemToCloset
@@ -58,7 +56,7 @@ class ClientClosetItems : BaseClass(),
     Controller.OutFItAPI,
     Controller.OutfitFilterAPI,
     Controller.FilterClosetItemsAPI,
-Controller.MyClosetsAPI{
+    Controller.MyClosetsAPI{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -138,7 +136,7 @@ Controller.MyClosetsAPI{
             pd.setContentView(R.layout.loading)
             controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
             controller.EventDetail("Bearer " + getStringVal(Constants.TOKEN), closetID)
-            setViewAnalyticsAPI(closetID, "closet_item");
+           // setViewAnalyticsAPI(closetID, "closet_item");
         } else {
             utility!!.relative_snackbar(
                 parent_clientclosetsitems!!,
@@ -151,7 +149,7 @@ Controller.MyClosetsAPI{
         viewclosetidIf = this
         selectedclosetId = this
         userID = intent.getStringExtra("userID")!!
-
+        Log.d("USERID",userID+"    "+closetID)
         listeners()
     }
 
@@ -201,7 +199,6 @@ Controller.MyClosetsAPI{
             closet_showselectbt.visibility = View.GONE
             select = 1
             setFullData(closetResponse, select, selectAll)
-
         }
 
         closet_deselectitembt.setOnClickListener {
@@ -226,12 +223,12 @@ Controller.MyClosetsAPI{
             selectAll = 1
             setFullData(closetResponse, select, selectAll)
             Log.d("test", "" + checkedClosetIDs)
-
             if (checkedClosetIDs.size > 0) {
 
                 closet_moveitembt.visibility = View.VISIBLE
                 closet_duplicateitembt.visibility = View.VISIBLE
                 closet_makeoutfitbt.visibility = View.VISIBLE
+
             } else {
                 closet_moveitembt.visibility = View.GONE
                 closet_duplicateitembt.visibility = View.GONE
@@ -377,8 +374,8 @@ Controller.MyClosetsAPI{
 
 
         //ToDo : Get USer closets for move and duplicate
-        for (i in 0 until userClosets.size) {
-            val title = userClosets.get(i)
+        for (i in 0 until clientClosetsName.size) {
+            val title = clientClosetsName.get(i)
             list.add(title.title.toString())
             listID.add(title.id.toString())
         }
@@ -1245,8 +1242,11 @@ Controller.MyClosetsAPI{
             itemview_removebt.visibility = View.GONE
             itemview_editbt.visibility = View.GONE
             itemview_move.visibility = View.GONE
+            itemview_copy.visibility = View.GONE
         }
 
+        itemview_removebt.visibility = View.VISIBLE
+        itemview_editbt.visibility = View.VISIBLE
 
         Glide.with(this).load(Constants.BASE_IMAGE_URL + closetResponse.get(id!!).picture)
             .placeholder(R.drawable.login_banner1).into(viewitem_image)
@@ -1288,7 +1288,15 @@ Controller.MyClosetsAPI{
             yes.setOnClickListener {
                 if (utility.isConnectingToInternet(this)) {
 
-                    DeleteDialog(closetResponse.get(id).id.toString())
+//                    DeleteDialog(closetResponse.get(id).id.toString())
+                    pd.show()
+                    pd.setContentView(R.layout.loading)
+                    logoutDialog.dismiss()
+                    Viewdialog.dismiss()
+                    controller.DeleteClosetItem(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        closetResponse.get(id).id.toString()
+                    )
                 } else {
                     utility.relative_snackbar(
                         parent_clientclosetsitems!!,
@@ -1456,9 +1464,9 @@ Controller.MyClosetsAPI{
         }
 
         if (checkedClosetIDs.size > 0) {
-            if (userID.equals(getStringVal(Constants.USERID))) {
+//            if (userID.equals(getStringVal(Constants.USERID))) {
                 closet_moveitembt.visibility = View.VISIBLE
-            }
+//            }
 
             closet_duplicateitembt.visibility = View.VISIBLE
             closet_makeoutfitbt.visibility = View.VISIBLE

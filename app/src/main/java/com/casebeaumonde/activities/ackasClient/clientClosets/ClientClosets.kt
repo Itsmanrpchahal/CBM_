@@ -77,7 +77,7 @@ class ClientClosets : BaseClass(), Controller.MyClosetsAPI {
         var logout_tv = exitDialog.findViewById<TextView>(R.id.logout_tv)
         var logout_yes = exitDialog.findViewById<Button>(R.id.logout_yes)
         var logout_no = exitDialog.findViewById<Button>(R.id.logout_no)
-        logout_tv.text = "Are you sure to return back to normal user"
+        logout_tv.text = "Are you sure to return back to login account"
         logout_yes.setOnClickListener {
             super.onBackPressed()
         }

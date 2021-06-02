@@ -37,14 +37,6 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
-import com.casebeaumonde.activities.myoutfitsdetail.response.DuplicateOutfitItemResponse;
-import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
-import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
-import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse;
-import com.casebeaumonde.fragments.contracts.ContractCountResponse;
-import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse;
-import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
-import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse;
@@ -59,6 +51,8 @@ import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse;
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.AddOutfitItemResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.DeleteOutfitItemResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.DuplicateOutfitItemResponse;
+import com.casebeaumonde.activities.myoutfitsdetail.response.FavOutfitResponse;
 import com.casebeaumonde.activities.myoutfitsdetail.response.MyOutfitsDetailResponse;
 import com.casebeaumonde.activities.notifications.response.NotificationsResponse;
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse;
@@ -68,6 +62,7 @@ import com.casebeaumonde.activities.openchat.response.GetChatResponse;
 import com.casebeaumonde.activities.openchat.response.SendChatResponse;
 import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileResponse;
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse;
+import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse;
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse;
 import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse;
 import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse;
@@ -77,10 +72,18 @@ import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
+import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse;
 import com.casebeaumonde.fragments.chat.GetChatUsers;
+import com.casebeaumonde.fragments.contracts.ContractCountResponse;
+import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse;
+import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse;
+import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse;
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse;
 import com.casebeaumonde.fragments.pricing.response.PricingResponse;
+import com.casebeaumonde.fragments.productManagement.productdetail.response.ProductDetailResponse;
+import com.casebeaumonde.fragments.productManagement.response.ProductListResponse;
+import com.casebeaumonde.fragments.productManagement.response.ProductPublishUnPublishResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.CancelPlanResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.DeletePaymentMethodResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.EditProfileResponse;
@@ -98,13 +101,11 @@ import java.util.HashMap;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -422,6 +423,12 @@ public interface ApiInterface {
     @GET("api/v1/fetchList")
     Call<FetchListResponse> fetchList(
             @Header("Authorization") String token
+    );
+
+    @GET("api/v1/fetchList/{input}")
+    Call<FetchListResponse> fetchList1(
+            @Header("Authorization") String token,
+            @Path("input") String id
     );
 
     @GET("api/v1/payment-profile")
@@ -927,4 +934,20 @@ public interface ApiInterface {
             @Path("input1") String status
     );
 
+    @GET("api/v1/products")
+    Call<ProductListResponse> ProductList(
+            @Header("Authorization") String token
+    );
+
+    @POST("api/v1/products/change-status")
+    Call<ProductPublishUnPublishResponse> ProductPublishUnPublish(
+            @Header("Authorization") String token,
+            @Query("product_id") String product_id
+    );
+
+    @GET("api/v1/products/{input}")
+    Call<ProductDetailResponse> ProductDetail(
+            @Header("Authorization") String token,
+            @Path("input") String product_id
+    );
 }

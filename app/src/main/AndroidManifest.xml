@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Translucent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ackasClient.clientClosetsItems.ClientClosetItems"></activity>
+        <activity android:name=".fragments.productManagement.productdetail.ProductDetailScreen"></activity>
+        <activity android:name=".fragments.productManagement.addproduct.AddNewProduct" />
+        <activity android:name=".activities.ackasClient.clientClosetsItems.ClientClosetItems" />
         <activity android:name=".activities.ackasClient.clientClosets.ClientClosets" />
         <activity android:name=".fragments.contracts.ContractActivity" />
         <activity android:name=".fragments.contracts.detail.DetailPage" />

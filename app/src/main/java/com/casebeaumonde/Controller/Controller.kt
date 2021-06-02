@@ -12,37 +12,28 @@ import com.casebeaumonde.activities.ShopItems.response.AddtoCartResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopFilterItemsResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsLIKEResponse
 import com.casebeaumonde.activities.ShopItems.response.ShopItemsResponse
-import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
-import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
-import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
-import com.casebeaumonde.fragments.designers.Response.DesignersResponse
-import com.casebeaumonde.fragments.users.Response.UsersResponse
-import com.casebeaumonde.activities.notifications.response.NotificationsResponse
-import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
-import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
-import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
-import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
-import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
-import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.activities.addItemtoCLoset.response.AddClosetItemResponse
 import com.casebeaumonde.activities.addItemtoEvent.response.AddEventItemResponse
 import com.casebeaumonde.activities.b_questionaries.SecondQuestionnaireResponse
+import com.casebeaumonde.activities.eventDetail.response.AddItemToAnotherCloset
+import com.casebeaumonde.activities.eventDetail.response.EventDetailResponse
 import com.casebeaumonde.activities.eventDetail.response.FavEventItemResponse
 import com.casebeaumonde.activities.login.loginResponse.ForgotPassworResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ChangeContractStatusResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractListResponse
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
-import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
-import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse
+import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.EditOutfitResponse
 import com.casebeaumonde.activities.myoutfits.response.MyOutfitsResponse
 import com.casebeaumonde.activities.myoutfits.response.NewOutfitResponse
 import com.casebeaumonde.activities.myoutfitsdetail.response.*
+import com.casebeaumonde.activities.notifications.response.NotificationsResponse
 import com.casebeaumonde.activities.notifications.response.RemoveAllNotificationResponse
+import com.casebeaumonde.activities.notifications.response.RemoveNotificationResponse
 import com.casebeaumonde.activities.openchat.response.BlockResponse
 import com.casebeaumonde.activities.openchat.response.GetChatResponse
 import com.casebeaumonde.activities.openchat.response.SendChatResponse
@@ -50,21 +41,31 @@ import com.casebeaumonde.activities.paymentScreen.response.PaymentProfileRespons
 import com.casebeaumonde.activities.paymentScreen.response.SubscribePlanResponse
 import com.casebeaumonde.activities.questionaries.BasicQuestionariesResponse
 import com.casebeaumonde.activities.questionaries.reponse.QuestionariesDataResponse
+import com.casebeaumonde.fragments.HireExpert.response.HireAnExpertResponse
+import com.casebeaumonde.fragments.HireExpert.response.SendInvitationResponse
+import com.casebeaumonde.fragments.Live_Events.response.FavLiveEventResponse
+import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
+import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.fragments.chat.GetChatUsers
 import com.casebeaumonde.fragments.contracts.ContractCountResponse
 import com.casebeaumonde.fragments.contracts.offers.response.DeleteOfferResponse
+import com.casebeaumonde.fragments.contracts.offers.response.OfferListResponse
+import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionResponse
+import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
+import com.casebeaumonde.fragments.productManagement.response.ProductListResponse
+import com.casebeaumonde.fragments.productManagement.response.ProductPublishUnPublishResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
 import com.casebeaumonde.fragments.shop.response.ShopResponse
+import com.casebeaumonde.fragments.users.Response.UsersResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.HashMap
 
 
 public class Controller {
@@ -162,11 +163,14 @@ public class Controller {
     var deleteEventAPI: DeleteEventAPI? = null
     var deleteOfferAPI : DeleteOfferAPI?= null
     var changeContractStatusAPI:ChangeContractStatusAPI?=null
+    var productListAPI : ProductListAPI? = null
+    var productPublishUnPublishAPI : ProductPublishUnPublishAPI? =null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
         webAPI = WebAPI()
     }
+
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
         notificationAPI = notification
@@ -206,6 +210,12 @@ public class Controller {
 
     fun Controller(myWall: MyWallAPI) {
         myWallAPI = myWall
+        webAPI = WebAPI()
+    }
+
+    fun Controller(fetchList: FetchListAPI)
+    {
+        fetchListAPI = fetchList
         webAPI = WebAPI()
     }
 
@@ -572,6 +582,23 @@ public class Controller {
         favEventAPI = favEvent
         removeEventItemAPI = removeEventItem
         addtoCartAPI = addtoCart
+        webAPI = WebAPI()
+    }
+
+    fun Controller(
+        productList: ProductListAPI,
+        productPublishUnPublish: ProductPublishUnPublishAPI
+    ){
+        productListAPI = productList
+        productPublishUnPublishAPI = productPublishUnPublish
+        webAPI = WebAPI()
+    }
+
+
+    fun Controller(
+        productList: ProductListAPI
+    ){
+        productListAPI = productList
         webAPI = WebAPI()
     }
 
@@ -1242,6 +1269,23 @@ public class Controller {
 
     fun FetchList(token: String?) {
         webAPI?.api?.fetchList(token)?.enqueue(object : Callback<FetchListResponse> {
+            override fun onResponse(
+                call: Call<FetchListResponse>,
+                response: Response<FetchListResponse>
+            ) {
+                val fetchList = response
+                fetchListAPI?.onFetchListSuccess(fetchList)
+            }
+
+            override fun onFailure(call: Call<FetchListResponse>, t: Throwable) {
+                fetchListAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun FetchList1(token: String?,id: String?) {
+        webAPI?.api?.fetchList1(token,id)?.enqueue(object : Callback<FetchListResponse> {
             override fun onResponse(
                 call: Call<FetchListResponse>,
                 response: Response<FetchListResponse>
@@ -2521,6 +2565,43 @@ public class Controller {
         })
     }
 
+    fun ProductList(token: String?)
+    {
+        webAPI?.api?.ProductList(token)?.enqueue(object :Callback<ProductListResponse>
+        {
+            override fun onResponse(
+                call: Call<ProductListResponse>,
+                response: Response<ProductListResponse>
+            ) {
+                productListAPI?.onProductListSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ProductListResponse>, t: Throwable) {
+               productListAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun ProductPublishUnPublish(token: String?,id: String?)
+    {
+       webAPI?.api?.ProductPublishUnPublish(token,id)?.enqueue(object :Callback<ProductPublishUnPublishResponse>
+       {
+           override fun onResponse(
+               call: Call<ProductPublishUnPublishResponse>,
+               response: Response<ProductPublishUnPublishResponse>
+           ) {
+               productPublishUnPublishAPI?.onProductPulishUnPublishSuccess(response)
+           }
+
+           override fun onFailure(call: Call<ProductPublishUnPublishResponse>, t: Throwable) {
+               productPublishUnPublishAPI?.error(t.message)
+           }
+
+       })
+    }
+
+
 
     interface NotificationAPI {
         fun onSucess(notificationsResponseResponse: Response<NotificationsResponse>)
@@ -2982,6 +3063,16 @@ public class Controller {
 
     interface ChangeContractStatusAPI {
         fun onChangeContractSuccess(success:Response<ChangeContractStatusResponse>)
+        fun error(error: String?)
+    }
+
+    interface ProductListAPI {
+        fun onProductListSuccess(success:Response<ProductListResponse>)
+        fun error(error: String?)
+    }
+
+    interface ProductPublishUnPublishAPI {
+        fun onProductPulishUnPublishSuccess(success: Response<ProductPublishUnPublishResponse>)
         fun error(error: String?)
     }
 }

@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.Retrofit.WebAPI
-import com.casebeaumonde.activities.ClosetItem.ClosetsItems
 import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.ClosetItem.IF.SelectedCloset_ID
 import com.casebeaumonde.activities.ClosetItem.adapter.FilterOutFitItems
@@ -123,6 +122,7 @@ class ClientClosetItems : BaseClass(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_closet_items)
+        userID = intent.getStringExtra("userID")!!
 
         findIds()
         hashMap = HashMap()
@@ -134,7 +134,7 @@ class ClientClosetItems : BaseClass(),
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.FetchList("Bearer " + getStringVal(Constants.TOKEN))
+            controller.FetchList1("Bearer " + getStringVal(Constants.TOKEN),userID)
             controller.EventDetail("Bearer " + getStringVal(Constants.TOKEN), closetID)
            // setViewAnalyticsAPI(closetID, "closet_item");
         } else {
@@ -148,7 +148,6 @@ class ClientClosetItems : BaseClass(),
         closetitemidIf = this
         viewclosetidIf = this
         selectedclosetId = this
-        userID = intent.getStringExtra("userID")!!
         Log.d("USERID",userID+"    "+closetID)
         listeners()
     }

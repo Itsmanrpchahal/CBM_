@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/productdetail"
+    tools:context=".fragments.productManagement.productdetail.ProductDetailScreen">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/closetitems_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:background="@android:color/transparent">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Product Details"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_16sp"
+                android:textAllCaps="true"
+                android:layout_centerInParent="true">
+
+            </TextView>
+
+            <ImageButton
+                android:id="@+id/closetiems_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_add_24"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/default_margin_16dp">
+
+            </ImageButton>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@android:color/darker_gray">
+
+        <ImageView
+            android:id="@+id/closetItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/login_banner1">
+
+        </ImageView>
+
+
+        <RelativeLayout
+            android:layout_below="@id/closetItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_8dp"
+            android:background="@color/colorBackground"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:fontFamily="@font/oswaldlight"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_16sp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:textStyle="bold">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textsize_12sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/sdecs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textsize_12sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/decs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textsize_12sp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Price"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/textsize_12sp">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/actualprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="$0"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/textsize_12sp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/newprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:text="$0"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/textsize_16sp">
+
+                    </TextView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/stockquantity1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textsize_12sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textsize_12sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/textsize_12sp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:weightSum="3">
+
+                    <Button
+                        android:id="@+id/edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="EDIT"
+                        android:background="#00000000">
+
+                    </Button>
+
+                    <Button
+                        android:id="@+id/unpublish"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="UNPUBLISH"
+                        android:background="#00000000"></Button>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="DELETE"
+                        android:background="#00000000"></Button>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</LinearLayout>

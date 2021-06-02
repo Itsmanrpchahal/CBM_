@@ -10,7 +10,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WebAPI {
-    public static String BASE_URL = "http://dev.casabeaumonde.com/";
+//    public static String BASE_URL = "http://dev.casabeaumonde.com/";
+    public static String BASE_URL = "https://prolific.casabeaumonde.com/";
     public static WebAPI mInstance;
     Retrofit retrofit;
     public static ApiInterface apiInterface;

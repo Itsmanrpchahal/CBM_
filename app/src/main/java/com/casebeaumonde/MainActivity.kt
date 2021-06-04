@@ -111,9 +111,15 @@ class MainActivity : BaseClass(), Controller.NotificationAPI, Controller.UserPro
                 ), drawerLayout
             )
 
+            if (!getStringVal(Constants.USER_ROLE).equals("retailer"))
+            {
+                navView.getMenu().findItem(R.id.nav_products).isVisible = false
+            }
+
             if (getStringVal(Constants.USER_ROLE).equals("customer")) {
                 navView.getMenu().findItem(R.id.nav_contractor).isVisible = false
             }
+
             navView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener({ menuItem ->
                 logoutDialog()
                 true

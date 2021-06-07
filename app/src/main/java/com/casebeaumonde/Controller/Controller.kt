@@ -145,6 +145,7 @@ public class Controller {
     var shopItemsAPI: ShopItemsAPI? = null
     var shopItemsLikeAPI: ShopItemsLikeAPI? = null
     var addtoCartAPI: AddtoCartAPI? = null
+    var addtoCartShopAPI: AddtoCartShopAPI? = null
     var searchShopItemAPI: SearchShopItemAPI? = null
     var removeItemCartAPI: RemoveItemCartAPI? = null
     var acceptDeclineInvitationAPI: AcceptDeclineInvitationAPI? = null
@@ -543,12 +544,12 @@ public class Controller {
     fun Controller(
         shopItems: ShopItemsAPI,
         shopItemsLike: ShopItemsLikeAPI,
-        addtoCart: AddtoCartAPI,
+        addtoCartShop: AddtoCartShopAPI,
         searchShopItem: SearchShopItemAPI
     ) {
         shopItemsAPI = shopItems
         shopItemsLikeAPI = shopItemsLike
-        addtoCartAPI = addtoCart
+        addtoCartShopAPI = addtoCartShop
         searchShopItemAPI = searchShopItem
         webAPI = WebAPI()
     }
@@ -2139,6 +2140,22 @@ public class Controller {
         })
     }
 
+    fun AddtoCartShop(token: String?, itemId: String?, qty: String) {
+        webAPI?.api?.addToCartShop(token, itemId, qty)?.enqueue(object : Callback<AddtoCartResponse> {
+            override fun onResponse(
+                call: Call<AddtoCartResponse>,
+                response: Response<AddtoCartResponse>
+            ) {
+                addtoCartAPI?.onAddtoCartSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AddtoCartResponse>, t: Throwable) {
+                addtoCartAPI?.error(t.message)
+            }
+
+        })
+    }
+
     fun SearchShopItems(token: String, retailer_id: String, category_id: String, price: String) {
         webAPI?.api?.serachShopItem(token, retailer_id, category_id, price)
             ?.enqueue(object : Callback<ShopFilterItemsResponse> {
@@ -3025,6 +3042,11 @@ public class Controller {
 
     interface AddtoCartAPI {
         fun onAddtoCartSuccess(success: Response<AddtoCartResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddtoCartShopAPI {
+        fun onAddtoCartShopSuccess(success: Response<AddtoCartResponse>)
         fun error(error: String?)
     }
 

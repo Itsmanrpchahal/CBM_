@@ -763,6 +763,14 @@ public interface ApiInterface {
 
     );
 
+    @POST("api/v1/set/{input}/{input1}")
+    Call<AddtoCartResponse> addToCartShop(
+            @Header("Authorization") String token,
+            @Path("input") String item_id,
+            @Path("input1") String qty
+
+    );
+
 
     @POST("api/v1/retailer_items/search")
     Call<ShopFilterItemsResponse> serachShopItem(

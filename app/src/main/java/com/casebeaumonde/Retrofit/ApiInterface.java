@@ -81,7 +81,9 @@ import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionRes
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse;
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse;
 import com.casebeaumonde.fragments.pricing.response.PricingResponse;
-import com.casebeaumonde.fragments.productManagement.productdetail.response.ProductDetailResponse;
+import com.casebeaumonde.fragments.productManagement.addproduct.reponse.AddProductResponse;
+import com.casebeaumonde.fragments.productManagement.addproduct.reponse.ProductDetailResponse;
+import com.casebeaumonde.fragments.productManagement.addproduct.reponse.UpdateProductResponse;
 import com.casebeaumonde.fragments.productManagement.response.ProductListResponse;
 import com.casebeaumonde.fragments.productManagement.response.ProductPublishUnPublishResponse;
 import com.casebeaumonde.fragments.profile.profileResponse.CancelPlanResponse;
@@ -950,4 +952,39 @@ public interface ApiInterface {
             @Header("Authorization") String token,
             @Path("input") String product_id
     );
+
+    @Multipart
+    @POST("api/v1/products")
+    Call<AddProductResponse> AddProduct(
+            @Header("Authorization") String token,
+            @Query("product_name") String product_name,
+            @Query("short_description") String short_description,
+            @Query("description") String description,
+            @Query("category_id") String category_id,
+            @Query("brand_id") String brand_id,
+            @Query("product_type") String product_type,
+            @Query("regular_price") String regular_price,
+            @Query("sell_price") String sell_price,
+            @Query("stock_quantity") String stock_quantity,
+            @Part ArrayList<MultipartBody.Part> photo
+    );
+
+    @Multipart
+    @POST("api/v1/products/{input}")
+    Call<UpdateProductResponse> UpdateProduct(
+            @Header("Authorization") String token,
+            @Path("input") String product_id,
+            @Query("product_name") String product_name,
+            @Query("short_description") String short_description,
+            @Query("description") String description,
+            @Query("category_id") String category_id,
+            @Query("brand_id") String brand_id,
+            @Query("product_type") String product_type,
+            @Query("regular_price") String regular_price,
+            @Query("sell_price") String sell_price,
+            @Query("stock_quantity") String stock_quantity,
+            @Part ArrayList<MultipartBody.Part> photo,
+            @Query("_method") String _method
+            );
+
 }

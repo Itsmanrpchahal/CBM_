@@ -17,6 +17,7 @@ import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.fragments.productManagement.IF.DeleteProductIF
+import com.casebeaumonde.fragments.productManagement.IF.EditProductIF
 import com.casebeaumonde.fragments.productManagement.IF.UnPublishIF
 import com.casebeaumonde.fragments.productManagement.adapter.ProductListAdapter
 import com.casebeaumonde.fragments.productManagement.addproduct.AddNewProduct
@@ -26,7 +27,7 @@ import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.fragment_products.*
 import retrofit2.Response
 
-class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublishIF,Controller.ProductPublishUnPublishAPI{
+class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublishIF,Controller.ProductPublishUnPublishAPI,EditProductIF{
 
     private lateinit var utility: Utility
     private lateinit var pd: ProgressDialog
@@ -48,10 +49,18 @@ class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublis
         findIds(view)
         controller = Controller()
         controller.Controller(this,this)
+
+
+        lisenters()
+        return view
+    }
+
+    override fun onResume() {
+        super.onResume()
         if (utility.isConnectingToInternet(context)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.ProductList("Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjYwNzBjM2I1M2MzZjQzZDQyYmQ2MjA5MjlhNWY5YWIyYjA0OTFmNzJlMTMyZmVlNzgzZmI2ZTE1NWFjNjhlNTEyNWMxOGRhMGRlZjVjMGE3In0.eyJhdWQiOiIxIiwianRpIjoiNjA3MGMzYjUzYzNmNDNkNDJiZDYyMDkyOWE1ZjlhYjJiMDQ5MWY3MmUxMzJmZWU3ODNmYjZlMTU1YWM2OGU1MTI1YzE4ZGEwZGVmNWMwYTciLCJpYXQiOjE2MjI2MjI1MjAsIm5iZiI6MTYyMjYyMjUyMCwiZXhwIjoxNjU0MTU4NTIwLCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.M2Csyr5DOWL_rZi8Cabf5IV6_DFghI8eTRhip1wVAWw8pWf20-GeJrS6mAPjte0nvcdTpMItHlk3vSQE9aWbs_J-v26jKBeVswqJOlAC9ouK55KDHagv1iMcF6arOknVXwwp3DjechX59M_jhXNyzKGJh5QJidhXlBZgcorkCz-javQ1cDxTcvsXyXmvw3KLXfzkUPPdnLVwfRStwnPC_cx1SoeDLY0ii2ysBrWLz8AgLrlvRWfzM42ZNYnptK9HpWSNQRYSvyQQEWSk9lAkEkpA9QBTFFzegBuBPflBYBteanuMkMJ9UOb4j46hRybLUjJ2l5LBvoefg6_a7Ttc__vwsJhi9CLYiFaMpvSw-vclgfJ6LtKWtDMOItZyNh8d1RrcQZZB__Zx6KFvrrWhO9didyQoo6sh9LSLiU3Lp-fjMIDaWSXduJj1I4KFMMiLqdhvvkwlFOoFety4vedWtZo4VlG0Q87LdBU9W9sHZWOWrZFC6Fr4cUmZkQpHiB2GV8mb0J4ITpsRCe03xNNYgay5EtB6cBTbdarbOT9Pezc6jetPhmuQpxDaPUdLQRc9RnDBfS2XkL0375B4P2OB4aA-VhefJNnhFNtzvUkr0FaG3gv891Pj_h8CNkHHNGVu9uBAqHt1r_lpc5H_7lL3CObN7CyuryQ7GmhrSc-zL60")
+            controller.ProductList("Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZkOTQ2N2I5YTVkOTc2NjEwMzFjNzlkYjQ3NmY1YWQyNWFjZGYxNjZjODBjNjExMTE1ZTk1NDAyMTJkZThjYzVjY2IxYmJkNjhmZjllMWRhIn0.eyJhdWQiOiIxIiwianRpIjoiZmQ5NDY3YjlhNWQ5NzY2MTAzMWM3OWRiNDc2ZjVhZDI1YWNkZjE2NmM4MGM2MTExMTVlOTU0MDIxMmRlOGNjNWNjYjFiYmQ2OGZmOWUxZGEiLCJpYXQiOjE2MjI3ODE0MzUsIm5iZiI6MTYyMjc4MTQzNSwiZXhwIjoxNjU0MzE3NDM1LCJzdWIiOiIxMTEiLCJzY29wZXMiOltdfQ.e9RrUdPPTXJ9amldSLut1DUhEDXGK9TDmwSv9gqJM-BDveob_aLqH_cW3p0j1JxRUsHhbND1U5QXf22qeTDWe74DLQLEXVqdFTlA9G9AdOR5DjOem3LxQnb7yrGUz8JNPn5ntruUB_WyNQs6BGYJ1REC6ADRN4E1W4ZLJbNotbvaC41MQJ526UWFVB825MeMQoGSKo-DVHtShfqKXzMKA6tYz7T4wdy_1yBJWmnYlAyAY-qAgdIDvpKvByEJ2A0XStqiht3ptRsnJXKcQmlV0yieU25siQz1XPLXlebfr4OjiYZAaQSv7MQNtRNwc32gWvmNpZpnIgtu_n01mtJuXn8cYSSx66r3TTCP1plFaLL30iXAz2x-NRcAcn37ekSBmsNc_EZNSQypWVWsgAoDA-2Um5VT-IJvCsQUglzT-QThNBXFtBcBWzVLD2mLEpFSryq3sK5jT7Klx71ehY6MekPOmJJr6w4kznEsD0Nmq923UsZ_0eJvvXdxL5wjZYjuK1xkX1QClsukE2XHMPL0RrUoabyglzMKLmdZioGHtV2SlNOUYob0I3mTPhR8vj-riRFEKBAB1aXfWq9B7BAQ7i4mptNz8qA4VcEBq2y3FSxH0xkbT2kQf7QBKiLVWz-wvTKP5ucDpLp1DqAZKz4Yrvjo5enaraGHtpvJuqVBZu8")
         } else {
             utility!!.relative_snackbar(
                 productscreen!!,
@@ -59,14 +68,11 @@ class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublis
                 getString(R.string.close_up)
             )
         }
-
-        lisenters()
-        return view
     }
 
     private fun lisenters() {
         addnewproduct.setOnClickListener {
-            startActivity(Intent(context, AddNewProduct::class.java))
+            startActivity(Intent(context, AddNewProduct::class.java).putExtra("type","add"))
         }
     }
 
@@ -74,6 +80,7 @@ class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublis
 
         deleteProductIF = this
         unPublishIF = this
+        editProductIF = this
         utility = Utility()
         pd = ProgressDialog(context)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -159,6 +166,7 @@ class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublis
     companion object {
         var deleteProductIF : DeleteProductIF? = null
         var unPublishIF : UnPublishIF? = null
+        var editProductIF : EditProductIF? = null
     }
 
     override fun deleteProductID(id: String) {
@@ -179,5 +187,9 @@ class Products : BaseFrag(), Controller.ProductListAPI ,DeleteProductIF,UnPublis
                 getString(R.string.close_up)
             )
         }
+    }
+
+    override fun getEditProductID(id: String, pos: String,s:String) {
+        startActivity(Intent(context,AddNewProduct::class.java).putExtra("id",id).putExtra("pos",pos).putExtra("type",s))
     }
 }

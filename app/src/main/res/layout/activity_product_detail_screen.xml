@@ -56,17 +56,32 @@
         android:layout_margin="5dp"
         android:background="@android:color/darker_gray">
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerMain"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"/>
         <ImageView
             android:id="@+id/closetItemImage"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:visibility="gone"
             android:src="@drawable/login_banner1">
 
         </ImageView>
 
+        <LinearLayout
+            android:id="@+id/layout_dot"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+        </LinearLayout>
+
 
         <RelativeLayout
-            android:layout_below="@id/closetItemImage"
+            android:layout_below="@id/viewPagerMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_8dp"

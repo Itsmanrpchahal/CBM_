@@ -99,6 +99,28 @@ public class Utility {
         return body;
     }
 
+    //convert image to multipart
+    public static MultipartBody.Part sendImageFileToserver1(Bitmap bitMap,String image) throws IOException {
+
+
+        File file = new File( image + ".png");
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitMap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(bitmapdata);
+        fos.flush();
+        fos.close();
+
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData(image, file.getName(), reqFile);
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), image);
+
+        return body;
+    }
+
 
 
     public void PhimpmeProgressBarHandler(Context context) {

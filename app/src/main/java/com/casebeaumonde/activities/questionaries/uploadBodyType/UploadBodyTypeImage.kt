@@ -30,7 +30,6 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.constants.Data
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
-import kotlinx.android.synthetic.main.activity_tell_about_your_self.*
 import kotlinx.android.synthetic.main.activity_upload_body_type_image.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -401,7 +400,7 @@ class UploadBodyTypeImage : BaseClass()  , Controller.QuestionariesAPI {
     private fun setAdapterData(images: ArrayList<String?>) {
         images_recyclers.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        adapter = AddImagesAdapter(this, images)
+        adapter = AddImagesAdapter(this, images,"")
         images_recyclers.adapter = adapter
     }
 

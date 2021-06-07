@@ -5,13 +5,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import com.bumptech.glide.Glide
+import android.widget.*
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.casebeaumonde.Controller.Controller
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.BaseClass
@@ -19,6 +18,7 @@ import com.casebeaumonde.fragments.productManagement.response.ProductListRespons
 import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_product_detail_screen.*
 import retrofit2.Response
+
 
 class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
     private lateinit var position:String
@@ -38,6 +38,13 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
     private lateinit var pd: ProgressDialog
     private lateinit var controller: Controller
     private lateinit var products: ArrayList<ProductListResponse.Data.Products.Datum>
+    var mViewPager: ViewPager? = null
+    private lateinit var image : ArrayList<ProductListResponse.Data.Products.Datum.ProductImage>
+    var layout_dot: LinearLayout? = null
+    lateinit var dot: ArrayList<TextView>
+
+    // Creating Object of ViewPagerAdapter
+    private lateinit var mViewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +57,7 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
         if (utility.isConnectingToInternet(this)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.ProductList("Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjYwNzBjM2I1M2MzZjQzZDQyYmQ2MjA5MjlhNWY5YWIyYjA0OTFmNzJlMTMyZmVlNzgzZmI2ZTE1NWFjNjhlNTEyNWMxOGRhMGRlZjVjMGE3In0.eyJhdWQiOiIxIiwianRpIjoiNjA3MGMzYjUzYzNmNDNkNDJiZDYyMDkyOWE1ZjlhYjJiMDQ5MWY3MmUxMzJmZWU3ODNmYjZlMTU1YWM2OGU1MTI1YzE4ZGEwZGVmNWMwYTciLCJpYXQiOjE2MjI2MjI1MjAsIm5iZiI6MTYyMjYyMjUyMCwiZXhwIjoxNjU0MTU4NTIwLCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.M2Csyr5DOWL_rZi8Cabf5IV6_DFghI8eTRhip1wVAWw8pWf20-GeJrS6mAPjte0nvcdTpMItHlk3vSQE9aWbs_J-v26jKBeVswqJOlAC9ouK55KDHagv1iMcF6arOknVXwwp3DjechX59M_jhXNyzKGJh5QJidhXlBZgcorkCz-javQ1cDxTcvsXyXmvw3KLXfzkUPPdnLVwfRStwnPC_cx1SoeDLY0ii2ysBrWLz8AgLrlvRWfzM42ZNYnptK9HpWSNQRYSvyQQEWSk9lAkEkpA9QBTFFzegBuBPflBYBteanuMkMJ9UOb4j46hRybLUjJ2l5LBvoefg6_a7Ttc__vwsJhi9CLYiFaMpvSw-vclgfJ6LtKWtDMOItZyNh8d1RrcQZZB__Zx6KFvrrWhO9didyQoo6sh9LSLiU3Lp-fjMIDaWSXduJj1I4KFMMiLqdhvvkwlFOoFety4vedWtZo4VlG0Q87LdBU9W9sHZWOWrZFC6Fr4cUmZkQpHiB2GV8mb0J4ITpsRCe03xNNYgay5EtB6cBTbdarbOT9Pezc6jetPhmuQpxDaPUdLQRc9RnDBfS2XkL0375B4P2OB4aA-VhefJNnhFNtzvUkr0FaG3gv891Pj_h8CNkHHNGVu9uBAqHt1r_lpc5H_7lL3CObN7CyuryQ7GmhrSc-zL60")
+            controller.ProductList("Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZkOTQ2N2I5YTVkOTc2NjEwMzFjNzlkYjQ3NmY1YWQyNWFjZGYxNjZjODBjNjExMTE1ZTk1NDAyMTJkZThjYzVjY2IxYmJkNjhmZjllMWRhIn0.eyJhdWQiOiIxIiwianRpIjoiZmQ5NDY3YjlhNWQ5NzY2MTAzMWM3OWRiNDc2ZjVhZDI1YWNkZjE2NmM4MGM2MTExMTVlOTU0MDIxMmRlOGNjNWNjYjFiYmQ2OGZmOWUxZGEiLCJpYXQiOjE2MjI3ODE0MzUsIm5iZiI6MTYyMjc4MTQzNSwiZXhwIjoxNjU0MzE3NDM1LCJzdWIiOiIxMTEiLCJzY29wZXMiOltdfQ.e9RrUdPPTXJ9amldSLut1DUhEDXGK9TDmwSv9gqJM-BDveob_aLqH_cW3p0j1JxRUsHhbND1U5QXf22qeTDWe74DLQLEXVqdFTlA9G9AdOR5DjOem3LxQnb7yrGUz8JNPn5ntruUB_WyNQs6BGYJ1REC6ADRN4E1W4ZLJbNotbvaC41MQJ526UWFVB825MeMQoGSKo-DVHtShfqKXzMKA6tYz7T4wdy_1yBJWmnYlAyAY-qAgdIDvpKvByEJ2A0XStqiht3ptRsnJXKcQmlV0yieU25siQz1XPLXlebfr4OjiYZAaQSv7MQNtRNwc32gWvmNpZpnIgtu_n01mtJuXn8cYSSx66r3TTCP1plFaLL30iXAz2x-NRcAcn37ekSBmsNc_EZNSQypWVWsgAoDA-2Um5VT-IJvCsQUglzT-QThNBXFtBcBWzVLD2mLEpFSryq3sK5jT7Klx71ehY6MekPOmJJr6w4kznEsD0Nmq923UsZ_0eJvvXdxL5wjZYjuK1xkX1QClsukE2XHMPL0RrUoabyglzMKLmdZioGHtV2SlNOUYob0I3mTPhR8vj-riRFEKBAB1aXfWq9B7BAQ7i4mptNz8qA4VcEBq2y3FSxH0xkbT2kQf7QBKiLVWz-wvTKP5ucDpLp1DqAZKz4Yrvjo5enaraGHtpvJuqVBZu8")
         } else {
             utility!!.relative_snackbar(
                 productdetail!!,
@@ -68,6 +75,7 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
     }
 
     private fun findIds() {
+        mViewPager = findViewById<View>(R.id.viewPagerMain) as ViewPager
         closetitems_back = findViewById(R.id.closetitems_back)
         closetItemImage = findViewById(R.id.closetItemImage)
         name = findViewById(R.id.name)
@@ -80,6 +88,7 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
         brand = findViewById(R.id.brand)
         decs = findViewById(R.id.decs)
         stockquantity = findViewById(R.id.stockquantity1)
+        layout_dot = findViewById(R.id.layout_dot);
         utility = Utility()
         pd = ProgressDialog(this)
         pd!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -93,8 +102,11 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
         if (success.isSuccessful) {
             if (success.body()?.code?.equals("200")!!) {
                 products = ArrayList()
+
+                image = ArrayList()
+                image.addAll(success.body()?.data?.products?.data?.get(position.toInt())?.productImages!!)
                 products.addAll(success.body()?.data?.products?.data!!)
-                Glide.with(this).load(products.get(position.toInt()).productImages.get(0).image).placeholder(R.drawable.login_banner1).into(closetItemImage)
+               // Glide.with(this).load(products.get(position.toInt()).productImages.get(0).image).placeholder(R.drawable.login_banner1).into(closetItemImage)
                 name.text ="Title :"+ products.get(position.toInt()).productName
                 title.text ="Short Description :"+ products.get(position.toInt()).shortDescription
                 actualprice.text ="$"+products.get(position.toInt()).regularPrice.toString()
@@ -104,7 +116,38 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
                 decs.text ="Description :"+ products.get(position.toInt()).description
                // stockquantity.text ="Stock Quantity :"+ products.get(position.toInt()).stock_quantity.toString()
                 category.text ="Category :"+products.get(position.toInt()).category.name
-                brand.text = "Brand :"+products.get(position.toInt()).brand.name
+                if (products.get(position.toInt()).brand!=null)
+                {
+                    brand.text = "Brand :"+products.get(position.toInt()).brand.name
+                }
+
+
+                // Initializing the ViewPager Object
+
+                // Initializing the ViewPager Object
+
+
+                // Initializing the ViewPagerAdapter
+
+                // Initializing the ViewPagerAdapter
+                mViewPagerAdapter = ViewPagerAdapter(this, image)
+
+                // Adding the Adapter to the ViewPager
+
+                // Adding the Adapter to the ViewPager
+                mViewPager!!.adapter = mViewPagerAdapter
+                //addDot(0);
+                // whenever the page changes
+
+                // whenever the page changes
+                mViewPager!!.addOnPageChangeListener(object : OnPageChangeListener {
+                    override fun onPageScrolled(i: Int, v: Float, i1: Int) {}
+                    override fun onPageSelected(i: Int) {
+                      //  addDot(i)
+                    }
+
+                    override fun onPageScrollStateChanged(i: Int) {}
+                })
             } else {
                 utility!!.relative_snackbar(
                     productdetail!!,
@@ -120,6 +163,21 @@ class ProductDetailScreen : BaseClass(),Controller.ProductListAPI {
                 getString(R.string.close_up)
             )
         }
+    }
+
+    fun addDot(page_position: Int) {
+        dot = ArrayList()
+         dot[image.size]
+        layout_dot!!.removeAllViews()
+        for (i in 0 until image.size) {
+            dot[i] = TextView(this)
+            dot[i].text = Html.fromHtml("&#9673;")
+            dot[i].setTextSize(35F)
+            dot[i].setTextColor(resources.getColor(R.color.colorWhite))
+            layout_dot!!.addView(dot[i])
+        }
+        //active dot
+        dot[page_position].setTextColor(resources.getColor(R.color.colorgray))
     }
 
     override fun error(error: String?) {

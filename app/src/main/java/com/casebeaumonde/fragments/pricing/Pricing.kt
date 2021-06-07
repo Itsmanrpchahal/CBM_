@@ -19,13 +19,11 @@ import com.casebeaumonde.constants.BaseFrag
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.pricing.IF.GetPriceID_IF
 import com.casebeaumonde.fragments.pricing.adapter.BussinessPlanFeaturesAdapter
-import com.casebeaumonde.fragments.pricing.adapter.BussinessPricingAdapter
 import com.casebeaumonde.fragments.pricing.adapter.CustomerPlanFeaturesAdapter
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
 import com.casebeaumonde.fragments.profile.profileResponse.UserProfileResponse
 import com.casebeaumonde.utilities.Utility
-import kotlinx.android.synthetic.main.customprice.view.*
 import kotlinx.android.synthetic.main.fragment_pricing.*
 import retrofit2.Response
 
@@ -263,7 +261,8 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                             } else {
 
                                 //ToDo: Change THis plan from suscribed
-                                selectthisplan.setText("CHANGE THIS PLAN")
+                             //   selectthisplan.setText("CHANGE THIS PLAN")
+                                selectthisplan.setText("Select This Plan")
                             }
                         }
 
@@ -416,9 +415,6 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                         }
 
 
-
-
-
                         if (from.equals("changeplan")) {
                             if ((pricing.body()
                                     ?.getData()?.businessPlans as ArrayList<PricingResponse.Data.BusinessPlan>).get(
@@ -426,7 +422,7 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                                 ).name.equals(planname)
                             ) {
 
-                                selectthisplan.setText("SUBSCRIBED")
+                            selectthisplan.setText("SUBSCRIBED")
 //            val param = holder.itemView.getLayoutParams()
 //            param.height = 0;
 //            param.width = 0;
@@ -453,7 +449,8 @@ class Pricing : BaseFrag(), Controller.PricingAPI, GetPriceID_IF, Controller.Cha
                             } else {
 
                                 //ToDo: Change THis plan from suscribed
-                                selectthisplan.setText("CHANGE THIS PLAN")
+                                //selectthisplan.setText("CHANGE THIS PLAN")
+                                selectthisplan.setText("Select This Plan")
                             }
                         }
 

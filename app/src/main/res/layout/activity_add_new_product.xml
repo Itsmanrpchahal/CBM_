@@ -228,6 +228,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:visibility="gone"
                     android:hint="Filename123.png"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/colorWhite"
@@ -235,6 +236,14 @@
 
                 </TextView>
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/images_recyclers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

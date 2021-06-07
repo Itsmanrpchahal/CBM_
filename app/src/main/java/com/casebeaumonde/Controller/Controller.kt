@@ -57,6 +57,9 @@ import com.casebeaumonde.fragments.contracts.offers.response.SetOfferDecisionRes
 import com.casebeaumonde.fragments.designers.Response.DesignersResponse
 import com.casebeaumonde.fragments.pricing.response.ChangePlanResponse
 import com.casebeaumonde.fragments.pricing.response.PricingResponse
+import com.casebeaumonde.fragments.productManagement.addproduct.reponse.AddProductResponse
+import com.casebeaumonde.fragments.productManagement.addproduct.reponse.ProductDetailResponse
+import com.casebeaumonde.fragments.productManagement.addproduct.reponse.UpdateProductResponse
 import com.casebeaumonde.fragments.productManagement.response.ProductListResponse
 import com.casebeaumonde.fragments.productManagement.response.ProductPublishUnPublishResponse
 import com.casebeaumonde.fragments.profile.profileResponse.*
@@ -165,12 +168,14 @@ public class Controller {
     var changeContractStatusAPI:ChangeContractStatusAPI?=null
     var productListAPI : ProductListAPI? = null
     var productPublishUnPublishAPI : ProductPublishUnPublishAPI? =null
+    var addProductAPI: AddProductAPI? = null
+    var productDetailAPI:ProductDetailAPI? = null
+    var updateProductAPI : UpdateProductAPI?= null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
         webAPI = WebAPI()
     }
-
 
     fun Controller(notification: NotificationAPI, userProfile: UserProfileAPI) {
         notificationAPI = notification
@@ -213,9 +218,13 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(fetchList: FetchListAPI)
+    fun Controller(fetchList: FetchListAPI,addProduct: AddProductAPI,productList: ProductListAPI,productDetail: ProductDetailAPI,updateProduct: UpdateProductAPI)
     {
         fetchListAPI = fetchList
+        addProductAPI = addProduct
+        productListAPI= productList
+        productDetailAPI = productDetail
+        updateProductAPI = updateProduct
         webAPI = WebAPI()
     }
 
@@ -2601,6 +2610,65 @@ public class Controller {
        })
     }
 
+    fun AddProduct(token: String?,product_name:String,short_description:String,description:String,
+                   category_id:String,brand_id:String,product_type:String,regular_price:String,
+                   sell_price:String,stock_quantity:String,photo:ArrayList<MultipartBody.Part>)
+    {
+        webAPI?.api?.AddProduct(token, product_name, short_description, description, category_id, brand_id, product_type, regular_price, sell_price, stock_quantity, photo)?.enqueue(object :Callback<AddProductResponse>
+        {
+            override fun onResponse(
+                call: Call<AddProductResponse>,
+                response: Response<AddProductResponse>
+            ) {
+                addProductAPI?.onAddProductSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AddProductResponse>, t: Throwable) {
+                addProductAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun UpdateProduct(token: String?,product_id:String,product_name:String,short_description:String,description:String,
+                      category_id:String,brand_id:String,product_type:String,regular_price:String,
+                      sell_price:String,stock_quantity:String,photo:ArrayList<MultipartBody.Part>,_method:String)
+
+    {
+        webAPI?.api?.UpdateProduct(token,product_id, product_name, short_description, description, category_id, brand_id, product_type, regular_price, sell_price, stock_quantity, photo, _method)?.enqueue(object :Callback<UpdateProductResponse>
+        {
+            override fun onResponse(
+                call: Call<UpdateProductResponse>,
+                response: Response<UpdateProductResponse>
+            ) {
+                updateProductAPI?.onUpdateProductSuccess(response)
+            }
+
+            override fun onFailure(call: Call<UpdateProductResponse>, t: Throwable) {
+                updateProductAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun ProductDetail(token: String?,product_id:String)
+    {
+        webAPI?.api?.ProductDetail(token, product_id)?.enqueue(object :Callback<ProductDetailResponse>
+        {
+            override fun onResponse(
+                call: Call<ProductDetailResponse>,
+                response: Response<ProductDetailResponse>
+            ) {
+                productDetailAPI?.onProductDetailSuccess(response)
+            }
+
+            override fun onFailure(call: Call<ProductDetailResponse>, t: Throwable) {
+                productDetailAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
 
     interface NotificationAPI {
@@ -3073,6 +3141,21 @@ public class Controller {
 
     interface ProductPublishUnPublishAPI {
         fun onProductPulishUnPublishSuccess(success: Response<ProductPublishUnPublishResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddProductAPI {
+        fun onAddProductSuccess(success:Response<AddProductResponse>)
+        fun error(error: String?)
+    }
+
+    interface ProductDetailAPI {
+        fun onProductDetailSuccess(success: Response<ProductDetailResponse>)
+        fun error(error: String?)
+    }
+
+    interface UpdateProductAPI {
+        fun onUpdateProductSuccess(success: Response<UpdateProductResponse>)
         fun error(error: String?)
     }
 }

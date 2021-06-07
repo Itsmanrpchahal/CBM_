@@ -31,8 +31,11 @@ class ProductListAdapter (var context: Context,
     }
 
     override fun onBindViewHolder(holder: ProductListAdapter.ViewHolder, position: Int) {
-        Glide.with(context).load(products.get(position).productImages.get(0).image).placeholder(R.drawable.login_banner1).into(holder.itemView.closetItemImage)
-        holder.itemView.name.text = products.get(position).productName
+        if (products.get(position.toInt()).productImages.size>=1)
+        {
+            Glide.with(context).load(products.get(position).productImages.get(0).image).placeholder(R.drawable.login_banner1).into(holder.itemView.closetItemImage)
+        }
+         holder.itemView.name.text = products.get(position).productName
         holder.itemView.title.text = products.get(position).shortDescription
         holder.itemView.actualprice.text = "$"+products.get(position).regularPrice.toString()
         holder.itemView.actualprice.setPaintFlags(holder.itemView.actualprice.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
@@ -51,6 +54,10 @@ class ProductListAdapter (var context: Context,
         holder.itemView.setOnClickListener {
             context.startActivity(Intent(context,ProductDetailScreen::class.java).putExtra("position",position.toString()))
         }
+
+        holder.itemView.edit.setOnClickListener {
+            Products.editProductIF?.getEditProductID(products.get(position).id.toString(),position.toString(),"edit")
+        }
     }
 
     override fun getItemCount(): Int {
@@ -65,6 +72,7 @@ class ProductListAdapter (var context: Context,
             var actualprice : TextView
             var newprice : TextView
             var unpublish : Button
+            var edit : Button
 
             closetItemImage = itemView.findViewById(R.id.closetItemImage)
             name = itemView.findViewById(R.id.name)
@@ -72,6 +80,7 @@ class ProductListAdapter (var context: Context,
             actualprice = itemView.findViewById(R.id.actualprice)
             newprice = itemView.findViewById(R.id.newprice)
             unpublish = itemView.findViewById(R.id.unpublish)
+            edit = itemView.findViewById(R.id.edit)
         }
     }
 

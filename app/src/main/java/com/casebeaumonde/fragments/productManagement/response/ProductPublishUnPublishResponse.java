@@ -7,75 +7,44 @@ import java.util.List;
 
 public class ProductPublishUnPublishResponse {
 
-@SerializedName("code")
-@Expose
-private String code;
-@SerializedName("message")
-@Expose
-private String message;
-@SerializedName("data")
-@Expose
-private Data data;
+    @SerializedName("code")
+    @Expose
+    private String code;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("data")
+    @Expose
+    private Data data;
 
-public String getCode() {
-return code;
-}
+    public String getCode() {
+        return code;
+    }
 
-public void setCode(String code) {
-this.code = code;
-}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-public String getMessage() {
-return message;
-}
+    public String getMessage() {
+        return message;
+    }
 
-public void setMessage(String message) {
-this.message = message;
-}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-public Data getData() {
-return data;
-}
+    public Data getData() {
+        return data;
+    }
 
-public void setData(Data data) {
-this.data = data;
-}
-
+    public void setData(Data data) {
+        this.data = data;
+    }
     public class Data {
 
         @SerializedName("product")
         @Expose
         private Product product;
-        @SerializedName("first_page_url")
-        @Expose
-        private String firstPageUrl;
-        @SerializedName("from")
-        @Expose
-        private Integer from;
-        @SerializedName("last_page")
-        @Expose
-        private Integer lastPage;
-        @SerializedName("last_page_url")
-        @Expose
-        private String lastPageUrl;
-        @SerializedName("next_page_url")
-        @Expose
-        private Object nextPageUrl;
-        @SerializedName("path")
-        @Expose
-        private String path;
-        @SerializedName("per_page")
-        @Expose
-        private Integer perPage;
-        @SerializedName("prev_page_url")
-        @Expose
-        private Object prevPageUrl;
-        @SerializedName("to")
-        @Expose
-        private Integer to;
-        @SerializedName("total")
-        @Expose
-        private Integer total;
 
         public Product getProduct() {
             return product;
@@ -83,86 +52,6 @@ this.data = data;
 
         public void setProduct(Product product) {
             this.product = product;
-        }
-
-        public String getFirstPageUrl() {
-            return firstPageUrl;
-        }
-
-        public void setFirstPageUrl(String firstPageUrl) {
-            this.firstPageUrl = firstPageUrl;
-        }
-
-        public Integer getFrom() {
-            return from;
-        }
-
-        public void setFrom(Integer from) {
-            this.from = from;
-        }
-
-        public Integer getLastPage() {
-            return lastPage;
-        }
-
-        public void setLastPage(Integer lastPage) {
-            this.lastPage = lastPage;
-        }
-
-        public String getLastPageUrl() {
-            return lastPageUrl;
-        }
-
-        public void setLastPageUrl(String lastPageUrl) {
-            this.lastPageUrl = lastPageUrl;
-        }
-
-        public Object getNextPageUrl() {
-            return nextPageUrl;
-        }
-
-        public void setNextPageUrl(Object nextPageUrl) {
-            this.nextPageUrl = nextPageUrl;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public void setPath(String path) {
-            this.path = path;
-        }
-
-        public Integer getPerPage() {
-            return perPage;
-        }
-
-        public void setPerPage(Integer perPage) {
-            this.perPage = perPage;
-        }
-
-        public Object getPrevPageUrl() {
-            return prevPageUrl;
-        }
-
-        public void setPrevPageUrl(Object prevPageUrl) {
-            this.prevPageUrl = prevPageUrl;
-        }
-
-        public Integer getTo() {
-            return to;
-        }
-
-        public void setTo(Integer to) {
-            this.to = to;
-        }
-
-        public Integer getTotal() {
-            return total;
-        }
-
-        public void setTotal(Integer total) {
-            this.total = total;
         }
 
         public class Product {
@@ -214,7 +103,7 @@ this.data = data;
             private String updatedAt;
             @SerializedName("product_images")
             @Expose
-            private List<Object> productImages = null;
+            private List<ProductImage> productImages = null;
             @SerializedName("category")
             @Expose
             private Category category;
@@ -342,14 +231,84 @@ this.data = data;
                 this.updatedAt = updatedAt;
             }
 
-            public List<Object> getProductImages() {
+            public List<ProductImage> getProductImages() {
                 return productImages;
             }
 
-            public void setProductImages(List<Object> productImages) {
+            public void setProductImages(List<ProductImage> productImages) {
                 this.productImages = productImages;
             }
 
+            public class ProductImage {
+
+                @SerializedName("id")
+                @Expose
+                private Integer id;
+                @SerializedName("product_id")
+                @Expose
+                private Integer productId;
+                @SerializedName("variant_id")
+                @Expose
+                private Object variantId;
+                @SerializedName("image")
+                @Expose
+                private String image;
+                @SerializedName("created_at")
+                @Expose
+                private String createdAt;
+                @SerializedName("updated_at")
+                @Expose
+                private String updatedAt;
+
+                public Integer getId() {
+                    return id;
+                }
+
+                public void setId(Integer id) {
+                    this.id = id;
+                }
+
+                public Integer getProductId() {
+                    return productId;
+                }
+
+                public void setProductId(Integer productId) {
+                    this.productId = productId;
+                }
+
+                public Object getVariantId() {
+                    return variantId;
+                }
+
+                public void setVariantId(Object variantId) {
+                    this.variantId = variantId;
+                }
+
+                public String getImage() {
+                    return image;
+                }
+
+                public void setImage(String image) {
+                    this.image = image;
+                }
+
+                public String getCreatedAt() {
+                    return createdAt;
+                }
+
+                public void setCreatedAt(String createdAt) {
+                    this.createdAt = createdAt;
+                }
+
+                public String getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                public void setUpdatedAt(String updatedAt) {
+                    this.updatedAt = updatedAt;
+                }
+
+            }
             public Category getCategory() {
                 return category;
             }

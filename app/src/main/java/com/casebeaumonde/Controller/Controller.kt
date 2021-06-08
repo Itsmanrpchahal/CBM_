@@ -48,6 +48,7 @@ import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.cart.reponse.GetCartItemsResponse
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.fragments.chat.GetChatUsers
 import com.casebeaumonde.fragments.contracts.ContractCountResponse
@@ -172,6 +173,7 @@ public class Controller {
     var addProductAPI: AddProductAPI? = null
     var productDetailAPI:ProductDetailAPI? = null
     var updateProductAPI : UpdateProductAPI?= null
+    var getCartItemsAPI : GetCartItemsAPI? = null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -384,11 +386,11 @@ public class Controller {
     }
 
     fun Controller(
-        cartItem: CartItemAPI,
+        getCartItems: GetCartItemsAPI,
         removeItemCart: RemoveItemCartAPI,
         addtoCart: AddtoCartAPI
     ) {
-        cartItemAPI = cartItem
+        getCartItemsAPI = getCartItems
         removeItemCartAPI = removeItemCart
         addtoCartAPI = addtoCart
         webAPI = WebAPI()
@@ -544,12 +546,12 @@ public class Controller {
     fun Controller(
         shopItems: ShopItemsAPI,
         shopItemsLike: ShopItemsLikeAPI,
-        addtoCartShop: AddtoCartShopAPI,
+        addtoCart: AddtoCartAPI,
         searchShopItem: SearchShopItemAPI
     ) {
         shopItemsAPI = shopItems
         shopItemsLikeAPI = shopItemsLike
-        addtoCartShopAPI = addtoCartShop
+        addtoCartAPI = addtoCart
         searchShopItemAPI = searchShopItem
         webAPI = WebAPI()
     }
@@ -1199,6 +1201,24 @@ public class Controller {
 
             override fun onFailure(call: Call<CartItemsResponse>, t: Throwable) {
                 cartItemAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun GetCartItems(token: String?)
+    {
+        webAPI?.api?.GetCartItems(token)?.enqueue(object :Callback<GetCartItemsResponse>
+        {
+            override fun onResponse(
+                call: Call<GetCartItemsResponse>,
+                response: Response<GetCartItemsResponse>
+            ) {
+                getCartItemsAPI?.onGetCartItemsSuccess(response)
+            }
+
+            override fun onFailure(call: Call<GetCartItemsResponse>, t: Throwable) {
+                getCartItemsAPI?.error(t.message)
             }
 
         })
@@ -3178,6 +3198,11 @@ public class Controller {
 
     interface UpdateProductAPI {
         fun onUpdateProductSuccess(success: Response<UpdateProductResponse>)
+        fun error(error: String?)
+    }
+
+    interface GetCartItemsAPI {
+        fun onGetCartItemsSuccess(success:Response<GetCartItemsResponse>)
         fun error(error: String?)
     }
 }

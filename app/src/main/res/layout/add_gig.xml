@@ -148,10 +148,36 @@
             android:layout_height="35dp"
             android:padding="@dimen/margin_8dp"
             android:layout_marginTop="@dimen/margin_8dp"
+            android:visibility="gone"
             android:textSize="@dimen/textsize_16sp"
             android:background="@drawable/blackroundcorners">
 
         </Spinner>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/addgid_active_RB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active"
+                android:buttonTint="@color/colorBlack"
+                android:textColor="@color/colorBlack">
+            </RadioButton>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inactive"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:textColor="@color/colorBlack"
+                android:buttonTint="@color/colorBlack">
+            </RadioButton>
+        </RadioGroup>
 
         <TextView
             android:layout_width="wrap_content"

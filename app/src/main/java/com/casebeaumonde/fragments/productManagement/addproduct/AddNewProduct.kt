@@ -65,6 +65,7 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
     private lateinit var brands : ArrayList<FetchListResponse.Data.Brand>
     private lateinit var brandsname :ArrayList<String>
     private  var catPos : Int = 0
+    private  var brandPos : Int = 0
     private lateinit var saveproductbt : Button
     private lateinit var productname:EditText
     private lateinit var shortdescription:EditText
@@ -80,8 +81,8 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
     private lateinit var adapter:AddImagesAdapter
     //current position/index of selected images
     private var position = 0
-    private lateinit var cateID:String
-    private lateinit var brandID : String
+    private  var cateID:String=""
+    private  var brandID : String=""
     private  var productType:String="1"
     private lateinit var type:String
     private lateinit var id:String
@@ -197,12 +198,12 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                         pd.show()
                         if (type.equals("edit"))
                         {
-                            controller.UpdateProduct("Bearer "+"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZkOTQ2N2I5YTVkOTc2NjEwMzFjNzlkYjQ3NmY1YWQyNWFjZGYxNjZjODBjNjExMTE1ZTk1NDAyMTJkZThjYzVjY2IxYmJkNjhmZjllMWRhIn0.eyJhdWQiOiIxIiwianRpIjoiZmQ5NDY3YjlhNWQ5NzY2MTAzMWM3OWRiNDc2ZjVhZDI1YWNkZjE2NmM4MGM2MTExMTVlOTU0MDIxMmRlOGNjNWNjYjFiYmQ2OGZmOWUxZGEiLCJpYXQiOjE2MjI3ODE0MzUsIm5iZiI6MTYyMjc4MTQzNSwiZXhwIjoxNjU0MzE3NDM1LCJzdWIiOiIxMTEiLCJzY29wZXMiOltdfQ.e9RrUdPPTXJ9amldSLut1DUhEDXGK9TDmwSv9gqJM-BDveob_aLqH_cW3p0j1JxRUsHhbND1U5QXf22qeTDWe74DLQLEXVqdFTlA9G9AdOR5DjOem3LxQnb7yrGUz8JNPn5ntruUB_WyNQs6BGYJ1REC6ADRN4E1W4ZLJbNotbvaC41MQJ526UWFVB825MeMQoGSKo-DVHtShfqKXzMKA6tYz7T4wdy_1yBJWmnYlAyAY-qAgdIDvpKvByEJ2A0XStqiht3ptRsnJXKcQmlV0yieU25siQz1XPLXlebfr4OjiYZAaQSv7MQNtRNwc32gWvmNpZpnIgtu_n01mtJuXn8cYSSx66r3TTCP1plFaLL30iXAz2x-NRcAcn37ekSBmsNc_EZNSQypWVWsgAoDA-2Um5VT-IJvCsQUglzT-QThNBXFtBcBWzVLD2mLEpFSryq3sK5jT7Klx71ehY6MekPOmJJr6w4kznEsD0Nmq923UsZ_0eJvvXdxL5wjZYjuK1xkX1QClsukE2XHMPL0RrUoabyglzMKLmdZioGHtV2SlNOUYob0I3mTPhR8vj-riRFEKBAB1aXfWq9B7BAQ7i4mptNz8qA4VcEBq2y3FSxH0xkbT2kQf7QBKiLVWz-wvTKP5ucDpLp1DqAZKz4Yrvjo5enaraGHtpvJuqVBZu8",
+                            controller.UpdateProduct("Bearer "+getStringVal(Constants.TOKEN),
                                 id,productname.text.toString(),
                                 shortdescription.text.toString(),
                                 description.text.toString(),
-                                "12",
-                                "",
+                                cateID,
+                                brandID,
                                 productType,
                                 regularprice.text.toString(),
                                 sellprice.text.toString(),
@@ -210,12 +211,12 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                                 partlist,"put")
                         }
                         else {
-                            controller.AddProduct("Bearer "+"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZkOTQ2N2I5YTVkOTc2NjEwMzFjNzlkYjQ3NmY1YWQyNWFjZGYxNjZjODBjNjExMTE1ZTk1NDAyMTJkZThjYzVjY2IxYmJkNjhmZjllMWRhIn0.eyJhdWQiOiIxIiwianRpIjoiZmQ5NDY3YjlhNWQ5NzY2MTAzMWM3OWRiNDc2ZjVhZDI1YWNkZjE2NmM4MGM2MTExMTVlOTU0MDIxMmRlOGNjNWNjYjFiYmQ2OGZmOWUxZGEiLCJpYXQiOjE2MjI3ODE0MzUsIm5iZiI6MTYyMjc4MTQzNSwiZXhwIjoxNjU0MzE3NDM1LCJzdWIiOiIxMTEiLCJzY29wZXMiOltdfQ.e9RrUdPPTXJ9amldSLut1DUhEDXGK9TDmwSv9gqJM-BDveob_aLqH_cW3p0j1JxRUsHhbND1U5QXf22qeTDWe74DLQLEXVqdFTlA9G9AdOR5DjOem3LxQnb7yrGUz8JNPn5ntruUB_WyNQs6BGYJ1REC6ADRN4E1W4ZLJbNotbvaC41MQJ526UWFVB825MeMQoGSKo-DVHtShfqKXzMKA6tYz7T4wdy_1yBJWmnYlAyAY-qAgdIDvpKvByEJ2A0XStqiht3ptRsnJXKcQmlV0yieU25siQz1XPLXlebfr4OjiYZAaQSv7MQNtRNwc32gWvmNpZpnIgtu_n01mtJuXn8cYSSx66r3TTCP1plFaLL30iXAz2x-NRcAcn37ekSBmsNc_EZNSQypWVWsgAoDA-2Um5VT-IJvCsQUglzT-QThNBXFtBcBWzVLD2mLEpFSryq3sK5jT7Klx71ehY6MekPOmJJr6w4kznEsD0Nmq923UsZ_0eJvvXdxL5wjZYjuK1xkX1QClsukE2XHMPL0RrUoabyglzMKLmdZioGHtV2SlNOUYob0I3mTPhR8vj-riRFEKBAB1aXfWq9B7BAQ7i4mptNz8qA4VcEBq2y3FSxH0xkbT2kQf7QBKiLVWz-wvTKP5ucDpLp1DqAZKz4Yrvjo5enaraGHtpvJuqVBZu8",
+                            controller.AddProduct("Bearer "+getStringVal(Constants.TOKEN),
                                 productname.text.toString(),
                                 shortdescription.text.toString(),
                                 description.text.toString(),
-                                "12",
-                                "",
+                                cateID,
+                                brandID,
                                 productType,
                                 regularprice.text.toString(),
                                 sellprice.text.toString(),
@@ -506,6 +507,17 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                     category.add(cat.name.toString())
                 }
 
+                if (categories.size > 0) {
+
+                    for (i in categories.indices) {
+                        val catpos = categories[i]
+
+                        if (catpos.id.toString().equals(cateID)) {
+                            catPos = i
+                        }
+                    }
+                }
+
 
               val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, category)
                 categoryspinner.adapter = adapter
@@ -516,7 +528,23 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                         position: Int,
                         id: Long
                     ) {
-                        cateID = categories.get(position).id.toString()
+                        Log.d("catID2","HERE"+catPos)
+                        if (catPos == 0) {
+                            //additemclosets_color.setText(color.get(position).name)
+                            //additemclosets_Colorpinner.setSelection(colorPos)
+                            cateID = categories.get(position).name.toString()
+                            Log.d("catID",cateID+"   "+catPos)
+                        } else {
+
+                            //additemclosets_color.setText(color.get(colorPos).name)
+                            categoryspinner.setSelection(catPos)
+                            cateID = categories.get(catPos).name.toString()
+                            catPos = position
+                            Log.d("catID1",cateID+"   "+catPos)
+                            //Toast.makeText(this@AddItemToEvent,""+position.toString(),Toast.LENGTH_SHORT).show()
+
+                        }
+                        //cateID = categories.get(position).id.toString()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -535,6 +563,17 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                     brandsname.add(brand.name.toString())
                 }
 
+                if (brands.size > 0) {
+
+                    for (i in brands.indices) {
+                        val catpos = brands[i]
+
+                        if (catpos.id.toString().equals(brandID)) {
+                            brandPos = i
+                        }
+                    }
+                }
+
                 val adapter1 = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, brandsname)
                 brandspinner.adapter = adapter1
                 brandspinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -544,7 +583,20 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                         position: Int,
                         id: Long
                     ) {
-                        brandID = brands.get(position).id.toString()
+                        if (brandPos == 0) {
+                            //additemclosets_color.setText(color.get(position).name)
+                            //additemclosets_Colorpinner.setSelection(colorPos)
+                            brandID = brands.get(position).name.toString()
+                        } else {
+
+                            //additemclosets_color.setText(color.get(colorPos).name)
+                            categoryspinner.setSelection(catPos)
+                            brandID = brands.get(brandPos).name.toString()
+                            brandPos = position
+                            //Toast.makeText(this@AddItemToEvent,""+position.toString(),Toast.LENGTH_SHORT).show()
+
+                        }
+                            // brandID = brands.get(position).id.toString()
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -636,6 +688,11 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                 sellprice.setText(success.body()?.data?.products?.sellPrice.toString())
                 stockquantity.setText(success.body()?.data?.products?.stockQuantity.toString())
 
+                cateID = success.body()?.data?.products?.categoryId.toString()
+                brandID = success.body()?.data?.products?.brandId.toString()
+
+
+
                 if (success.body()?.data?.products?.productType==1)
                 {
                     simpleproduct.setBackgroundResource(R.drawable.whiteborder)
@@ -724,7 +781,7 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
         if (type.equals("edit"))
         {
             pd.show()
-            controller.ProductDetail("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZkOTQ2N2I5YTVkOTc2NjEwMzFjNzlkYjQ3NmY1YWQyNWFjZGYxNjZjODBjNjExMTE1ZTk1NDAyMTJkZThjYzVjY2IxYmJkNjhmZjllMWRhIn0.eyJhdWQiOiIxIiwianRpIjoiZmQ5NDY3YjlhNWQ5NzY2MTAzMWM3OWRiNDc2ZjVhZDI1YWNkZjE2NmM4MGM2MTExMTVlOTU0MDIxMmRlOGNjNWNjYjFiYmQ2OGZmOWUxZGEiLCJpYXQiOjE2MjI3ODE0MzUsIm5iZiI6MTYyMjc4MTQzNSwiZXhwIjoxNjU0MzE3NDM1LCJzdWIiOiIxMTEiLCJzY29wZXMiOltdfQ.e9RrUdPPTXJ9amldSLut1DUhEDXGK9TDmwSv9gqJM-BDveob_aLqH_cW3p0j1JxRUsHhbND1U5QXf22qeTDWe74DLQLEXVqdFTlA9G9AdOR5DjOem3LxQnb7yrGUz8JNPn5ntruUB_WyNQs6BGYJ1REC6ADRN4E1W4ZLJbNotbvaC41MQJ526UWFVB825MeMQoGSKo-DVHtShfqKXzMKA6tYz7T4wdy_1yBJWmnYlAyAY-qAgdIDvpKvByEJ2A0XStqiht3ptRsnJXKcQmlV0yieU25siQz1XPLXlebfr4OjiYZAaQSv7MQNtRNwc32gWvmNpZpnIgtu_n01mtJuXn8cYSSx66r3TTCP1plFaLL30iXAz2x-NRcAcn37ekSBmsNc_EZNSQypWVWsgAoDA-2Um5VT-IJvCsQUglzT-QThNBXFtBcBWzVLD2mLEpFSryq3sK5jT7Klx71ehY6MekPOmJJr6w4kznEsD0Nmq923UsZ_0eJvvXdxL5wjZYjuK1xkX1QClsukE2XHMPL0RrUoabyglzMKLmdZioGHtV2SlNOUYob0I3mTPhR8vj-riRFEKBAB1aXfWq9B7BAQ7i4mptNz8qA4VcEBq2y3FSxH0xkbT2kQf7QBKiLVWz-wvTKP5ucDpLp1DqAZKz4Yrvjo5enaraGHtpvJuqVBZu8",id)
+            controller.ProductDetail("Bearer "+getStringVal(Constants.TOKEN),id)
         }else {
             pd.dismiss()
         }

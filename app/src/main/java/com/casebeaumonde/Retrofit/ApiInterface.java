@@ -72,6 +72,7 @@ import com.casebeaumonde.fragments.Live_Events.response.LiveEventsResponse;
 import com.casebeaumonde.fragments.allClosets.response.AllClosetsResponse;
 import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse;
 import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse;
+import com.casebeaumonde.fragments.cart.reponse.GetCartItemsResponse;
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse;
 import com.casebeaumonde.fragments.chat.GetChatUsers;
 import com.casebeaumonde.fragments.contracts.ContractCountResponse;
@@ -755,7 +756,7 @@ public interface ApiInterface {
             @Field("id") String id
     );
 
-    @GET("api/v1/addToCart/{input}/{input1}")
+    @POST("api/v1/addToCart/{input}/{input1}")
     Call<AddtoCartResponse> addToCart(
             @Header("Authorization") String token,
             @Path("input") String itemId,
@@ -769,6 +770,11 @@ public interface ApiInterface {
             @Path("input") String item_id,
             @Path("input1") String qty
 
+    );
+
+    @GET("api/v1/get")
+    Call<GetCartItemsResponse> GetCartItems(
+            @Header("Authorization") String token
     );
 
 

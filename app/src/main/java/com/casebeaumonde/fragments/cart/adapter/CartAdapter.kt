@@ -12,12 +12,12 @@ import com.bumptech.glide.Glide
 import com.casebeaumonde.R
 import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.cart.Cart
-import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.cart.reponse.GetCartItemsResponse
 import kotlinx.android.synthetic.main.cart_custom.view.*
 
 class CartAdapter(
     val context: Context,
-    var cartsItems: ArrayList<CartItemsResponse.Data.CartItem>
+    var cartsItems: ArrayList<GetCartItemsResponse.CartItems>
 ) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
@@ -31,18 +31,18 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: CartAdapter.ViewHolder, position: Int) {
         val cartlist = cartsItems.get(position)
-        Glide.with(context).load(Constants.BASE_IMAGE_URL + cartlist.image)
+        Glide.with(context).load(Constants.BASE_IMAGE_URL + cartlist.maggiePi.get(position).product.productImages.get(0).image)
             .placeholder(R.drawable.login_banner1).into(holder.itemView.cartimage)
-        holder.itemView.itemdata.setText("Name :" + cartlist.name)
-        holder.itemView.pricetv.setText("$" + cartlist.price)
-        holder.itemView.count_tv.setText(cartlist.qty.toString())
+        holder.itemView.itemdata.setText("Name :" + cartlist.maggiePi.get(position).product.productName)
+        holder.itemView.pricetv.setText("$" + cartlist.maggiePi.get(position).product.sellPrice)
+        holder.itemView.count_tv.setText(cartlist.maggiePi.get(position).qty.toString())
 
         holder.itemView.plus.setOnClickListener {
             count++
 
             holder.itemView.count_tv.text = count.toString()
 
-            Cart.addtoCartIF?.getCartQuantity(count.toString(), cartlist.id.toString())
+            Cart.addtoCartIF?.getCartQuantity(count.toString(), cartlist.maggiePi.get(position).product.id.toString())
 
 
         }
@@ -54,7 +54,7 @@ class CartAdapter(
                 count--
                 holder.itemView.count_tv.text = count.toString()
             } else {
-                Cart.removeCartItemIF?.getID(position.toString(), cartlist.id.toString())
+                Cart.removeCartItemIF?.getID(position.toString(), cartlist.maggiePi.get(position).product.id.toString())
             }
 
         }

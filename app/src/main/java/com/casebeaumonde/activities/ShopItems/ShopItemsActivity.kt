@@ -27,7 +27,7 @@ import com.casebeaumonde.utilities.Utility
 import kotlinx.android.synthetic.main.activity_shop_items.*
 import retrofit2.Response
 
-class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Controller.ShopItemsLikeAPI,Controller.AddtoCartShopAPI,Controller.SearchShopItemAPI{
+class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Controller.ShopItemsLikeAPI,Controller.AddtoCartAPI,Controller.SearchShopItemAPI{
     lateinit var shopID : String
     lateinit var retailer_spinner:Spinner
     lateinit var designer_spinner : Spinner
@@ -301,36 +301,6 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         }
     }
 
-    override fun onAddtoCartShopSuccess(success: Response<AddtoCartResponse>) {
-        pd.dismiss()
-        if (success.isSuccessful)
-        {
-            if (success.body()?.code?.equals("200")!!)
-            {
-
-
-                dialog.dismiss()
-                utility!!.relative_snackbar(
-                    parent_shopitems!!,
-                    success.body()?.message,
-                    getString(R.string.close_up)
-                )
-            } else {
-                utility!!.relative_snackbar(
-                    parent_shopitems!!,
-                    success.message(),
-                    getString(R.string.close_up)
-                )
-            }
-        }else {
-            utility!!.relative_snackbar(
-                parent_shopitems!!,
-                success.message(),
-                getString(R.string.close_up)
-            )
-        }
-    }
-
 
     override fun error(error: String?) {
        pd.dismiss()
@@ -413,13 +383,41 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
 
     private fun addtoCart(addtocart: Button?, id: String?) {
     addtocart?.setOnClickListener {
-        controller.AddtoCartShop("Bearer "+getStringVal(Constants.TOKEN),id,"1")
+        controller.AddtoCart("Bearer "+getStringVal(Constants.TOKEN),id,"1")
         pd.show()
         pd.setContentView(R.layout.loading)
     }
     }
 
+    override fun onAddtoCartSuccess(success: Response<AddtoCartResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful)
+        {
+            if (success.body()?.code?.equals("200")!!)
+            {
 
+
+                dialog.dismiss()
+                utility!!.relative_snackbar(
+                    parent_shopitems!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
+            } else {
+                utility!!.relative_snackbar(
+                    parent_shopitems!!,
+                    success.message(),
+                    getString(R.string.close_up)
+                )
+            }
+        }else {
+            utility!!.relative_snackbar(
+                parent_shopitems!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
 
     fun searchUserHeart(
         items: ShopItemsResponse.Data.Item,

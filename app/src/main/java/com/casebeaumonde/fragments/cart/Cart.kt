@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casebeaumonde.Controller.Controller
@@ -21,14 +20,17 @@ import com.casebeaumonde.constants.Constants
 import com.casebeaumonde.fragments.cart.IF.AddtoCartIF
 import com.casebeaumonde.fragments.cart.IF.RemoveCartItemIF
 import com.casebeaumonde.fragments.cart.adapter.CartAdapter
-import com.casebeaumonde.fragments.cart.reponse.CartItemsResponse
+import com.casebeaumonde.fragments.cart.reponse.GetCartItemsResponse
 import com.casebeaumonde.fragments.cart.reponse.RemoveItemCartResponse
 import com.casebeaumonde.utilities.Utility
-import kotlinx.android.synthetic.main.activity_shop_items.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import retrofit2.Response
 
-class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF, Controller.RemoveItemCartAPI,
+class Cart : BaseFrag(),
+//    Controller.CartItemAPI,
+    Controller.GetCartItemsAPI,
+    RemoveCartItemIF,
+    Controller.RemoveItemCartAPI,
     AddtoCartIF, Controller.AddtoCartAPI {
 
     private lateinit var cartitems_recycler: RecyclerView
@@ -36,7 +38,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF, Controller.Re
     private lateinit var pd: ProgressDialog
     private lateinit var checkout_bt: Button
     private lateinit var controller: Controller
-    private lateinit var response: ArrayList<CartItemsResponse.Data.CartItem>
+    private lateinit var response: ArrayList<GetCartItemsResponse.CartItems>
     private var quantity1: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +59,7 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF, Controller.Re
         if (utility.isConnectingToInternet(context)) {
             pd.show()
             pd.setContentView(R.layout.loading)
-            controller.CartItems("Bearer " + getStringVal(Constants.TOKEN))
+            controller.GetCartItems("Bearer " + getStringVal(Constants.TOKEN))
         } else {
             utility!!.relative_snackbar(
                 parent_cart!!,
@@ -91,35 +93,39 @@ class Cart : BaseFrag(), Controller.CartItemAPI, RemoveCartItemIF, Controller.Re
         checkout_bt = view.findViewById(R.id.checkout_bt)
     }
 
-    override fun onCartItemSuccess(cartitem: Response<CartItemsResponse>) {
-        pd.dismiss()
-
-        if (cartitem.isSuccessful) {
-
-            response =
-                cartitem.body()?.getData()?.cartItems as ArrayList<CartItemsResponse.Data.CartItem>
-            setFullData(response)
-        } else {
-            utility!!.relative_snackbar(
-                parent_cart!!,
-                cartitem.message(),
-                getString(R.string.close_up)
-            )
-        }
-    }
+//    override fun onCartItemSuccess(cartitem: Response<CartItemsResponse>) {
+//
+//    }
 
     companion object {
         var removeCartItemIF: RemoveCartItemIF? = null
         var addtoCartIF: AddtoCartIF? = null
     }
 
-    private fun setFullData(response: ArrayList<CartItemsResponse.Data.CartItem>) {
+    private fun setFullData(response: ArrayList<GetCartItemsResponse.CartItems>) {
         cartitems_recycler.visibility = View.VISIBLE
         //response = closets
         cartitems_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val adapter = CartAdapter(context!!, response)
         cartitems_recycler.adapter = adapter
+    }
+
+    override fun onGetCartItemsSuccess(success: Response<GetCartItemsResponse>) {
+        pd.dismiss()
+
+        if (success.isSuccessful) {
+//            response =
+//                success.body()?.cartItems
+//            response.addAll(success.body()?.)
+            setFullData(response)
+        } else {
+            utility!!.relative_snackbar(
+                parent_cart!!,
+                success.message(),
+                getString(R.string.close_up)
+            )
+        }
     }
 
 

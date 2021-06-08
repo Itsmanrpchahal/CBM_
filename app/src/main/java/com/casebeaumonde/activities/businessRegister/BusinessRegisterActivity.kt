@@ -11,9 +11,9 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.Window
@@ -23,17 +23,23 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.casebeaumonde.R
+import com.casebeaumonde.Retrofit.WebAPI
 import com.casebeaumonde.activities.login.LoginActivity
 import com.casebeaumonde.activities.register.userRegister.RegisterActivity
+import com.casebeaumonde.activities.register.userRegister.userRegisterResponse.UserRegisterResponse
+import com.casebeaumonde.constants.BaseClass
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_business_register.*
 import kotlinx.android.synthetic.main.activity_register.*
 import okhttp3.MultipartBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 
-class BusinessRegisterActivity : AppCompatActivity() {
+class BusinessRegisterActivity : BaseClass() {
 
     private lateinit var business_team_spinner: AppCompatSpinner
     private lateinit var spinnertitle: TextView
@@ -216,7 +222,7 @@ class BusinessRegisterActivity : AppCompatActivity() {
             }
         } else {
             when {
-                userType.equals("-Select Team-") -> {
+                userType.equals("- Select Team -") -> {
                     utility!!.relative_snackbar(
                         bregister_parent!!,
                         "Select team",
@@ -285,11 +291,118 @@ class BusinessRegisterActivity : AppCompatActivity() {
                     {
                         c = "terms"
                     }
+
+                    userRegister(
+                        bregister_firstname.text.toString(),
+                        bregister_lastname.text.toString(),
+                        bregister_email.text.toString(),
+                        bregister_password.text.toString(),
+                        bregister_cpassword.text.toString(),
+                        bregister_phone.text.toString(),
+                        "",
+                        part,
+                        c
+                    )
                 }
             }
         }
 
     }
+
+    private fun userRegister(
+        firstname: String?,
+        lastname: String?,
+        email: String?,
+        password: String?,
+        cpassword: String?,
+        phone: String?,
+        about: String?,
+        part: MultipartBody.Part,
+        c: String
+    ) {
+        //hideKeyboard()
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
+
+
+            val userRegisterCall = WebAPI.apiInterface?.userRegisterCall(
+                firstname,
+                lastname,
+                email,
+                password,
+                cpassword,
+                phone,
+                c,
+                about,
+                part,
+                userType,""
+            )
+            userRegisterCall?.enqueue(object : Callback<UserRegisterResponse> {
+
+                override fun onResponse(
+                    call: Call<UserRegisterResponse>,
+                    response: Response<UserRegisterResponse>
+                ) {
+                    pd.dismiss()
+                    Log.d("registerresponse", "" + response.body())
+
+                    if(response.isSuccessful)
+                    {
+                        if(response.body()?.code.equals("200"))
+                        {
+                            register_firstname.setText("")
+                            register_email.setText("")
+                            register_password.setText("")
+                            register_cpassword.setText("")
+                            register_phone.setText("")
+                            register_aboutme.setText("")
+                            uploadfilename.setText("")
+                            bitMap.recycle()
+                            startActivity(Intent(this@BusinessRegisterActivity,LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                            finish()
+                            utility!!.relative_snackbar(
+                                bregister_parent!!,
+                                response.body()?.getMessage(),
+                                getString(R.string.close_up)
+                            )
+                        }else {
+                            utility!!.relative_snackbar(
+                                bregister_parent!!,
+                                response.body()?.getMessage(),
+                                getString(R.string.close_up)
+                            )
+                        }
+                    } else
+                    {
+                        utility!!.relative_snackbar(
+                            bregister_parent!!,
+                            response.message(),
+                            getString(R.string.close_up)
+                        )
+                    }
+
+                }
+
+                override fun onFailure(call: Call<UserRegisterResponse>, t: Throwable) {
+                    pd.dismiss()
+                    utility!!.relative_snackbar(
+                        bregister_parent!!,
+                        "Error "+t.message,
+                        getString(R.string.close_up)
+                    )
+                }
+            })
+        } else {
+            pd.dismiss()
+            utility.relative_snackbar(
+                bregister_parent!!,
+                getString(R.string.nointernet),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
 
     private fun setSpinnerData() {
 
@@ -310,6 +423,7 @@ class BusinessRegisterActivity : AppCompatActivity() {
                     spinnertitle.setText(languages[position])
                 }
                 userType = languages[position]
+                Log.d("userType",""+userType)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -390,7 +504,6 @@ class BusinessRegisterActivity : AppCompatActivity() {
 
     ) {
         pictureSelectionDialog()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

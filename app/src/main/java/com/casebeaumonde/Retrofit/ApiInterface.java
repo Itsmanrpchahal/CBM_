@@ -37,10 +37,12 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse;
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse;
+import com.casebeaumonde.activities.myGigs.response.AddGigResponse;
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse;
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse;
 import com.casebeaumonde.activities.myclosets.response.DuplicateItemResponse;
 import com.casebeaumonde.activities.myclosets.response.FetchListResponse;
+import com.casebeaumonde.activities.myclosets.response.InfluencerResponse;
 import com.casebeaumonde.activities.myclosets.response.MoveClosetItems;
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse;
 import com.casebeaumonde.activities.myclosets.response.OutFitResponse;
@@ -242,7 +244,8 @@ public interface ApiInterface {
             @Query("title") String title,
             @Query("visibility") String visibility,
             @Part MultipartBody.Part image,
-            @Query("description") String description
+            @Query("description") String description,
+            @Query("user_id") String user_id
     );
 
     @GET("api/v1/closet/{input}")
@@ -268,7 +271,8 @@ public interface ApiInterface {
             @Query("title") String title,
             @Query("visibility") String visibility,
             @Part MultipartBody.Part image,
-            @Query("description") String description
+            @Query("description") String description,
+            @Query("user_id") String user_id
     );
 
     @DELETE("api/v1/deleteCloset/{input}")
@@ -1001,4 +1005,31 @@ public interface ApiInterface {
             @Query("_method") String _method
             );
 
+    @POST("api/v1/add-gig")
+    Call<AddGigResponse> AddGig(
+            @Header("Authorization") String token,
+            @Query("title") String title,
+            @Query("rate_type") String rate_type,
+            @Query("hours") String hours,
+            @Query("rate") String rate,
+            @Query("status") String status,
+            @Query("description") String description
+    );
+
+    @POST("api/v1/update-gig/{input}")
+    Call<AddGigResponse> UpdateGig(
+            @Header("Authorization") String token,
+            @Path("input") String id,
+            @Query("title") String title,
+            @Query("rate_type") String rate_type,
+            @Query("hours") String hours,
+            @Query("rate") String rate,
+            @Query("status") String status,
+            @Query("description") String description
+    );
+
+    @GET("api/v1/influencers")
+    Call<InfluencerResponse> Influncers(
+            @Header("Authorization") String token
+    );
 }

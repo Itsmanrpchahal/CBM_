@@ -60,7 +60,9 @@
             android:padding="@dimen/margin_8dp"
             android:layout_marginTop="@dimen/margin_8dp"
             android:textSize="@dimen/textsize_16sp"
-            android:background="@drawable/blackroundcorners">
+            android:fontFamily="@font/oswald_regular"
+            android:textColor="@color/colorBlack"
+            android:backgroundTint="@color/colorBlack">
 
         </EditText>
 
@@ -80,6 +82,7 @@
             </RadioButton>
 
             <RadioButton
+                android:id="@+id/fixed_RB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fixed Rate"
@@ -106,8 +109,11 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_8dp"
             android:layout_marginTop="@dimen/margin_8dp"
+            android:inputType="number"
             android:textSize="@dimen/textsize_16sp"
-            android:background="@drawable/blackroundcorners">
+            android:fontFamily="@font/oswald_regular"
+            android:textColor="@color/colorBlack"
+            android:backgroundTint="@color/colorBlack">
 
         </EditText>
 
@@ -128,7 +134,10 @@
             android:layout_marginTop="@dimen/margin_8dp"
             android:textSize="@dimen/textsize_16sp"
             android:padding="@dimen/margin_8dp"
-            android:background="@drawable/blackroundcorners">
+            android:inputType="number"
+            android:fontFamily="@font/oswald_regular"
+            android:textColor="@color/colorBlack"
+            android:backgroundTint="@color/colorBlack">
 
         </EditText>
 
@@ -142,42 +151,42 @@
 
         </TextView>
 
-        <Spinner
-            android:id="@+id/addgig_status_spinner"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:padding="@dimen/margin_8dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:visibility="gone"
-            android:textSize="@dimen/textsize_16sp"
-            android:background="@drawable/blackroundcorners">
+            android:layout_height="wrap_content">
 
-        </Spinner>
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:id="@+id/addgid_active_RB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Active"
-                android:buttonTint="@color/colorBlack"
-                android:textColor="@color/colorBlack">
-            </RadioButton>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Inactive"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/addgig_status_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginTop="@dimen/margin_8dp"
+                android:visibility="visible"
+                android:textSize="@dimen/textsize_16sp"
+                android:fontFamily="@font/oswald_regular"
                 android:textColor="@color/colorBlack"
-                android:buttonTint="@color/colorBlack">
-            </RadioButton>
-        </RadioGroup>
+                android:backgroundTint="@color/colorBlack">
+
+            </androidx.appcompat.widget.AppCompatSpinner>
+            <TextView
+                android:id="@+id/spinnertitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:gravity="center_vertical"
+                android:text="-Select Team-"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/textsize_16sp">
+
+            </TextView>
+
+
+        </RelativeLayout>
+
+
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -195,8 +204,12 @@
             android:layout_height="70dp"
             android:padding="@dimen/margin_8dp"
             android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_gravity="start"
+            android:gravity="start"
             android:textSize="@dimen/textsize_16sp"
-            android:background="@drawable/blackroundcorners">
+            android:fontFamily="@font/oswald_regular"
+            android:textColor="@color/colorBlack"
+            android:backgroundTint="@color/colorBlack">
 
         </EditText>
 
@@ -208,6 +221,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/save_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save"
@@ -217,6 +231,7 @@
             </Button>
 
             <Button
+                android:id="@+id/cancel_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancel"

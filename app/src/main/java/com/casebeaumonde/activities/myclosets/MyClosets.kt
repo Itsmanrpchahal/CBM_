@@ -32,6 +32,7 @@ import com.casebeaumonde.activities.ClosetItem.IF.ClosetItemID_IF
 import com.casebeaumonde.activities.myclosets.IF.DeleteClosetID
 import com.casebeaumonde.activities.myclosets.adapter.MyClosetsAdapter
 import com.casebeaumonde.activities.myclosets.response.DeleteClosetResponse
+import com.casebeaumonde.activities.myclosets.response.InfluencerResponse
 import com.casebeaumonde.activities.myclosets.response.MyClosetsResponse
 import com.casebeaumonde.activities.myclosets.response.UpdateClosetsResponse
 import com.casebeaumonde.activities.myoutfits.MyOutfits
@@ -42,7 +43,6 @@ import com.casebeaumonde.fragments.allClosets.response.CreateClosetResponse
 import com.casebeaumonde.utilities.Utility
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
-import kotlinx.android.synthetic.main.activity_closets_items.*
 import kotlinx.android.synthetic.main.activity_my_closets.*
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -51,7 +51,7 @@ import java.io.File
 
 class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetAPI,
     Controller.UpdateClosetAPI, Controller.DeleteClosetAPI,
-    ClosetItemID_IF, DeleteClosetID {
+    ClosetItemID_IF, DeleteClosetID,Controller.InfluencersAPI {
 
     private lateinit var myclosets_back: ImageButton
     private lateinit var controller: Controller
@@ -87,13 +87,14 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
     private var id: String? = ""
     var msg: String? = ""
     var lastMsg = ""
+    private  var influencerID :String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_closets)
         findIds()
         controller = Controller()
-        controller.Controller(this, this, this, this)
+        controller.Controller(this, this, this, this,this)
         closetitemidIf = this
         deleteClosetID = this
         userID = intent.getStringExtra("userID")!!
@@ -226,6 +227,11 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         if (getStringVal(Constants.USER_ROLE).equals("customer")) {
             createcloset_checkbox.visibility = View.GONE
         }
+
+        if (getStringVal(Constants.USER_ROLE).equals("retailer")) {
+            createcloset_checkbox.setText("This closet is designed for a influencer")
+        }
+
         if (pos != -1) {
             createcloset_title.setText(response.get(pos!!).title)
             createcloset_description.setText(response.get(pos!!).description)
@@ -342,43 +348,66 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
         }
 
 
-                if (utility.isConnectingToInternet(this)) {
-                    pd.show()
-                    pd.setContentView(R.layout.loading)
+        if (utility.isConnectingToInternet(this)) {
+            pd.show()
+            pd.setContentView(R.layout.loading)
 
-                    if (toString.equals("Update")) {
+            if (getStringVal(Constants.USER_ROLE).equals("retailer"))
+            {
+                if (toString.equals("Update")) {
 
-                        controller.UpdateCloset(
-                            "Bearer " + getStringVal(Constants.TOKEN),
-                            id,
-                            title,
-                            c,
-                            part,
-                            descrition
-                        )
-                    } else {
-                        createClosetAPI(
-                            createcloset_title.text.toString(),
-                            c,
-                            createcloset_description.text.toString(),
-                            this.part
-                        )
-                    }
-
+                    controller.UpdateCloset(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        id,
+                        title,
+                        c,
+                        part,
+                        descrition, influencerID
+                    )
                 } else {
-                    utility!!.relative_snackbar(
-                        parent_myclosets,
-                        R.string.nointernet.toString(),
-                        getString(R.string.close_up)
+                    createClosetAPI(
+                        createcloset_title.text.toString(),
+                        c,
+                        createcloset_description.text.toString(),
+                        this.part,influencerID
                     )
                 }
+            }else {
+                if (toString.equals("Update")) {
+
+                    controller.UpdateCloset(
+                        "Bearer " + getStringVal(Constants.TOKEN),
+                        id,
+                        title,
+                        c,
+                        part,
+                        descrition, ""
+                    )
+                } else {
+                    createClosetAPI(
+                        createcloset_title.text.toString(),
+                        c,
+                        createcloset_description.text.toString(),
+                        this.part,""
+                    )
+                }
+            }
+
+
+        } else {
+            utility!!.relative_snackbar(
+                parent_myclosets,
+                R.string.nointernet.toString(),
+                getString(R.string.close_up)
+            )
+        }
 
 
     }
 
-    private fun createClosetAPI(title: String, c: String, decs: String, part: MultipartBody.Part) {
+    private fun createClosetAPI(title: String, c: String, decs: String, part: MultipartBody.Part,user_id:String) {
 
-        controller.CreateCloset("Bearer " + getStringVal(Constants.TOKEN), title, c, part, decs)
+        controller.CreateCloset("Bearer " + getStringVal(Constants.TOKEN), title, c, part, decs,user_id)
 
     }
 
@@ -464,6 +493,24 @@ class MyClosets : BaseClass(), Controller.MyClosetsAPI, Controller.CreateClosetA
             utility!!.relative_snackbar(
                 parent_myclosets,
                 updateClosetsResponse.message(),
+                getString(R.string.close_up)
+            )
+        }
+    }
+
+    override fun onInfluencerSuccess(success: Response<InfluencerResponse>) {
+        pd.dismiss()
+        if (success.isSuccessful)
+        {
+            if (success.body()?.code.equals("200"))
+            {
+                influencerID = success.body()?.data?.gig?.userId.toString()
+            }
+
+        }else {
+            utility!!.relative_snackbar(
+                parent_myclosets,
+                success.message(),
                 getString(R.string.close_up)
             )
         }

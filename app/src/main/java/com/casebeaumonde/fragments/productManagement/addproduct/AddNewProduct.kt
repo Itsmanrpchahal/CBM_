@@ -486,7 +486,7 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
         if (type.equals("edit"))
         {
             pd.show()
-            controller.ProductDetail("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImZkOTQ2N2I5YTVkOTc2NjEwMzFjNzlkYjQ3NmY1YWQyNWFjZGYxNjZjODBjNjExMTE1ZTk1NDAyMTJkZThjYzVjY2IxYmJkNjhmZjllMWRhIn0.eyJhdWQiOiIxIiwianRpIjoiZmQ5NDY3YjlhNWQ5NzY2MTAzMWM3OWRiNDc2ZjVhZDI1YWNkZjE2NmM4MGM2MTExMTVlOTU0MDIxMmRlOGNjNWNjYjFiYmQ2OGZmOWUxZGEiLCJpYXQiOjE2MjI3ODE0MzUsIm5iZiI6MTYyMjc4MTQzNSwiZXhwIjoxNjU0MzE3NDM1LCJzdWIiOiIxMTEiLCJzY29wZXMiOltdfQ.e9RrUdPPTXJ9amldSLut1DUhEDXGK9TDmwSv9gqJM-BDveob_aLqH_cW3p0j1JxRUsHhbND1U5QXf22qeTDWe74DLQLEXVqdFTlA9G9AdOR5DjOem3LxQnb7yrGUz8JNPn5ntruUB_WyNQs6BGYJ1REC6ADRN4E1W4ZLJbNotbvaC41MQJ526UWFVB825MeMQoGSKo-DVHtShfqKXzMKA6tYz7T4wdy_1yBJWmnYlAyAY-qAgdIDvpKvByEJ2A0XStqiht3ptRsnJXKcQmlV0yieU25siQz1XPLXlebfr4OjiYZAaQSv7MQNtRNwc32gWvmNpZpnIgtu_n01mtJuXn8cYSSx66r3TTCP1plFaLL30iXAz2x-NRcAcn37ekSBmsNc_EZNSQypWVWsgAoDA-2Um5VT-IJvCsQUglzT-QThNBXFtBcBWzVLD2mLEpFSryq3sK5jT7Klx71ehY6MekPOmJJr6w4kznEsD0Nmq923UsZ_0eJvvXdxL5wjZYjuK1xkX1QClsukE2XHMPL0RrUoabyglzMKLmdZioGHtV2SlNOUYob0I3mTPhR8vj-riRFEKBAB1aXfWq9B7BAQ7i4mptNz8qA4VcEBq2y3FSxH0xkbT2kQf7QBKiLVWz-wvTKP5ucDpLp1DqAZKz4Yrvjo5enaraGHtpvJuqVBZu8",id)
+            controller.ProductDetail("Bearer "+getStringVal(Constants.TOKEN),id)
         }else {
             pd.dismiss()
         }
@@ -512,8 +512,9 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
                     for (i in categories.indices) {
                         val catpos = categories[i]
 
-                        if (catpos.id.toString().equals(cateID)) {
+                        if (catpos.name.toString().equals(cateID)) {
                             catPos = i
+                            Log.d("here",""+catpos)
                         }
                     }
                 }
@@ -570,6 +571,7 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
 
                         if (catpos.id.toString().equals(brandID)) {
                             brandPos = i
+                            Log.d("here",""+brandPos)
                         }
                     }
                 }
@@ -798,7 +800,9 @@ class AddNewProduct : BaseClass(),Controller.FetchListAPI ,
 
 
     override fun getImages(part: ArrayList<MultipartBody.Part>) {
-        //partlist.addAll(part)
+        partlist = ArrayList()
+        partlist.clear()
+        partlist.addAll(part)
         Log.d("part",""+partlist.size)
     }
 }

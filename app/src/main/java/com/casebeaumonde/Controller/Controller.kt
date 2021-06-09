@@ -24,6 +24,7 @@ import com.casebeaumonde.activities.myContracts.tabs.Contract.response.ContractL
 import com.casebeaumonde.activities.myContracts.tabs.Contract.response.SendClaimResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.MakeOfferResponse
 import com.casebeaumonde.activities.myContracts.tabs.WorkInvitation.response.WorkInvitationResponse
+import com.casebeaumonde.activities.myGigs.response.AddGigResponse
 import com.casebeaumonde.activities.myGigs.response.MyGigsResponse
 import com.casebeaumonde.activities.myclosets.response.*
 import com.casebeaumonde.activities.myoutfits.response.DeleteOutfitResponse
@@ -174,6 +175,9 @@ public class Controller {
     var productDetailAPI:ProductDetailAPI? = null
     var updateProductAPI : UpdateProductAPI?= null
     var getCartItemsAPI : GetCartItemsAPI? = null
+    var addGigAPI : AddGigAPI?=null
+    var updateGigAPI : UpdateGigAPI?=null
+    var influencersAPI : InfluencersAPI?=null
 
     fun Controller(fOrgotPassword: FOrgotPasswordAPI) {
         fOrgotPasswordAPI = fOrgotPassword
@@ -242,9 +246,11 @@ public class Controller {
         webAPI = WebAPI()
     }
 
-    fun Controller(getUserGigs: GetUserGigsAPI, sendInvitation: SendInvitationAPI) {
+    fun Controller(getUserGigs: GetUserGigsAPI, sendInvitation: SendInvitationAPI,addGig: AddGigAPI,updateGig: UpdateGigAPI) {
         getUserGigsAPI = getUserGigs
         sendInvitationAPI = sendInvitation
+        addGigAPI = addGig
+        updateGigAPI = updateGig
         webAPI = WebAPI()
     }
 
@@ -262,12 +268,14 @@ public class Controller {
         myClosets: MyClosetsAPI,
         createCloset: CreateClosetAPI,
         updateCloset: UpdateClosetAPI,
-        deleteCloset: DeleteClosetAPI
+        deleteCloset: DeleteClosetAPI,
+        influencers: InfluencersAPI
     ) {
         myClosetsAPI = myClosets
         createClosetAPI = createCloset
         updateClosetAPI = updateCloset
         deleteClosetAPI = deleteCloset
+        influencersAPI = influencers
         webAPI = WebAPI()
     }
 
@@ -780,6 +788,25 @@ public class Controller {
             })
     }
 
+    fun Influencers(token: String?)
+    {
+        webAPI?.api?.Influncers(token)?.enqueue(object :Callback<InfluencerResponse>
+        {
+            override fun onResponse(
+                call: Call<InfluencerResponse>,
+                response: Response<InfluencerResponse>
+            ) {
+                influencersAPI?.onInfluencerSuccess(response)
+            }
+
+            override fun onFailure(call: Call<InfluencerResponse>, t: Throwable) {
+                influencersAPI?.error(t.message)
+            }
+
+        })
+    }
+
+
     fun GetUserGigs(token: String?, userId: String?) {
         webAPI?.api?.usergigs(token, userId)?.enqueue(object : Callback<MyGigsResponse> {
             override fun onResponse(
@@ -852,9 +879,10 @@ public class Controller {
         title: String?,
         visibility: String?,
         part: MultipartBody.Part,
-        decs: String?
+        decs: String?,
+        user_id: String
     ) {
-        webAPI?.api?.createCloset(token, title, visibility, part, decs)
+        webAPI?.api?.createCloset(token, title, visibility, part, decs,user_id)
             ?.enqueue(object : Callback<CreateClosetResponse> {
                 override fun onResponse(
                     call: Call<CreateClosetResponse>,
@@ -913,9 +941,10 @@ public class Controller {
         title: String?,
         visibility: String?,
         image: MultipartBody.Part,
-        description: String?
+        description: String?,
+        user_id:String
     ) {
-        webAPI?.api?.closetUpdate(token, id, title, visibility, image, description)
+        webAPI?.api?.closetUpdate(token, id, title, visibility, image, description,user_id)
             ?.enqueue(object : Callback<UpdateClosetsResponse> {
                 override fun onResponse(
                     call: Call<UpdateClosetsResponse>,
@@ -2706,6 +2735,42 @@ public class Controller {
         })
     }
 
+    fun AddGig(token: String?,title:String,rate_type:String,hours:String,rate:String,status:String,description:String)
+    {
+        webAPI?.api?.AddGig(token, title, rate_type, hours, rate, status, description)?.enqueue(object :Callback<AddGigResponse>
+        {
+            override fun onResponse(
+                call: Call<AddGigResponse>,
+                response: Response<AddGigResponse>
+            ) {
+                addGigAPI?.onAddGigSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AddGigResponse>, t: Throwable) {
+                addGigAPI?.error(t.message)
+            }
+
+        })
+    }
+
+    fun UpdatEgig(token: String?,id: String?,title: String?,rate_type: String,hours: String,rate:String,status: String,decripition: String?)
+    {
+        webAPI?.api?.UpdateGig(token,id,title,rate_type,hours,rate,status,decripition)?.enqueue(object :Callback<AddGigResponse>
+        {
+            override fun onResponse(
+                call: Call<AddGigResponse>,
+                response: Response<AddGigResponse>
+            ) {
+                updateGigAPI?.onUpdateGigSuccess(response)
+            }
+
+            override fun onFailure(call: Call<AddGigResponse>, t: Throwable) {
+               updateGigAPI?.error(t.message)
+            }
+
+        })
+    }
+
 
 
     interface NotificationAPI {
@@ -3203,6 +3268,21 @@ public class Controller {
 
     interface GetCartItemsAPI {
         fun onGetCartItemsSuccess(success:Response<GetCartItemsResponse>)
+        fun error(error: String?)
+    }
+
+    interface AddGigAPI {
+        fun onAddGigSuccess(success:Response<AddGigResponse>)
+        fun error(error: String?)
+    }
+
+    interface UpdateGigAPI {
+        fun onUpdateGigSuccess(success:Response<AddGigResponse>)
+        fun error(error: String?)
+    }
+
+    interface InfluencersAPI {
+        fun onInfluencerSuccess(success:Response<InfluencerResponse>)
         fun error(error: String?)
     }
 }

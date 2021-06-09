@@ -36,10 +36,24 @@ class MyGigsAdapter(
             holder.itemView.gig_edit_bt.visibility = View.GONE
             holder.itemView.gig_delete_bt.visibility = View.GONE
             holder.itemView.gig_sendInvitation.visibility = View.VISIBLE
+        } else {
+            holder.itemView.gig_delete_bt.visibility = View.GONE
+        }
+
+        holder.itemView.gig_edit_bt.setOnClickListener {
+            MyGigs?.geteditgigidIf?.getEditgigID(gigs.id.toString(), position.toString())
+        }
+
+        holder.itemView.gig_delete_bt.setOnClickListener {
+            MyGigs?.getdeletegigidIf?.getDeleteID_IF(gigs.id.toString(),position.toString())
         }
 
         holder.itemView.gig_sendInvitation.setOnClickListener {
             MyGigs.getGigId?.getGigID(gigs.id.toString(),position)
+        }
+
+        holder.itemView.setOnClickListener {
+        MyGigs.detailgigId?.gigDetailID(gigs.id.toString(), position.toString())
         }
     }
 

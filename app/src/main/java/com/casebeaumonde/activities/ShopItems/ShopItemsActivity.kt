@@ -349,9 +349,10 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
             count.text = filterItems.get(pos!!.toInt()).likes.size.toString()
 
             shopitem_favorite.setOnClickListener {
+
+
                 controller.ShopItemsLike("Bearer "+getStringVal(Constants.TOKEN),id)
             }
-
 
             searchUserHeart(items.get(pos!!.toInt()),shopitem_favorite)
 
@@ -441,6 +442,9 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
         pd.dismiss()
         if (success.isSuccessful)
         {
+            dialog.dismiss()
+            controller.ShopItems("Bearer "+getStringVal(Constants.TOKEN),"1")
+//            count.text = (count1+1).toString()
             if (success.body()?.code.equals("200"))
             {
                 filterItems = ArrayList()
@@ -451,6 +455,11 @@ class ShopItemsActivity : BaseClass() ,Controller.ShopItemsAPI,GetShopItemID,Con
                     this, items,filterItems,"all"
                 )
                 shop_items_recyler.adapter = itemsadapter
+                utility!!.relative_snackbar(
+                    parent_shopitems!!,
+                    success.body()?.message,
+                    getString(R.string.close_up)
+                )
             } else {
                 utility!!.relative_snackbar(
                     parent_shopitems!!,

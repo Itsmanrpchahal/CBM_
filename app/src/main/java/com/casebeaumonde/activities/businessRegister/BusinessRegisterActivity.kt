@@ -282,8 +282,8 @@ class BusinessRegisterActivity : BaseClass() {
                 }
 
                 !bregister_password.text.toString().equals(bregister_cpassword.text.toString()) -> {
-                    register_cpassword.requestFocus()
-                    register_cpassword.error = getString(R.string.passwordnotmatch)
+                    bregister_cpassword.requestFocus()
+                    bregister_cpassword.error = getString(R.string.passwordnotmatch)
 
                 }
                 else -> {
